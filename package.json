@@ -15,6 +15,7 @@
       "test": "yarn run test:unit",
       "test:jest": "jest --ci --coverage",
       "test:unit": "yarn run test:jest && yarn run test:unit:report",
+      "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
       "test:unit:report": "cp -r ./artifacts/coverage-jest ./artifacts/coverage"
     },
     "stripes": {
