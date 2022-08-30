@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import SerialsManagementView from './components/SerialsManagementView';
 
 const App = ({ actAs }) => {
   if (actAs === 'settings') {
     return <div>Settings go here eventually</div>;
   }
 
-  return null;
+  return <SerialsManagementView />;
 };
 
 App.propTypes = {
