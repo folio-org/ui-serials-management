@@ -1,5 +1,5 @@
 const SerialsManagementView = () => {
-  return <></>;
+  return <>Test</>;
 };
 
 export default SerialsManagementView;
