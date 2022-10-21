@@ -1,10 +1,9 @@
+@Library ('folio_jenkins_shared_libs') _
+
 buildNPM {
-  publishModDescriptor = true
-  runLint = true
-  runSonarqube = true
-  runTestOptions = ''
-  runScripts = [
-    ['formatjs-compile': ''],
-    ['test':''],
-  ]
-}
+    publishModDescriptor = 'yes'
+    runRegression = 'no'
+    runLint = 'yes'
+    runSonarqube = 'true'
+    runTest = 'yes'
+  }
