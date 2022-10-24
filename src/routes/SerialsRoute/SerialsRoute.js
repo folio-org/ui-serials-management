@@ -9,26 +9,26 @@ const SerialsRoute = ({ children, path }) => {
   const resultColumns = [
     {
       propertyPath: 'poLineNumber',
-      label: <FormattedMessage id="ui-oa.publicationRequest.requestNumber" />,
+      label: <FormattedMessage id="ui-serials-management.serials.poLineNumber" />,
     },
     {
       propertyPath: 'title',
-      label: <FormattedMessage id="ui-oa.publicationRequest.requestDate" />,
+      label: <FormattedMessage id="ui-serials-management.serials.title" />,
     },
     {
       propertyPath: 'productIDs',
-      label: <FormattedMessage id="ui-oa.publicationRequest.status" />,
+      label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
     },
     {
       propertyPath: 'location',
       label: (
-        <FormattedMessage id="ui-oa.publicationRequest.publicationTitle" />
+        <FormattedMessage id="ui-serials-management.serials.location" />
       ),
     },
     {
       propertyPath: 'predictionPattern',
       label: (
-        <FormattedMessage id="ui-oa.publicationRequest.correspondingAuthorName" />
+        <FormattedMessage id="uui-serials-management.serials.predictionPattern" />
       ),
     },
   ];
