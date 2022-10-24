@@ -20,11 +20,12 @@
     },
     "stripes": {
       "actsAs": [
+        "app",
         "settings"
       ],
       "displayName": "ui-serials-management.meta.title",
       "route": "/serials-management",
-      "home": "/serials-management",
+      "home": "/serials-management/serials",
       "hasSettings": true,
       "queryResource": "query",
       "stripesDeps": [
