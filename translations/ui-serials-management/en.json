@@ -1,9 +1,16 @@
 {
   "meta.title": "Serials management",
+
+  "found#Values": "Found {total} results",
+
   "serials": "Serials",
   "serials.poLineNumber": "PO line number",
   "serials.title": "Title",
   "serials.productIDs": "Product IDs",
   "serials.location": "Location",
-  "serials.predictionPattern": "predictionPattern"
+  "serials.predictionPattern": "predictionPattern",
+
+  "expectedPieces": "Expected pieces",
+
+  "patterns": "Patterns"
 }
