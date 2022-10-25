@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 import { ExpectedPiecesView } from '../../components/views';
+import RouteSwitcher from '../../components/SearchAndFilter';
 
 const ExpectedPiecesRoute = ({ children, path }) => {
   const resultColumns = [
@@ -16,6 +17,7 @@ const ExpectedPiecesRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={{}}
+      FilterPaneHeaderComponent={RouteSwitcher}
       id="expected-pieces"
       mainPaneProps={{
         paneTitle: <FormattedMessage id="ui-serials-management.expectedPieces" />,

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 import { SerialsView } from '../../components/views';
+import RouteSwitcher from '../../components/SearchAndFilter';
 
 const SerialsRoute = ({ children, path }) => {
   const resultColumns = [
@@ -36,6 +37,7 @@ const SerialsRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={{}}
+      FilterPaneHeaderComponent={RouteSwitcher}
       id="serials"
       mainPaneProps={{
         paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
