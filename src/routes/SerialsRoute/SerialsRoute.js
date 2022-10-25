@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
-import SerialsView from '../../components/views/SerialsView';
+import { SerialsView } from '../../components/views';
 
 const SerialsRoute = ({ children, path }) => {
   const resultColumns = [
     {
       propertyPath: 'poLineNumber',
-      label: <FormattedMessage id="ui-serials-management.serials.poLineNumber" />,
+      label: (
+        <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
+      ),
     },
     {
       propertyPath: 'title',
@@ -21,9 +23,7 @@ const SerialsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'location',
-      label: (
-        <FormattedMessage id="ui-serials-management.serials.location" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.serials.location" />,
     },
     {
       propertyPath: 'predictionPattern',

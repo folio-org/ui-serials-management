@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
-import SerialsRoute from './routes/SerialsRoute';
+import { SerialsRoute, ExpectedPiecesRoute } from './routes';
 
 const App = ({ actAs, match: { path } }) => {
   const addKey = useIntlKeyStore((state) => state.addKey);
@@ -17,6 +17,7 @@ const App = ({ actAs, match: { path } }) => {
     <Suspense fallback={null}>
       <Switch>
         <SerialsRoute path={`${path}/serials`} />
+        <ExpectedPiecesRoute path={`${path}/expectedPieces`} />
       </Switch>
     </Suspense>
   );
