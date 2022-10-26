@@ -1,0 +1,12 @@
+{
+    "meta.title": "Správa seriálů",
+    "serials": "Seriály",
+    "serials.poLineNumber": "Číslo řádku NO",
+    "serials.title": "Název",
+    "serials.productIDs": "ID produktů",
+    "serials.location": "Umístění",
+    "serials.predictionPattern": "predikceVzor",
+    "found#Values": "Nalezeno {total} výsledků",
+    "expectedPieces": "Očekávané kusy",
+    "patterns": "Vzory"
+}
