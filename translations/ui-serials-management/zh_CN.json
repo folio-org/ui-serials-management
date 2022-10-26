@@ -1,0 +1,12 @@
+{
+    "meta.title": "连续出版物管理",
+    "serials": "Serials",
+    "serials.poLineNumber": "PO line number",
+    "serials.title": "Title",
+    "serials.productIDs": "Product IDs",
+    "serials.location": "Location",
+    "serials.predictionPattern": "predictionPattern",
+    "found#Values": "Found {total} results",
+    "expectedPieces": "Expected pieces",
+    "patterns": "Patterns"
+}
