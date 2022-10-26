@@ -55,7 +55,7 @@
     "@folio/stripes": "^7.2.0",
     "@folio/stripes-cli": "^2.6.0",
     "@folio/stripes-testing": "^4.2.0",
-    "@folio/stripes-erm-components": "^6.2.0",
+    "@folio/stripes-erm-components": "^7.0.0",
     "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^8.16.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -95,7 +95,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^7.2.0",
-    "@folio/stripes-erm-components": "^6.2.0",
+    "@folio/stripes-erm-components": "^7.0.0",
     "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
