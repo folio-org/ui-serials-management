@@ -28,6 +28,9 @@
     "home": "/serials-management/serials",
     "hasSettings": true,
     "queryResource": "query",
+    "okapiInterfaces": {
+      "serials-management": "1.0"
+    },
     "stripesDeps": [
       "@folio/stripes-erm-components",
       "@k-int/stripes-kint-components"
