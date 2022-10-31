@@ -1,11 +1,11 @@
 {
     "meta.title": "Gerenciamento de publicações seriadas",
     "serials": "Publicações seriadas",
-    "serials.poLineNumber": "PO line number",
+    "serials.poLineNumber": "Número da linha do pedido",
     "serials.title": "Título",
     "serials.productIDs": "IDs de produtos",
     "serials.location": "Localização",
-    "serials.predictionPattern": "predictionPattern",
+    "serials.predictionPattern": "Previsão padrão",
     "found#Values": "Resultados encontrados {total}",
     "expectedPieces": "Peças esperadas",
     "patterns": "Padrões"
