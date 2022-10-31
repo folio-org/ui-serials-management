@@ -4,13 +4,24 @@ import PropTypes from 'prop-types';
 
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 import { SerialsRoute, ExpectedPiecesRoute, PatternsRoute } from './routes';
+import Settings from './settings';
 
-const App = ({ actAs, match: { path } }) => {
+
+const App = (props) => {
+  const {
+    actAs,
+    match: { path },
+  } = props;
+
   const addKey = useIntlKeyStore((state) => state.addKey);
   addKey('ui-serials-management');
 
   if (actAs === 'settings') {
-    return <div>Settings go here eventually</div>;
+    return (
+      <Suspense fallback={null}>
+        <Settings {...props} />
+      </Suspense>
+    );
   }
 
   return (

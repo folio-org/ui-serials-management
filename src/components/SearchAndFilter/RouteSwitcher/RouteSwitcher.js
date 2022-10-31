@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
-import urls from '../../utils';
+import { urls } from '../../utils';
 
 const HeaderComponent = () => {
   const { pathname } = useLocation();
