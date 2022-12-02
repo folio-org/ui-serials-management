@@ -1,12 +1,12 @@
 {
-    "meta.title": "连续出版物管理",
-    "serials": "Serials",
-    "serials.poLineNumber": "PO line number",
-    "serials.title": "Title",
-    "serials.productIDs": "Product IDs",
-    "serials.location": "Location",
-    "serials.predictionPattern": "predictionPattern",
-    "found#Values": "Found {total} results",
-    "expectedPieces": "Expected pieces",
-    "patterns": "Patterns"
+    "meta.title": "连续出版物",
+    "serials": "连续出版物",
+    "serials.poLineNumber": "订单行号",
+    "serials.title": "题名",
+    "serials.productIDs": "产品ID",
+    "serials.location": "位置",
+    "serials.predictionPattern": "预测模式",
+    "found#Values": "找到{total}结果",
+    "expectedPieces": "预期件数",
+    "patterns": "模式"
 }

@@ -1,7 +1,7 @@
 {
     "meta.title": "Seriály",
     "serials": "Seriály",
-    "serials.poLineNumber": "Číslo řádku NO",
+    "serials.poLineNumber": "Číslo NO řádek",
     "serials.title": "Název",
     "serials.productIDs": "ID produktů",
     "serials.location": "Umístění",
