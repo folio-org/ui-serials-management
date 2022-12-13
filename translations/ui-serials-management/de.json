@@ -1,12 +1,12 @@
 {
     "meta.title": "Serials",
     "serials": "Serials",
-    "serials.poLineNumber": "PO line number",
-    "serials.title": "Title",
-    "serials.productIDs": "Product IDs",
-    "serials.location": "Location",
+    "serials.poLineNumber": "Bestellpostennummer",
+    "serials.title": "Titel",
+    "serials.productIDs": "Produkt-IDs",
+    "serials.location": "Standort",
     "serials.predictionPattern": "predictionPattern",
-    "found#Values": "Found {total} results",
-    "expectedPieces": "Expected pieces",
+    "found#Values": "{total} Ergebnisse gefunden",
+    "expectedPieces": "Erwartete Teile",
     "patterns": "Patterns"
 }
