@@ -6,7 +6,7 @@
     "serials.productIDs": "Product IDs",
     "serials.location": "Location",
     "serials.predictionPattern": "predictionPattern",
-    "found#Values": "Resultados encontrados",
+    "found#Values": "Resultados encontrados {total}",
     "expectedPieces": "Piezas esperadas",
     "patterns": "Patrones"
 }

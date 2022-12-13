@@ -1,12 +1,12 @@
 {
-    "meta.title": "Serials",
-    "serials": "Serials",
-    "serials.poLineNumber": "PO line number",
-    "serials.title": "Title",
-    "serials.productIDs": "Product IDs",
-    "serials.location": "Location",
-    "serials.predictionPattern": "predictionPattern",
-    "found#Values": "Found {total} results",
-    "expectedPieces": "Expected pieces",
-    "patterns": "Patterns"
+    "meta.title": "연속간행물(Serials)",
+    "serials": "연속간행물(Serials)",
+    "serials.poLineNumber": "PO 라인 번호",
+    "serials.title": "타이틀",
+    "serials.productIDs": "제품 ID",
+    "serials.location": "위치",
+    "serials.predictionPattern": "예측 패턴",
+    "found#Values": "{total}개의 결과를 찾았습니다.",
+    "expectedPieces": "예상 부수",
+    "patterns": "패턴"
 }
