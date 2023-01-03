@@ -101,7 +101,9 @@
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
     "final-form-set-field-data": "^1.0.2",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "react-final-form": "^6.3.0",
+    "react-final-form-arrays": "^3.1.1"
   },
   "peerDependencies": {
     "@folio/stripes": "^7.2.0",
