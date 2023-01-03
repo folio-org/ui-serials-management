@@ -35,6 +35,13 @@
       "@folio/stripes-erm-components",
       "@k-int/stripes-kint-components"
     ],
+    "icons": [
+      {
+        "name": "app",
+        "alt": "FOLIO app for Serials Management",
+        "title": "serials"
+      }
+    ],
     "permissionSets": [
       {
         "permissionName": "module.serials-management.enabled",
