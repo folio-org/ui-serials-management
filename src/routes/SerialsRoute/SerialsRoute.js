@@ -1,12 +1,41 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import { Button, PaneMenu } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
+
 import { SerialsView } from '../../components/views';
 import RouteSwitcher from '../../components/SearchAndFilter';
+import urls from '../../components/utils/urls';
 
 const SerialsRoute = ({ children, path }) => {
+  const history = useHistory();
+  const location = useLocation();
+
+  const handleCreate = () => {
+    history.push(`${urls.serialCreate()}${location.search}`);
+  };
+  const renderLastMenu = (
+    <PaneMenu>
+      <FormattedMessage id="ui-serials-management.serials.newSerial">
+        {(ariaLabel) => (
+          <Button
+            aria-label={ariaLabel}
+            buttonStyle="primary"
+            id="clickable-new-serial"
+            marginBottom0
+            onClick={() => handleCreate()}
+          >
+            <FormattedMessage id="ui-serials-management.new" />
+          </Button>
+        )}
+      </FormattedMessage>
+    </PaneMenu>
+  );
+
   const resultColumns = [
     {
       propertyPath: 'poLineNumber',
@@ -29,7 +58,7 @@ const SerialsRoute = ({ children, path }) => {
     {
       propertyPath: 'predictionPattern',
       label: (
-        <FormattedMessage id="uui-serials-management.serials.predictionPattern" />
+        <FormattedMessage id="ui-serials-management.serials.predictionPattern" />
       ),
     },
   ];
@@ -40,6 +69,10 @@ const SerialsRoute = ({ children, path }) => {
       FilterPaneHeaderComponent={RouteSwitcher}
       id="serials"
       mainPaneProps={{
+        appIcon: (
+          <AppIcon app="serials-management" iconKey="app" size="small" />
+        ),
+        lastMenu: renderLastMenu,
         paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
       }}
       path={path}
