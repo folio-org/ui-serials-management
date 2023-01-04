@@ -2,8 +2,11 @@
   "meta.title": "Serials",
 
   "found#Values": "Found {total} results",
+  "new": "New",
+  "closeForm": "Close form",
 
   "serials": "Serials",
+  "serials.newSerial": "New serial",
   "serials.poLineNumber": "PO line number",
   "serials.title": "Title",
   "serials.productIDs": "Product IDs",
