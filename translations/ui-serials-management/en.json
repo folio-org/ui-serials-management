@@ -11,7 +11,14 @@
   "serials.title": "Title",
   "serials.productIDs": "Product IDs",
   "serials.location": "Location",
-  "serials.predictionPattern": "predictionPattern",
+  "serials.predictionPattern": "Prediction pattern",
+  "serials.poLine": "PO Line",
+  "serials.poLine.noneLinked": "No PO line linked",
+  "serials.poLine.linkToStart": "Link a PO line to get started",
+  "serials.poLine.linkPOLine": "Link PO line",
+  "serials.poLine.noPlugin": "No \"find-po-line\" plugin is installed",
+  "serials.poLine.replacePOLine": "Replace PO line",
+  "serials.poLine.replacePOLineSpecific": "Replace PO line {titleOrPackage}",
 
   "expectedPieces": "Expected pieces",
 

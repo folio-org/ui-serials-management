@@ -13,6 +13,8 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
+import POLineForm from '../../SerialFormSections';
+
 const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -82,7 +84,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
           <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
         )}
       >
-        <></>
+        <POLineForm />
       </Pane>
     </Paneset>
   );
