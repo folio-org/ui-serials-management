@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-  Card,
-  Layout,
-  Tooltip,
-} from '@folio/stripes/components';
+import { Button, Card, Layout, Tooltip } from '@folio/stripes/components';
 
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 const propTypes = {
+  children: PropTypes.node,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   input: PropTypes.shape({
@@ -24,6 +20,7 @@ const propTypes = {
 };
 
 const POLineLookup = ({
+  children,
   disabled,
   id,
   input: { name, value },
@@ -32,7 +29,7 @@ const POLineLookup = ({
 }) => {
   let triggerButton = useRef(null);
 
-  const renderPOLineLinkButton = (v) => (
+  const renderPOLineLinkButton = () => (
     <Pluggable
       addLines={onResourceSelected}
       dataKey="find-po-line"
@@ -43,7 +40,7 @@ const POLineLookup = ({
         const buttonProps = {
           'aria-haspopup': 'true',
           buttonRef: triggerButton,
-          buttonStyle: v ? 'default' : 'primary',
+          buttonStyle: value ? 'default' : 'primary',
           disabled,
           id: `${id}-find-po-line-btn`,
           marginBottom0: true,
@@ -83,8 +80,6 @@ const POLineLookup = ({
     </Pluggable>
   );
 
-  const renderPOLine = () => <>Linked</>;
-
   const renderEmpty = () => (
     <>
       <Layout className="textCentered">
@@ -101,7 +96,7 @@ const POLineLookup = ({
   return (
     <Card
       cardStyle={value ? 'positive' : 'negative'}
-      headerEnd={renderPOLineLinkButton(value)}
+      headerEnd={renderPOLineLinkButton()}
       headerStart={
         <AppIcon app="orders" size="small">
           <strong>
@@ -112,7 +107,7 @@ const POLineLookup = ({
       id={id}
       roundedBorder
     >
-      {value ? renderPOLine() : renderEmpty()}
+      {value ? children : renderEmpty()}
     </Card>
   );
 };

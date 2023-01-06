@@ -10,13 +10,20 @@ const POLineForm = () => {
   };
 
   return (
-    <Field
-      component={POLineLookup}
-      id="po-line-field"
-      name="poLine"
-      onResourceSelected={onPOLineSelected}
-      resource={values?.poLine}
-    />
+    <Field name="poLine">
+      {({ input }) => {
+        return (
+          <POLineLookup
+            id="po-line-field"
+            input={input}
+            onResourceSelected={onPOLineSelected}
+            resource={values?.poLine}
+          >
+            Linked
+          </POLineLookup>
+        );
+      }}
+    </Field>
   );
 };
 
