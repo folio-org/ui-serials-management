@@ -4,6 +4,8 @@ const urls = {
 
   expectedPieces: () => '/serials-management/expectedPieces',
   patterns: () => '/serials-management/patterns',
+
+  inventoryView: (id) => `/inventory/view/${id}`,
 };
 
 export default urls;
