@@ -13,7 +13,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import POLineForm from '../../SerialFormSections';
+import { POLineForm } from '../../SerialFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({

@@ -1,9 +1,11 @@
-import { Field } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 import POLineLookup from '../POLineLookup';
 
 const POLineForm = () => {
+  const { values } = useFormState();
+  const { change } = useForm();
   const onPOLineSelected = (poLine) => {
-    console.log(poLine);
+    change('poLine', poLine[0]);
   };
 
   return (
@@ -12,6 +14,7 @@ const POLineForm = () => {
       id="po-line-field"
       name="poLine"
       onResourceSelected={onPOLineSelected}
+      resource={values?.poLine}
     />
   );
 };
