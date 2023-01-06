@@ -57,7 +57,7 @@ const POLineLookup = ({
               id={`${id}-po-line-button-tooltip`}
               text={
                 <FormattedMessage
-                  id="ui-serials-management.serials.poLine.replacePOLineSpecific"
+                  id="ui-serials-management.poLine.replacePOLineSpecific"
                   values={{ titleOrPackage: resource?.titleOrPackage }}
                 />
               }
@@ -65,7 +65,7 @@ const POLineLookup = ({
             >
               {({ ariaIds }) => (
                 <Button aria-labelledby={ariaIds.text} {...buttonProps}>
-                  <FormattedMessage id="ui-serials-management.serials.poLine.replacePOLine" />
+                  <FormattedMessage id="ui-serials-management.poLine.replacePOLine" />
                 </Button>
               )}
             </Tooltip>
@@ -73,13 +73,13 @@ const POLineLookup = ({
         }
         return (
           <Button {...buttonProps}>
-            <FormattedMessage id="ui-serials-management.serials.poLine.linkPOLine" />
+            <FormattedMessage id="ui-serials-management.poLine.linkPOLine" />
           </Button>
         );
       }}
       type="find-po-line"
     >
-      <FormattedMessage id="ui-serials-management.serials.poLine.noPlugin" />
+      <FormattedMessage id="ui-serials-management.poLine.noPlugin" />
     </Pluggable>
   );
 
@@ -89,11 +89,11 @@ const POLineLookup = ({
     <>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-serials-management.serials.poLine.noneLinked" />
+          <FormattedMessage id="ui-serials-management.poLine.noneLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-serials-management.serials.poLine.linkToStart" />
+        <FormattedMessage id="ui-serials-management.poLine.linkToStart" />
       </Layout>
     </>
   );
@@ -105,7 +105,7 @@ const POLineLookup = ({
       headerStart={
         <AppIcon app="orders" size="small">
           <strong>
-            <FormattedMessage id="ui-serials-management.serials.poLine" />
+            <FormattedMessage id="ui-serials-management.poLine" />
           </strong>
         </AppIcon>
       }

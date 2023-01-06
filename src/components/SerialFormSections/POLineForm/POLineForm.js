@@ -6,6 +6,7 @@ const POLineForm = () => {
   const { change } = useForm();
   const onPOLineSelected = (poLine) => {
     change('poLine', poLine[0]);
+    console.log(poLine[0]);
   };
 
   return (
