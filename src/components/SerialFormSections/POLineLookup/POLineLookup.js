@@ -2,10 +2,12 @@ import { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { Button, Card, Layout, Tooltip } from '@folio/stripes/components';
-
 import { AppIcon, Pluggable } from '@folio/stripes/core';
+
+import { urls } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node,
@@ -70,7 +72,7 @@ const POLineLookup = ({
         }
         return (
           <Button {...buttonProps}>
-            <FormattedMessage id="ui-serials-management.poLine.linkPOLine" />
+            <FormattedMessage id="ui-serials-management.poLine.selectPOLine" />
           </Button>
         );
       }}
@@ -99,9 +101,18 @@ const POLineLookup = ({
       headerEnd={renderPOLineLinkButton()}
       headerStart={
         <AppIcon app="orders" size="small">
-          <strong>
-            <FormattedMessage id="ui-serials-management.poLine" />
-          </strong>
+          {resource?.id ? (
+            <Link to={urls.poLineView(resource?.id)}>
+              <strong>
+                <FormattedMessage id="ui-serials-management.poLine" />
+                {': ' + resource?.poLineNumber}
+              </strong>
+            </Link>
+          ) : (
+            <strong>
+              <FormattedMessage id="ui-serials-management.poLine" />
+            </strong>
+          )}
         </AppIcon>
       }
       id={id}
