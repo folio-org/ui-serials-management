@@ -16,12 +16,17 @@
   "poLine": "PO Line",
   "poLine.noneLinked": "No PO line linked",
   "poLine.linkToStart": "Link a PO line to get started",
-  "poLine.linkPOLine": "Link PO line",
+  "poLine.selectPOLine": "Select PO line",
   "poLine.noPlugin": "No \"find-po-line\" plugin is installed",
   "poLine.replacePOLine": "Replace PO line",
   "poLine.replacePOLineSpecific": "Replace PO line {identifier}",
   "poLine.title": "Title in PO line",
   "poLine.viewInInventory": "View in inventory",
+  "poLine.orderNumber": "Order number",
+  "poLine.orderStatus": "Order status",
+  "poLine.vendor": "Vendor",
+  "poLine.materialType": "Material type",
+  "poLine.funds": "Funds",
 
   "expectedPieces": "Expected pieces",
 
