@@ -55,7 +55,7 @@ const POLineLookup = ({
               text={
                 <FormattedMessage
                   id="ui-serials-management.poLine.replacePOLineSpecific"
-                  values={{ titleOrPackage: resource?.titleOrPackage }}
+                  values={{ identifier: resource?.poLineNumber }}
                 />
               }
               triggerRef={triggerButton}

@@ -19,7 +19,7 @@
   "poLine.linkPOLine": "Link PO line",
   "poLine.noPlugin": "No \"find-po-line\" plugin is installed",
   "poLine.replacePOLine": "Replace PO line",
-  "poLine.replacePOLineSpecific": "Replace PO line {titleOrPackage}",
+  "poLine.replacePOLineSpecific": "Replace PO line {identifier}",
   "poLine.title": "Title in PO line",
   "poLine.viewInInventory": "View in inventory",
 
