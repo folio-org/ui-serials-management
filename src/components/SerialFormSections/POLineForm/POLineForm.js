@@ -92,13 +92,19 @@ const POLineForm = () => {
                   label={
                     <FormattedMessage id="ui-serials-management.poLine.funds" />
                   }
-                  value={values?.poLine?.fundDistribution.map((fund) => {
-                    return (
-                      <li>
-                        <Link to={urls.fundView(fund?.id)}>{fund?.code}</Link>
-                      </li>
-                    );
-                  })}
+                  value={
+                    values?.poLine?.fundDistribution.length
+                      ? values?.poLine?.fundDistribution.map((fund) => {
+                        return (
+                          <li>
+                            <Link to={urls.fundView(fund?.id)}>
+                              {fund?.code}
+                            </Link>
+                          </li>
+                        );
+                      })
+                      : null
+                  }
                 />
               </Col>
               <Col xs={3}>
