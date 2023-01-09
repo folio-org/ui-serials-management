@@ -24,6 +24,9 @@
   "poLine.viewInInventory": "View in inventory",
   "poLine.orderNumber": "Order number",
   "poLine.orderStatus": "Order status",
+  "poLine.vendor": "Vendor",
+  "poLine.materialType": "Material type",
+  "poLine.funds": "Funds",
 
   "expectedPieces": "Expected pieces",
 

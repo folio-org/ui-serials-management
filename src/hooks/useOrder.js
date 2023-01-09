@@ -4,7 +4,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { ORDERS_ENDPOINT } from '../constants/endpoints';
 
-export const useOrders = (orderId) => {
+export const useOrder = (orderId) => {
   const ky = useOkapiKy();
 
   const { isLoading, data = {} } = useQuery(
@@ -19,4 +19,4 @@ export const useOrders = (orderId) => {
   };
 };
 
-export default useOrders;
+export default useOrder;

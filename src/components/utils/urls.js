@@ -6,7 +6,9 @@ const urls = {
   patterns: () => '/serials-management/patterns',
 
   inventoryView: (id) => `/inventory/view/${id}`,
-  poLineView: (id) => `/orders/lines/view/${id}`
+  poLineView: (id) => `/orders/lines/view/${id}`,
+  organisationView: (id) => `/organizations/view/${id}`,
+  fundView: (id) => `/finance/fund/view/${id}`
 };
 
 export default urls;

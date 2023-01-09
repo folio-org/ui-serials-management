@@ -7,14 +7,19 @@ import { AppIcon } from '@folio/stripes/core';
 
 import { urls } from '../../utils';
 import POLineLookup from '../POLineLookup';
-import { useOrders } from '../../../hooks/useOrders';
+import { useOrder, useVendor, useMaterialType } from '../../../hooks';
 
 const POLineForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
-  const { isLoading: orderLoading, data: order } = useOrders(
+
+  const { isLoading: orderLoading, data: order } = useOrder(
     values?.poLine?.purchaseOrderId
   );
+  const { isLoading: vendorLoading, data: vendor } = useVendor(order?.vendor);
+
+  const { isLoading: materialTypeLoading, data: materialType } =
+    useMaterialType(values?.poLine?.physical?.materialType);
 
   const onPOLineSelected = (poLine) => {
     change('poLine', poLine[0]);
@@ -62,6 +67,46 @@ const POLineForm = () => {
                     <FormattedMessage id="ui-serials-management.poLine.orderStatus" />
                   }
                   value={orderLoading ? <Loading /> : order?.workflowStatus}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={3}>
+                <KeyValue
+                  label={
+                    <FormattedMessage id="ui-serials-management.poLine.vendor" />
+                  }
+                  value={
+                    vendorLoading ? (
+                      <Loading />
+                    ) : (
+                      <Link to={urls.organisationView(vendor?.id)}>
+                        {vendor?.name + ' (' + vendor?.code + ')'}
+                      </Link>
+                    )
+                  }
+                />
+              </Col>
+              <Col xs={3}>
+                <KeyValue
+                  label={
+                    <FormattedMessage id="ui-serials-management.poLine.funds" />
+                  }
+                  value={values?.poLine?.fundDistribution.map((fund) => {
+                    return (
+                      <li>
+                        <Link to={urls.fundView(fund?.id)}>{fund?.code}</Link>
+                      </li>
+                    );
+                  })}
+                />
+              </Col>
+              <Col xs={3}>
+                <KeyValue
+                  label={
+                    <FormattedMessage id="ui-serials-management.poLine.materialType" />
+                  }
+                  value={materialTypeLoading ? <Loading /> : materialType?.name}
                 />
               </Col>
             </Row>
