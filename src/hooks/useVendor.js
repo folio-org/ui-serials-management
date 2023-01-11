@@ -7,14 +7,14 @@ import { VENDOR_ENDPOINT } from '../constants/endpoints';
 export const useVendor = (vendorId) => {
   const ky = useOkapiKy();
 
-  const { isLoading, data = {} } = useQuery(
+  const { isFetching, data = {} } = useQuery(
     ['ui-serials-management', VENDOR_ENDPOINT, vendorId],
     () => ky.get(`${VENDOR_ENDPOINT}/${vendorId}`).json(),
     { enabled: !!vendorId }
   );
 
   return {
-    isLoading,
+    isFetching,
     data,
   };
 };
