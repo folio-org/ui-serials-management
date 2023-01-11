@@ -7,7 +7,12 @@ import { AppIcon } from '@folio/stripes/core';
 
 import { urls } from '../../utils';
 import POLineLookup from '../POLineLookup';
-import { useOrder, useVendor, useMaterialType } from '../../../hooks';
+import {
+  useOrder,
+  useVendor,
+  useMaterialType,
+  useIdentifierTypes,
+} from '../../../hooks';
 
 const POLineForm = () => {
   const { values } = useFormState();
@@ -16,14 +21,38 @@ const POLineForm = () => {
   const { isLoading: orderLoading, data: order } = useOrder(
     values?.poLine?.purchaseOrderId
   );
-  const { isLoading: vendorLoading, data: vendor } = useVendor(order?.vendor);
+  const { isFetching: vendorLoading, data: vendor } = useVendor(order?.vendor);
 
   const { isLoading: materialTypeLoading, data: materialType } =
     useMaterialType(values?.poLine?.physical?.materialType);
 
+  const { isLoading: identifierTypeLoading, data: identifierTypes } =
+    useIdentifierTypes(
+      values?.poLine?.details?.productIds?.map((e) => e?.productIdType)
+    );
+
   const onPOLineSelected = (poLine) => {
     change('poLine', poLine[0]);
     console.log(poLine[0]);
+  };
+
+  const renderIdentifierTypes = () => {
+    if (identifierTypes?.length && !identifierTypeLoading) {
+      return identifierTypes?.map((type) => {
+        return (
+          <li key={type?.id}>
+            {type?.name + ': '}
+            {
+              values?.poLine?.details?.productIds?.find(
+                (e) => e?.productIdType === type?.id
+              )?.productId
+            }
+          </li>
+        );
+      });
+    } else {
+      return <Loading />;
+    }
   };
 
   return (
@@ -74,10 +103,23 @@ const POLineForm = () => {
               <Col xs={3}>
                 <KeyValue
                   label={
+                    <FormattedMessage id="ui-serials-management.poLine.productIds" />
+                  }
+                  value={
+                    // Add Loading
+                    values?.poLine?.details?.productIds?.length
+                      ? renderIdentifierTypes()
+                      : null
+                  }
+                />
+              </Col>
+              <Col xs={3}>
+                <KeyValue
+                  label={
                     <FormattedMessage id="ui-serials-management.poLine.vendor" />
                   }
                   value={
-                    vendorLoading ? (
+                    vendorLoading || orderLoading ? (
                       <Loading />
                     ) : (
                       <Link to={urls.organisationView(vendor?.id)}>
@@ -96,7 +138,7 @@ const POLineForm = () => {
                     values?.poLine?.fundDistribution.length
                       ? values?.poLine?.fundDistribution.map((fund) => {
                         return (
-                          <li>
+                          <li key={fund?.id}>
                             <Link to={urls.fundView(fund?.id)}>
                               {fund?.code}
                             </Link>

@@ -15,7 +15,7 @@ const propTypes = {
   id: PropTypes.string,
   input: PropTypes.shape({
     name: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }),
   onResourceSelected: PropTypes.func,
   resource: PropTypes.object,
