@@ -40,6 +40,11 @@ const SerialsRoute = ({ children, path }) => {
     </PaneMenu>
   );
 
+  const renderHeaderComponent = () => {
+    return <RouteSwitcher primary="serials" />;
+  };
+
+
   const resultColumns = [
     {
       propertyPath: 'title',
@@ -76,7 +81,7 @@ const SerialsRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
-      FilterPaneHeaderComponent={RouteSwitcher}
+      FilterPaneHeaderComponent={renderHeaderComponent}
       id="serials"
       mainPaneProps={{
         appIcon: (

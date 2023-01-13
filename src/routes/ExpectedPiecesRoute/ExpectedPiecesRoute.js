@@ -7,6 +7,10 @@ import { ExpectedPiecesView } from '../../components/views';
 import RouteSwitcher from '../../components/SearchAndFilter';
 
 const ExpectedPiecesRoute = ({ children, path }) => {
+  const renderHeaderComponent = () => {
+    return <RouteSwitcher primary="expectedPieces" />;
+  };
+
   const resultColumns = [
     {
       propertyPath: 'expectedPieces',
@@ -17,7 +21,7 @@ const ExpectedPiecesRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={{}}
-      FilterPaneHeaderComponent={RouteSwitcher}
+      FilterPaneHeaderComponent={renderHeaderComponent}
       id="expected-pieces"
       mainPaneProps={{
         paneTitle: <FormattedMessage id="ui-serials-management.expectedPieces" />,
