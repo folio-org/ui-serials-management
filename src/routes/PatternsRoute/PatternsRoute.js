@@ -7,6 +7,10 @@ import { PatternsView } from '../../components/views';
 import RouteSwitcher from '../../components/SearchAndFilter';
 
 const PatternsRoute = ({ children, path }) => {
+  const renderHeaderComponent = () => {
+    return <RouteSwitcher primary="patterns" />;
+  };
+
   const resultColumns = [
     {
       propertyPath: 'patterns',
@@ -19,7 +23,7 @@ const PatternsRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={{}}
-      FilterPaneHeaderComponent={RouteSwitcher}
+      FilterPaneHeaderComponent={renderHeaderComponent}
       id="patterns"
       mainPaneProps={{
         paneTitle: <FormattedMessage id="ui-serials-management.patterns" />,

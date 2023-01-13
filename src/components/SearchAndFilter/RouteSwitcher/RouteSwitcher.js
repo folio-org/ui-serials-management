@@ -1,60 +1,60 @@
-import { Button, ButtonGroup } from '@folio/stripes/components';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+
+import { Button } from '@folio/stripes/components';
+
+import { ResponsiveButtonGroup } from '@k-int/stripes-kint-components';
+
 import { urls } from '../../utils';
 
-const HeaderComponent = () => {
-  const { pathname } = useLocation();
+const propTypes = {
+  primary: PropTypes.string,
+};
+
+const RouteSwitcher = ({ primary }) => {
+  let selectedIndex;
+
+  switch (primary) {
+    case 'serials':
+      selectedIndex = 0;
+      break;
+    case 'expectedPieces':
+      selectedIndex = 1;
+      break;
+    case 'patterns':
+      selectedIndex = 2;
+      break;
+    default:
+      break;
+  }
 
   return (
-    <ButtonGroup fullWidth>
+    <ResponsiveButtonGroup fullWidth selectedIndex={selectedIndex}>
       <Button
-        buttonStyle={
-          pathname?.startsWith('/serials-management/serials')
-            ? 'primary'
-            : 'default'
-        }
+        key="clickable-nav-serials"
         id="clickable-nav-serials"
-        to={
-          pathname?.startsWith('/serials-management/serials')
-            ? null
-            : urls.serials()
-        }
+        to={primary === 'serials' ? null : urls.serials()}
       >
         <FormattedMessage id="ui-serials-management.serials" />
       </Button>
       <Button
-        buttonStyle={
-          pathname?.startsWith('/serials-management/expectedPieces')
-            ? 'primary'
-            : 'default'
-        }
+        key="clickable-nav-expected-pieces"
         id="clickable-nav-expected-pieces"
-        to={
-          pathname?.startsWith('/serials-management/expectedPieces')
-            ? null
-            : urls.expectedPieces()
-        }
+        to={primary === 'expectedPieces' ? null : urls.expectedPieces()}
       >
         <FormattedMessage id="ui-serials-management.expectedPieces" />
       </Button>
       <Button
-        buttonStyle={
-          pathname?.startsWith('/serials-management/patterns')
-            ? 'primary'
-            : 'default'
-        }
+        key="clickable-nav-patterns"
         id="clickable-nav-patterns"
-        to={
-          pathname?.startsWith('/serials-management/patterns')
-            ? null
-            : urls.patterns()
-        }
+        to={primary === 'patterns' ? null : urls.patterns()}
       >
         <FormattedMessage id="ui-serials-management.patterns" />
       </Button>
-    </ButtonGroup>
+    </ResponsiveButtonGroup>
   );
 };
 
-export default HeaderComponent;
+RouteSwitcher.propTypes = propTypes;
+
+export default RouteSwitcher;
