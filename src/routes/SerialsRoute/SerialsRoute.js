@@ -42,19 +42,19 @@ const SerialsRoute = ({ children, path }) => {
 
   const resultColumns = [
     {
-      propertyPath: 'id',
+      propertyPath: 'title',
+      label: <FormattedMessage id="ui-serials-management.serials.title" />,
+    },
+    {
+      propertyPath: 'productIDs',
+      label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
+    },
+    {
+      propertyPath: 'poLineNumber',
       label: (
         <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
       ),
     },
-    // {
-    //   propertyPath: 'title',
-    //   label: <FormattedMessage id="ui-serials-management.serials.title" />,
-    // },
-    // {
-    //   propertyPath: 'productIDs',
-    //   label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
-    // },
     // {
     //   propertyPath: 'location',
     //   label: <FormattedMessage id="ui-serials-management.serials.location" />,
@@ -67,6 +67,12 @@ const SerialsRoute = ({ children, path }) => {
     // },
   ];
 
+  const formatter = {
+    title: (d) => d?.orderLine?.remoteId_object?.titleOrPackage,
+    productIds: (d) => d?.orderLine?.remoteId_object?.details?.productIds?.map((p) => p?.productId)?.join(';'),
+    poLineNumber: (d) => d?.orderLine?.remoteId_object?.poLineNumber,
+  };
+
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
@@ -78,6 +84,9 @@ const SerialsRoute = ({ children, path }) => {
         ),
         lastMenu: renderLastMenu,
         paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
+      }}
+      mclProps={{
+        formatter,
       }}
       path={path}
       resultColumns={resultColumns}
