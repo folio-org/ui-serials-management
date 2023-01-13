@@ -44,22 +44,28 @@ const SerialsRoute = ({ children, path }) => {
     return <RouteSwitcher primary="serials" />;
   };
 
-
   const resultColumns = [
     {
-      propertyPath: 'title',
-      label: <FormattedMessage id="ui-serials-management.serials.title" />,
+      propertyPath: 'id',
+      label: 'Serial ID',
     },
-    {
-      propertyPath: 'productIDs',
-      label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
-    },
-    {
-      propertyPath: 'poLineNumber',
-      label: (
-        <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
-      ),
-    },
+
+    // Will be re-implemented when values are stored locally
+
+    // {
+    //   propertyPath: 'title',
+    //   label: <FormattedMessage id="ui-serials-management.serials.title" />,
+    // },
+    // {
+    //   propertyPath: 'productIDs',
+    //   label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
+    // },
+    // {
+    //   propertyPath: 'poLineNumber',
+    //   label: (
+    //     <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
+    //   ),
+    // },
     // {
     //   propertyPath: 'location',
     //   label: <FormattedMessage id="ui-serials-management.serials.location" />,
@@ -73,9 +79,10 @@ const SerialsRoute = ({ children, path }) => {
   ];
 
   const formatter = {
-    title: (d) => d?.orderLine?.remoteId_object?.titleOrPackage,
-    productIds: (d) => d?.orderLine?.remoteId_object?.details?.productIds?.map((p) => p?.productId)?.join(';'),
-    poLineNumber: (d) => d?.orderLine?.remoteId_object?.poLineNumber,
+    id: (d) => d?.id,
+    // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
+    // productIds: (d) => d?.orderLine?.remoteId_object?.details?.productIds?.map((p) => p?.productId)?.join(';'),
+    // poLineNumber: (d) => d?.orderLine?.remoteId_object?.poLineNumber,
   };
 
   return (
