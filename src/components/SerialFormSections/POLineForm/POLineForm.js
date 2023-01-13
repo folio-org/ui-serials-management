@@ -19,21 +19,20 @@ const POLineForm = () => {
   const { change } = useForm();
 
   const { isLoading: orderLoading, data: order } = useOrder(
-    values?.poLine?.purchaseOrderId
+    values?.orderLine?.purchaseOrderId
   );
   const { isFetching: vendorLoading, data: vendor } = useVendor(order?.vendor);
 
   const { isLoading: materialTypeLoading, data: materialType } =
-    useMaterialType(values?.poLine?.physical?.materialType);
+    useMaterialType(values?.orderLine?.physical?.materialType);
 
   const { isLoading: identifierTypeLoading, data: identifierTypes } =
     useIdentifierTypes(
-      values?.poLine?.details?.productIds?.map((e) => e?.productIdType)
+      values?.orderLine?.details?.productIds?.map((e) => e?.productIdType)
     );
 
   const onPOLineSelected = (poLine) => {
-    change('poLine', poLine[0]);
-    console.log(poLine[0]);
+    change('orderLine', poLine[0]);
   };
 
   const renderIdentifierTypes = () => {
@@ -43,7 +42,7 @@ const POLineForm = () => {
           <li key={type?.id}>
             {type?.name + ': '}
             {
-              values?.poLine?.details?.productIds?.find(
+              values?.orderLine?.details?.productIds?.find(
                 (e) => e?.productIdType === type?.id
               )?.productId
             }
@@ -56,14 +55,14 @@ const POLineForm = () => {
   };
 
   return (
-    <Field name="poLine">
+    <Field name="orderLine">
       {({ input }) => {
         return (
           <POLineLookup
             id="po-line-field"
             input={input}
             onResourceSelected={onPOLineSelected}
-            resource={values?.poLine}
+            resource={values?.orderLine}
           >
             <Row>
               <Col xs={12}>
@@ -71,10 +70,10 @@ const POLineForm = () => {
                   label={
                     <FormattedMessage id="ui-serials-management.poLine.title" />
                   }
-                  value={values?.poLine?.titleOrPackage}
+                  value={values?.orderLine?.titleOrPackage}
                 />
                 <AppIcon app="inventory" iconKey="instance" size="small">
-                  <Link to={urls.inventoryView(values?.poLine?.instanceId)}>
+                  <Link to={urls.inventoryView(values?.orderLine?.instanceId)}>
                     <FormattedMessage id="ui-serials-management.poLine.viewInInventory" />
                   </Link>
                 </AppIcon>
@@ -107,7 +106,7 @@ const POLineForm = () => {
                   }
                   value={
                     // Add Loading
-                    values?.poLine?.details?.productIds?.length
+                    values?.orderLine?.details?.productIds?.length
                       ? renderIdentifierTypes()
                       : null
                   }
@@ -135,8 +134,8 @@ const POLineForm = () => {
                     <FormattedMessage id="ui-serials-management.poLine.funds" />
                   }
                   value={
-                    values?.poLine?.fundDistribution.length
-                      ? values?.poLine?.fundDistribution.map((fund) => {
+                    values?.orderLine?.fundDistribution?.length
+                      ? values?.orderLine?.fundDistribution.map((fund) => {
                         return (
                           <li key={fund?.id}>
                             <Link to={urls.fundView(fund?.id)}>

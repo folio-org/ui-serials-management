@@ -10,10 +10,14 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 import { SerialsView } from '../../components/views';
 import RouteSwitcher from '../../components/SearchAndFilter';
 import urls from '../../components/utils/urls';
+import { SERIALS_ENDPOINT } from '../../constants/endpoints';
 
 const SerialsRoute = ({ children, path }) => {
   const history = useHistory();
   const location = useLocation();
+  const fetchParameters = {
+    endpoint: SERIALS_ENDPOINT,
+  };
 
   const handleCreate = () => {
     history.push(`${urls.serialCreate()}${location.search}`);
@@ -38,34 +42,34 @@ const SerialsRoute = ({ children, path }) => {
 
   const resultColumns = [
     {
-      propertyPath: 'poLineNumber',
+      propertyPath: 'id',
       label: (
         <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
       ),
     },
-    {
-      propertyPath: 'title',
-      label: <FormattedMessage id="ui-serials-management.serials.title" />,
-    },
-    {
-      propertyPath: 'productIDs',
-      label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
-    },
-    {
-      propertyPath: 'location',
-      label: <FormattedMessage id="ui-serials-management.serials.location" />,
-    },
-    {
-      propertyPath: 'predictionPattern',
-      label: (
-        <FormattedMessage id="ui-serials-management.serials.predictionPattern" />
-      ),
-    },
+    // {
+    //   propertyPath: 'title',
+    //   label: <FormattedMessage id="ui-serials-management.serials.title" />,
+    // },
+    // {
+    //   propertyPath: 'productIDs',
+    //   label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
+    // },
+    // {
+    //   propertyPath: 'location',
+    //   label: <FormattedMessage id="ui-serials-management.serials.location" />,
+    // },
+    // {
+    //   propertyPath: 'predictionPattern',
+    //   label: (
+    //     <FormattedMessage id="ui-serials-management.serials.predictionPattern" />
+    //   ),
+    // },
   ];
 
   return (
     <SASQRoute
-      fetchParameters={{}}
+      fetchParameters={fetchParameters}
       FilterPaneHeaderComponent={RouteSwitcher}
       id="serials"
       mainPaneProps={{
