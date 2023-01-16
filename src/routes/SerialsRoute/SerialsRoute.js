@@ -7,7 +7,7 @@ import { Button, PaneMenu } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import { SerialsView } from '../../components/views';
+import { SerialView } from '../../components/views';
 import {
   RouteSwitcher,
   SerialsFilters,
@@ -113,7 +113,7 @@ const SerialsRoute = ({ children, path }) => {
       path={path}
       resultColumns={resultColumns}
       searchFieldAriaLabel="serials-search-field"
-      ViewComponent={SerialsView}
+      ViewComponent={SerialView}
     >
       {children}
     </SASQRoute>
