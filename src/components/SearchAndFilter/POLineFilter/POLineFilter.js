@@ -14,7 +14,7 @@ const POLineFilter = ({ disabled, name, onPOLineSelected }) => {
   let triggerButton = useRef(null);
   return (
     <Pluggable
-      addLines={(poLines) => onPOLineSelected({ name, values: poLines[0]?.id })}
+      addLines={(poLines) => onPOLineSelected(poLines[0])}
       dataKey={`po-line-filter-button-${name}`}
       isSingleSelect
       renderTrigger={(pluggableRenderProps) => {

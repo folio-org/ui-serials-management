@@ -14,13 +14,6 @@ const propTypes = {
 };
 
 const SerialsFilters = ({ activeFilters, filterHandlers }) => {
-  const onChangeHandler = (group) => {
-    filterHandlers.state({
-      ...activeFilters,
-      [group.name]: group.values,
-    });
-  };
-
   const renderPOLineFilter = () => {
     return (
       <Accordion
@@ -33,7 +26,12 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
         }}
         separator={false}
       >
-        <POLineFilter name="orderLine" onPOLineSelected={onChangeHandler} />
+        <POLineFilter
+          name="orderLine"
+          onPOLineSelected={(poLine) => {
+            filterHandlers.state({ ...activeFilters, orderLine: [poLine.id] });
+          }}
+        />
       </Accordion>
     );
   };
