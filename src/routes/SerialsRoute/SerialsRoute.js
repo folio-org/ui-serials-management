@@ -8,7 +8,10 @@ import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import { SerialsView } from '../../components/views';
-import RouteSwitcher from '../../components/SearchAndFilter';
+import {
+  RouteSwitcher,
+  SerialsFilters,
+} from '../../components/SearchAndFilter';
 import urls from '../../components/utils/urls';
 import { SERIALS_ENDPOINT } from '../../constants/endpoints';
 
@@ -17,6 +20,12 @@ const SerialsRoute = ({ children, path }) => {
   const location = useLocation();
   const fetchParameters = {
     endpoint: SERIALS_ENDPOINT,
+    SASQ_MAP: {
+      searchKey: 'id',
+      filterKeys: {
+        orderLine: 'orderLine.remoteId',
+      },
+    },
   };
 
   const handleCreate = () => {
@@ -88,6 +97,7 @@ const SerialsRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
+      FilterComponent={SerialsFilters}
       FilterPaneHeaderComponent={renderHeaderComponent}
       id="serials"
       mainPaneProps={{
