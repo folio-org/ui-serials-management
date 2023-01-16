@@ -25,15 +25,15 @@ const SerialView = ({ resource, onClose, queryProps: { isLoading } }) => {
 
   const renderActionMenu = () => {
     const buttons = [];
-    if (stripes.hasPerm('oa.publicationRequest.manage')) {
+    if (stripes.hasPerm('serials-management.serials.edit')) {
       buttons.push(
         <Button
           buttonStyle="dropdownItem"
-          id="clickable-dropdown-edit-publication-request"
+          id="clickable-dropdown-edit-serial"
           onClick={handleEdit}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-oa.publicationRequest.edit" />
+            <FormattedMessage id="ui-serials-management.edit" />
           </Icon>
         </Button>
       );
