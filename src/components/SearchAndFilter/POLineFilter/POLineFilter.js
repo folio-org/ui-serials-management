@@ -33,7 +33,7 @@ const POLineFilter = ({ disabled, name, onPOLineSelected }) => {
       }}
       type="find-po-line"
     >
-      <FormattedMessage id="ui-serials-management.poLine.noPOLinePlugin" />
+      <FormattedMessage id="ui-serials-management.poLine.noPlugin" />
     </Pluggable>
   );
 };
