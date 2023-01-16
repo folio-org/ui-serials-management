@@ -1,28 +1,35 @@
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation } from 'react-query';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useMutation, useQuery } from 'react-query';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
+import { LoadingView } from '@folio/stripes/components';
 
 import { SerialForm } from '../../components/views';
-import { SERIALS_ENDPOINT } from '../../constants/endpoints';
-import urls from '../../components/utils/urls';
+import { SERIAL_ENDPOINT } from '../../constants/endpoints';
+import { urls } from '../../components/utils';
 
 const SerialEditRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
+  const { id } = useParams();
 
   const handleClose = () => {
     history.push(`${urls.serials()}${location.search}`);
   };
 
+  const { data: serial, isLoading } = useQuery(
+    ['ui-serials-management', 'SerialEditRoute', id],
+    () => ky(SERIAL_ENDPOINT(id)).json()
+  );
+
   const { mutateAsync: putSerial } = useMutation(
     ['ui-serials-management', 'SerialEditRoute', 'putSerial'],
     (data) => {
-      ky.put(SERIALS_ENDPOINT, { json: data })
+      ky.put(SERIAL_ENDPOINT(id), { json: data })
         .json()
         .then(() => handleClose());
     }
@@ -33,9 +40,16 @@ const SerialEditRoute = () => {
     await putSerial(submitValues);
   };
 
+  if (isLoading) {
+    return <LoadingView dismissible onClose={handleClose} />;
+  }
   return (
     <>
-      <Form mutators={arrayMutators} onSubmit={submitSerial}>
+      <Form
+        initialValues={{ orderLine: serial?.orderLine?.remoteId_object }}
+        mutators={arrayMutators}
+        onSubmit={submitSerial}
+      >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <SerialForm
