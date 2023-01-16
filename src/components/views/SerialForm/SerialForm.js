@@ -23,7 +23,7 @@ const propTypes = {
 };
 
 const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting } = useFormState();
+  const { pristine, submitting, initialValues } = useFormState();
   const renderPaneFooter = () => {
     return (
       <PaneFooter
@@ -51,9 +51,11 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
     );
   };
 
-  const renderPaneTitle = () => (
+  const renderPaneTitle = () => (initialValues ? (
+    <FormattedMessage id="ui-serials-management.serials.editSerial" />
+  ) : (
     <FormattedMessage id="ui-serials-management.serials.newSerial" />
-  );
+  ));
 
   const renderFirstMenu = () => {
     return (

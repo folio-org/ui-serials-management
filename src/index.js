@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 import {
   SerialsRoute,
-  SerialsCreateRoute,
+  SerialCreateRoute,
+  SerialEditRoute,
   ExpectedPiecesRoute,
   PatternsRoute,
 } from './routes';
@@ -31,10 +32,8 @@ const App = (props) => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        <Route
-          component={SerialsCreateRoute}
-          path={`${path}/serials/create`}
-        />
+        <Route component={SerialCreateRoute} path={`${path}/serials/create`} />
+        <Route component={SerialEditRoute} path={`${path}/serials/:id/edit`} />
         <SerialsRoute path={`${path}/serials`} />
         <ExpectedPiecesRoute path={`${path}/expectedPieces`} />
         <PatternsRoute path={`${path}/patterns`} />
