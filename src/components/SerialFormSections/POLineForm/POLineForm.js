@@ -37,15 +37,12 @@ const POLineForm = () => {
 
   const renderIdentifierTypes = () => {
     if (identifierTypes?.length && !identifierTypeLoading) {
-      return identifierTypes?.map((type) => {
+      return values?.orderLine?.details?.productIds?.map((type) => {
         return (
           <li key={type?.id}>
-            {type?.name + ': '}
-            {
-              values?.orderLine?.details?.productIds?.find(
-                (e) => e?.productIdType === type?.id
-              )?.productId
-            }
+            {identifierTypes?.find((e) => e?.id === type?.productIdType)?.name +
+              ': '}
+            {type?.productId}
           </li>
         );
       });
