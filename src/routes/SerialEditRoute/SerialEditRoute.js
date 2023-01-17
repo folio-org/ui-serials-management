@@ -36,7 +36,12 @@ const SerialEditRoute = () => {
   );
 
   const submitSerial = async (values) => {
-    const submitValues = { orderLine: { remoteId: values?.orderLine?.id } };
+    const submitValues = {
+      ...values,
+      ...(values?.orderLine && {
+        orderLine: { remoteId: values?.orderLine?.id },
+      }),
+    };
     await putSerial(submitValues);
   };
 
@@ -46,7 +51,12 @@ const SerialEditRoute = () => {
   return (
     <>
       <Form
-        initialValues={{ orderLine: serial?.orderLine?.remoteId_object }}
+        initialValues={{
+          ...serial,
+          ...(!!serial?.orderLine && {
+            orderLine: serial?.orderLine?.remoteId_object,
+          }),
+        }}
         mutators={arrayMutators}
         onSubmit={submitSerial}
       >

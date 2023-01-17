@@ -29,7 +29,12 @@ const SerialCreateRoute = () => {
   );
 
   const submitSerial = async (values) => {
-    const submitValues = { orderLine: { remoteId: values?.orderLine?.id } };
+    const submitValues = {
+      ...values,
+      ...(values?.orderLine && {
+        orderLine: { remoteId: values?.orderLine?.id },
+      }),
+    };
     await postSerial(submitValues);
   };
 

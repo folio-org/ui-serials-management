@@ -14,6 +14,8 @@
   "serials.productIDs": "Product IDs",
   "serials.location": "Location",
   "serials.predictionPattern": "Prediction pattern",
+  "serials.description": "Description",
+  "serials.status": "Status",
 
   "poLine": "PO Line",
   "poLine.noneLinked": "No PO line linked",
