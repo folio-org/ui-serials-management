@@ -13,7 +13,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import { POLineForm } from '../../SerialFormSections';
+import { POLineForm, SerialInfoForm } from '../../SerialFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -24,6 +24,7 @@ const propTypes = {
 
 const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, initialValues } = useFormState();
+
   const renderPaneFooter = () => {
     return (
       <PaneFooter
@@ -87,6 +88,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
         )}
       >
         <POLineForm />
+        <SerialInfoForm />
       </Pane>
     </Paneset>
   );
