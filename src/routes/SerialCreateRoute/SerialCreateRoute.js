@@ -40,7 +40,13 @@ const SerialCreateRoute = () => {
 
   return (
     <>
-      <Form mutators={arrayMutators} onSubmit={submitSerial}>
+      <Form
+        initialValues={{
+          serialStatus: { value: 'active' },
+        }}
+        mutators={arrayMutators}
+        onSubmit={submitSerial}
+      >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <SerialForm
