@@ -38,7 +38,7 @@ const SerialEditRoute = () => {
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
-      ...(!values?.serialStatus?.id && { serialStatus: null }),
+      ...(!values?.serialStatus?.value && { serialStatus: null }),
       ...(values?.orderLine && {
         orderLine: { remoteId: values?.orderLine?.id },
       }),

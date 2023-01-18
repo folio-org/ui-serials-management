@@ -1,12 +1,7 @@
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Row,
-  Col,
-  TextArea,
-  Select,
-} from '@folio/stripes/components';
+import { Row, Col, TextArea, Select } from '@folio/stripes/components';
 
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
@@ -14,7 +9,6 @@ const [SERIAL_STATUS] = ['Serial.SerialStatus'];
 
 const SerialInfoForm = () => {
   const refdataValues = useSerialsManagementRefdata([SERIAL_STATUS]);
-  const statusValues = selectifyRefdata(refdataValues, SERIAL_STATUS);
 
   return (
     <Row>
@@ -32,9 +26,12 @@ const SerialInfoForm = () => {
       <Col xs={3}>
         <Field
           component={Select}
-          dataOptions={[{ value: '', label: '' }, ...statusValues]}
+          dataOptions={[
+            { value: '', label: '' },
+            ...selectifyRefdata(refdataValues, SERIAL_STATUS, 'value'),
+          ]}
           label={<FormattedMessage id="ui-serials-management.serials.status" />}
-          name="serialStatus.id"
+          name="serialStatus.value"
         />
       </Col>
     </Row>
