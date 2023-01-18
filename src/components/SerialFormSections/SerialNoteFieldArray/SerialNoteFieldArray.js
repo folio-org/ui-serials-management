@@ -39,7 +39,7 @@ const SerialNoteField = ({ fields: { name } }) => {
               </Col>
               <Col xs={6}>
                 <Tooltip
-                  id={`request-id-${index + 1}-trash-button-tooltip`}
+                  id={`note-${index + 1}-trash-button-tooltip`}
                   text={
                     <FormattedMessage
                       id="ui-serials-management.serials.removeNoteIndex"
