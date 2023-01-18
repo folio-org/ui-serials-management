@@ -55,6 +55,14 @@ const SerialsRoute = ({ children, path }) => {
 
   const resultColumns = [
     {
+      propertyPath: 'serialStatus',
+      label: 'Status',
+    },
+    {
+      propertyPath: 'description',
+      label: 'Description',
+    },
+    {
       propertyPath: 'id',
       label: 'Serial ID',
     },
@@ -89,6 +97,7 @@ const SerialsRoute = ({ children, path }) => {
 
   const formatter = {
     id: (d) => d?.id,
+    serialStatus: (d) => d?.serialStatus?.label,
     // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
     // productIds: (d) => d?.orderLine?.remoteId_object?.details?.productIds?.map((p) => p?.productId)?.join(';'),
     // poLineNumber: (d) => d?.orderLine?.remoteId_object?.poLineNumber,
