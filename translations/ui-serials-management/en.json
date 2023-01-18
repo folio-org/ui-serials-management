@@ -4,7 +4,22 @@
   "found#Values": "Found {total} results",
   "new": "New",
   "edit": "Edit",
+  "delete": "Delete",
   "closeForm": "Close form",
+  "actions": "Actions",
+  "save": "Save",
+  "cancel": "Cancel",
+
+  "refdata.label": "Label",
+  "refdata.value": "Value",
+  "refdata.deleteRefdataValue": "Delete refdata value",
+  "refdata.deleteRefdataValue.confirmMessage": "<strong>{name}</strong> will be deleted.",
+  "refdata.deleteRefdataValue.errorMessage": "<strong>Error: {label}</strong> was not deleted. {error}",
+  "refdata.editAriaLabel": "Edit value {label}",
+  "refdata.deleteAriaLabel": "Delete value {label}",
+
+  "settings.refdata.picklistValues": "Pick list values",
+  "settings.refdata.picklist": "Pick list",
 
   "serials": "Serials",
   "serials.newSerial": "New serial",
