@@ -80,7 +80,8 @@ const POLineForm = () => {
                 )}
               </Col>
             </Row>
-            <br />
+            {/* This conditional is a bit tacky, possible a better way of implementing this */}
+            {!!values?.orderLine?.instanceId && <br />}
             <Row>
               <Col xs={3}>
                 <KeyValue
