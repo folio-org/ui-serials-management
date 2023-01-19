@@ -31,6 +31,10 @@
   "serials.predictionPattern": "Prediction pattern",
   "serials.description": "Description",
   "serials.status": "Status",
+  "serials.note": "Note",
+  "serials.notes": "Notes",
+  "serials.addNote": "Add note",
+  "serials.removeNoteIndex": "Remove note {index}",
 
   "poLine": "PO Line",
   "poLine.noneLinked": "No PO line linked",

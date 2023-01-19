@@ -11,9 +11,14 @@ import {
   PaneHeader,
   Paneset,
   PaneMenu,
+  Accordion,
 } from '@folio/stripes/components';
 
-import { POLineForm, SerialInfoForm } from '../../SerialFormSections';
+import {
+  POLineForm,
+  SerialInfoForm,
+  SerialNoteFieldArray,
+} from '../../SerialFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -89,6 +94,13 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
       >
         <POLineForm />
         <SerialInfoForm />
+        <Accordion
+          label={
+            <FormattedMessage id="ui-serials-management.serials.notes" />
+          }
+        >
+          <SerialNoteFieldArray />
+        </Accordion>
       </Pane>
     </Paneset>
   );
