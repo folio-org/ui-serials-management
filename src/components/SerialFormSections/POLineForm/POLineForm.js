@@ -140,7 +140,7 @@ const POLineForm = () => {
                       ? values?.orderLine?.fundDistribution.map((fund) => {
                         return (
                           <li key={fund?.id}>
-                            <Link to={urls.fundView(fund?.id)}>
+                            <Link to={urls.fundView(fund?.fundId)}>
                               {fund?.code}
                             </Link>
                           </li>
