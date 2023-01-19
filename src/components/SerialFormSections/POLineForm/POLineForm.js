@@ -69,11 +69,15 @@ const POLineForm = () => {
                   }
                   value={values?.orderLine?.titleOrPackage}
                 />
-                <AppIcon app="inventory" iconKey="instance" size="small">
-                  <Link to={urls.inventoryView(values?.orderLine?.instanceId)}>
-                    <FormattedMessage id="ui-serials-management.poLine.viewInInventory" />
-                  </Link>
-                </AppIcon>
+                {!!values?.orderLine?.instanceId && (
+                  <AppIcon app="inventory" iconKey="instance" size="small">
+                    <Link
+                      to={urls.inventoryView(values?.orderLine?.instanceId)}
+                    >
+                      <FormattedMessage id="ui-serials-management.poLine.viewInInventory" />
+                    </Link>
+                  </AppIcon>
+                )}
               </Col>
             </Row>
             <br />
