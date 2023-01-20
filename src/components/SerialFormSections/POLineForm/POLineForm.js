@@ -22,7 +22,7 @@ const POLineForm = () => {
   const { isLoading: orderLoading, data: order } = useOrder(
     values?.orderLine?.purchaseOrderId
   );
-  const { isFetching: vendorLoading, data: vendor } = useVendor(order?.vendor);
+  const { isLoading: vendorLoading, data: vendor } = useVendor(order?.vendor);
 
   const { isLoading: materialTypeLoading, data: materialType } =
     useMaterialType(values?.orderLine?.physical?.materialType);
@@ -119,7 +119,11 @@ const POLineForm = () => {
                   label={
                     <FormattedMessage id="ui-serials-management.poLine.acqUnits" />
                   }
-                  value={order?.acqUnitIds?.length ? renderAcqUnits() : null}
+                  value={
+                    order?.acqUnitIds?.length || orderLoading
+                      ? renderAcqUnits()
+                      : null
+                  }
                 />
               </Col>
             </Row>
