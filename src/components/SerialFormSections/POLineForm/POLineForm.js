@@ -12,6 +12,7 @@ import {
   useVendor,
   useMaterialType,
   useIdentifierTypes,
+  useAcqUnits,
 } from '../../../hooks';
 
 const POLineForm = () => {
@@ -31,6 +32,10 @@ const POLineForm = () => {
       values?.orderLine?.details?.productIds?.map((e) => e?.productIdType)
     );
 
+  const { isLoading: acqUnitsLoading, data: acqUnits } = useAcqUnits(
+    order?.acqUnitIds
+  );
+
   const onPOLineSelected = (poLine) => {
     change('orderLine', poLine[0]);
   };
@@ -45,6 +50,16 @@ const POLineForm = () => {
             {type?.productId}
           </li>
         );
+      });
+    } else {
+      return <Loading />;
+    }
+  };
+
+  const renderAcqUnits = () => {
+    if (acqUnits?.length && !acqUnitsLoading) {
+      return acqUnits?.map((unit) => {
+        return <li key={unit?.id}>{unit?.name}</li>;
       });
     } else {
       return <Loading />;
@@ -97,6 +112,14 @@ const POLineForm = () => {
                     <FormattedMessage id="ui-serials-management.poLine.orderStatus" />
                   }
                   value={orderLoading ? <Loading /> : order?.workflowStatus}
+                />
+              </Col>
+              <Col xs={3}>
+                <KeyValue
+                  label={
+                    <FormattedMessage id="ui-serials-management.poLine.acqUnits" />
+                  }
+                  value={order?.acqUnitIds?.length ? renderAcqUnits() : null}
                 />
               </Col>
             </Row>

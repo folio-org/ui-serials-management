@@ -47,6 +47,7 @@
   "poLine.viewInInventory": "View in inventory",
   "poLine.orderNumber": "Order number",
   "poLine.orderStatus": "Order status",
+  "poLine.acqUnits": "Acquisition units",
   "poLine.vendor": "Vendor",
   "poLine.materialType": "Material type",
   "poLine.funds": "Funds",
