@@ -7,8 +7,10 @@ import { IDENTIFIER_TYPES_ENDPOINT } from '../constants/endpoints';
 export const useIdentifierTypes = (identifierTypeIds) => {
   const ky = useOkapiKy();
 
+  const uniqueIdsArray = [...new Set(identifierTypeIds)];
+
   const queryString =
-    'id==(' + identifierTypeIds?.map((e) => `"${e}"`).join(' or ') + ')';
+    'id==(' + uniqueIdsArray?.map((e) => `"${e}"`).join(' or ') + ')';
 
   const { isLoading, data = [] } = useQuery(
     ['ui-serials-management', IDENTIFIER_TYPES_ENDPOINT],
@@ -18,7 +20,7 @@ export const useIdentifierTypes = (identifierTypeIds) => {
 
   return {
     isLoading,
-    data: data?.identifierTypes,
+    data: data?.identifierTypes || [],
   };
 };
 
