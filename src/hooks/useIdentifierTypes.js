@@ -13,7 +13,7 @@ export const useIdentifierTypes = (identifierTypeIds) => {
   const { isLoading, data = [] } = useQuery(
     ['ui-serials-management', IDENTIFIER_TYPES_ENDPOINT],
     () => ky.get(`${IDENTIFIER_TYPES_ENDPOINT}?query=${queryString}`).json(),
-    { enabled: !!identifierTypeIds }
+    { enabled: !!identifierTypeIds?.length }
   );
 
   return {
