@@ -15,6 +15,9 @@ import {
   useAcqUnits,
 } from '../../../hooks';
 
+// The card contents within this is a duplicate of the serials PO Line view
+// If both are the same contents in the future, this can be moved to seperate component
+
 const POLineForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
