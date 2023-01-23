@@ -3,8 +3,15 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
-import { Pane, LoadingPane, Button, Icon } from '@folio/stripes/components';
+import {
+  Pane,
+  LoadingPane,
+  Button,
+  Icon,
+  MetaSection,
+} from '@folio/stripes/components';
 
+import SerialInfo from '../../SerialSections/SerialInfo';
 import { urls } from '../../utils';
 
 const propTypes = {
@@ -13,7 +20,11 @@ const propTypes = {
   queryProps: PropTypes.object,
 };
 
-const SerialView = ({ resource, onClose, queryProps: { isLoading } }) => {
+const SerialView = ({
+  resource: serial,
+  onClose,
+  queryProps: { isLoading },
+}) => {
   const history = useHistory();
   const location = useLocation();
   const params = useParams();
@@ -21,6 +32,13 @@ const SerialView = ({ resource, onClose, queryProps: { isLoading } }) => {
 
   const handleEdit = () => {
     history.push(`${urls.serialEdit(params?.id)}${location.search}`);
+  };
+
+  const getSectionProps = (name) => {
+    return {
+      id: `serial-section-${name}`,
+      serial,
+    };
   };
 
   const renderActionMenu = () => {
@@ -47,7 +65,13 @@ const SerialView = ({ resource, onClose, queryProps: { isLoading } }) => {
 
   return (
     <Pane actionMenu={renderActionMenu} dismissible onClose={onClose}>
-      {resource?.id}
+      <MetaSection
+        contentId="serialMetaContent"
+        createdDate={serial?.dateCreated}
+        hideSource
+        lastUpdatedDate={serial?.lastUpdated}
+      />
+      <SerialInfo {...getSectionProps('serial-info')} />
     </Pane>
   );
 };
