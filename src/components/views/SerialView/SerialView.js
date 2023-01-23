@@ -11,7 +11,7 @@ import {
   MetaSection,
 } from '@folio/stripes/components';
 
-import SerialInfo from '../../SerialSections/SerialInfo';
+import { SerialInfo, SerialPOLine } from '../../SerialSections';
 import { urls } from '../../utils';
 
 const propTypes = {
@@ -71,7 +71,8 @@ const SerialView = ({
         hideSource
         lastUpdatedDate={serial?.lastUpdated}
       />
-      <SerialInfo {...getSectionProps('serial-info')} />
+      <SerialInfo {...getSectionProps('info')} />
+      <SerialPOLine {...getSectionProps('po-line')} />
     </Pane>
   );
 };
