@@ -26,6 +26,9 @@ const propTypes = {
   id: PropTypes.string,
 };
 
+// The card contents within this is a duplicate of the forms PO Line information
+// If both are the same contents in the future, this can be moved to seperate component
+
 const SerialPOLine = ({ serial, id }) => {
   const { isLoading: orderLoading, data: order } = useOrder(
     serial?.orderLine?.remoteId_object?.purchaseOrderId
@@ -185,16 +188,16 @@ const SerialPOLine = ({ serial, id }) => {
                 value={
                   serial?.orderLine?.remoteId_object?.fundDistribution?.length
                     ? serial?.orderLine?.remoteId_object?.fundDistribution.map(
-                        (fund) => {
-                          return (
-                            <li key={fund?.id}>
-                              <Link to={urls.fundView(fund?.fundId)}>
-                                {fund?.code}
-                              </Link>
-                            </li>
-                          );
-                        }
-                      )
+                      (fund) => {
+                        return (
+                          <li key={fund?.id}>
+                            <Link to={urls.fundView(fund?.fundId)}>
+                              {fund?.code}
+                            </Link>
+                          </li>
+                        );
+                      }
+                    )
                     : null
                 }
               />
