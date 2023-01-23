@@ -72,7 +72,9 @@ const SerialView = ({
         lastUpdatedDate={serial?.lastUpdated}
       />
       <SerialInfo {...getSectionProps('info')} />
-      <SerialPOLine {...getSectionProps('po-line')} />
+      {!!serial?.orderLine?.remoteId && (
+        <SerialPOLine {...getSectionProps('po-line')} />
+      )}
     </Pane>
   );
 };
