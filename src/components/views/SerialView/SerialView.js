@@ -13,6 +13,7 @@ import {
 
 import { SerialInfo, SerialPOLine } from '../../SerialSections';
 import { urls } from '../../utils';
+import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -64,7 +65,12 @@ const SerialView = ({
   }
 
   return (
-    <Pane actionMenu={renderActionMenu} dismissible onClose={onClose}>
+    <Pane
+      actionMenu={renderActionMenu}
+      defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
+      dismissible
+      onClose={onClose}
+    >
       <MetaSection
         contentId="serialMetaContent"
         createdDate={serial?.dateCreated}

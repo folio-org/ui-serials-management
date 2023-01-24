@@ -1,7 +1,7 @@
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
@@ -12,13 +12,14 @@ import { SERIAL_ENDPOINT } from '../../constants/endpoints';
 import { urls } from '../../components/utils';
 
 const SerialEditRoute = () => {
+  const queryClient = useQueryClient();
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
 
   const handleClose = () => {
-    history.push(`${urls.serials()}${location.search}`);
+    history.push(`${urls.serialView(id)}${location.search}`);
   };
 
   const { data: serial, isLoading } = useQuery(
@@ -31,14 +32,23 @@ const SerialEditRoute = () => {
     (data) => {
       ky.put(SERIAL_ENDPOINT(id), { json: data })
         .json()
-        .then(() => handleClose());
+        .then(() => {
+          queryClient.invalidateQueries([
+            'ui-serials-management',
+            'SerialEditRoute',
+            id,
+          ]);
+          handleClose();
+        });
     }
   );
 
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
-      ...(!values?.serialStatus?.value && { serialStatus: null }),
+      ...(!values?.serialStatus?.value
+        ? { serialStatus: null }
+        : { serialStatus: { value: values?.serialStatus?.value } }),
       ...(values?.orderLine && {
         orderLine: { remoteId: values?.orderLine?.id },
       }),
