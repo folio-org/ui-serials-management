@@ -1,5 +1,6 @@
 const urls = {
   serials: () => '/serials-management/serials',
+  serialView: (id) => `/serials-management/serials/${id}`,
   serialCreate: () => '/serials-management/serials/create',
   serialEdit: (id) => `/serials-management/serials/${id}/edit`,
 

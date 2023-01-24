@@ -18,7 +18,7 @@ const SerialEditRoute = () => {
   const { id } = useParams();
 
   const handleClose = () => {
-    history.push(`${urls.serials()}${location.search}`);
+    history.push(`${urls.serialView(id)}${location.search}`);
   };
 
   const { data: serial, isLoading } = useQuery(
@@ -31,14 +31,18 @@ const SerialEditRoute = () => {
     (data) => {
       ky.put(SERIAL_ENDPOINT(id), { json: data })
         .json()
-        .then(() => handleClose());
+        .then(() => {
+          handleClose();
+        });
     }
   );
 
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
-      ...(!values?.serialStatus?.value && { serialStatus: null }),
+      ...(!values?.serialStatus?.value
+        ? { serialStatus: null }
+        : { serialStatus: { value: values?.serialStatus?.value } }),
       ...(values?.orderLine && {
         orderLine: { remoteId: values?.orderLine?.id },
       }),
