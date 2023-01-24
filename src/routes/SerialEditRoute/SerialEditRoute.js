@@ -1,7 +1,7 @@
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
@@ -12,6 +12,7 @@ import { SERIAL_ENDPOINT } from '../../constants/endpoints';
 import { urls } from '../../components/utils';
 
 const SerialEditRoute = () => {
+  const queryClient = useQueryClient();
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
@@ -32,6 +33,11 @@ const SerialEditRoute = () => {
       ky.put(SERIAL_ENDPOINT(id), { json: data })
         .json()
         .then(() => {
+          queryClient.invalidateQueries([
+            'ui-serials-management',
+            'SerialEditRoute',
+            id,
+          ]);
           handleClose();
         });
     }
