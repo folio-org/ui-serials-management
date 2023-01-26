@@ -33,6 +33,7 @@ const SerialPOLine = ({ serial, id }) => {
   const { isLoading: orderLoading, data: order } = useOrder(
     serial?.orderLine?.remoteId_object?.purchaseOrderId
   );
+
   const { isLoading: vendorLoading, data: vendor } = useVendor(order?.vendor);
 
   const { isLoading: materialTypeLoading, data: materialType } =
@@ -48,6 +49,7 @@ const SerialPOLine = ({ serial, id }) => {
   const { isLoading: acqUnitsLoading, data: acqUnits } = useAcqUnits(
     order?.acqUnitIds
   );
+
   const renderIdentifierTypes = () => {
     if (identifierTypes?.length && !identifierTypeLoading) {
       return serial?.orderLine?.remoteId_object?.details?.productIds?.map(
