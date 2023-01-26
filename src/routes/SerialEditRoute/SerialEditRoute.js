@@ -68,6 +68,7 @@ const SerialEditRoute = () => {
             orderLine: serial?.orderLine?.remoteId_object,
           }),
         }}
+        keepDirtyOnReinitialize
         mutators={arrayMutators}
         onSubmit={submitSerial}
       >

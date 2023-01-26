@@ -44,6 +44,7 @@ const SerialCreateRoute = () => {
         initialValues={{
           serialStatus: { value: 'active' },
         }}
+        keepDirtyOnReinitialize
         mutators={arrayMutators}
         onSubmit={submitSerial}
       >
