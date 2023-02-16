@@ -57,7 +57,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
     );
   };
 
-  const renderPaneTitle = () => (initialValues ? (
+  const renderPaneTitle = () => (initialValues?.id ? (
     <FormattedMessage id="ui-serials-management.serials.editSerial" />
   ) : (
     <FormattedMessage id="ui-serials-management.serials.newSerial" />
