@@ -1,4 +1,4 @@
-import { Field, useFormState } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
@@ -10,6 +10,7 @@ const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
+  const { change } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
@@ -87,6 +88,12 @@ const PatternTimePeriodForm = () => {
               <FormattedMessage id="ui-serials-management.recurrence.timeUnit" />
             }
             name="recurrence.timeUnit"
+            onChange={(e) => {
+              change('recurrence.timeUnit', e?.target?.value);
+              change('recurrence.period', null);
+              change('recurrence.issues', null);
+              change('patternType', null);
+            }}
             required
             validate={requiredValidator}
           />
