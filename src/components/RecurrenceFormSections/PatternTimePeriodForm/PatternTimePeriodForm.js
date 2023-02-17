@@ -10,7 +10,7 @@ const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
-  const { change } = useForm();
+  const { change, resetFieldState } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
@@ -91,8 +91,13 @@ const PatternTimePeriodForm = () => {
             onChange={(e) => {
               change('recurrence.timeUnit', e?.target?.value);
               change('recurrence.period', null);
+              resetFieldState('recurrence.period');
               change('recurrence.issues', null);
-              change('patternType', null);
+              resetFieldState('recurrence.issues');
+              if (values?.patternType) {
+                change('patternType', null);
+                resetFieldState('patternType');
+              }
             }}
             required
             validate={requiredValidator}
@@ -135,21 +140,22 @@ const PatternTimePeriodForm = () => {
             validate={requiredValidator}
           />
         </Col>
-        <Col xs={3}>
-          <Field
-            component={Select}
-            dataOptions={
-              patternTypes[values?.recurrence?.timeUnit] || [
-                { label: '', value: '' },
-              ]
-            }
-            disabled={!patternTypes[values?.recurrence?.timeUnit]}
-            label="<FIELD NAME>"
-            name="patternType"
-            required
-            validate={requiredValidator}
-          />
-        </Col>
+        {!!patternTypes[values?.recurrence?.timeUnit] && (
+          <Col xs={3}>
+            <Field
+              component={Select}
+              dataOptions={
+                patternTypes[values?.recurrence?.timeUnit] || [
+                  { label: '', value: '' },
+                ]
+              }
+              label="<FIELD NAME>"
+              name="patternType"
+              required
+              validate={requiredValidator}
+            />
+          </Col>
+        )}
       </Row>
     </>
   );
