@@ -20,7 +20,10 @@ import {
   SerialNoteFieldArray,
 } from '../../SerialFormSections';
 
-import PatternTimePeriodForm from '../../RecurrenceFormSections';
+import {
+  PatternTimePeriodForm,
+  IssuePublicationFieldArray,
+} from '../../RecurrenceFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -100,6 +103,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
           label={<FormattedMessage id="ui-serials-management.recurrence" />}
         >
           <PatternTimePeriodForm />
+          <IssuePublicationFieldArray />
         </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-serials-management.serials.notes" />}

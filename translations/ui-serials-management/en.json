@@ -63,7 +63,10 @@
   "recurrence.month": "Month",
   "recurrence.year": "Year",
   "recurrence.patternTimePeriodTitle": "<strong>Pattern time period</strong>",
-
+  "recurrence.ofWeek": "Of week",
+  "recurrence.ofMonth": "Of month",
+  "recurrence.ofYear": "Of year",
+  "recurrence.issueIndex": "Issue {index}",
 
   "expectedPieces": "Expected pieces",
 
