@@ -170,7 +170,6 @@ const PatternTimePeriodForm = () => {
               />
             </Col>
           </Row>
-          <br />
         </>
       )}
     </>
