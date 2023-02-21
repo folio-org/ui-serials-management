@@ -72,10 +72,10 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
     );
   };
 
-  const renderMonthField = () => {
+  const renderMonthField = (ordinal = false) => {
     return (
       <Field
-        component={Select}
+        component={ordinal ? TextField : Select}
         dataOptions={[
           { value: '', label: '' },
           ...selectifyRefdata(refdataValues, MONTHS, 'value'),
@@ -90,14 +90,14 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
     );
   };
 
-  const renderYearField = () => {
+  const renderYearField = (ordinal = false) => {
     return (
       <Field
         component={TextField}
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofYear" />
         }
-        name={`${name}.pattern.year`}
+        name={ordinal ? `${name}.ordinal` : `${name}.pattern.year`}
         required
         type="number"
         validate={requiredValidator}
@@ -108,22 +108,22 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
   const patternTypeFormats = {
     day: { fields: [renderDayField()] },
     week: { fields: [renderWeekdayField()] },
-    month_date: { fields: [renderDayField()], ordinal: renderMonthField() },
+    month_date: { fields: [renderDayField()], ordinal: renderMonthField(true) },
     month_weekday: {
       fields: [renderWeekdayField(), renderWeekField()],
-      ordinal: renderMonthField(),
+      ordinal: renderMonthField(true),
     },
     year_date: {
       fields: [renderDayField(), renderMonthField()],
-      ordinal: renderYearField(),
+      ordinal: renderYearField(true),
     },
     year_weekday: {
       fields: [renderWeekdayField(), renderWeekField()],
-      ordinal: renderYearField(),
+      ordinal: renderYearField(true),
     },
     year_month_weekday: {
       fields: [renderWeekdayField(), renderWeekField(), renderMonthField()],
-      ordinal: renderYearField(),
+      ordinal: renderYearField(true),
     },
   };
 
