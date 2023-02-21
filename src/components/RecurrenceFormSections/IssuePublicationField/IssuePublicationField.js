@@ -83,7 +83,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofMonth" />
         }
-        name={`${name}.pattern.month`}
+        name={ordinal ? `${name}.ordinal` : `${name}.pattern.month`}
         required
         validate={requiredValidator}
       />

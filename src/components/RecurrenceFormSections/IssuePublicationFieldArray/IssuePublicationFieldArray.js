@@ -14,7 +14,7 @@ const IssuePublicationFieldArray = () => {
   );
 
   return (
-    <FieldArray initialValue={initialValue} name="rules">
+    <FieldArray initialValue={initialValue} name="recurrence.rules">
       {({ fields }) => fields.map((name, index) => {
         return (
           <IssuePublicationField
