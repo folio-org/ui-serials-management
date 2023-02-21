@@ -72,7 +72,9 @@ const PatternTimePeriodForm = () => {
     <>
       <Row>
         <Col xs={12}>
-          <FormattedMessage id="ui-serials-management.recurrence.patternTimePeriodTitle" />
+          <strong>
+            <FormattedMessage id="ui-serials-management.recurrence.patternTimePeriod" />
+          </strong>
         </Col>
       </Row>
       <br />
@@ -140,23 +142,37 @@ const PatternTimePeriodForm = () => {
             validate={requiredValidator}
           />
         </Col>
-        {!!patternTypes[values?.recurrence?.timeUnit] && (
-          <Col xs={3}>
-            <Field
-              component={Select}
-              dataOptions={
-                patternTypes[values?.recurrence?.timeUnit] || [
-                  { label: '', value: '' },
-                ]
-              }
-              label="<FIELD NAME>"
-              name="patternType"
-              required
-              validate={requiredValidator}
-            />
-          </Col>
-        )}
       </Row>
+      {!!patternTypes[values?.recurrence?.timeUnit] && (
+        <>
+          <Row>
+            <Col xs={12}>
+              <br />
+              <strong>
+                <FormattedMessage id="ui-serials-management.recurrence.issuePublication" />
+              </strong>
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col xs={3}>
+              <Field
+                component={Select}
+                dataOptions={
+                  patternTypes[values?.recurrence?.timeUnit] || [
+                    { label: '', value: '' },
+                  ]
+                }
+                label="<FIELD NAME>"
+                name="patternType"
+                required
+                validate={requiredValidator}
+              />
+            </Col>
+          </Row>
+          <br />
+        </>
+      )}
     </>
   );
 };
