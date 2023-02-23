@@ -102,9 +102,9 @@ const PatternTimePeriodForm = () => {
                   }
                 }}
                 required
-                validate={requiredValidator}
               />
             )}
+            validate={requiredValidator}
           />
         </Col>
         <Col xs={3}>
@@ -143,9 +143,9 @@ const PatternTimePeriodForm = () => {
                 }}
                 required
                 type="number"
-                validate={requiredValidator}
               />
             )}
+            validate={requiredValidator}
           />
         </Col>
         <Col xs={3}>
@@ -168,9 +168,9 @@ const PatternTimePeriodForm = () => {
                 }}
                 required
                 type="number"
-                validate={requiredValidator}
               />
             )}
+            validate={requiredValidator}
           />
         </Col>
       </Row>
@@ -209,9 +209,9 @@ const PatternTimePeriodForm = () => {
                       }
                     }}
                     required
-                    validate={requiredValidator}
                   />
                 )}
+                validate={requiredValidator}
               />
             </Col>
           </Row>
