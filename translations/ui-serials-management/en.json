@@ -53,6 +53,22 @@
   "poLine.funds": "Funds",
   "poLine.productIds": "Product IDs",
 
+  "recurrence": "Recurrence",
+  "recurrence.timeUnit": "Time unit",
+  "recurrence.numberOfTimeUnit": "Number of {timeUnit}s",
+  "recurrence.numberOfIssues": "Number of issues per time period",
+  "recurrence.day": "Day",
+  "recurrence.week": "Week",
+  "recurrence.weekday": "Weekday",
+  "recurrence.month": "Month",
+  "recurrence.year": "Year",
+  "recurrence.patternTimePeriod": "Pattern time period",
+  "recurrence.issuePublication": "Issue publication",
+  "recurrence.ofWeek": "Of week",
+  "recurrence.ofMonth": "Of month",
+  "recurrence.ofYear": "Of year",
+  "recurrence.issueIndex": "Issue {index}",
+
   "expectedPieces": "Expected pieces",
 
   "patterns": "Patterns"

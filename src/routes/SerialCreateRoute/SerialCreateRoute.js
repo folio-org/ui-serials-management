@@ -35,6 +35,13 @@ const SerialCreateRoute = () => {
         orderLine: { remoteId: values?.orderLine?.id },
       }),
     };
+    submitValues?.recurrence?.rules?.forEach((e) => {
+      if (!e?.ordinal) {
+        e.ordinal = 1;
+      }
+      e.patternType = submitValues?.patternType;
+    });
+    delete submitValues.patternType;
     await postSerial(submitValues);
   };
 
