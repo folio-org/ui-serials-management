@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
@@ -13,6 +14,7 @@ const PatternTimePeriodForm = () => {
   const { change, resetFieldState } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
+  const { onAddField } = useKiwtFieldArray('recurrence.rules');
 
   const patternTypes = {
     month: [
@@ -131,15 +133,27 @@ const PatternTimePeriodForm = () => {
         </Col>
         <Col xs={3}>
           <Field
-            component={TextField}
-            disabled={!values?.recurrence?.timeUnit}
-            label={
-              <FormattedMessage id="ui-serials-management.recurrence.numberOfIssues" />
-            }
             name="recurrence.issues"
-            required
-            type="number"
-            validate={requiredValidator}
+            render={({ input, meta }) => (
+              <TextField
+                disabled={!values?.recurrence?.timeUnit}
+                input={input}
+                label={
+                  <FormattedMessage id="ui-serials-management.recurrence.numberOfIssues" />
+                }
+                meta={meta}
+                onChange={(e) => {
+                  input.onChange(e);
+                  change(
+                    'recurrence.rules',
+                    Array(Number(e?.target?.value)).fill({})
+                  );
+                }}
+                required
+                type="number"
+                validate={requiredValidator}
+              />
+            )}
           />
         </Col>
       </Row>

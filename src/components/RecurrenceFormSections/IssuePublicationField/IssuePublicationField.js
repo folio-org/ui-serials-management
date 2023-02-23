@@ -10,10 +10,11 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 const propTypes = {
-  fields: PropTypes.object,
+  issue: PropTypes.object,
   name: PropTypes.string,
   index: PropTypes.string,
   patternType: PropTypes.string,
@@ -24,16 +25,17 @@ const [MONTHS, WEEKDAYS] = [
   'RecurrencePattern.Weekday',
 ];
 
-const IssuePublicationField = ({ fields, name, index, patternType }) => {
+const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const { values } = useFormState();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
+  const { onDeleteField } = useKiwtFieldArray(name);
 
   const renderDayField = () => {
     return (
       <Field
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
-        name={`${name}.pattern.day`}
+        name={`${name}[${index}].pattern.day`}
         required
         type="number"
         validate={requiredValidator}
@@ -50,7 +52,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
           ...selectifyRefdata(refdataValues, WEEKDAYS, 'value'),
         ]}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
-        name={`${name}.pattern.weekday`}
+        name={`${name}[${index}].pattern.weekday`}
         required
         validate={requiredValidator}
       />
@@ -64,7 +66,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofWeek" />
         }
-        name={`${name}.pattern.week`}
+        name={`${name}[${index}].pattern.week`}
         required
         type="number"
         validate={requiredValidator}
@@ -83,7 +85,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofMonth" />
         }
-        name={ordinal ? `${name}.ordinal` : `${name}.pattern.month`}
+        name={ordinal ? `${name}[${index}].ordinal` : `${name}[${index}].pattern.month`}
         required
         validate={requiredValidator}
       />
@@ -97,7 +99,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofYear" />
         }
-        name={ordinal ? `${name}.ordinal` : `${name}.pattern.year`}
+        name={ordinal ? `${name}[${index}].ordinal` : `${name}[${index}].pattern.year`}
         required
         type="number"
         validate={requiredValidator}
@@ -148,7 +150,7 @@ const IssuePublicationField = ({ fields, name, index, patternType }) => {
           <Col xs={1}>
             <IconButton
               icon="trash"
-              onClick={() => fields.remove(index)}
+              onClick={() => onDeleteField(index, issue)}
               style={{ paddingTop: '25px' }}
             />
           </Col>
