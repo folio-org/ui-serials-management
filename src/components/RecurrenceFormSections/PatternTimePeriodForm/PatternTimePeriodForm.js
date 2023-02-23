@@ -10,7 +10,7 @@ const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
-  const { change, resetFieldState } = useForm();
+  const { change } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
@@ -81,52 +81,71 @@ const PatternTimePeriodForm = () => {
       <Row>
         <Col xs={3}>
           <Field
-            component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(refdataValues, TIME_UNITS, 'value'),
-            ]}
-            label={
-              <FormattedMessage id="ui-serials-management.recurrence.timeUnit" />
-            }
             name="recurrence.timeUnit"
-            onChange={(e) => {
-              change('recurrence.timeUnit', e?.target?.value);
-              change('recurrence.period', null);
-              resetFieldState('recurrence.period');
-              change('recurrence.issues', null);
-              resetFieldState('recurrence.issues');
-              if (values?.patternType) {
-                change('patternType', null);
-                resetFieldState('patternType');
-              }
-            }}
-            required
-            validate={requiredValidator}
+            render={({ input, meta }) => (
+              <Select
+                dataOptions={[
+                  { value: '', label: '' },
+                  ...selectifyRefdata(refdataValues, TIME_UNITS, 'value'),
+                ]}
+                input={input}
+                label={
+                  <FormattedMessage id="ui-serials-management.recurrence.timeUnit" />
+                }
+                meta={meta}
+                onChange={(e) => {
+                  input.onChange(e);
+                  change('recurrence.period', undefined);
+                  change('recurrence.issues', undefined);
+                  if (values?.patternType) {
+                    change('patternType', undefined);
+                  }
+                }}
+                required
+                validate={requiredValidator}
+              />
+            )}
           />
         </Col>
         <Col xs={3}>
           <Field
-            component={TextField}
-            disabled={!values?.recurrence?.timeUnit}
-            label={
-              <FormattedMessage
-                id="ui-serials-management.recurrence.numberOfTimeUnit"
-                values={{
-                  timeUnit:
-                    values?.recurrence?.timeUnit ||
-                    intl
-                      .formatMessage({
-                        id: 'ui-serials-management.recurrence.timeUnit',
-                      })
-                      .toLocaleLowerCase(),
-                }}
-              />
-            }
             name="recurrence.period"
-            required
-            type="number"
-            validate={requiredValidator}
+            render={({ input, meta }) => (
+              <TextField
+                disabled={!values?.recurrence?.timeUnit}
+                input={input}
+                label={
+                  <FormattedMessage
+                    id="ui-serials-management.recurrence.numberOfTimeUnit"
+                    values={{
+                      timeUnit:
+                        values?.recurrence?.timeUnit ||
+                        intl
+                          .formatMessage({
+                            id: 'ui-serials-management.recurrence.timeUnit',
+                          })
+                          .toLocaleLowerCase(),
+                    }}
+                  />
+                }
+                meta={meta}
+                onChange={(e) => {
+                  input.onChange(e);
+                  if (values?.recurrence?.rules?.length) {
+                    for (
+                      let i = 0;
+                      i < values?.recurrence?.rules?.length;
+                      i++
+                    ) {
+                      change(`recurrence.rules[${i}].ordinal`, undefined);
+                    }
+                  }
+                }}
+                required
+                type="number"
+                validate={requiredValidator}
+              />
+            )}
           />
         </Col>
         <Col xs={3}>
@@ -169,16 +188,30 @@ const PatternTimePeriodForm = () => {
           <Row>
             <Col xs={3}>
               <Field
-                component={Select}
-                dataOptions={
-                  patternTypes[values?.recurrence?.timeUnit] || [
-                    { label: '', value: '' },
-                  ]
-                }
-                label="<FIELD NAME>"
                 name="patternType"
-                required
-                validate={requiredValidator}
+                render={({ input, meta }) => (
+                  <Select
+                    dataOptions={
+                      patternTypes[values?.recurrence?.timeUnit] || [
+                        { label: '', value: '' },
+                      ]
+                    }
+                    input={input}
+                    label="<FIELD NAME>"
+                    meta={meta}
+                    onChange={(e) => {
+                      input.onChange(e);
+                      if (values?.recurrence?.issues) {
+                        change(
+                          'recurrence.rules',
+                          Array(Number(values?.recurrence?.issues)).fill({})
+                        );
+                      }
+                    }}
+                    required
+                    validate={requiredValidator}
+                  />
+                )}
               />
             </Col>
           </Row>

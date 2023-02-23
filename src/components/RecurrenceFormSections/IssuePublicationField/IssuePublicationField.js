@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 import {
   Col,
   IconButton,
@@ -27,6 +27,7 @@ const [MONTHS, WEEKDAYS] = [
 
 const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const { values } = useFormState();
+  const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
   const { onDeleteField } = useKiwtFieldArray(name);
 
@@ -85,7 +86,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofMonth" />
         }
-        name={ordinal ? `${name}[${index}].ordinal` : `${name}[${index}].pattern.month`}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.month`
+        }
         required
         validate={requiredValidator}
       />
@@ -99,7 +104,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofYear" />
         }
-        name={ordinal ? `${name}[${index}].ordinal` : `${name}[${index}].pattern.year`}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.year`
+        }
         required
         type="number"
         validate={requiredValidator}
@@ -150,7 +159,10 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           <Col xs={1}>
             <IconButton
               icon="trash"
-              onClick={() => onDeleteField(index, issue)}
+              onClick={() => {
+                onDeleteField(index, issue);
+                change('recurrence.issues', values?.recurrence?.issues - 1);
+              }}
               style={{ paddingTop: '25px' }}
             />
           </Col>

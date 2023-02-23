@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Row, Col, TextArea, Select } from '@folio/stripes/components';
 
+import { requiredValidator } from '@folio/stripes-erm-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 const [SERIAL_STATUS] = ['Serial.SerialStatus'];
@@ -32,6 +33,8 @@ const SerialInfoForm = () => {
           ]}
           label={<FormattedMessage id="ui-serials-management.serials.status" />}
           name="serialStatus.value"
+          required
+          validate={requiredValidator}
         />
       </Col>
     </Row>
