@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
@@ -14,7 +13,6 @@ const PatternTimePeriodForm = () => {
   const { change, resetFieldState } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
-  const { onAddField } = useKiwtFieldArray('recurrence.rules');
 
   const patternTypes = {
     month: [
