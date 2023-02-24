@@ -2,9 +2,16 @@ import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
-import { requiredValidator } from '@folio/stripes-erm-components';
+import {
+  requiredValidator,
+  composeValidators,
+} from '@folio/stripes-erm-components';
 
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import {
+  useSerialsManagementRefdata,
+  selectifyRefdata,
+  validateNotNegative,
+} from '../../utils';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
@@ -145,7 +152,7 @@ const PatternTimePeriodForm = () => {
                 type="number"
               />
             )}
-            validate={requiredValidator}
+            validate={composeValidators(requiredValidator, validateNotNegative)}
           />
         </Col>
         <Col xs={3}>
@@ -172,7 +179,7 @@ const PatternTimePeriodForm = () => {
                 type="number"
               />
             )}
-            validate={requiredValidator}
+            validate={composeValidators(requiredValidator, validateNotNegative)}
           />
         </Col>
       </Row>
