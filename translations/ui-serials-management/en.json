@@ -71,5 +71,9 @@
 
   "expectedPieces": "Expected pieces",
 
-  "patterns": "Patterns"
+  "patterns": "Patterns",
+
+  "validate.withinRange": "Must be within range {minValue} and {maxValue}",
+  "validate.notNegative": "Cannot be negative"
+
 }

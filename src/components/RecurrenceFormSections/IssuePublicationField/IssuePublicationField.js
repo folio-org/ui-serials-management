@@ -9,9 +9,16 @@ import {
   Select,
   TextField,
 } from '@folio/stripes/components';
-import { requiredValidator } from '@folio/stripes-erm-components';
+import {
+  requiredValidator,
+  composeValidators,
+} from '@folio/stripes-erm-components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import {
+  useSerialsManagementRefdata,
+  selectifyRefdata,
+  validateWithinRange,
+} from '../../utils';
 
 const propTypes = {
   issue: PropTypes.object,
@@ -31,7 +38,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
   const { onDeleteField } = useKiwtFieldArray(name);
 
-  const renderDayField = () => {
+  const renderDayField = (minValue, maxValue) => {
     return (
       <Field
         component={TextField}
@@ -39,7 +46,10 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         name={`${name}[${index}].pattern.day`}
         required
         type="number"
-        validate={requiredValidator}
+        validate={composeValidators(
+          requiredValidator,
+          validateWithinRange(minValue, maxValue)
+        )}
       />
     );
   };
@@ -60,7 +70,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
     );
   };
 
-  const renderWeekField = () => {
+  const renderWeekField = (minValue, maxValue) => {
     return (
       <Field
         component={TextField}
@@ -70,12 +80,15 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         name={`${name}[${index}].pattern.week`}
         required
         type="number"
-        validate={requiredValidator}
+        validate={composeValidators(
+          requiredValidator,
+          validateWithinRange(minValue, maxValue)
+        )}
       />
     );
   };
 
-  const renderMonthField = (ordinal = false) => {
+  const renderMonthField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
         component={ordinal ? TextField : Select}
@@ -92,12 +105,19 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
             : `${name}[${index}].pattern.month`
         }
         required
-        validate={requiredValidator}
+        validate={
+          ordinal
+            ? composeValidators(
+              requiredValidator,
+              validateWithinRange(minValue, maxValue)
+            )
+            : requiredValidator
+        }
       />
     );
   };
 
-  const renderYearField = (ordinal = false) => {
+  const renderYearField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
         component={TextField}
@@ -111,7 +131,10 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         }
         required
         type="number"
-        validate={requiredValidator}
+        validate={composeValidators(
+          requiredValidator,
+          validateWithinRange(minValue, maxValue)
+        )}
       />
     );
   };
@@ -119,22 +142,25 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const patternTypeFormats = {
     day: { fields: [renderDayField()] },
     week: { fields: [renderWeekdayField()] },
-    month_date: { fields: [renderDayField()], ordinal: renderMonthField(true) },
+    month_date: {
+      fields: [renderDayField(1, 31)],
+      ordinal: renderMonthField(true, 1, values?.recurrence?.period),
+    },
     month_weekday: {
-      fields: [renderWeekdayField(), renderWeekField()],
-      ordinal: renderMonthField(true),
+      fields: [renderWeekdayField(), renderWeekField(1, 4)],
+      ordinal: renderMonthField(true, 1, values?.recurrence?.period),
     },
     year_date: {
-      fields: [renderDayField(), renderMonthField()],
-      ordinal: renderYearField(true),
+      fields: [renderDayField(1, 31), renderMonthField()],
+      ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
     year_weekday: {
-      fields: [renderWeekdayField(), renderWeekField()],
-      ordinal: renderYearField(true),
+      fields: [renderWeekdayField(), renderWeekField(1, 52)],
+      ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
     year_month_weekday: {
-      fields: [renderWeekdayField(), renderWeekField(), renderMonthField()],
-      ordinal: renderYearField(true),
+      fields: [renderWeekdayField(), renderWeekField(1, 4), renderMonthField()],
+      ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
   };
 
