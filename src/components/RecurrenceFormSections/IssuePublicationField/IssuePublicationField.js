@@ -17,7 +17,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import {
   useSerialsManagementRefdata,
   selectifyRefdata,
-  validators,
+  validateWithinRange
 } from '../../utils';
 
 const propTypes = {
@@ -48,7 +48,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         type="number"
         validate={composeValidators(
           requiredValidator,
-          validators(minValue, maxValue)
+          validateWithinRange(minValue, maxValue)
         )}
       />
     );
@@ -82,7 +82,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         type="number"
         validate={composeValidators(
           requiredValidator,
-          validators(minValue, maxValue)
+          validateWithinRange(minValue, maxValue)
         )}
       />
     );
@@ -107,7 +107,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         required
         validate={composeValidators(
           requiredValidator,
-          validators(minValue, maxValue)
+          validateWithinRange(minValue, maxValue)
         )}
       />
     );
@@ -129,7 +129,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         type="number"
         validate={composeValidators(
           requiredValidator,
-          validators(minValue, maxValue)
+          validateWithinRange(minValue, maxValue)
         )}
       />
     );

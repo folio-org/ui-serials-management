@@ -1,9 +1,18 @@
 import { FormattedMessage } from 'react-intl';
 
-const validateMinMaxValue = (minValue, maxValue) => (value) => {
-  return !value || (value <= maxValue && value >= minValue)
-    ? undefined
-    : 'Noooooooooo';
+const validateWithinRange = (minValue, maxValue) => (value) => {
+  return !value || (value <= maxValue && value >= minValue) ? undefined : (
+    <FormattedMessage
+      id="ui-serials-management.validate.withinRange"
+      values={{ minValue, maxValue }}
+    />
+  );
 };
 
-export default validateMinMaxValue;
+const validateNotNegative = (value) => {
+  return !value || value > 0 ? undefined : (
+    <FormattedMessage id="ui-serials-management.validate.notNegative" />
+  );
+};
+
+export { validateWithinRange, validateNotNegative };
