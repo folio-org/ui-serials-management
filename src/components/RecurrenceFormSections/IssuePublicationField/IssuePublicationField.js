@@ -17,7 +17,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import {
   useSerialsManagementRefdata,
   selectifyRefdata,
-  validateWithinRange
+  validateWithinRange,
 } from '../../utils';
 
 const propTypes = {
@@ -105,10 +105,14 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
             : `${name}[${index}].pattern.month`
         }
         required
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue)
-        )}
+        validate={
+          ordinal
+            ? composeValidators(
+              requiredValidator,
+              validateWithinRange(minValue, maxValue)
+            )
+            : requiredValidator
+        }
       />
     );
   };
