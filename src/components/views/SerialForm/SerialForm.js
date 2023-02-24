@@ -20,6 +20,11 @@ import {
   SerialNoteFieldArray,
 } from '../../SerialFormSections';
 
+import {
+  PatternTimePeriodForm,
+  IssuePublicationFieldArray,
+} from '../../RecurrenceFormSections';
+
 const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -95,9 +100,13 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
         <POLineForm />
         <SerialInfoForm />
         <Accordion
-          label={
-            <FormattedMessage id="ui-serials-management.serials.notes" />
-          }
+          label={<FormattedMessage id="ui-serials-management.recurrence" />}
+        >
+          <PatternTimePeriodForm />
+          <IssuePublicationFieldArray />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-serials-management.serials.notes" />}
         >
           <SerialNoteFieldArray />
         </Accordion>
