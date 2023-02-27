@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState, useForm } from 'react-final-form';
+
 import {
   Col,
   IconButton,
@@ -14,11 +15,16 @@ import {
   composeValidators,
 } from '@folio/stripes-erm-components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
+
 import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateWithinRange,
 } from '../../utils';
+import {
+  SORTED_MONTHS,
+  SORTED_WEEKDAYS,
+} from '../../../constants/sortedArrays';
 
 const propTypes = {
   issue: PropTypes.object,
@@ -60,7 +66,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, WEEKDAYS, 'value'),
+          ...selectifyRefdata(refdataValues, WEEKDAYS, 'value').sort((a, b) => {
+            return (
+              SORTED_WEEKDAYS.indexOf(a.value) - SORTED_WEEKDAYS.indexOf(b.value)
+            );
+          }),
         ]}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
         name={`${name}[${index}].pattern.weekday.value`}
@@ -94,7 +104,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         component={ordinal ? TextField : Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, MONTHS, 'value'),
+          ...selectifyRefdata(refdataValues, MONTHS, 'value').sort((a, b) => {
+            return (
+              SORTED_MONTHS.indexOf(a.value) - SORTED_MONTHS.indexOf(b.value)
+            );
+          }),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofMonth" />
