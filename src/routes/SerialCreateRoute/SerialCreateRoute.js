@@ -41,6 +41,8 @@ const SerialCreateRoute = () => {
       }
       e.patternType = submitValues?.patternType;
     });
+    // POST Request can work without deleting patternType
+    // Deleting just for clarity
     delete submitValues.patternType;
     await postSerial(submitValues);
   };
