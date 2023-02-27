@@ -67,6 +67,9 @@ const SerialEditRoute = () => {
           ...(!!serial?.orderLine && {
             orderLine: serial?.orderLine?.remoteId_object,
           }),
+          ...(serial?.recurrence?.rules && {
+            patternType: serial?.recurrence?.rules[0]?.patternType?.value,
+          }),
         }}
         keepDirtyOnReinitialize
         mutators={arrayMutators}

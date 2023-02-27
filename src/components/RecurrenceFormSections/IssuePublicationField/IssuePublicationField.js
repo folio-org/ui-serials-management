@@ -63,7 +63,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           ...selectifyRefdata(refdataValues, WEEKDAYS, 'value'),
         ]}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
-        name={`${name}[${index}].pattern.weekday`}
+        name={`${name}[${index}].pattern.weekday.value`}
         required
         validate={requiredValidator}
       />
@@ -102,7 +102,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         name={
           ordinal
             ? `${name}[${index}].ordinal`
-            : `${name}[${index}].pattern.month`
+            : `${name}[${index}].pattern.month.value`
         }
         required
         validate={

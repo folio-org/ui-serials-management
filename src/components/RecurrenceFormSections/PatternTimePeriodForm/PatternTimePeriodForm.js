@@ -88,7 +88,7 @@ const PatternTimePeriodForm = () => {
       <Row>
         <Col xs={3}>
           <Field
-            name="recurrence.timeUnit"
+            name="recurrence.timeUnit.value"
             render={({ input, meta }) => (
               <Select
                 dataOptions={[
@@ -126,7 +126,7 @@ const PatternTimePeriodForm = () => {
                     id="ui-serials-management.recurrence.numberOfTimeUnit"
                     values={{
                       timeUnit:
-                        values?.recurrence?.timeUnit ||
+                        values?.recurrence?.timeUnit?.value ||
                         intl
                           .formatMessage({
                             id: 'ui-serials-management.recurrence.timeUnit',
@@ -183,7 +183,7 @@ const PatternTimePeriodForm = () => {
           />
         </Col>
       </Row>
-      {!!patternTypes[values?.recurrence?.timeUnit] && (
+      {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
         <>
           <Row>
             <Col xs={12}>
@@ -201,7 +201,7 @@ const PatternTimePeriodForm = () => {
                 render={({ input, meta }) => (
                   <Select
                     dataOptions={
-                      patternTypes[values?.recurrence?.timeUnit] || [
+                      patternTypes[values?.recurrence?.timeUnit?.value] || [
                         { label: '', value: '' },
                       ]
                     }
