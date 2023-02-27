@@ -12,6 +12,7 @@ import {
   selectifyRefdata,
   validateNotNegative,
 } from '../../utils';
+import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
@@ -93,7 +94,14 @@ const PatternTimePeriodForm = () => {
               <Select
                 dataOptions={[
                   { value: '', label: '' },
-                  ...selectifyRefdata(refdataValues, TIME_UNITS, 'value'),
+                  ...selectifyRefdata(refdataValues, TIME_UNITS, 'value').sort(
+                    (a, b) => {
+                      return (
+                        SORTED_TIME_UNITS.indexOf(a.value) -
+                        SORTED_TIME_UNITS.indexOf(b.value)
+                      );
+                    }
+                  ),
                 ]}
                 input={input}
                 label={
