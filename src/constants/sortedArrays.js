@@ -1,6 +1,6 @@
 const SORTED_MONTHS = [
   'january',
-  'febuary',
+  'february',
   'march',
   'april',
   'may',
