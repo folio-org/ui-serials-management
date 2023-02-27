@@ -214,7 +214,8 @@ const PatternTimePeriodForm = () => {
                       ]
                     }
                     input={input}
-                    label="<FIELD NAME>"
+                    // TODO Update to translated string when preffered name has been chosen
+                    label="Pattern type"
                     meta={meta}
                     onChange={(e) => {
                       input.onChange(e);
