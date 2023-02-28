@@ -39,6 +39,9 @@ const SerialCreateRoute = () => {
       if (!e?.ordinal) {
         e.ordinal = 1;
       }
+      if (!e?.pattern) {
+        e.pattern = {};
+      }
       e.patternType = submitValues?.patternType;
     });
     // POST Request can work without deleting patternType

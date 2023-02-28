@@ -12,6 +12,7 @@ import {
   selectifyRefdata,
   validateNotNegative,
 } from '../../utils';
+import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
@@ -20,61 +21,8 @@ const PatternTimePeriodForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
+  const patternTypes = usePatternTypes();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
-
-  const patternTypes = {
-    month: [
-      {
-        label: '',
-        value: '',
-      },
-      {
-        label: `${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.day',
-        })} (1-31)`,
-        value: 'month_date',
-      },
-      {
-        label: `${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.week',
-        })} (1-4)`,
-        value: 'month_weekday',
-      },
-    ],
-
-    year: [
-      {
-        label: '',
-        value: '',
-      },
-      {
-        label: `${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.day',
-        })} (1-31), Month (Jan-Dec)`,
-        value: 'year_date',
-      },
-      {
-        label: `${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.week',
-        })} (1-52)`,
-        value: 'year_weekday',
-      },
-      {
-        label: `${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.day',
-        })} (1-31), ${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.week',
-        })} (1-4), ${intl.formatMessage({
-          id: 'ui-serials-management.recurrence.month',
-        })} (Jan-Dec)`,
-        value: 'year_month_weekday',
-      },
-    ],
-  };
 
   return (
     <>
@@ -115,6 +63,10 @@ const PatternTimePeriodForm = () => {
                   if (values?.patternType) {
                     change('patternType', undefined);
                   }
+                  if (e?.target?.value && !patternTypes[e?.target?.value]) {
+                    change('patternType', e?.target?.value);
+                  }
+                  change('recurrence.rules', undefined);
                 }}
                 required
               />
@@ -191,50 +143,6 @@ const PatternTimePeriodForm = () => {
           />
         </Col>
       </Row>
-      {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
-        <>
-          <Row>
-            <Col xs={12}>
-              <br />
-              <strong>
-                <FormattedMessage id="ui-serials-management.recurrence.issuePublication" />
-              </strong>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col xs={3}>
-              <Field
-                name="patternType"
-                render={({ input, meta }) => (
-                  <Select
-                    dataOptions={
-                      patternTypes[values?.recurrence?.timeUnit?.value] || [
-                        { label: '', value: '' },
-                      ]
-                    }
-                    input={input}
-                    // TODO Update to translated string when preffered name has been chosen
-                    label="Pattern type"
-                    meta={meta}
-                    onChange={(e) => {
-                      input.onChange(e);
-                      if (values?.recurrence?.issues) {
-                        change(
-                          'recurrence.rules',
-                          Array(Number(values?.recurrence?.issues)).fill({})
-                        );
-                      }
-                    }}
-                    required
-                  />
-                )}
-                validate={requiredValidator}
-              />
-            </Col>
-          </Row>
-        </>
-      )}
     </>
   );
 };

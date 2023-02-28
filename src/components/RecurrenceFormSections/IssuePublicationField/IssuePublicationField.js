@@ -44,12 +44,16 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
   const { onDeleteField } = useKiwtFieldArray(name);
 
-  const renderDayField = (minValue, maxValue) => {
+  const renderDayField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
-        name={`${name}[${index}].pattern.day`}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.day`
+        }
         required
         type="number"
         validate={composeValidators(
@@ -68,7 +72,8 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           { value: '', label: '' },
           ...selectifyRefdata(refdataValues, WEEKDAYS, 'value').sort((a, b) => {
             return (
-              SORTED_WEEKDAYS.indexOf(a.value) - SORTED_WEEKDAYS.indexOf(b.value)
+              SORTED_WEEKDAYS.indexOf(a.value) -
+              SORTED_WEEKDAYS.indexOf(b.value)
             );
           }),
         ]}
@@ -80,14 +85,18 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
     );
   };
 
-  const renderWeekField = (minValue, maxValue) => {
+  const renderWeekField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
         component={TextField}
         label={
           <FormattedMessage id="ui-serials-management.recurrence.ofWeek" />
         }
-        name={`${name}[${index}].pattern.week`}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.week`
+        }
         required
         type="number"
         validate={composeValidators(
@@ -154,8 +163,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
   };
 
   const patternTypeFormats = {
-    day: { fields: [renderDayField()] },
-    week: { fields: [renderWeekdayField()] },
+    day: { fields: [renderDayField(true, 1, values?.recurrence?.period)] },
+    week: {
+      fields: [renderWeekdayField()],
+      ordinal: renderWeekField(true, 1, values?.recurrence?.period),
+    },
     month_date: {
       fields: [renderDayField(1, 31)],
       ordinal: renderMonthField(true, 1, values?.recurrence?.period),
@@ -190,11 +202,12 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
               />
             </Label>
           </Col>
-          {patternTypeFormats[patternType].fields.map((e) => {
+          {patternTypeFormats[patternType]?.fields?.map((e) => {
             return <Col xs={2}>{e}</Col>;
           })}
-          {values?.recurrence?.period > 1 && (
-            <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>
+          {values?.recurrence?.period > 1 &&
+            !!patternTypeFormats[patternType]?.ordinal && (
+              <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>
           )}
           <Col xs={1}>
             <IconButton
