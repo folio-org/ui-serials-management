@@ -63,6 +63,8 @@ const PatternTimePeriodForm = () => {
                   if (values?.patternType) {
                     change('patternType', undefined);
                   }
+                  // If a value is supplied and does not have corresponding patternType options
+                  // Assign the patternType value the timeUnit value
                   if (e?.target?.value && !patternTypes[e?.target?.value]) {
                     change('patternType', e?.target?.value);
                   }
@@ -98,6 +100,8 @@ const PatternTimePeriodForm = () => {
                 meta={meta}
                 onChange={(e) => {
                   input.onChange(e);
+                  // Since recurrence.period determines whether or not ordinals are assigned to the rules
+                  // Clear all ordinal fields within form when recurrence.period is changed
                   if (values?.recurrence?.rules?.length) {
                     for (
                       let i = 0;
@@ -128,6 +132,7 @@ const PatternTimePeriodForm = () => {
                 meta={meta}
                 onChange={(e) => {
                   input.onChange(e);
+                  // Create an array of empty objects corresponding to amount of issues
                   change(
                     'recurrence.rules',
                     e?.target?.value > 0

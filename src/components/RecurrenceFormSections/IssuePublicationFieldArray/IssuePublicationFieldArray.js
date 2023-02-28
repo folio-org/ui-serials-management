@@ -16,6 +16,7 @@ const IssuePublicationFieldArray = () => {
   const { change } = useForm();
   const patternTypes = usePatternTypes();
 
+  // TODO This title rendering could be done better
   const renderTitle = () => {
     return (
       <>
