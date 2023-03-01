@@ -185,7 +185,11 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
       ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
     year_month_weekday: {
-      fields: [renderWeekdayField(), renderWeekField(false, 1, 4), renderMonthField()],
+      fields: [
+        renderWeekdayField(),
+        renderWeekField(false, 1, 4),
+        renderMonthField(),
+      ],
       ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
   };
@@ -214,7 +218,10 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
               icon="trash"
               onClick={() => {
                 onDeleteField(index, issue);
-                change('recurrence.issues', values?.recurrence?.issues - 1);
+                change(
+                  'recurrence.issues',
+                  String(values?.recurrence?.issues - 1)
+                );
               }}
               style={{ paddingTop: '25px' }}
             />
