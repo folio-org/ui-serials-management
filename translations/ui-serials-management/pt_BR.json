@@ -48,5 +48,22 @@
     "serials.notes": "Observações",
     "serials.addNote": "Adicionar nota",
     "serials.removeNoteIndex": "Remover nota {index}",
-    "poLine.acqUnits": "Unidades de aquisição"
+    "poLine.acqUnits": "Unidades de aquisição",
+    "recurrence": "Recorrência",
+    "recurrence.timeUnit": "Unidade de tempo",
+    "recurrence.numberOfTimeUnit": "Número de {timeUnit} s",
+    "recurrence.numberOfIssues": "Número de edições por período de tempo",
+    "recurrence.day": "Dia",
+    "recurrence.week": "Semana",
+    "recurrence.weekday": "Dia da semana",
+    "recurrence.month": "Mês",
+    "recurrence.year": "Ano",
+    "recurrence.patternTimePeriod": "Período de tempo padrão",
+    "recurrence.issuePublication": "Publicação da edição",
+    "recurrence.ofWeek": "Da semana",
+    "recurrence.ofMonth": "Do mês",
+    "recurrence.ofYear": "Do ano",
+    "recurrence.issueIndex": "Edição {index}",
+    "validate.withinRange": "Deve estar dentro do intervalo {minValue} e {maxValue}",
+    "validate.notNegative": "Não pode ser negativo"
 }
