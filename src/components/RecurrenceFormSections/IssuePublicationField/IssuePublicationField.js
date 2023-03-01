@@ -169,23 +169,23 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
       ordinal: renderWeekField(true, 1, values?.recurrence?.period),
     },
     month_date: {
-      fields: [renderDayField(1, 31)],
+      fields: [renderDayField(false, 1, 31)],
       ordinal: renderMonthField(true, 1, values?.recurrence?.period),
     },
     month_weekday: {
-      fields: [renderWeekdayField(), renderWeekField(1, 4)],
+      fields: [renderWeekdayField(), renderWeekField(false, 1, 4)],
       ordinal: renderMonthField(true, 1, values?.recurrence?.period),
     },
     year_date: {
-      fields: [renderDayField(1, 31), renderMonthField()],
+      fields: [renderDayField(false, 1, 31), renderMonthField()],
       ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
     year_weekday: {
-      fields: [renderWeekdayField(), renderWeekField(1, 52)],
+      fields: [renderWeekdayField(), renderWeekField(false, 1, 52)],
       ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
     year_month_weekday: {
-      fields: [renderWeekdayField(), renderWeekField(1, 4), renderMonthField()],
+      fields: [renderWeekdayField(), renderWeekField(false, 1, 4), renderMonthField()],
       ordinal: renderYearField(true, 1, values?.recurrence?.period),
     },
   };
