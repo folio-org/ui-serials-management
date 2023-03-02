@@ -44,22 +44,31 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
   const { onDeleteField } = useKiwtFieldArray(name);
 
-  const renderDayField = (ordinal = false, minValue = 1, maxValue = 1) => {
+  const renderDayField = (
+    ordinal = false,
+    minValue = 1,
+    maxValue = 1,
+    disabled = false
+  ) => {
     return (
       <Field
         component={TextField}
+        disabled={disabled}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
         name={
           ordinal
             ? `${name}[${index}].ordinal`
             : `${name}[${index}].pattern.day`
         }
-        required
+        required={!disabled}
         type="number"
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue)
-        )}
+        validate={
+          !disabled &&
+          composeValidators(
+            requiredValidator,
+            validateWithinRange(minValue, maxValue)
+          )
+        }
       />
     );
   };
@@ -162,8 +171,19 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
     );
   };
 
+  // Field render params: ordinal bool, min value of field, max value and disabled bool
   const patternTypeFormats = {
-    day: { fields: [renderDayField(true, 1, values?.recurrence?.period)] },
+    day: {
+      fields: [
+        renderDayField(
+          true,
+          1,
+          values?.recurrence?.period,
+          values?.recurrence?.period <= 1 || !values?.recurrence?.period
+        ),
+      ],
+      disabled: values?.recurrence?.period <= 1 || !values?.recurrence?.period,
+    },
     week: {
       fields: [renderWeekdayField()],
       ordinal: renderWeekField(true, 1, values?.recurrence?.period),
@@ -215,6 +235,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           )}
           <Col xs={1}>
             <IconButton
+              disabled={patternTypeFormats[patternType]?.disabled}
               icon="trash"
               onClick={() => {
                 onDeleteField(index, issue);

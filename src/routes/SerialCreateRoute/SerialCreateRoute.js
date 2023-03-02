@@ -50,6 +50,7 @@ const SerialCreateRoute = () => {
     // POST Request can work without deleting patternType
     // Deleting just for clarity
     delete submitValues.patternType;
+    // console.log(submitValues);
     await postSerial(submitValues);
   };
 
