@@ -11,7 +11,11 @@ import {
   MetaSection,
 } from '@folio/stripes/components';
 
-import { SerialInfo, SerialPOLine } from '../../SerialSections';
+import {
+  RecurrenceRulesets,
+  SerialInfo,
+  SerialPOLine,
+} from '../../SerialSections';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
@@ -81,6 +85,7 @@ const SerialView = ({
       {!!serial?.orderLine?.remoteId && (
         <SerialPOLine {...getSectionProps('po-line')} />
       )}
+      <RecurrenceRulesets {...getSectionProps('recurrene-rulesets')} />
     </Pane>
   );
 };

@@ -11,14 +11,12 @@ import {
   PaneHeader,
   Paneset,
   PaneMenu,
-  Accordion,
 } from '@folio/stripes/components';
 
 import {
-  POLineForm,
-  SerialInfoForm,
-  SerialNoteFieldArray,
-} from '../../SerialFormSections';
+  PatternTimePeriodForm,
+  IssuePublicationFieldArray,
+} from '../../RecurrenceFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -27,7 +25,7 @@ const propTypes = {
   }).isRequired,
 };
 
-const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
+const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, initialValues } = useFormState();
 
   const renderPaneFooter = () => {
@@ -58,9 +56,9 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
   };
 
   const renderPaneTitle = () => (initialValues?.id ? (
-    <FormattedMessage id="ui-serials-management.serials.editSerial" />
+    <FormattedMessage id="ui-serials-management.rulesets.editRuleset" />
   ) : (
-    <FormattedMessage id="ui-serials-management.serials.newSerial" />
+    <FormattedMessage id="ui-serials-management.rulesets.newRuleset" />
   ));
 
   const renderFirstMenu = () => {
@@ -71,7 +69,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
             <IconButton
               aria-label={ariaLabel}
               icon="times"
-              id="close-serial-form-button"
+              id="close-ruleset-form-button"
               onClick={() => onClose()}
             />
           )}
@@ -92,18 +90,13 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
           <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
         )}
       >
-        <POLineForm />
-        <SerialInfoForm />
-        <Accordion
-          label={<FormattedMessage id="ui-serials-management.serials.notes" />}
-        >
-          <SerialNoteFieldArray />
-        </Accordion>
+        <PatternTimePeriodForm />
+        <IssuePublicationFieldArray />
       </Pane>
     </Paneset>
   );
 };
 
-SerialForm.propTypes = propTypes;
+RulesetForm.propTypes = propTypes;
 
-export default SerialForm;
+export default RulesetForm;
