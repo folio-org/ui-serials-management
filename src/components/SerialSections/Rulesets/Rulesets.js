@@ -11,7 +11,7 @@ const proptypes = {
   serial: PropTypes.object,
 };
 
-const RecurrenceRulesets = ({ serial }) => {
+const Rulesets = ({ serial }) => {
   const location = useLocation();
 
   const renderBadge = (serialRulesets) => {
@@ -44,11 +44,15 @@ const RecurrenceRulesets = ({ serial }) => {
         <FormattedMessage id="ui-serials-management.serials.recurrenceRulesets" />
       }
     >
-      Recurrences
+      <ul>
+        {serial?.serialRulesets?.map((e) => (
+          <li>{e?.id}</li>
+        ))}
+      </ul>
     </Accordion>
   );
 };
 
-RecurrenceRulesets.propTypes = proptypes;
+Rulesets.propTypes = proptypes;
 
-export default RecurrenceRulesets;
+export default Rulesets;

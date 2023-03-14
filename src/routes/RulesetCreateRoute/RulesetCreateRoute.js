@@ -8,10 +8,10 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
-import { RecurrenceRulesetForm } from '../../components/views';
+import { RulesetForm } from '../../components/views';
 import urls from '../../components/utils/urls';
 
-const RecurrenceRulesetCreateRoute = () => {
+const RulesetCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
@@ -22,7 +22,7 @@ const RecurrenceRulesetCreateRoute = () => {
   };
 
   const { mutateAsync: postSerial } = useMutation(
-    ['ui-serials-management', 'RecurrenceRulesetCreateRoute', 'postRuleset'],
+    ['ui-serials-management', 'RulesetCreateRoute', 'postRuleset'],
     (data) => {
       ky.post(RULESETS_ENDPOINT, { json: data })
         .json()
@@ -62,7 +62,7 @@ const RecurrenceRulesetCreateRoute = () => {
       >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <RecurrenceRulesetForm
+            <RulesetForm
               handlers={{
                 onClose: handleClose,
                 onSubmit: handleSubmit,
@@ -75,4 +75,4 @@ const RecurrenceRulesetCreateRoute = () => {
   );
 };
 
-export default RecurrenceRulesetCreateRoute;
+export default RulesetCreateRoute;

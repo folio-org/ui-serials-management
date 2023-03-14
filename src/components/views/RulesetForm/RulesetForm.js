@@ -16,7 +16,7 @@ import {
 import {
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
-} from '../../RecurrenceFormSections';
+} from '../../RulesetFormSections';
 
 const propTypes = {
   handlers: PropTypes.shape({
