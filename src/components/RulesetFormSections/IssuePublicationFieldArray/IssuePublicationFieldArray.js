@@ -63,15 +63,14 @@ const IssuePublicationFieldArray = () => {
           </Col>
         </Row>
       )}
-      {values?.patternType === 'day' ||
-      (values?.patternType === 'week' &&
-        (values?.recurrence?.period <= 1 || !values?.recurrence?.period)) ? (
-          <IssuePublicationField
-            index={0}
-            issue={items[0]}
-            name="recurrence.rules"
-            patternType={values?.patternType}
-          />
+      {values?.patternType === 'day' &&
+      (values?.recurrence?.period <= 1 || !values?.recurrence?.period) ? (
+        <IssuePublicationField
+          index={0}
+          issue={items[0]}
+          name="recurrence.rules"
+          patternType={values?.patternType}
+        />
         ) : (
           <FieldArray name="recurrence.rules">
             {() => items.map((issue, index) => {

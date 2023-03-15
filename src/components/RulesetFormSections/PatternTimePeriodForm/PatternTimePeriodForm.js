@@ -145,6 +145,9 @@ const PatternTimePeriodForm = () => {
                       ? Array(Number(e?.target?.value)).fill({})
                       : undefined
                   );
+                  if (patternTypes[values?.recurrence?.timeUnit?.value]) {
+                    change('patternType', undefined);
+                  }
                 }}
                 required
                 type="number"
