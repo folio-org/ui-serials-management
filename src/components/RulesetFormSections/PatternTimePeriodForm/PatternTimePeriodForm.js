@@ -11,7 +11,7 @@ import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateNotNegative,
-  validateWholeNumber
+  validateWholeNumber,
 } from '../../utils';
 import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';

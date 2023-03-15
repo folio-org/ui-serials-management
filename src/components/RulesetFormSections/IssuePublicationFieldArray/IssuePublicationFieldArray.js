@@ -16,77 +16,62 @@ const IssuePublicationFieldArray = () => {
   const { change } = useForm();
   const patternTypes = usePatternTypes();
 
-  // TODO This title rendering could be done better
-  const renderTitle = () => {
-    return (
-      <>
-        <Row>
-          <Col xs={12}>
-            <br />
-            <strong>
-              <FormattedMessage id="ui-serials-management.recurrence.issuePublication" />
-            </strong>
-          </Col>
-        </Row>
-        <br />
-      </>
-    );
-  };
-
   return (
     <>
-      {!!values?.patternType &&
-        !!values?.recurrence?.issues &&
-        !patternTypes[values?.recurrence?.timeUnit?.value] && (
-          <>{renderTitle()}</>
-      )}
+      <Row>
+        <Col xs={12}>
+          <br />
+          <strong>
+            <FormattedMessage id="ui-serials-management.recurrence.issuePublication" />
+          </strong>
+        </Col>
+      </Row>
+      <br />
       {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
-        <>
-          {renderTitle()}
-          <Row>
-            <Col xs={3}>
-              <Field
-                name="patternType"
-                render={({ input, meta }) => (
-                  <Select
-                    dataOptions={
-                      patternTypes[values?.recurrence?.timeUnit?.value] || [
-                        { label: '', value: '' },
-                      ]
+        <Row>
+          <Col xs={3}>
+            <Field
+              name="patternType"
+              render={({ input, meta }) => (
+                <Select
+                  dataOptions={
+                    patternTypes[values?.recurrence?.timeUnit?.value] || [
+                      { label: '', value: '' },
+                    ]
+                  }
+                  input={input}
+                  // TODO Update to translated string when preffered name has been chosen
+                  label="Pattern type"
+                  meta={meta}
+                  onChange={(e) => {
+                    input.onChange(e);
+                    if (
+                      values?.recurrence?.issues &&
+                      Number.isInteger(Number(values?.recurrence?.issues))
+                    ) {
+                      change(
+                        'recurrence.rules',
+                        Array(Number(values?.recurrence?.issues)).fill({})
+                      );
                     }
-                    input={input}
-                    // TODO Update to translated string when preffered name has been chosen
-                    label="Pattern type"
-                    meta={meta}
-                    onChange={(e) => {
-                      input.onChange(e);
-                      if (
-                        values?.recurrence?.issues &&
-                        Number.isInteger(Number(values?.recurrence?.issues))
-                      ) {
-                        change(
-                          'recurrence.rules',
-                          Array(Number(values?.recurrence?.issues)).fill({})
-                        );
-                      }
-                    }}
-                    required
-                  />
-                )}
-                validate={requiredValidator}
-              />
-            </Col>
-          </Row>
-        </>
+                  }}
+                  required
+                />
+              )}
+              validate={requiredValidator}
+            />
+          </Col>
+        </Row>
       )}
-      {values?.patternType === 'day' &&
-      (values?.recurrence?.period <= 1 || !values?.recurrence?.period) ? (
-        <IssuePublicationField
-          index={0}
-          issue={items[0]}
-          name="recurrence.rules"
-          patternType={values?.patternType}
-        />
+      {values?.patternType === 'day' ||
+      (values?.patternType === 'week' &&
+        (values?.recurrence?.period <= 1 || !values?.recurrence?.period)) ? (
+          <IssuePublicationField
+            index={0}
+            issue={items[0]}
+            name="recurrence.rules"
+            patternType={values?.patternType}
+          />
         ) : (
           <FieldArray name="recurrence.rules">
             {() => items.map((issue, index) => {

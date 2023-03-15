@@ -26,7 +26,7 @@ const propTypes = {
 };
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting, initialValues } = useFormState();
+  const { pristine, submitting, initialValues, values } = useFormState();
 
   const renderPaneFooter = () => {
     return (
@@ -91,7 +91,9 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
         )}
       >
         <PatternTimePeriodForm />
-        <IssuePublicationFieldArray />
+        {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
+          <IssuePublicationFieldArray />
+        )}
       </Pane>
     </Paneset>
   );
