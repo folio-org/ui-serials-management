@@ -79,6 +79,7 @@
   "patterns": "Patterns",
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
-  "validate.notNegative": "Cannot be negative"
+  "validate.notNegative": "Cannot be negative",
+  "validate.wholeNumber": "Must be a whole number"
 
 }

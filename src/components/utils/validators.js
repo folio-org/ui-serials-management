@@ -1,12 +1,14 @@
 import { FormattedMessage } from 'react-intl';
 
 const validateWithinRange = (minValue, maxValue) => (value) => {
-  return !value || (Number(value) <= Number(maxValue) && Number(value) >= Number(minValue)) ? undefined : (
-    <FormattedMessage
-      id="ui-serials-management.validate.withinRange"
-      values={{ minValue, maxValue }}
-    />
-  );
+  return !value ||
+    (Number(value) <= Number(maxValue) &&
+      Number(value) >= Number(minValue)) ? undefined : (
+        <FormattedMessage
+          id="ui-serials-management.validate.withinRange"
+          values={{ minValue, maxValue }}
+        />
+    );
 };
 
 const validateNotNegative = (value) => {
@@ -15,4 +17,11 @@ const validateNotNegative = (value) => {
   );
 };
 
-export { validateWithinRange, validateNotNegative };
+const validateWholeNumber = (value) => {
+  const regexp = /^\d+$/;
+  return !value || regexp.test(value) ? undefined : (
+    <FormattedMessage id="ui-serials-management.validate.wholeNumber" />
+  );
+};
+
+export { validateWithinRange, validateNotNegative, validateWholeNumber };

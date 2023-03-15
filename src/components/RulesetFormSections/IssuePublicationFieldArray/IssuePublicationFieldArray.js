@@ -60,7 +60,10 @@ const IssuePublicationFieldArray = () => {
                     meta={meta}
                     onChange={(e) => {
                       input.onChange(e);
-                      if (values?.recurrence?.issues) {
+                      if (
+                        values?.recurrence?.issues &&
+                        Number.isInteger(Number(values?.recurrence?.issues))
+                      ) {
                         change(
                           'recurrence.rules',
                           Array(Number(values?.recurrence?.issues)).fill({})

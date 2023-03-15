@@ -11,6 +11,7 @@ import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateNotNegative,
+  validateWholeNumber
 } from '../../utils';
 import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
@@ -116,7 +117,11 @@ const PatternTimePeriodForm = () => {
                 type="number"
               />
             )}
-            validate={composeValidators(requiredValidator, validateNotNegative)}
+            validate={composeValidators(
+              requiredValidator,
+              validateNotNegative,
+              validateWholeNumber
+            )}
           />
         </Col>
         <Col xs={3}>
@@ -135,7 +140,8 @@ const PatternTimePeriodForm = () => {
                   // Create an array of empty objects corresponding to amount of issues
                   change(
                     'recurrence.rules',
-                    e?.target?.value > 0
+                    e?.target?.value > 0 &&
+                      Number.isInteger(Number(e?.target?.value))
                       ? Array(Number(e?.target?.value)).fill({})
                       : undefined
                   );
@@ -144,7 +150,11 @@ const PatternTimePeriodForm = () => {
                 type="number"
               />
             )}
-            validate={composeValidators(requiredValidator, validateNotNegative)}
+            validate={composeValidators(
+              requiredValidator,
+              validateNotNegative,
+              validateWholeNumber
+            )}
           />
         </Col>
       </Row>
