@@ -12,9 +12,11 @@ import {
   selectifyRefdata,
   validateNotNegative,
   validateWholeNumber,
+  validateWithinRange,
 } from '../../utils';
 import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
+import TIME_UNIT_LIMITERS from '../../../constants/timeUnitLimiters';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
@@ -156,7 +158,12 @@ const PatternTimePeriodForm = () => {
             validate={composeValidators(
               requiredValidator,
               validateNotNegative,
-              validateWholeNumber
+              validateWholeNumber,
+              validateWithinRange(
+                1,
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value] *
+                  (values?.recurrence?.period || 1)
+              )
             )}
           />
         </Col>

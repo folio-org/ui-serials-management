@@ -80,6 +80,7 @@
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
   "validate.notNegative": "Cannot be negative",
-  "validate.wholeNumber": "Must be a whole number"
+  "validate.wholeNumber": "Must be a whole number",
+  "validate.mustEqual": "Must equal {value}"
 
 }
