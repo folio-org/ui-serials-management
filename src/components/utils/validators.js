@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
 const validateWithinRange = (minValue, maxValue) => (value) => {
-  return !value || (value <= maxValue && value >= minValue) ? undefined : (
+  return !value || (Number(value) <= Number(maxValue) && Number(value) >= Number(minValue)) ? undefined : (
     <FormattedMessage
       id="ui-serials-management.validate.withinRange"
       values={{ minValue, maxValue }}
