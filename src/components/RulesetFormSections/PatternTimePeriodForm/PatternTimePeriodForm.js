@@ -16,9 +16,15 @@ import {
 } from '../../utils';
 import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
-import TIME_UNIT_LIMITERS from '../../../constants/timeUnitLimiters';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
+
+const TIME_UNIT_LIMITERS = {
+  day: 1,
+  week: 7,
+  month: 31,
+  year: 366,
+};
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
