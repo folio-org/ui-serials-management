@@ -36,7 +36,7 @@
   "serials.addNote": "Add note",
   "serials.removeNoteIndex": "Remove note {index}",
   "serials.addRuleset": "Add ruleset",
-  "serials.recurrenceRulesets": "Recurrence rulesets",
+  "serials.rulesets": "Rulesets",
 
   "rulesets.newRuleset": "New ruleset",
   "rulestes.editRuleset": "Edit ruleset",

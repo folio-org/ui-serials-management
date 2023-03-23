@@ -41,7 +41,7 @@ const Rulesets = ({ serial }) => {
       displayWhenClosed={renderBadge(serial?.serialRulesets)}
       displayWhenOpen={renderAddChargesButton()}
       label={
-        <FormattedMessage id="ui-serials-management.serials.recurrenceRulesets" />
+        <FormattedMessage id="ui-serials-management.serials.rulesets" />
       }
     >
       <ul>
