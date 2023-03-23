@@ -4,6 +4,8 @@ export const SETTINGS_ENDPOINT = 'serials-management/settings/appSettings';
 export const SERIALS_ENDPOINT = 'serials-management/serials';
 export const SERIAL_ENDPOINT = (id) => `serials-management/serials/${id}`;
 
+export const RULESETS_ENDPOINT = 'serials-management/rulesets';
+
 export const ORDERS_ENDPOINT = 'orders/composite-orders';
 export const VENDOR_ENDPOINT = 'organizations/organizations';
 export const MATERIAL_TYPE_ENDPOINT = 'material-types';

@@ -20,6 +20,7 @@ import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateWithinRange,
+  validateWholeNumber
 } from '../../utils';
 import {
   SORTED_MONTHS,
@@ -66,7 +67,8 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           !disabled &&
           composeValidators(
             requiredValidator,
-            validateWithinRange(minValue, maxValue)
+            validateWithinRange(minValue, maxValue),
+            validateWholeNumber
           )
         }
       />
@@ -110,7 +112,8 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         type="number"
         validate={composeValidators(
           requiredValidator,
-          validateWithinRange(minValue, maxValue)
+          validateWithinRange(minValue, maxValue),
+          validateWholeNumber
         )}
       />
     );
@@ -141,7 +144,8 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           ordinal
             ? composeValidators(
               requiredValidator,
-              validateWithinRange(minValue, maxValue)
+              validateWithinRange(minValue, maxValue),
+              validateWholeNumber
             )
             : requiredValidator
         }
@@ -165,7 +169,8 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
         type="number"
         validate={composeValidators(
           requiredValidator,
-          validateWithinRange(minValue, maxValue)
+          validateWithinRange(minValue, maxValue),
+          validateWholeNumber
         )}
       />
     );

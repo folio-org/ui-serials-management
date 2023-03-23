@@ -35,6 +35,11 @@
   "serials.notes": "Notes",
   "serials.addNote": "Add note",
   "serials.removeNoteIndex": "Remove note {index}",
+  "serials.addRuleset": "Add ruleset",
+  "serials.recurrenceRulesets": "Recurrence rulesets",
+
+  "rulesets.newRuleset": "New ruleset",
+  "rulestes.editRuleset": "Edit ruleset",
 
   "poLine": "PO Line",
   "poLine.noneLinked": "No PO line linked",
@@ -74,6 +79,8 @@
   "patterns": "Patterns",
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
-  "validate.notNegative": "Cannot be negative"
+  "validate.notNegative": "Cannot be negative",
+  "validate.wholeNumber": "Must be a whole number",
+  "validate.mustEqual": "Must equal {value}"
 
 }

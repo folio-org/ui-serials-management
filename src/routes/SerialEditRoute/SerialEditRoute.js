@@ -53,15 +53,6 @@ const SerialEditRoute = () => {
         orderLine: { remoteId: values?.orderLine?.id },
       }),
     };
-    submitValues?.recurrence?.rules?.forEach((e) => {
-      if (!e?.ordinal) {
-        e.ordinal = 1;
-      }
-      e.patternType = submitValues?.patternType;
-    });
-    // POST Request can work without deleting patternType
-    // Deleting just for clarity
-    delete submitValues.patternType;
     await putSerial(submitValues);
   };
 
@@ -75,9 +66,6 @@ const SerialEditRoute = () => {
           ...serial,
           ...(!!serial?.orderLine && {
             orderLine: serial?.orderLine?.remoteId_object,
-          }),
-          ...(serial?.recurrence?.rules && {
-            patternType: serial?.recurrence?.rules[0]?.patternType?.value,
           }),
         }}
         keepDirtyOnReinitialize

@@ -11,11 +11,20 @@ import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateNotNegative,
+  validateWholeNumber,
+  validateWithinRange,
 } from '../../utils';
 import usePatternTypes from '../../../hooks/usePatternTypes';
 import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
+
+const TIME_UNIT_LIMITERS = {
+  day: 1,
+  week: 7,
+  month: 31,
+  year: 366,
+};
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
@@ -116,7 +125,11 @@ const PatternTimePeriodForm = () => {
                 type="number"
               />
             )}
-            validate={composeValidators(requiredValidator, validateNotNegative)}
+            validate={composeValidators(
+              requiredValidator,
+              validateNotNegative,
+              validateWholeNumber
+            )}
           />
         </Col>
         <Col xs={3}>
@@ -135,16 +148,29 @@ const PatternTimePeriodForm = () => {
                   // Create an array of empty objects corresponding to amount of issues
                   change(
                     'recurrence.rules',
-                    e?.target?.value > 0
+                    e?.target?.value > 0 &&
+                      Number.isInteger(Number(e?.target?.value))
                       ? Array(Number(e?.target?.value)).fill({})
                       : undefined
                   );
+                  if (patternTypes[values?.recurrence?.timeUnit?.value]) {
+                    change('patternType', undefined);
+                  }
                 }}
                 required
                 type="number"
               />
             )}
-            validate={composeValidators(requiredValidator, validateNotNegative)}
+            validate={composeValidators(
+              requiredValidator,
+              validateNotNegative,
+              validateWholeNumber,
+              validateWithinRange(
+                1,
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value] *
+                  (values?.recurrence?.period || 1)
+              )
+            )}
           />
         </Col>
       </Row>

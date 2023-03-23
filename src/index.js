@@ -7,6 +7,7 @@ import {
   SerialsRoute,
   SerialCreateRoute,
   SerialEditRoute,
+  RulesetCreateRoute,
   ExpectedPiecesRoute,
   PatternsRoute,
 } from './routes';
@@ -34,6 +35,7 @@ const App = (props) => {
       <Switch>
         <Route component={SerialCreateRoute} path={`${path}/serials/create`} />
         <Route component={SerialEditRoute} path={`${path}/serials/:id/edit`} />
+        <Route component={RulesetCreateRoute} path={`${path}/serials/:id/rulesets/create`} />
         <SerialsRoute path={`${path}/serials`} />
         <ExpectedPiecesRoute path={`${path}/expectedPieces`} />
         <PatternsRoute path={`${path}/patterns`} />

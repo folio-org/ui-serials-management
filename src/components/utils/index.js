@@ -3,4 +3,6 @@ export { default as useSerialsManagementRefdata } from './useSerialsManagementRe
 export { default as selectifyRefdata } from './selectifyRefdata';
 export { validateNotNegative } from './validators';
 export { validateWithinRange } from './validators';
+export { validateWholeNumber } from './validators';
+
 
