@@ -65,5 +65,11 @@
     "recurrence.ofYear": "Do ano",
     "recurrence.issueIndex": "Edição {index}",
     "validate.withinRange": "Deve estar dentro do intervalo {minValue} e {maxValue}",
-    "validate.notNegative": "Não pode ser negativo"
+    "validate.notNegative": "Não pode ser negativo",
+    "serials.addRuleset": "Adicionar conjunto de regras",
+    "rulesets.newRuleset": "Novo conjunto de regras",
+    "rulestes.editRuleset": "Editar conjunto de regras",
+    "validate.wholeNumber": "Deve ser um número inteiro",
+    "validate.mustEqual": "Deve ser igual a {value}",
+    "serials.rulesets": "Conjuntos de regras"
 }

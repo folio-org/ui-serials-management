@@ -65,5 +65,11 @@
     "recurrence.ofYear": "De año",
     "recurrence.issueIndex": "Número {index}",
     "validate.withinRange": "Debe estar dentro del rango {minValue} y {maxValue}",
-    "validate.notNegative": "no puede ser negativo"
+    "validate.notNegative": "no puede ser negativo",
+    "serials.addRuleset": "Añadir conjunto de reglas",
+    "rulesets.newRuleset": "Nueva solicitud",
+    "rulestes.editRuleset": "Editar conjunto de reglas",
+    "validate.wholeNumber": "Debe ser un número de 4 cifras",
+    "validate.mustEqual": "Debe ser igual a {valor}",
+    "serials.rulesets": "Juegos de reglas"
 }
