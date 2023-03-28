@@ -65,5 +65,11 @@
     "recurrence.ofYear": "Of year",
     "recurrence.issueIndex": "Issue {index}",
     "validate.withinRange": "Must be within range {minValue} and {maxValue}",
-    "validate.notNegative": "Cannot be negative"
+    "validate.notNegative": "Cannot be negative",
+    "serials.addRuleset": "Add ruleset",
+    "rulesets.newRuleset": "New ruleset",
+    "rulestes.editRuleset": "Edit ruleset",
+    "validate.wholeNumber": "Must be a whole number",
+    "validate.mustEqual": "Must equal {value}",
+    "serials.rulesets": "Rulesets"
 }
