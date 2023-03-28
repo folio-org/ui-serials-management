@@ -6,10 +6,10 @@ import { Row, Col, TextArea, Select } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
-const [SERIAL_STATUS] = ['Serial.SerialStatus'];
+const [RULESET_STATUS] = ['SerialRuleset.Status'];
 
-const SerialInfoForm = () => {
-  const refdataValues = useSerialsManagementRefdata([SERIAL_STATUS]);
+const RulesetInfoForm = () => {
+  const refdataValues = useSerialsManagementRefdata([RULESET_STATUS]);
 
   return (
     <Row>
@@ -18,10 +18,10 @@ const SerialInfoForm = () => {
           component={Select}
           dataOptions={[
             { value: '', label: '' },
-            ...selectifyRefdata(refdataValues, SERIAL_STATUS, 'value'),
+            ...selectifyRefdata(refdataValues, RULESET_STATUS, 'value'),
           ]}
-          label={<FormattedMessage id="ui-serials-management.serials.status" />}
-          name="serialStatus.value"
+          label={<FormattedMessage id="ui-serials-management.status" />}
+          name="rulesetStatus.value"
           required
           validate={requiredValidator}
         />
@@ -30,9 +30,7 @@ const SerialInfoForm = () => {
         <Field
           component={TextArea}
           fullWidth
-          label={
-            <FormattedMessage id="ui-serials-management.serials.description" />
-          }
+          label={<FormattedMessage id="ui-serials-management.description" />}
           name="description"
           parse={(v) => v}
         />
@@ -41,4 +39,4 @@ const SerialInfoForm = () => {
   );
 };
 
-export default SerialInfoForm;
+export default RulesetInfoForm;
