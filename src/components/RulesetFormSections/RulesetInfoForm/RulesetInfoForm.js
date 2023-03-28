@@ -6,7 +6,7 @@ import { Row, Col, TextArea, Select } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
-const [RULESET_STATUS] = ['SerialRuleset.Status'];
+const [RULESET_STATUS] = ['SerialRuleset.RulesetStatus'];
 
 const RulesetInfoForm = () => {
   const refdataValues = useSerialsManagementRefdata([RULESET_STATUS]);
