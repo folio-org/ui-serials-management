@@ -4,6 +4,7 @@ import { useFormState } from 'react-final-form';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
+  Accordion,
   Button,
   IconButton,
   Pane,
@@ -14,6 +15,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  RulesetInfoForm,
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
 } from '../../RulesetFormSections';
@@ -90,10 +92,15 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
         )}
       >
-        <PatternTimePeriodForm />
-        {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
-          <IssuePublicationFieldArray />
-        )}
+        <RulesetInfoForm />
+        <Accordion
+          label={<FormattedMessage id="ui-serials-management.recurrence" />}
+        >
+          <PatternTimePeriodForm />
+          {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
+            <IssuePublicationFieldArray />
+          )}
+        </Accordion>
       </Pane>
     </Paneset>
   );
