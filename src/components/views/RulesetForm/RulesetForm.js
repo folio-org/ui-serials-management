@@ -18,6 +18,7 @@ import {
   RulesetInfoForm,
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
+  OmissionFieldArray,
 } from '../../RulesetFormSections';
 
 const propTypes = {
@@ -100,6 +101,11 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
             <IssuePublicationFieldArray />
           )}
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-serials-management.omissions" />}
+        >
+          <OmissionFieldArray />
         </Accordion>
       </Pane>
     </Paneset>

@@ -76,6 +76,12 @@
   "recurrence.ofYear": "Of year",
   "recurrence.issueIndex": "Issue {index}",
 
+  "omissions": "Omissions",
+  "omissions.omissionIndex": "Omission {index}",
+  "omissions.omissionType": "Omission type",
+  "omissions.removeOmission": "Remove omission {index}",
+  "omissions.addOmission": "Add omission",
+
   "expectedPieces": "Expected pieces",
 
   "patterns": "Patterns",
