@@ -85,8 +85,13 @@
   "omissions.weeks": "Week(s)",
   "omissions.inWeeks": "In week(s)",
   "omissions.inMonth": "In month",
+  "omissions.monthFrom": "Month from",
+  "omissions.monthTo": "Month to",
+  "omissions.weekFrom": "Week from",
+  "omissions.weekTo": "Week to",
   "omissions.months": "Month(s)",
   "omissions.issue": "Issue",
+  "omissions.omitRangeOf": "Omit range of {omissionType}",
 
   "expectedPieces": "Expected pieces",
 

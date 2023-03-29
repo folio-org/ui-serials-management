@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
+  Checkbox,
   Select,
   Col,
   TextField,
@@ -29,17 +30,16 @@ import {
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
-const OmissionsField = ({ name, index }) => {
+const OmissionsField = ({ name, index, omission }) => {
   const { values } = useFormState();
+  const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
 
   const renderIssueField = (minValue = 1, maxValue = 1) => {
     return (
       <Field
         component={TextField}
-        label={
-          <FormattedMessage id="ui-serials-management.omissions.issue" />
-        }
+        label={<FormattedMessage id="ui-serials-management.omissions.issue" />}
         name={`${name}[${index}].issue`}
         required
         type="number"
@@ -69,7 +69,7 @@ const OmissionsField = ({ name, index }) => {
     );
   };
 
-  const renderMonthField = (labelId) => {
+  const renderMonthField = (labelId, fieldName = 'month.value') => {
     return (
       <Field
         component={Select}
@@ -82,27 +82,7 @@ const OmissionsField = ({ name, index }) => {
           }),
         ]}
         label={<FormattedMessage id={labelId} />}
-        name={`${name}[${index}].month.value`}
-        required
-        validate={requiredValidator}
-      />
-    );
-  };
-
-  const renderMonthsField = () => {
-    return (
-      <Field
-        component={MultiSelection}
-        dataOptions={[
-          ...selectifyRefdata(refdataValues, MONTHS, 'value').sort((a, b) => {
-            return (
-              SORTED_MONTHS.indexOf(a.value) - SORTED_MONTHS.indexOf(b.value)
-            );
-          }),
-        ]}
-        label={<FormattedMessage id="ui-serials-management.omissions.months" />}
-        name={`${name}[${index}].months`}
-        renderToOverlay
+        name={`${name}[${index}].${fieldName}`}
         required
         validate={requiredValidator}
       />
@@ -127,6 +107,24 @@ const OmissionsField = ({ name, index }) => {
     );
   };
 
+  const renderWeekField = (minValue, maxValue, labelId, fieldName = 'week') => {
+    const dataOptions = [];
+    for (let i = minValue; i <= maxValue; i++) {
+      dataOptions.push({ value: i, label: i });
+    }
+    return (
+      <Field
+        component={Select}
+        dataOptions={[{ value: '', label: '' }, ...dataOptions]}
+        label={<FormattedMessage id={labelId} />}
+        name={`${name}[${index}].${fieldName}`}
+        renderToOverlay
+        required
+        validate={requiredValidator}
+      />
+    );
+  };
+
   const renderWeekdayField = () => {
     return (
       <Field
@@ -142,7 +140,7 @@ const OmissionsField = ({ name, index }) => {
         label={
           <FormattedMessage id="ui-serials-management.omissions.weekdays" />
         }
-        name={`${name}[${index}].pattern.weekday.value`}
+        name={`${name}[${index}].weekday.value`}
         renderToOverlay
         required
         validate={requiredValidator}
@@ -171,14 +169,42 @@ const OmissionsField = ({ name, index }) => {
     },
     weeks: {
       fields: [
-        renderWeeksField(1, 52, 'ui-serials-management.omissions.weeks'),
+        renderWeekField(
+          1,
+          52,
+          !omission.omitRange
+            ? 'ui-serials-management.recurrence.week'
+            : 'ui-serials-management.omissions.weekFrom',
+          omission.omitRange && 'weekFrom'
+        ),
+      ],
+      range: [
+        renderWeekField(
+          1,
+          52,
+          'ui-serials-management.omissions.weekTo',
+          'weekTo'
+        ),
       ],
     },
     weeksInEveryMonth: {
       fields: [renderWeeksField(1, 4, 'ui-serials-management.omissions.weeks')],
     },
     months: {
-      fields: [renderMonthsField()],
+      fields: [
+        renderMonthField(
+          !omission.omitRange
+            ? 'ui-serials-management.recurrence.month'
+            : 'ui-serials-management.omissions.monthFrom',
+          omission.omitRange && 'monthFrom.value'
+        ),
+      ],
+      range: [
+        renderMonthField(
+          'ui-serials-management.omissions.monthTo',
+          'monthTo.value'
+        ),
+      ],
     },
     nthIssue: {
       fields: [
@@ -208,16 +234,50 @@ const OmissionsField = ({ name, index }) => {
               <FormattedMessage id="ui-serials-management.omissions.omissionType" />
             }
             name={`${name}[${index}].omissionType.value`}
+            onChange={(e) => change(`${name}[${index}]`, {
+              omissionType: { value: e?.target?.value },
+            })
+            }
             required
             validate={requiredValidator}
           />
         </Col>
-        {omissionTypeFormats[
-          values?.omissions[index]?.omissionType?.value
-        ]?.fields?.map((e) => {
-          return <Col xs={3}>{e}</Col>;
-        })}
+        {omissionTypeFormats[omission?.omissionType?.value]?.fields?.map(
+          (e) => {
+            return <Col xs={3}>{e}</Col>;
+          }
+        )}
       </Row>
+      {(omission?.omissionType?.value === 'weeks' ||
+        omission?.omissionType?.value === 'months') && (
+        <Row>
+          <Col xs={3}>
+            <Field
+              component={Checkbox}
+              label={
+                <FormattedMessage
+                  id="ui-serials-management.omissions.omitRangeOf"
+                  values={{ omissionType: omission?.omissionType?.value }}
+                />
+              }
+              name={`${name}[${index}].omitRange`}
+              onChange={(e) => {
+                change(`${name}[${index}]`, {
+                  omissionType: { value: omission?.omissionType?.value },
+                  omitRange: e.target.checked,
+                });
+              }}
+              type="checkbox"
+            />
+          </Col>
+          {omission.omitRange &&
+            omissionTypeFormats[omission?.omissionType?.value]?.range?.map(
+              (e) => {
+                return <Col xs={3}>{e}</Col>;
+              }
+            )}
+        </Row>
+      )}
     </>
   );
 };
@@ -225,6 +285,7 @@ const OmissionsField = ({ name, index }) => {
 OmissionsField.propTypes = {
   name: PropTypes.string,
   index: PropTypes.string,
+  omission: PropTypes.object,
 };
 
 export default OmissionsField;
