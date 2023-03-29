@@ -9,6 +9,8 @@
   "actions": "Actions",
   "save": "Save",
   "cancel": "Cancel",
+  "status": "Status",
+  "description": "Description",
 
   "refdata.label": "Label",
   "refdata.value": "Value",

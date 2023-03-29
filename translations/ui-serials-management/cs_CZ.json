@@ -65,5 +65,11 @@
     "recurrence.ofYear": "Roku",
     "recurrence.issueIndex": "Vydání {index}",
     "validate.withinRange": "Musí být v rozsahu {minValue} a {maxValue}",
-    "validate.notNegative": "Nemůže být negativní"
+    "validate.notNegative": "Nemůže být negativní",
+    "serials.addRuleset": "Add ruleset",
+    "rulesets.newRuleset": "New ruleset",
+    "rulestes.editRuleset": "Edit ruleset",
+    "validate.wholeNumber": "Must be a whole number",
+    "validate.mustEqual": "Must equal {value}",
+    "serials.rulesets": "Rulesets"
 }
