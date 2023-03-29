@@ -81,6 +81,12 @@
   "omissions.omissionType": "Omission type",
   "omissions.removeOmission": "Remove omission {index}",
   "omissions.addOmission": "Add omission",
+  "omissions.weekdays": "Weekday(s)",
+  "omissions.weeks": "Week(s)",
+  "omissions.inWeeks": "In week(s)",
+  "omissions.inMonth": "In month",
+  "omissions.months": "Month(s)",
+  "omissions.issue": "Issue",
 
   "expectedPieces": "Expected pieces",
 
