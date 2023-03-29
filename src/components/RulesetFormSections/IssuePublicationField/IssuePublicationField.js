@@ -20,7 +20,7 @@ import {
   useSerialsManagementRefdata,
   selectifyRefdata,
   validateWithinRange,
-  validateWholeNumber
+  validateWholeNumber,
 } from '../../utils';
 import {
   SORTED_MONTHS,
@@ -34,10 +34,7 @@ const propTypes = {
   patternType: PropTypes.string,
 };
 
-const [MONTHS, WEEKDAYS] = [
-  'RecurrencePattern.Month',
-  'RecurrencePattern.Weekday',
-];
+const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
 const IssuePublicationField = ({ issue, name, index, patternType }) => {
   const { values } = useFormState();
