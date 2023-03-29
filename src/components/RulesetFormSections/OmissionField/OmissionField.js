@@ -40,7 +40,7 @@ const OmissionsField = ({ name, index, omission }) => {
       <Field
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.omissions.issue" />}
-        name={`${name}[${index}].issue`}
+        name={`${name}[${index}].pattern.issue`}
         required
         type="number"
         validate={composeValidators(
@@ -57,7 +57,7 @@ const OmissionsField = ({ name, index, omission }) => {
       <Field
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
-        name={`${name}[${index}].day`}
+        name={`${name}[${index}].pattern.day`}
         required
         type="number"
         validate={composeValidators(
@@ -82,7 +82,7 @@ const OmissionsField = ({ name, index, omission }) => {
           }),
         ]}
         label={<FormattedMessage id={labelId} />}
-        name={`${name}[${index}].${fieldName}`}
+        name={`${name}[${index}].pattern.${fieldName}`}
         required
         validate={requiredValidator}
       />
@@ -99,7 +99,7 @@ const OmissionsField = ({ name, index, omission }) => {
         component={MultiSelection}
         dataOptions={[...dataOptions]}
         label={<FormattedMessage id={labelId} />}
-        name={`${name}[${index}].weeks`}
+        name={`${name}[${index}].pattern.weeks`}
         renderToOverlay
         required
         validate={requiredValidator}
@@ -117,7 +117,7 @@ const OmissionsField = ({ name, index, omission }) => {
         component={Select}
         dataOptions={[{ value: '', label: '' }, ...dataOptions]}
         label={<FormattedMessage id={labelId} />}
-        name={`${name}[${index}].${fieldName}`}
+        name={`${name}[${index}].pattern.${fieldName}`}
         renderToOverlay
         required
         validate={requiredValidator}
@@ -140,7 +140,7 @@ const OmissionsField = ({ name, index, omission }) => {
         label={
           <FormattedMessage id="ui-serials-management.omissions.weekdays" />
         }
-        name={`${name}[${index}].weekday.value`}
+        name={`${name}[${index}].pattern.weekday.value`}
         renderToOverlay
         required
         validate={requiredValidator}
@@ -172,10 +172,10 @@ const OmissionsField = ({ name, index, omission }) => {
         renderWeekField(
           1,
           52,
-          !omission.omitRange
+          !omission?.pattern?.omitRange
             ? 'ui-serials-management.recurrence.week'
             : 'ui-serials-management.omissions.weekFrom',
-          omission.omitRange && 'weekFrom'
+          omission?.pattern?.omitRange && 'weekFrom'
         ),
       ],
       range: [
@@ -193,10 +193,10 @@ const OmissionsField = ({ name, index, omission }) => {
     months: {
       fields: [
         renderMonthField(
-          !omission.omitRange
+          !omission?.pattern?.omitRange
             ? 'ui-serials-management.recurrence.month'
             : 'ui-serials-management.omissions.monthFrom',
-          omission.omitRange && 'monthFrom.value'
+          omission?.pattern?.omitRange && 'monthFrom.value'
         ),
       ],
       range: [
@@ -260,17 +260,17 @@ const OmissionsField = ({ name, index, omission }) => {
                   values={{ omissionType: omission?.omissionType?.value }}
                 />
               }
-              name={`${name}[${index}].omitRange`}
+              name={`${name}[${index}].pattern.omitRange`}
               onChange={(e) => {
                 change(`${name}[${index}]`, {
                   omissionType: { value: omission?.omissionType?.value },
-                  omitRange: e.target.checked,
+                  pattern: { omitRange: e.target.checked },
                 });
               }}
               type="checkbox"
             />
           </Col>
-          {omission.omitRange &&
+          {omission?.pattern?.omitRange &&
             omissionTypeFormats[omission?.omissionType?.value]?.range?.map(
               (e) => {
                 return <Col xs={3}>{e}</Col>;
