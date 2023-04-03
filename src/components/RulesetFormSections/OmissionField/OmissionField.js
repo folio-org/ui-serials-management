@@ -28,12 +28,15 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
+const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = ['Global.Month', 'Global.Weekday', 'OmissionRule.PatternType'];
+
+// TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
+// This should be fixed on backend then tweaked here
 
 const OmissionsField = ({ name, index, omission }) => {
   const { values } = useFormState();
   const { change } = useForm();
-  const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
+  const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES]);
 
   const renderIssueField = (minValue = 1, maxValue = 1) => {
     return (
@@ -148,20 +151,20 @@ const OmissionsField = ({ name, index, omission }) => {
     );
   };
 
-  const omissionTypeFormats = {
-    daysInMonth: {
+  const patternTypeFormats = {
+    days_in_month: {
       fields: [
         renderDayField(1, 31),
         renderMonthField('ui-serials-management.recurrence.ofMonth'),
       ],
     },
-    weekdaysInWeek: {
+    weekdays_in_week: {
       fields: [
         renderWeekdayField(),
         renderWeeksField(1, 52, 'ui-serials-management.omissions.inWeeks'),
       ],
     },
-    weekdaysInMonth: {
+    weekdays_in_month: {
       fields: [
         renderWeekdayField(),
         renderMonthField('ui-serials-management.omissions.inMonth'),
@@ -187,7 +190,7 @@ const OmissionsField = ({ name, index, omission }) => {
         ),
       ],
     },
-    weeksInEveryMonth: {
+    weeks_in_every_month: {
       fields: [renderWeeksField(1, 4, 'ui-serials-management.omissions.weeks')],
     },
     months: {
@@ -206,7 +209,7 @@ const OmissionsField = ({ name, index, omission }) => {
         ),
       ],
     },
-    nthIssue: {
+    nth_issue: {
       fields: [
         renderIssueField(1, values?.recurrence?.issues),
         renderMonthField('ui-serials-management.recurrence.ofMonth'),
@@ -222,34 +225,28 @@ const OmissionsField = ({ name, index, omission }) => {
             component={Select}
             dataOptions={[
               { value: '', label: '' },
-              { value: 'daysInMonth', label: 'Days in month' },
-              { value: 'weekdaysInWeek', label: 'Weekdays in week' },
-              { value: 'weekdaysInMonth', label: 'Weekdays in month' },
-              { value: 'weeks', label: 'Weeks' },
-              { value: 'weeksInEveryMonth', label: 'Weeks in every month' },
-              { value: 'months', label: 'Months' },
-              { value: 'nthIssue', label: 'Nth issue' },
+              ...selectifyRefdata(refdataValues, OMISSION_PATTERN_TYPES, 'value')
             ]}
             label={
               <FormattedMessage id="ui-serials-management.omissions.omissionType" />
             }
-            name={`${name}[${index}].omissionType.value`}
+            name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
-              omissionType: { value: e?.target?.value },
+              patternType: e?.target?.value,
             })
             }
             required
             validate={requiredValidator}
           />
         </Col>
-        {omissionTypeFormats[omission?.omissionType?.value]?.fields?.map(
+        {patternTypeFormats[omission?.patternType]?.fields?.map(
           (e) => {
             return <Col xs={3}>{e}</Col>;
           }
         )}
       </Row>
-      {(omission?.omissionType?.value === 'weeks' ||
-        omission?.omissionType?.value === 'months') && (
+      {(omission?.patternType === 'weeks' ||
+        omission?.patternType === 'months') && (
         <Row>
           <Col xs={3}>
             <Field
@@ -257,13 +254,13 @@ const OmissionsField = ({ name, index, omission }) => {
               label={
                 <FormattedMessage
                   id="ui-serials-management.omissions.omitRangeOf"
-                  values={{ omissionType: omission?.omissionType?.value }}
+                  values={{ omissionType: omission?.patternType }}
                 />
               }
               name={`${name}[${index}].pattern.omitRange`}
               onChange={(e) => {
                 change(`${name}[${index}]`, {
-                  omissionType: { value: omission?.omissionType?.value },
+                  patternType: omission?.patternType,
                   pattern: { omitRange: e.target.checked },
                 });
               }}
@@ -271,7 +268,7 @@ const OmissionsField = ({ name, index, omission }) => {
             />
           </Col>
           {omission?.pattern?.omitRange &&
-            omissionTypeFormats[omission?.omissionType?.value]?.range?.map(
+            patternTypeFormats[omission?.patternType]?.range?.map(
               (e) => {
                 return <Col xs={3}>{e}</Col>;
               }

@@ -9,11 +9,11 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import OmissionField from '../OmissionField';
 
 const OmissionFieldArray = () => {
-  const { items, onAddField, onDeleteField } = useKiwtFieldArray('omissions');
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray('omission.rules');
 
   return (
     <>
-      <FieldArray name="omissions">
+      <FieldArray name="omission.rules">
         {() => items.map((omission, index) => {
           return (
             <EditCard
@@ -33,7 +33,7 @@ const OmissionFieldArray = () => {
             >
               <OmissionField
                 index={index}
-                name="omissions"
+                name="omission.rules"
                 omission={omission}
               />
             </EditCard>
