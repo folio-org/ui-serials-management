@@ -30,6 +30,7 @@ const IssuePublicationFieldArray = () => {
       {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
         <Row>
           <Col xs={3}>
+            {/* IMPORTANT This needs to be patternType instead of patternType.value for the time being */}
             <Field
               name="patternType"
               render={({ input, meta }) => (
