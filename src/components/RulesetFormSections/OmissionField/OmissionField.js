@@ -95,8 +95,9 @@ const OmissionsField = ({ name, index, omission }) => {
   const renderWeeksField = (minValue, maxValue, labelId) => {
     const dataOptions = [];
     for (let i = minValue; i <= maxValue; i++) {
-      dataOptions.push({ value: i, label: i });
+      dataOptions.push({ value: i, label: String(i) });
     }
+
     return (
       <Field
         component={MultiSelection}
@@ -115,6 +116,7 @@ const OmissionsField = ({ name, index, omission }) => {
     for (let i = minValue; i <= maxValue; i++) {
       dataOptions.push({ value: i, label: i });
     }
+
     return (
       <Field
         component={Select}
