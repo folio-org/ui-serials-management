@@ -28,7 +28,11 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = ['Global.Month', 'Global.Weekday', 'OmissionRule.PatternType'];
+const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = [
+  'Global.Month',
+  'Global.Weekday',
+  'OmissionRule.PatternType',
+];
 
 // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
 // This should be fixed on backend then tweaked here
@@ -36,7 +40,11 @@ const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = ['Global.Month', 'Global.Week
 const OmissionsField = ({ name, index, omission }) => {
   const { values } = useFormState();
   const { change } = useForm();
-  const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES]);
+  const refdataValues = useSerialsManagementRefdata([
+    MONTHS,
+    WEEKDAYS,
+    OMISSION_PATTERN_TYPES,
+  ]);
 
   const renderIssueField = (minValue = 1, maxValue = 1) => {
     return (
@@ -177,10 +185,10 @@ const OmissionsField = ({ name, index, omission }) => {
         renderWeekField(
           1,
           52,
-          !omission?.pattern?.omitRange
+          !omission?.pattern?.isRange
             ? 'ui-serials-management.recurrence.week'
             : 'ui-serials-management.omissions.weekFrom',
-          omission?.pattern?.omitRange && 'weekFrom'
+          omission?.pattern?.isRange && 'weekFrom'
         ),
       ],
       range: [
@@ -198,10 +206,10 @@ const OmissionsField = ({ name, index, omission }) => {
     months: {
       fields: [
         renderMonthField(
-          !omission?.pattern?.omitRange
+          !omission?.pattern?.isRange
             ? 'ui-serials-management.recurrence.month'
             : 'ui-serials-management.omissions.monthFrom',
-          omission?.pattern?.omitRange && 'monthFrom.value'
+          'monthFrom.value'
         ),
       ],
       range: [
@@ -227,7 +235,11 @@ const OmissionsField = ({ name, index, omission }) => {
             component={Select}
             dataOptions={[
               { value: '', label: '' },
-              ...selectifyRefdata(refdataValues, OMISSION_PATTERN_TYPES, 'value')
+              ...selectifyRefdata(
+                refdataValues,
+                OMISSION_PATTERN_TYPES,
+                'value'
+              ),
             ]}
             label={
               <FormattedMessage id="ui-serials-management.omissions.omissionType" />
@@ -241,11 +253,9 @@ const OmissionsField = ({ name, index, omission }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[omission?.patternType]?.fields?.map(
-          (e) => {
-            return <Col xs={3}>{e}</Col>;
-          }
-        )}
+        {patternTypeFormats[omission?.patternType]?.fields?.map((e) => {
+          return <Col xs={3}>{e}</Col>;
+        })}
       </Row>
       {(omission?.patternType === 'weeks' ||
         omission?.patternType === 'months') && (
@@ -259,22 +269,20 @@ const OmissionsField = ({ name, index, omission }) => {
                   values={{ omissionType: omission?.patternType }}
                 />
               }
-              name={`${name}[${index}].pattern.omitRange`}
+              name={`${name}[${index}].pattern.isRange`}
               onChange={(e) => {
                 change(`${name}[${index}]`, {
                   patternType: omission?.patternType,
-                  pattern: { omitRange: e.target.checked },
+                  pattern: { isRange: e.target.checked },
                 });
               }}
               type="checkbox"
             />
           </Col>
-          {omission?.pattern?.omitRange &&
-            patternTypeFormats[omission?.patternType]?.range?.map(
-              (e) => {
-                return <Col xs={3}>{e}</Col>;
-              }
-            )}
+          {omission?.pattern?.isRange &&
+            patternTypeFormats[omission?.patternType]?.range?.map((e) => {
+              return <Col xs={3}>{e}</Col>;
+            })}
         </Row>
       )}
     </>
