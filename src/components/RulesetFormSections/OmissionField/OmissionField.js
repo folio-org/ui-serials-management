@@ -188,7 +188,7 @@ const OmissionsField = ({ name, index, omission }) => {
           !omission?.pattern?.isRange
             ? 'ui-serials-management.recurrence.week'
             : 'ui-serials-management.omissions.weekFrom',
-          omission?.pattern?.isRange && 'weekFrom'
+          'weekFrom'
         ),
       ],
       range: [
