@@ -15,11 +15,7 @@ const Rulesets = ({ serial }) => {
   const location = useLocation();
 
   const renderBadge = (serialRulesets) => {
-    return serialRulesets ? (
-      <Badge>{serialRulesets?.length}</Badge>
-    ) : (
-      <Badge>0</Badge>
-    );
+    return <Badge>{serialRulesets?.length}</Badge>;
   };
 
   const renderAddChargesButton = () => {
@@ -40,9 +36,7 @@ const Rulesets = ({ serial }) => {
       closedByDefault
       displayWhenClosed={renderBadge(serial?.serialRulesets)}
       displayWhenOpen={renderAddChargesButton()}
-      label={
-        <FormattedMessage id="ui-serials-management.serials.rulesets" />
-      }
+      label={<FormattedMessage id="ui-serials-management.serials.rulesets" />}
     >
       <ul>
         {serial?.serialRulesets?.map((e) => (

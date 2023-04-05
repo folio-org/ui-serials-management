@@ -33,6 +33,9 @@ const PatternTimePeriodForm = () => {
   const patternTypes = usePatternTypes();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
+  // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
+  // This should be fixed on backend then tweaked here
+
   return (
     <>
       <Row>
@@ -133,6 +136,7 @@ const PatternTimePeriodForm = () => {
           />
         </Col>
         <Col xs={3}>
+          {/* IMPORTANT This needs to be patternType instead of patternType.value for the time being */}
           <Field
             name="recurrence.issues"
             render={({ input, meta }) => (
