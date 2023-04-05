@@ -172,7 +172,7 @@ const OmissionsField = ({ name, index, omission }) => {
     weekdays_in_week: {
       fields: [
         renderWeekdayField(),
-        renderWeeksField(1, 52, 'ui-serials-management.omissions.inWeeks'),
+        renderWeekField(1, 52, 'ui-serials-management.omissions.inWeek'),
       ],
     },
     weekdays_in_month: {
