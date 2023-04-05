@@ -141,8 +141,9 @@ const OmissionsField = ({ name, index, omission }) => {
   const renderWeekdayField = () => {
     return (
       <Field
-        component={MultiSelection}
+        component={Select}
         dataOptions={[
+          { value: '', label: '' },
           ...selectifyRefdata(refdataValues, WEEKDAYS, 'value').sort((a, b) => {
             return (
               SORTED_WEEKDAYS.indexOf(a.value) -
@@ -151,7 +152,7 @@ const OmissionsField = ({ name, index, omission }) => {
           }),
         ]}
         label={
-          <FormattedMessage id="ui-serials-management.omissions.weekdays" />
+          <FormattedMessage id="ui-serials-management.omissions.weekday" />
         }
         name={`${name}[${index}].pattern.weekday.value`}
         renderToOverlay
