@@ -8,7 +8,6 @@ import {
   Col,
   TextField,
   Row,
-  MultiSelection,
 } from '@folio/stripes/components';
 
 import {
@@ -100,25 +99,6 @@ const OmissionsField = ({ name, index, omission }) => {
     );
   };
 
-  const renderWeeksField = (minValue, maxValue, labelId) => {
-    const dataOptions = [];
-    for (let i = minValue; i <= maxValue; i++) {
-      dataOptions.push({ value: i, label: String(i) });
-    }
-
-    return (
-      <Field
-        component={MultiSelection}
-        dataOptions={[...dataOptions]}
-        label={<FormattedMessage id={labelId} />}
-        name={`${name}[${index}].pattern.weeks`}
-        renderToOverlay
-        required
-        validate={requiredValidator}
-      />
-    );
-  };
-
   const renderWeekField = (minValue, maxValue, labelId, fieldName = 'week') => {
     const dataOptions = [];
     for (let i = minValue; i <= maxValue; i++) {
@@ -202,7 +182,7 @@ const OmissionsField = ({ name, index, omission }) => {
       ],
     },
     weeks_in_every_month: {
-      fields: [renderWeeksField(1, 4, 'ui-serials-management.omissions.weeks')],
+      fields: [renderWeekField(1, 4, 'ui-serials-management.omissions.week')],
     },
     months: {
       fields: [
