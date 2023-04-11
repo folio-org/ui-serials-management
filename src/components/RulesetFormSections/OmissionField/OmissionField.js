@@ -49,7 +49,7 @@ const OmissionsField = ({ name, index, omission }) => {
     return (
       <Field
         component={TextField}
-        label={<FormattedMessage id="ui-serials-management.omissions.issue" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.issue" />}
         name={`${name}[${index}].pattern.issue`}
         required
         type="number"
@@ -66,7 +66,7 @@ const OmissionsField = ({ name, index, omission }) => {
     return (
       <Field
         component={TextField}
-        label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={`${name}[${index}].pattern.day`}
         required
         type="number"
@@ -91,7 +91,9 @@ const OmissionsField = ({ name, index, omission }) => {
             );
           }),
         ]}
-        label={<FormattedMessage id={labelId} />}
+        label={
+          <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
+        }
         name={`${name}[${index}].pattern.${fieldName}`}
         required
         validate={requiredValidator}
@@ -109,7 +111,9 @@ const OmissionsField = ({ name, index, omission }) => {
       <Field
         component={Select}
         dataOptions={[{ value: '', label: '' }, ...dataOptions]}
-        label={<FormattedMessage id={labelId} />}
+        label={
+          <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
+        }
         name={`${name}[${index}].pattern.${fieldName}`}
         renderToOverlay
         required
@@ -131,9 +135,7 @@ const OmissionsField = ({ name, index, omission }) => {
             );
           }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.omissions.weekday" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.weekday" />}
         name={`${name}[${index}].pattern.weekday.value`}
         renderToOverlay
         required
@@ -144,67 +146,27 @@ const OmissionsField = ({ name, index, omission }) => {
 
   const patternTypeFormats = {
     days_in_month: {
-      fields: [
-        renderDayField(1, 31),
-        renderMonthField('ui-serials-management.recurrence.ofMonth'),
-      ],
+      fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
     weekdays_in_week: {
-      fields: [
-        renderWeekdayField(),
-        renderWeekField(1, 52, 'ui-serials-management.omissions.inWeek'),
-      ],
+      fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
     },
     weekdays_in_month: {
-      fields: [
-        renderWeekdayField(),
-        renderMonthField('ui-serials-management.omissions.inMonth'),
-      ],
+      fields: [renderWeekdayField(), renderMonthField('inMonth')],
     },
     weeks: {
-      fields: [
-        renderWeekField(
-          1,
-          52,
-          !omission?.pattern?.isRange
-            ? 'ui-serials-management.recurrence.week'
-            : 'ui-serials-management.omissions.weekFrom',
-          'weekFrom'
-        ),
-      ],
-      range: [
-        renderWeekField(
-          1,
-          52,
-          'ui-serials-management.omissions.weekTo',
-          'weekTo'
-        ),
-      ],
+      fields: [renderWeekField(1, 52, !omission?.pattern?.isRange ? 'week' : 'weekFrom', 'weekFrom')],
+      range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
     },
     weeks_in_every_month: {
-      fields: [renderWeekField(1, 4, 'ui-serials-management.omissions.week')],
+      fields: [renderWeekField(1, 4, 'week')],
     },
     months: {
-      fields: [
-        renderMonthField(
-          !omission?.pattern?.isRange
-            ? 'ui-serials-management.recurrence.month'
-            : 'ui-serials-management.omissions.monthFrom',
-          'monthFrom.value'
-        ),
-      ],
-      range: [
-        renderMonthField(
-          'ui-serials-management.omissions.monthTo',
-          'monthTo.value'
-        ),
-      ],
+      fields: [renderMonthField(!omission?.pattern?.isRange ? 'month' : 'monthFrom', 'monthFrom.value')],
+      range: [renderMonthField('monthTo', 'monthTo.value')],
     },
     nth_issue: {
-      fields: [
-        renderIssueField(1, values?.recurrence?.issues),
-        renderMonthField('ui-serials-management.recurrence.ofMonth'),
-      ],
+      fields: [renderIssueField(1, values?.recurrence?.issues), renderMonthField('ofMonth')]
     },
   };
 
@@ -223,7 +185,7 @@ const OmissionsField = ({ name, index, omission }) => {
               ),
             ]}
             label={
-              <FormattedMessage id="ui-serials-management.omissions.omissionType" />
+              <FormattedMessage id="ui-serials-management.ruleset.omissionType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
@@ -246,16 +208,24 @@ const OmissionsField = ({ name, index, omission }) => {
               component={Checkbox}
               label={
                 <FormattedMessage
-                  id="ui-serials-management.omissions.omitRangeOf"
+                  id="ui-serials-management.ruleset.omitRangeOf"
                   values={{ omissionType: omission?.patternType }}
                 />
               }
               name={`${name}[${index}].pattern.isRange`}
               onChange={(e) => {
-                change(`${name}[${index}]`, {
-                  patternType: omission?.patternType,
-                  pattern: { isRange: e.target.checked },
-                });
+                // If isRange checkbox is checked, keep the 'From' value
+                if (e.target.checked) {
+                  change(`${name}[${index}].pattern`, {
+                    ...omission.pattern,
+                    isRange: e.target.checked,
+                  });
+                  // If isRange is unchecked, clear the field for the 'To' value
+                } else {
+                  change(`${name}[${index}].pattern.isRange`, e.target.checked);
+                  // Remove 's' from patternType so it is correct backend variable
+                  change(`${name}[${index}].pattern.${omission?.patternType?.slice(0, -1)}To`, undefined);
+                }
               }}
               type="checkbox"
             />

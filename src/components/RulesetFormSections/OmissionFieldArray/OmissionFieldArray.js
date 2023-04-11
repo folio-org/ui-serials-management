@@ -19,13 +19,13 @@ const OmissionFieldArray = () => {
             <EditCard
               deleteButtonTooltipText={
                 <FormattedMessage
-                  id="ui-serials-management.omissions.removeOmission"
+                  id="ui-serials-management.ruleset.removeOmission"
                   values={{ index: index + 1 }}
                 />
                 }
               header={
                 <FormattedMessage
-                  id="ui-serials-management.omissions.omissionIndex"
+                  id="ui-serials-management.ruleset.omissionIndex"
                   values={{ index: index + 1 }}
                 />
                 }
@@ -42,7 +42,7 @@ const OmissionFieldArray = () => {
         }
       </FieldArray>
       <Button onClick={() => onAddField({})}>
-        <FormattedMessage id="ui-serials-management.omissions.addOmission" />
+        <FormattedMessage id="ui-serials-management.ruleset.addOmission" />
       </Button>
     </>
   );

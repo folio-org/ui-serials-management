@@ -52,7 +52,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
       <Field
         component={TextField}
         disabled={disabled}
-        label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={
           ordinal
             ? `${name}[${index}].ordinal`
@@ -85,7 +85,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
             );
           }),
         ]}
-        label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={`${name}[${index}].pattern.weekday.value`}
         required
         validate={requiredValidator}
@@ -98,7 +98,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
       <Field
         component={TextField}
         label={
-          <FormattedMessage id="ui-serials-management.recurrence.ofWeek" />
+          <FormattedMessage id="ui-serials-management.ruleset.ofWeek" />
         }
         name={
           ordinal
@@ -129,7 +129,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           }),
         ]}
         label={
-          <FormattedMessage id="ui-serials-management.recurrence.ofMonth" />
+          <FormattedMessage id="ui-serials-management.ruleset.ofMonth" />
         }
         name={
           ordinal
@@ -155,7 +155,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
       <Field
         component={TextField}
         label={
-          <FormattedMessage id="ui-serials-management.recurrence.ofYear" />
+          <FormattedMessage id="ui-serials-management.ruleset.ofYear" />
         }
         name={
           ordinal
@@ -223,7 +223,7 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
           <Col xs={1}>
             <Label style={{ paddingTop: '25px' }}>
               <FormattedMessage
-                id="ui-serials-management.recurrence.issueIndex"
+                id="ui-serials-management.ruleset.issueIndex"
                 values={{ index: index + 1 }}
               />
             </Label>
