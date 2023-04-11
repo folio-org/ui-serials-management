@@ -41,7 +41,7 @@ const PatternTimePeriodForm = () => {
       <Row>
         <Col xs={12}>
           <strong>
-            <FormattedMessage id="ui-serials-management.recurrence.patternTimePeriod" />
+            <FormattedMessage id="ui-serials-management.ruleset.patternTimePeriod" />
           </strong>
         </Col>
       </Row>
@@ -65,7 +65,7 @@ const PatternTimePeriodForm = () => {
                 ]}
                 input={input}
                 label={
-                  <FormattedMessage id="ui-serials-management.recurrence.timeUnit" />
+                  <FormattedMessage id="ui-serials-management.ruleset.timeUnit" />
                 }
                 meta={meta}
                 onChange={(e) => {
@@ -97,13 +97,13 @@ const PatternTimePeriodForm = () => {
                 input={input}
                 label={
                   <FormattedMessage
-                    id="ui-serials-management.recurrence.numberOfTimeUnit"
+                    id="ui-serials-management.ruleset.numberOfTimeUnit"
                     values={{
                       timeUnit:
                         values?.recurrence?.timeUnit?.value ||
                         intl
                           .formatMessage({
-                            id: 'ui-serials-management.recurrence.timeUnit',
+                            id: 'ui-serials-management.ruleset.timeUnit',
                           })
                           .toLocaleLowerCase(),
                     }}
@@ -144,7 +144,7 @@ const PatternTimePeriodForm = () => {
                 disabled={!values?.recurrence?.timeUnit}
                 input={input}
                 label={
-                  <FormattedMessage id="ui-serials-management.recurrence.numberOfIssues" />
+                  <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
                 }
                 meta={meta}
                 onChange={(e) => {

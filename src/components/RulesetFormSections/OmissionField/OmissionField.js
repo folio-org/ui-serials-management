@@ -49,7 +49,7 @@ const OmissionsField = ({ name, index, omission }) => {
     return (
       <Field
         component={TextField}
-        label={<FormattedMessage id="ui-serials-management.omissions.issue" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.issue" />}
         name={`${name}[${index}].pattern.issue`}
         required
         type="number"
@@ -66,7 +66,7 @@ const OmissionsField = ({ name, index, omission }) => {
     return (
       <Field
         component={TextField}
-        label={<FormattedMessage id="ui-serials-management.recurrence.day" />}
+        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={`${name}[${index}].pattern.day`}
         required
         type="number"
@@ -132,7 +132,7 @@ const OmissionsField = ({ name, index, omission }) => {
           }),
         ]}
         label={
-          <FormattedMessage id="ui-serials-management.omissions.weekday" />
+          <FormattedMessage id="ui-serials-management.ruleset.weekday" />
         }
         name={`${name}[${index}].pattern.weekday.value`}
         renderToOverlay
@@ -146,19 +146,19 @@ const OmissionsField = ({ name, index, omission }) => {
     days_in_month: {
       fields: [
         renderDayField(1, 31),
-        renderMonthField('ui-serials-management.recurrence.ofMonth'),
+        renderMonthField('ui-serials-management.ruleset.ofMonth'),
       ],
     },
     weekdays_in_week: {
       fields: [
         renderWeekdayField(),
-        renderWeekField(1, 52, 'ui-serials-management.omissions.inWeek'),
+        renderWeekField(1, 52, 'ui-serials-management.ruleset.inWeek'),
       ],
     },
     weekdays_in_month: {
       fields: [
         renderWeekdayField(),
-        renderMonthField('ui-serials-management.omissions.inMonth'),
+        renderMonthField('ui-serials-management.ruleset.inMonth'),
       ],
     },
     weeks: {
@@ -167,8 +167,8 @@ const OmissionsField = ({ name, index, omission }) => {
           1,
           52,
           !omission?.pattern?.isRange
-            ? 'ui-serials-management.recurrence.week'
-            : 'ui-serials-management.omissions.weekFrom',
+            ? 'ui-serials-management.ruleset.week'
+            : 'ui-serials-management.ruleset.weekFrom',
           'weekFrom'
         ),
       ],
@@ -176,26 +176,26 @@ const OmissionsField = ({ name, index, omission }) => {
         renderWeekField(
           1,
           52,
-          'ui-serials-management.omissions.weekTo',
+          'ui-serials-management.ruleset.weekTo',
           'weekTo'
         ),
       ],
     },
     weeks_in_every_month: {
-      fields: [renderWeekField(1, 4, 'ui-serials-management.omissions.week')],
+      fields: [renderWeekField(1, 4, 'ui-serials-management.ruleset.week')],
     },
     months: {
       fields: [
         renderMonthField(
           !omission?.pattern?.isRange
-            ? 'ui-serials-management.recurrence.month'
-            : 'ui-serials-management.omissions.monthFrom',
+            ? 'ui-serials-management.ruleset.month'
+            : 'ui-serials-management.ruleset.monthFrom',
           'monthFrom.value'
         ),
       ],
       range: [
         renderMonthField(
-          'ui-serials-management.omissions.monthTo',
+          'ui-serials-management.ruleset.monthTo',
           'monthTo.value'
         ),
       ],
@@ -203,7 +203,7 @@ const OmissionsField = ({ name, index, omission }) => {
     nth_issue: {
       fields: [
         renderIssueField(1, values?.recurrence?.issues),
-        renderMonthField('ui-serials-management.recurrence.ofMonth'),
+        renderMonthField('ui-serials-management.ruleset.ofMonth'),
       ],
     },
   };
@@ -223,7 +223,7 @@ const OmissionsField = ({ name, index, omission }) => {
               ),
             ]}
             label={
-              <FormattedMessage id="ui-serials-management.omissions.omissionType" />
+              <FormattedMessage id="ui-serials-management.ruleset.omissionType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
@@ -246,7 +246,7 @@ const OmissionsField = ({ name, index, omission }) => {
               component={Checkbox}
               label={
                 <FormattedMessage
-                  id="ui-serials-management.omissions.omitRangeOf"
+                  id="ui-serials-management.ruleset.omitRangeOf"
                   values={{ omissionType: omission?.patternType }}
                 />
               }

@@ -95,7 +95,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
       >
         <RulesetInfoForm />
         <Accordion
-          label={<FormattedMessage id="ui-serials-management.recurrence" />}
+          label={<FormattedMessage id="ui-serials-management.ruleset.recurrence" />}
         >
           <PatternTimePeriodForm />
           {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
@@ -103,7 +103,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           )}
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-serials-management.omissions" />}
+          label={<FormattedMessage id="ui-serials-management.ruleset.omissions" />}
         >
           <OmissionFieldArray />
         </Accordion>

@@ -22,7 +22,7 @@ const IssuePublicationFieldArray = () => {
         <Col xs={12}>
           <br />
           <strong>
-            <FormattedMessage id="ui-serials-management.recurrence.issuePublication" />
+            <FormattedMessage id="ui-serials-management.ruleset.issuePublication" />
           </strong>
         </Col>
       </Row>
