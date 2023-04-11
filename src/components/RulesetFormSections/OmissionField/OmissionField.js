@@ -91,7 +91,9 @@ const OmissionsField = ({ name, index, omission }) => {
             );
           }),
         ]}
-        label={<FormattedMessage id={labelId} />}
+        label={
+          <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
+        }
         name={`${name}[${index}].pattern.${fieldName}`}
         required
         validate={requiredValidator}
@@ -109,7 +111,9 @@ const OmissionsField = ({ name, index, omission }) => {
       <Field
         component={Select}
         dataOptions={[{ value: '', label: '' }, ...dataOptions]}
-        label={<FormattedMessage id={labelId} />}
+        label={
+          <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
+        }
         name={`${name}[${index}].pattern.${fieldName}`}
         renderToOverlay
         required
@@ -131,9 +135,7 @@ const OmissionsField = ({ name, index, omission }) => {
             );
           }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.weekday" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.weekday" />}
         name={`${name}[${index}].pattern.weekday.value`}
         renderToOverlay
         required
@@ -144,67 +146,27 @@ const OmissionsField = ({ name, index, omission }) => {
 
   const patternTypeFormats = {
     days_in_month: {
-      fields: [
-        renderDayField(1, 31),
-        renderMonthField('ui-serials-management.ruleset.ofMonth'),
-      ],
+      fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
     weekdays_in_week: {
-      fields: [
-        renderWeekdayField(),
-        renderWeekField(1, 52, 'ui-serials-management.ruleset.inWeek'),
-      ],
+      fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
     },
     weekdays_in_month: {
-      fields: [
-        renderWeekdayField(),
-        renderMonthField('ui-serials-management.ruleset.inMonth'),
-      ],
+      fields: [renderWeekdayField(), renderMonthField('inMonth')],
     },
     weeks: {
-      fields: [
-        renderWeekField(
-          1,
-          52,
-          !omission?.pattern?.isRange
-            ? 'ui-serials-management.ruleset.week'
-            : 'ui-serials-management.ruleset.weekFrom',
-          'weekFrom'
-        ),
-      ],
-      range: [
-        renderWeekField(
-          1,
-          52,
-          'ui-serials-management.ruleset.weekTo',
-          'weekTo'
-        ),
-      ],
+      fields: [renderWeekField(1, 52, !omission?.pattern?.isRange ? 'week' : 'weekFrom', 'weekFrom')],
+      range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
     },
     weeks_in_every_month: {
-      fields: [renderWeekField(1, 4, 'ui-serials-management.ruleset.week')],
+      fields: [renderWeekField(1, 4, 'week')],
     },
     months: {
-      fields: [
-        renderMonthField(
-          !omission?.pattern?.isRange
-            ? 'ui-serials-management.ruleset.month'
-            : 'ui-serials-management.ruleset.monthFrom',
-          'monthFrom.value'
-        ),
-      ],
-      range: [
-        renderMonthField(
-          'ui-serials-management.ruleset.monthTo',
-          'monthTo.value'
-        ),
-      ],
+      fields: [renderMonthField(!omission?.pattern?.isRange ? 'month' : 'monthFrom', 'monthFrom.value')],
+      range: [renderMonthField('monthTo', 'monthTo.value')],
     },
     nth_issue: {
-      fields: [
-        renderIssueField(1, values?.recurrence?.issues),
-        renderMonthField('ui-serials-management.ruleset.ofMonth'),
-      ],
+      fields: [renderIssueField(1, values?.recurrence?.issues), renderMonthField('ofMonth')]
     },
   };
 
@@ -258,7 +220,7 @@ const OmissionsField = ({ name, index, omission }) => {
                     ...omission.pattern,
                     isRange: e.target.checked,
                   });
-                // If isRange is unchecked, clear the field for the 'To' value
+                  // If isRange is unchecked, clear the field for the 'To' value
                 } else {
                   change(`${name}[${index}].pattern.isRange`, e.target.checked);
                   // Remove 's' from patternType so it is correct backend variable
