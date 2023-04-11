@@ -252,10 +252,18 @@ const OmissionsField = ({ name, index, omission }) => {
               }
               name={`${name}[${index}].pattern.isRange`}
               onChange={(e) => {
-                change(`${name}[${index}]`, {
-                  patternType: omission?.patternType,
-                  pattern: { isRange: e.target.checked },
-                });
+                // If isRange checkbox is checked, keep the 'From' value
+                if (e.target.checked) {
+                  change(`${name}[${index}].pattern`, {
+                    ...omission.pattern,
+                    isRange: e.target.checked,
+                  });
+                // If isRange is unchecked, clear the field for the 'To' value
+                } else {
+                  change(`${name}[${index}].pattern.isRange`, e.target.checked);
+                  // Remove 's' from patternType so it is correct backend variable
+                  change(`${name}[${index}].pattern.${omission?.patternType?.slice(0, -1)}To`, undefined);
+                }
               }}
               type="checkbox"
             />
