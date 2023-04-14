@@ -94,6 +94,11 @@
   "ruleset.issue": "Issue",
   "ruleset.omitRangeOf": "Omit range of {omissionType}",
 
+  "ruleset.combinations": "Combinations",
+  "ruleset.combinationIndex": "Combination {index}",
+  "ruleset.removeCombination": "Remove combination {index}",
+  "ruleset.addCombination": "Add combination",
+
   "expectedPieces": "Expected pieces",
 
   "patterns": "Patterns",

@@ -19,6 +19,7 @@ import {
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
   OmissionFieldArray,
+  CombinationFieldArray,
 } from '../../RulesetFormSections';
 
 const propTypes = {
@@ -95,7 +96,9 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
       >
         <RulesetInfoForm />
         <Accordion
-          label={<FormattedMessage id="ui-serials-management.ruleset.recurrence" />}
+          label={
+            <FormattedMessage id="ui-serials-management.ruleset.recurrence" />
+          }
         >
           <PatternTimePeriodForm />
           {values?.recurrence?.timeUnit && values?.recurrence?.issues >= 1 && (
@@ -103,9 +106,18 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           )}
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-serials-management.ruleset.omissions" />}
+          label={
+            <FormattedMessage id="ui-serials-management.ruleset.omissions" />
+          }
         >
           <OmissionFieldArray />
+        </Accordion>
+        <Accordion
+          label={
+            <FormattedMessage id="ui-serials-management.ruleset.combinations" />
+          }
+        >
+          <CombinationFieldArray />
         </Accordion>
       </Pane>
     </Paneset>
