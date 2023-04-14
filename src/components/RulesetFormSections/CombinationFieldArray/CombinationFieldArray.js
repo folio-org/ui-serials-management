@@ -33,9 +33,9 @@ const CombinationFieldArray = () => {
               onDelete={() => onDeleteField(index, combination)}
             >
               <CombinationField
+                combination={combination}
                 index={index}
                 name="combination.rules"
-                omission={combination}
               />
             </EditCard>
           );

@@ -98,6 +98,8 @@
   "ruleset.combinationIndex": "Combination {index}",
   "ruleset.removeCombination": "Remove combination {index}",
   "ruleset.addCombination": "Add combination",
+  "ruleset.firstIssueType": "First issue - type",
+  "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
 
   "expectedPieces": "Expected pieces",
 
