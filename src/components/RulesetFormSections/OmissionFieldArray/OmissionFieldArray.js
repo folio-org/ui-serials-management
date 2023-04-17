@@ -1,4 +1,5 @@
 import { FieldArray } from 'react-final-form-arrays';
+import { useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
@@ -9,7 +10,9 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import OmissionField from '../OmissionField';
 
 const OmissionFieldArray = () => {
-  const { items, onAddField, onDeleteField } = useKiwtFieldArray('omission.rules');
+  const { values } = useFormState();
+  const { items, onAddField, onDeleteField } =
+    useKiwtFieldArray('omission.rules');
 
   return (
     <>
@@ -41,7 +44,7 @@ const OmissionFieldArray = () => {
         })
         }
       </FieldArray>
-      <Button onClick={() => onAddField({})}>
+      <Button disabled={values?.combination} onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addOmission" />
       </Button>
     </>

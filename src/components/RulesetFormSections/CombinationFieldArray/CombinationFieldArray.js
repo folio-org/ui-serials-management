@@ -1,4 +1,5 @@
 import { FieldArray } from 'react-final-form-arrays';
+import { useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
@@ -9,6 +10,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import CombinationField from '../CombinationField';
 
 const CombinationFieldArray = () => {
+  const { values } = useFormState();
   const { items, onAddField, onDeleteField } =
     useKiwtFieldArray('combination.rules');
 
@@ -42,7 +44,7 @@ const CombinationFieldArray = () => {
         })
         }
       </FieldArray>
-      <Button onClick={() => onAddField({})}>
+      <Button disabled={values?.omission} onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addCombination" />
       </Button>
     </>
