@@ -23,6 +23,8 @@ const SORTED_WEEKDAYS = [
   'sunday',
 ];
 
-const SORTED_TIME_UNITS = ['day', 'week', 'month', 'year'];
+const SORTED_RECURRENCE_TIME_UNITS = ['day', 'week', 'month', 'year'];
 
-export { SORTED_MONTHS, SORTED_WEEKDAYS, SORTED_TIME_UNITS };
+const SORTED_OMISSION_TIME_UNITS = ['day', 'week', 'month', 'year', 'issue'];
+
+export { SORTED_MONTHS, SORTED_WEEKDAYS, SORTED_RECURRENCE_TIME_UNITS, SORTED_OMISSION_TIME_UNITS };

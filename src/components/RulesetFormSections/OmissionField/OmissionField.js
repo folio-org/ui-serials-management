@@ -27,6 +27,8 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
+import { useOmissionPatternTypes } from '../../../hooks';
+
 const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = [
   'Global.Month',
   'Global.Weekday',
@@ -44,8 +46,9 @@ const OmissionsField = ({ name, index, omission }) => {
     WEEKDAYS,
     OMISSION_PATTERN_TYPES,
   ]);
+  const patternTypes = useOmissionPatternTypes();
 
-  const renderIssueField = (minValue = 1, maxValue = 1) => {
+  const renderIssueField = () => {
     return (
       <Field
         component={TextField}
@@ -53,11 +56,7 @@ const OmissionsField = ({ name, index, omission }) => {
         name={`${name}[${index}].pattern.issue`}
         required
         type="number"
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue),
-          validateWholeNumber
-        )}
+        validate={composeValidators(requiredValidator, validateWholeNumber)}
       />
     );
   };
@@ -145,28 +144,63 @@ const OmissionsField = ({ name, index, omission }) => {
   };
 
   const patternTypeFormats = {
-    days_in_month: {
+    day_month: {
       fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
-    weekdays_in_week: {
+    day_week: {
       fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
     },
-    weekdays_in_month: {
-      fields: [renderWeekdayField(), renderMonthField('inMonth')],
+    day_week_month: {
+      fields: [
+        renderWeekdayField(),
+        renderWeekField(1, 52, 'inWeek'),
+        renderMonthField('inMonth'),
+      ],
     },
-    weeks: {
-      fields: [renderWeekField(1, 52, !omission?.pattern?.isRange ? 'week' : 'weekFrom', 'weekFrom')],
+    day: {
+      fields: [renderDayField(1, 31)],
+    },
+    day_weekday: {
+      fields: [renderWeekdayField()],
+    },
+    week: {
+      fields: [
+        renderWeekField(
+          1,
+          52,
+          !omission?.pattern?.isRange ? 'week' : 'weekFrom',
+          'weekFrom'
+        ),
+      ],
       range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
     },
-    weeks_in_every_month: {
-      fields: [renderWeekField(1, 4, 'week')],
+    week_month: {
+      fields: [renderWeekdayField(), renderMonthField('inMonth')],
     },
-    months: {
-      fields: [renderMonthField(!omission?.pattern?.isRange ? 'month' : 'monthFrom', 'monthFrom.value')],
+    month: {
+      fields: [
+        renderMonthField(
+          !omission?.pattern?.isRange ? 'month' : 'monthFrom',
+          'monthFrom.value'
+        ),
+      ],
       range: [renderMonthField('monthTo', 'monthTo.value')],
     },
-    nth_issue: {
-      fields: [renderIssueField(1, values?.recurrence?.issues), renderMonthField('ofMonth')]
+    issue: {
+      fields: [renderIssueField()],
+    },
+    issue_week: {
+      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
+    },
+    issue_week_month: {
+      fields: [
+        renderIssueField(),
+        renderWeekField(1, 52, 'inWeek'),
+        renderMonthField('inMonth'),
+      ],
+    },
+    issue_month: {
+      fields: [renderIssueField(), renderMonthField('ofMonth')],
     },
   };
 
@@ -176,21 +210,20 @@ const OmissionsField = ({ name, index, omission }) => {
         <Col xs={3}>
           <Field
             component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(
-                refdataValues,
-                OMISSION_PATTERN_TYPES,
-                'value'
-              ),
-            ]}
+            dataOptions={
+              patternTypes[omission?.timeUnit?.value] || [
+                { label: '', value: '' },
+              ]
+            }
             label={
               <FormattedMessage id="ui-serials-management.ruleset.omissionType" />
             }
             name={`${name}[${index}].patternType`}
-            onChange={(e) => change(`${name}[${index}]`, {
-              patternType: e?.target?.value,
-            })
+            onChange={(e) =>
+              change(`${name}[${index}]`, {
+                timeUnit: { value: omission?.timeUnit?.value },
+                patternType: e?.target?.value,
+              })
             }
             required
             validate={requiredValidator}
@@ -200,8 +233,8 @@ const OmissionsField = ({ name, index, omission }) => {
           return <Col xs={3}>{e}</Col>;
         })}
       </Row>
-      {(omission?.patternType === 'weeks' ||
-        omission?.patternType === 'months') && (
+      {(omission?.patternType === 'week' ||
+        omission?.patternType === 'month') && (
         <Row>
           <Col xs={3}>
             <Field
@@ -223,8 +256,10 @@ const OmissionsField = ({ name, index, omission }) => {
                   // If isRange is unchecked, clear the field for the 'To' value
                 } else {
                   change(`${name}[${index}].pattern.isRange`, e.target.checked);
-                  // Remove 's' from patternType so it is correct backend variable
-                  change(`${name}[${index}].pattern.${omission?.patternType?.slice(0, -1)}To`, undefined);
+                  change(
+                    `${name}[${index}].pattern.${omission?.patternType}To`,
+                    undefined
+                  );
                 }
               }}
               type="checkbox"

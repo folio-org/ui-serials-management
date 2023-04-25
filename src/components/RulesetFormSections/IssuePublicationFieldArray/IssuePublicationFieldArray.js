@@ -7,14 +7,14 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import usePatternTypes from '../../../hooks/usePatternTypes';
+import useRecurrencePatternTypes from '../../../hooks/useRecurrencePatternTypes';
 import IssuePublicationField from '../IssuePublicationField';
 
 const IssuePublicationFieldArray = () => {
   const { values } = useFormState();
   const { items } = useKiwtFieldArray('recurrence.rules');
   const { change } = useForm();
-  const patternTypes = usePatternTypes();
+  const patternTypes = useRecurrencePatternTypes();
 
   return (
     <>
