@@ -152,7 +152,7 @@ const OmissionsField = ({ name, index, omission }) => {
     day_week_month: {
       fields: [
         renderWeekdayField(),
-        renderWeekField(1, 52, 'inWeek'),
+        renderWeekField(1, 4, 'inWeek'),
         renderMonthField('inMonth'),
       ],
     },
@@ -174,7 +174,7 @@ const OmissionsField = ({ name, index, omission }) => {
       range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
     },
     week_month: {
-      fields: [renderWeekdayField(), renderMonthField('inMonth')],
+      fields: [renderWeekField(1, 4, 'week'), renderMonthField('inMonth')],
     },
     month: {
       fields: [

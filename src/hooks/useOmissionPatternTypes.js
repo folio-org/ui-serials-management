@@ -28,7 +28,7 @@ const useOmissionPatternTypes = () => {
           id: 'ui-serials-management.ruleset.day',
         })} (Mon-Sun), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-52), ${intl.formatMessage({
+        })} (1-4), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.month',
         })} (Jan-Dec)`,
         value: 'day_week_month',
