@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState, useForm } from 'react-final-form';
+import { Field, useForm } from 'react-final-form';
 
 import {
   Checkbox,
@@ -39,7 +39,6 @@ const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = [
 // This should be fixed on backend then tweaked here
 
 const OmissionsField = ({ name, index, omission }) => {
-  const { values } = useFormState();
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
@@ -219,11 +218,10 @@ const OmissionsField = ({ name, index, omission }) => {
               <FormattedMessage id="ui-serials-management.ruleset.omissionType" />
             }
             name={`${name}[${index}].patternType`}
-            onChange={(e) =>
-              change(`${name}[${index}]`, {
-                timeUnit: { value: omission?.timeUnit?.value },
-                patternType: e?.target?.value,
-              })
+            onChange={(e) => change(`${name}[${index}]`, {
+              timeUnit: { value: omission?.timeUnit?.value },
+              patternType: e?.target?.value,
+            })
             }
             required
             validate={requiredValidator}
