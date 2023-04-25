@@ -10,16 +10,13 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import {
   useSerialsManagementRefdata,
   selectifyRefdata,
-  validateNotNegative,
-  validateWholeNumber,
-  validateWithinRange,
 } from '../../utils';
 
 import { SORTED_OMISSION_TIME_UNITS } from '../../../constants/sortedArrays';
 
 import OmissionField from '../OmissionField';
 
-const [TIME_UNITS] = ['Omission.TimeUnits'];
+const [TIME_UNITS] = ['OmissionRule.TimeUnits'];
 
 const OmissionFieldArray = () => {
   const { values } = useFormState();
