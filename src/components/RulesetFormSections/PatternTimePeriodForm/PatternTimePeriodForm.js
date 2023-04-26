@@ -14,8 +14,8 @@ import {
   validateWholeNumber,
   validateWithinRange,
 } from '../../utils';
-import usePatternTypes from '../../../hooks/usePatternTypes';
-import { SORTED_TIME_UNITS } from '../../../constants/sortedArrays';
+import useRecurrencePatternTypes from '../../../hooks/useRecurrencePatternTypes';
+import { SORTED_RECURRENCE_TIME_UNITS } from '../../../constants/sortedArrays';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
@@ -30,7 +30,7 @@ const PatternTimePeriodForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
-  const patternTypes = usePatternTypes();
+  const patternTypes = useRecurrencePatternTypes();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
   // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
@@ -57,8 +57,8 @@ const PatternTimePeriodForm = () => {
                   ...selectifyRefdata(refdataValues, TIME_UNITS, 'value').sort(
                     (a, b) => {
                       return (
-                        SORTED_TIME_UNITS.indexOf(a.value) -
-                        SORTED_TIME_UNITS.indexOf(b.value)
+                        SORTED_RECURRENCE_TIME_UNITS.indexOf(a.value) -
+                        SORTED_RECURRENCE_TIME_UNITS.indexOf(b.value)
                       );
                     }
                   ),

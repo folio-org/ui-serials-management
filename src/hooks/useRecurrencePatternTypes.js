@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl';
 
-const usePatternTypes = () => {
+const useRecurrencePatternTypes = () => {
   const intl = useIntl();
 
   return {
@@ -58,4 +58,4 @@ const usePatternTypes = () => {
   };
 };
 
-export default usePatternTypes;
+export default useRecurrencePatternTypes;
