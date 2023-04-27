@@ -194,7 +194,7 @@ const OmissionsField = ({ name, index, omission }) => {
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 52, 'inWeek'),
+        renderWeekField(1, 4, 'inWeek'),
         renderMonthField('inMonth'),
       ],
     },
