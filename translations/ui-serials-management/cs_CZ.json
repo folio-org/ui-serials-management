@@ -91,10 +91,10 @@
     "ruleset.months": "Měsíc(e)",
     "ruleset.issue": "Vydání",
     "ruleset.omitRangeOf": "Vynechat rozsah {omissionType}",
-    "ruleset.combinations": "Combinations",
-    "ruleset.combinationIndex": "Combination {index}",
-    "ruleset.removeCombination": "Remove combination {index}",
-    "ruleset.addCombination": "Add combination",
-    "ruleset.firstIssueType": "First issue - type",
-    "ruleset.numberOfIssuesToCombine": "Number of issues to combine"
+    "ruleset.combinations": "Spojení",
+    "ruleset.combinationIndex": "Spojení {index}",
+    "ruleset.removeCombination": "Odstranit spojení {index}",
+    "ruleset.addCombination": "Přidat spojení",
+    "ruleset.firstIssueType": "První vydání - typ",
+    "ruleset.numberOfIssuesToCombine": "Počet vydání ke spojení"
 }
