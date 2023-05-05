@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState, useForm } from 'react-final-form';
+import { Field, useForm } from 'react-final-form';
 
 import { Select, Col, TextField, Row } from '@folio/stripes/components';
 
@@ -21,6 +21,8 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
+import { useCombinationPatternTypes } from '../../../hooks';
+
 const [MONTHS, WEEKDAYS, COMBINATION_PATTERN_TYPES] = [
   'Global.Month',
   'Global.Weekday',
@@ -28,15 +30,15 @@ const [MONTHS, WEEKDAYS, COMBINATION_PATTERN_TYPES] = [
 ];
 
 const CombinationField = ({ name, index, combination }) => {
-  const { values } = useFormState();
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
     WEEKDAYS,
     COMBINATION_PATTERN_TYPES,
   ]);
+  const patternTypes = useCombinationPatternTypes();
 
-  const renderIssueField = (minValue = 1, maxValue = 1) => {
+  const renderIssueField = () => {
     return (
       <Field
         component={TextField}
@@ -44,11 +46,7 @@ const CombinationField = ({ name, index, combination }) => {
         name={`${name}[${index}].pattern.issue`}
         required
         type="number"
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue),
-          validateWholeNumber
-        )}
+        validate={composeValidators(requiredValidator, validateWholeNumber)}
       />
     );
   };
@@ -136,30 +134,49 @@ const CombinationField = ({ name, index, combination }) => {
   };
 
   const patternTypeFormats = {
-    day_in_a_month: {
+    day_month: {
       fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
-    weekday_in_a_week: {
+    day_week: {
       fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
     },
-    weekday_in_week_of_a_month: {
+    day_week_month: {
       fields: [
         renderWeekdayField(),
         renderWeekField(1, 4, 'inWeek'),
-        renderMonthField('ofMonth'),
+        renderMonthField('inMonth'),
       ],
     },
-    week: {
-      fields: [renderWeekField(1, 4, 'week')],
+    day: {
+      fields: [renderDayField(1, 31)],
     },
-    week_in_a_month: {
+    day_weekday: {
+      fields: [renderWeekdayField()],
+    },
+    week: {
+      fields: [renderWeekField(1, 52, 'week')],
+    },
+    week_month: {
       fields: [renderWeekField(1, 4, 'week'), renderMonthField('inMonth')],
     },
     month: {
       fields: [renderMonthField('month')],
     },
-    nth_issue: {
-      fields: [renderIssueField(1, values?.recurrence?.issues)],
+    issue: {
+      fields: [renderIssueField()],
+    },
+    issue_week: {
+      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
+    },
+    issue_week_month: {
+      fields: [
+        renderIssueField(),
+        renderWeekField(1, 4, 'inWeek'),
+        renderMonthField('inMonth'),
+      ],
+    },
+    issue_month: {
+      fields: [renderIssueField(), renderMonthField('ofMonth')],
     },
   };
 
@@ -169,19 +186,18 @@ const CombinationField = ({ name, index, combination }) => {
         <Col xs={3}>
           <Field
             component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(
-                refdataValues,
-                COMBINATION_PATTERN_TYPES,
-                'value'
-              ),
-            ]}
+            dataOptions={
+              patternTypes[combination?.timeUnit?.value] || [
+                { label: '', value: '' },
+              ]
+            }
+            la
             label={
               <FormattedMessage id="ui-serials-management.ruleset.firstIssueType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
+              timeUnit: { value: combination?.timeUnit?.value },
               patternType: e?.target?.value,
             })
             }

@@ -1,18 +1,25 @@
 import { FieldArray } from 'react-final-form-arrays';
-import { useFormState } from 'react-final-form';
+import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button } from '@folio/stripes/components';
-import { EditCard } from '@folio/stripes-erm-components';
+import { Button, Select, Row, Col } from '@folio/stripes/components';
+import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
+import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import { SORTED_COMBINATION_TIME_UNITS } from '../../../constants/sortedArrays';
+
 import CombinationField from '../CombinationField';
+
+const [TIME_UNITS] = ['OmissionRule.TimeUnits'];
 
 const CombinationFieldArray = () => {
   const { values } = useFormState();
+  const { change } = useForm();
   const { items, onAddField, onDeleteField } =
     useKiwtFieldArray('combination.rules');
+  const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
   return (
     <>
@@ -34,11 +41,48 @@ const CombinationFieldArray = () => {
                 }
               onDelete={() => onDeleteField(index, combination)}
             >
+              <Row>
+                <Col xs={3}>
+                  <Field
+                    name={`combination.rules[${index}].timeUnit.value`}
+                    render={({ input, meta }) => (
+                      <Select
+                        dataOptions={[
+                          { value: '', label: '' },
+                          ...selectifyRefdata(
+                            refdataValues,
+                            TIME_UNITS,
+                            'value'
+                          ).sort((a, b) => {
+                            return (
+                              SORTED_COMBINATION_TIME_UNITS.indexOf(a.value) -
+                                SORTED_COMBINATION_TIME_UNITS.indexOf(b.value)
+                            );
+                          }),
+                        ]}
+                        input={input}
+                        label={
+                          <FormattedMessage id="ui-serials-management.ruleset.timeUnit" />
+                          }
+                        meta={meta}
+                        onChange={(e) => change(`combination.rules[${index}]`, {
+                          timeUnit: { value: e?.target?.value },
+                        })
+                          }
+                        required
+                      />
+                    )}
+                    validate={requiredValidator}
+                  />
+                </Col>
+              </Row>
+              {values?.combination?.rules[index]?.timeUnit && (
               <CombinationField
                 combination={combination}
                 index={index}
                 name="combination.rules"
               />
+              )}
             </EditCard>
           );
         })
