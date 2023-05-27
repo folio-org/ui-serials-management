@@ -85,7 +85,7 @@ const SerialView = ({
       {!!serial?.orderLine?.remoteId && (
         <SerialPOLine {...getSectionProps('po-line')} />
       )}
-      <Rulesets {...getSectionProps('recurrene-rulesets')} />
+      <Rulesets {...getSectionProps('recurrence-rulesets')} />
     </Pane>
   );
 };

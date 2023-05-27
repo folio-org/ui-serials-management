@@ -1,5 +1,6 @@
-import { FormattedMessage } from 'react-intl';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { useFormState } from 'react-final-form';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -21,6 +22,7 @@ import {
   OmissionFieldArray,
   CombinationFieldArray,
 } from '../../RulesetFormSections';
+import PiecesPreviewModal from '../../PiecesPreviewModal/PiecesPreviewModal';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -31,6 +33,8 @@ const propTypes = {
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, initialValues, values } = useFormState();
+  const [showModal, setShowModal] = useState(false);
+  console.log(values);
 
   const renderPaneFooter = () => {
     return (
@@ -40,8 +44,8 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
             buttonStyle="primary mega"
             disabled={pristine || submitting}
             marginBottom0
-            onClick={onSubmit}
-            type="submit"
+            onClick={() => setShowModal(!showModal)}
+            // type="submit"
           >
             <FormattedMessage id="stripes-components.saveAndClose" />
           </Button>
@@ -120,6 +124,11 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           <CombinationFieldArray />
         </Accordion>
       </Pane>
+      <PiecesPreviewModal
+        ruleset={values}
+        setShowModal={setShowModal}
+        showModal={showModal}
+      />
     </Paneset>
   );
 };
