@@ -96,5 +96,10 @@
     "ruleset.removeCombination": "移除组合{index}",
     "ruleset.addCombination": "添加组合",
     "ruleset.firstIssueType": "第一期-类型",
-    "ruleset.numberOfIssuesToCombine": "要合并的期数"
+    "ruleset.numberOfIssuesToCombine": "要合并的期数",
+    "close": "Close",
+    "ruleset.preview": "Preview",
+    "ruleset.startDate": "Start date",
+    "ruleset.generatePredictedPieces": "Generate predicted pieces",
+    "ruleset.generate": "Generate"
 }

@@ -96,5 +96,10 @@
     "ruleset.removeCombination": "Remover a combinação {index}",
     "ruleset.addCombination": "Adicionar combinação",
     "ruleset.firstIssueType": "Primeira edição - tipo",
-    "ruleset.numberOfIssuesToCombine": "Número de edições a combinar"
+    "ruleset.numberOfIssuesToCombine": "Número de edições a combinar",
+    "close": "Fechar",
+    "ruleset.preview": "Pré-visualizar",
+    "ruleset.startDate": "Data de início",
+    "ruleset.generatePredictedPieces": "Gerar peças previstas",
+    "ruleset.generate": "Gerar"
 }

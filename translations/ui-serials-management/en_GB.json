@@ -1,11 +1,11 @@
 {
-    "meta.title": "Serials management",
+    "meta.title": "Serials",
     "serials": "Serials",
     "serials.poLineNumber": "PO line number",
     "serials.title": "Title",
     "serials.productIDs": "Product IDs",
     "serials.location": "Location",
-    "serials.predictionPattern": "predictionPattern",
+    "serials.predictionPattern": "Prediction pattern",
     "found#Values": "Found {total} results",
     "expectedPieces": "Expected pieces",
     "patterns": "Patterns",
@@ -96,5 +96,10 @@
     "ruleset.removeCombination": "Remove combination {index}",
     "ruleset.addCombination": "Add combination",
     "ruleset.firstIssueType": "First issue - type",
-    "ruleset.numberOfIssuesToCombine": "Number of issues to combine"
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "close": "Close",
+    "ruleset.preview": "Preview",
+    "ruleset.startDate": "Start date",
+    "ruleset.generatePredictedPieces": "Generate predicted pieces",
+    "ruleset.generate": "Generate"
 }
