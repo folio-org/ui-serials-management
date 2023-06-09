@@ -96,5 +96,10 @@
     "ruleset.removeCombination": "Odstranit spojení {index}",
     "ruleset.addCombination": "Přidat spojení",
     "ruleset.firstIssueType": "První vydání - typ",
-    "ruleset.numberOfIssuesToCombine": "Počet vydání ke spojení"
+    "ruleset.numberOfIssuesToCombine": "Počet vydání ke spojení",
+    "close": "Close",
+    "ruleset.preview": "Preview",
+    "ruleset.startDate": "Start date",
+    "ruleset.generatePredictedPieces": "Generate predicted pieces",
+    "ruleset.generate": "Generate"
 }
