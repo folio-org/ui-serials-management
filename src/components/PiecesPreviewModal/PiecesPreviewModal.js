@@ -6,87 +6,108 @@ import { FormattedMessage } from 'react-intl';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { FormModal } from '@k-int/stripes-kint-components';
-import { Button, Datepicker, Row, Col } from '@folio/stripes/components';
+import {
+  Datepicker,
+  Row,
+  Col,
+  ModalFooter,
+  Button,
+} from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import { GENERATE_PIECES_PREVIEW } from '../../constants/endpoints';
 import { useState } from 'react';
+import { GENERATE_PIECES_PREVIEW } from '../../constants/endpoints';
 
 const propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  handleChange: PropTypes.func,
   ruleset: PropTypes.object,
 };
 
-const PiecesPreviewModal = ({
-  showModal,
-  setShowModal,
-  handleChange,
-  ruleset,
-}) => {
+const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
   const ky = useOkapiKy();
   const [predictedPieces, setPredictedPieces] = useState(null);
 
-  const handleClose = () => {
+  const closeModal = () => {
     setShowModal(false);
+    setPredictedPieces(null);
   };
-
-  const submitValues = {
-    ...ruleset,
-    startDate: '2022-04-01',
-  };
-  submitValues?.recurrence?.rules?.forEach((e) => {
-    // If no ordinal specified, assume ordinal is 1 for all rules
-    if (!e?.ordinal) {
-      e.ordinal = 1;
-    }
-    // If no pattern fields are supplied (in the case of the day time unit)
-    // Add anempty pattern object to all rules
-    if (!e?.pattern) {
-      e.pattern = {};
-    }
-    e.patternType = submitValues?.patternType;
-  });
 
   const { mutateAsync: generatePieces } = useMutation(
     ['ui-serials-management', 'PiecesPreviewModal', 'generatePreview'],
-    (data) =>
-      ky
-        .post(GENERATE_PIECES_PREVIEW, { json: submitValues })
-        .json()
-        .then((res) => setPredictedPieces(res))
+    (data) => ky
+      .post(GENERATE_PIECES_PREVIEW, { json: data })
+      .json()
+      .then((res) => setPredictedPieces(res))
   );
 
-  const submit = async (values, form) => {
-    // await postParty(values);
+  const submitRecurrence = async (values) => {
+    const submitValues = {
+      ...ruleset,
+      startDate: values?.startDate,
+    };
+    submitValues?.recurrence?.rules?.forEach((e) => {
+      // If no ordinal specified, assume ordinal is 1 for all rules
+      if (!e?.ordinal) {
+        e.ordinal = '1';
+      }
+      // If no pattern fields are supplied (in the case of the day time unit)
+      // Add anempty pattern object to all rules
+      if (!e?.pattern) {
+        e.pattern = {};
+      }
+      e.patternType = submitValues?.patternType;
+    });
+    await generatePieces(submitValues);
+  };
+
+  const renderFooter = ({ formState, handleSubmit, handleClose }) => {
+    const { invalid, pristine, submitting } = formState;
+    return (
+      <ModalFooter>
+        <Button
+          buttonStyle="primary"
+          disabled={submitting || invalid || pristine}
+          marginBottom0
+          onClick={handleSubmit}
+          type="submit"
+        >
+          <FormattedMessage id="ui-serials-management.ruleset.generate" />
+        </Button>
+        <Button marginBottom0 onClick={handleClose}>
+          <FormattedMessage id="ui-serials-management.close" />
+        </Button>
+      </ModalFooter>
+    );
   };
 
   return (
     <FormModal
       modalProps={{
-        onClose: handleClose,
+        onClose: closeModal,
         open: showModal,
-        label: <FormattedMessage id="ui-oa.party.newPerson" />,
+        label: (
+          <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+        ),
+        footer: renderFooter,
       }}
       mutators={arrayMutators}
-      onSubmit={submit}
+      onSubmit={submitRecurrence}
     >
       <Row>
         <Col xs={4}>
           <Field
+            backendDateStandard="YYYY-MM-DD"
             component={Datepicker}
+            label={
+              <FormattedMessage id="ui-serials-management.ruleset.startDate" />
+            }
             name="startDate"
             required
             usePortal
             validate={requiredValidator}
           />
-        </Col>
-        <Col xs={4}>
-          <Button buttonStyle="primary" onClick={() => generatePieces()}>
-            Generate Pieces
-          </Button>
         </Col>
       </Row>
       {!!predictedPieces && JSON.stringify(predictedPieces, null, 2)}

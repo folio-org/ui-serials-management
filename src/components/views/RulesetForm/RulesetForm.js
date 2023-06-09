@@ -32,23 +32,33 @@ const propTypes = {
 };
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting, initialValues, values } = useFormState();
+  const { pristine, submitting, invalid, initialValues, values } = useFormState();
   const [showModal, setShowModal] = useState(false);
-  console.log(values);
 
   const renderPaneFooter = () => {
     return (
       <PaneFooter
         renderEnd={
-          <Button
-            buttonStyle="primary mega"
-            disabled={pristine || submitting}
-            marginBottom0
-            onClick={() => setShowModal(!showModal)}
-            // type="submit"
-          >
-            <FormattedMessage id="stripes-components.saveAndClose" />
-          </Button>
+          <>
+            <Button
+              buttonStyle="primary mega"
+              // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
+              disabled={pristine || invalid || submitting}
+              marginBottom0
+              onClick={() => setShowModal(!showModal)}
+            >
+              <FormattedMessage id="ui-serials-management.ruleset.preview" />
+            </Button>
+            <Button
+              buttonStyle="primary mega"
+              disabled={pristine || submitting}
+              marginBottom0
+              onClick={onSubmit}
+              type="submit"
+            >
+              <FormattedMessage id="stripes-components.saveAndClose" />
+            </Button>
+          </>
         }
         renderStart={
           <Button
