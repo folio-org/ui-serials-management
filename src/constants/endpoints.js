@@ -6,6 +6,8 @@ export const SERIAL_ENDPOINT = (id) => `serials-management/serials/${id}`;
 
 export const RULESETS_ENDPOINT = 'serials-management/rulesets';
 
+export const GENERATE_PIECES_PREVIEW = 'serials-management/predictedPieces/generate';
+
 export const ORDERS_ENDPOINT = 'orders/composite-orders';
 export const VENDOR_ENDPOINT = 'organizations/organizations';
 export const MATERIAL_TYPE_ENDPOINT = 'material-types';

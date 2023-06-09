@@ -1,5 +1,6 @@
-import { FormattedMessage } from 'react-intl';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { useFormState } from 'react-final-form';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -21,6 +22,7 @@ import {
   OmissionFieldArray,
   CombinationFieldArray,
 } from '../../RulesetFormSections';
+import PiecesPreviewModal from '../../PiecesPreviewModal/PiecesPreviewModal';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -30,21 +32,33 @@ const propTypes = {
 };
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting, initialValues, values } = useFormState();
+  const { pristine, submitting, invalid, initialValues, values } = useFormState();
+  const [showModal, setShowModal] = useState(false);
 
   const renderPaneFooter = () => {
     return (
       <PaneFooter
         renderEnd={
-          <Button
-            buttonStyle="primary mega"
-            disabled={pristine || submitting}
-            marginBottom0
-            onClick={onSubmit}
-            type="submit"
-          >
-            <FormattedMessage id="stripes-components.saveAndClose" />
-          </Button>
+          <>
+            <Button
+              buttonStyle="primary mega"
+              // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
+              disabled={pristine || invalid || submitting}
+              marginBottom0
+              onClick={() => setShowModal(!showModal)}
+            >
+              <FormattedMessage id="ui-serials-management.ruleset.preview" />
+            </Button>
+            <Button
+              buttonStyle="primary mega"
+              disabled={pristine || submitting}
+              marginBottom0
+              onClick={onSubmit}
+              type="submit"
+            >
+              <FormattedMessage id="stripes-components.saveAndClose" />
+            </Button>
+          </>
         }
         renderStart={
           <Button
@@ -120,6 +134,11 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           <CombinationFieldArray />
         </Accordion>
       </Pane>
+      <PiecesPreviewModal
+        ruleset={values}
+        setShowModal={setShowModal}
+        showModal={showModal}
+      />
     </Paneset>
   );
 };

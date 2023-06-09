@@ -11,6 +11,7 @@
   "cancel": "Cancel",
   "status": "Status",
   "description": "Description",
+  "close" : "Close",
 
   "refdata.label": "Label",
   "refdata.value": "Value",
@@ -93,6 +94,10 @@
   "ruleset.months": "Month(s)",
   "ruleset.issue": "Issue",
   "ruleset.omitRangeOf": "Omit range of {omissionType}",
+  "ruleset.preview" : "Preview",
+  "ruleset.startDate":"Start date",
+  "ruleset.generatePredictedPieces" : "Generate predicted pieces",
+  "ruleset.generate" : "Generate",
 
   "ruleset.combinations": "Combinations",
   "ruleset.combinationIndex": "Combination {index}",
