@@ -118,6 +118,7 @@ const SerialsRoute = ({ children, path }) => {
       }}
       mclProps={{
         formatter,
+        columnWidths: { description: 500 },
       }}
       path={path}
       resultColumns={resultColumns}
