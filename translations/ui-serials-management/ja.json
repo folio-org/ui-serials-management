@@ -97,9 +97,9 @@
     "ruleset.addCombination": "Add combination",
     "ruleset.firstIssueType": "First issue - type",
     "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
-    "close": "Close",
-    "ruleset.preview": "Preview",
-    "ruleset.startDate": "Start date",
+    "close": "終了",
+    "ruleset.preview": "プレビュー",
+    "ruleset.startDate": "開始日",
     "ruleset.generatePredictedPieces": "Generate predicted pieces",
     "ruleset.generate": "Generate"
 }
