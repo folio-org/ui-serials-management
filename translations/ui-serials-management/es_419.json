@@ -97,9 +97,9 @@
     "ruleset.addCombination": "Añadir combinación",
     "ruleset.firstIssueType": "Primer número - tipo",
     "ruleset.numberOfIssuesToCombine": "Número de números a combinar",
-    "close": "Close",
-    "ruleset.preview": "Preview",
-    "ruleset.startDate": "Start date",
-    "ruleset.generatePredictedPieces": "Generate predicted pieces",
-    "ruleset.generate": "Generate"
+    "close": "Cerrar",
+    "ruleset.preview": "Vista previa",
+    "ruleset.startDate": "Fecha de inicio",
+    "ruleset.generatePredictedPieces": "Generar piezas previstas",
+    "ruleset.generate": "Genere"
 }
