@@ -97,9 +97,9 @@
     "ruleset.addCombination": "Přidat spojení",
     "ruleset.firstIssueType": "První vydání - typ",
     "ruleset.numberOfIssuesToCombine": "Počet vydání ke spojení",
-    "close": "Close",
-    "ruleset.preview": "Preview",
-    "ruleset.startDate": "Start date",
-    "ruleset.generatePredictedPieces": "Generate predicted pieces",
-    "ruleset.generate": "Generate"
+    "close": "Zavřít",
+    "ruleset.preview": "Náhled",
+    "ruleset.startDate": "Datum zahájení",
+    "ruleset.generatePredictedPieces": "Generovat předpokládané kusy",
+    "ruleset.generate": "Generovat"
 }
