@@ -97,9 +97,9 @@
     "ruleset.addCombination": "添加组合",
     "ruleset.firstIssueType": "第一期-类型",
     "ruleset.numberOfIssuesToCombine": "要合并的期数",
-    "close": "Close",
-    "ruleset.preview": "Preview",
-    "ruleset.startDate": "Start date",
-    "ruleset.generatePredictedPieces": "Generate predicted pieces",
-    "ruleset.generate": "Generate"
+    "close": "关闭",
+    "ruleset.preview": "预览",
+    "ruleset.startDate": "开始日期",
+    "ruleset.generatePredictedPieces": "生成预期件",
+    "ruleset.generate": "生成"
 }
