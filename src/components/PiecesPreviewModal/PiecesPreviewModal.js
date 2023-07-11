@@ -12,6 +12,8 @@ import {
   Col,
   ModalFooter,
   Button,
+  MultiColumnList,
+  FormattedUTCDate,
 } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -62,6 +64,49 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
     await generatePieces(submitValues);
   };
 
+  // The following predicted pieces are currently placeholders for testing
+  // Will be replaced with more concrete designs later
+
+  const formatter = {
+    issueCount: (e) => {
+      return e.rowIndex + 1;
+    },
+    publicationDate: (e) => {
+      return (
+        <FormattedUTCDate
+          value={`${e?.date?.year}/${e?.date?.monthValue}/${e?.date?.dayOfMonth}`}
+        />
+      );
+    },
+    omitted: (e) => {
+      return e?.omitted && 'Omitted';
+    },
+  };
+
+  const renderPiecesTable = () => {
+    return (
+      <Row>
+        <Col xs={12}>
+          <MultiColumnList
+            columnMapping={{
+              issueCount: (
+                <FormattedMessage id="ui-serials-management.ruleset.issueCount" />
+              ),
+              publicationDate: (
+                <FormattedMessage id="ui-serials-management.ruleset.issuePublicationDate" />
+              ),
+              omitted: 'Omitted',
+            }}
+            contentData={predictedPieces?.dates}
+            formatter={formatter}
+            interactive={false}
+            visibleColumns={['issueCount', 'publicationDate', 'omitted']}
+          />
+        </Col>
+      </Row>
+    );
+  };
+
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting } = formState;
     return (
@@ -110,7 +155,7 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
           />
         </Col>
       </Row>
-      {!!predictedPieces && JSON.stringify(predictedPieces, null, 2)}
+      {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
 };
