@@ -1,6 +1,8 @@
 {
   "meta.title": "Serials",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "found#Values": "Found {total} results",
   "new": "New",
   "edit": "Edit",
