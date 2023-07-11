@@ -100,6 +100,8 @@
   "ruleset.startDate":"Start date",
   "ruleset.generatePredictedPieces" : "Generate predicted pieces",
   "ruleset.generate" : "Generate",
+  "ruleset.issueCount": "Issue count",
+  "ruleset.issuePublicationDate": "Issue publication date",
 
   "ruleset.combinations": "Combinations",
   "ruleset.combinationIndex": "Combination {index}",
