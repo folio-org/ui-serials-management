@@ -101,5 +101,7 @@
     "ruleset.preview": "Náhled",
     "ruleset.startDate": "Datum zahájení",
     "ruleset.generatePredictedPieces": "Generovat předpokládané kusy",
-    "ruleset.generate": "Generovat"
+    "ruleset.generate": "Generovat",
+    "ruleset.issueCount": "Počet vydání",
+    "ruleset.issuePublicationDate": "Datum vydání publikace"
 }

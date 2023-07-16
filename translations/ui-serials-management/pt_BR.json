@@ -101,5 +101,7 @@
     "ruleset.preview": "Pré-visualizar",
     "ruleset.startDate": "Data de início",
     "ruleset.generatePredictedPieces": "Gerar peças previstas",
-    "ruleset.generate": "Gerar"
+    "ruleset.generate": "Gerar",
+    "ruleset.issueCount": "Contagem de edições",
+    "ruleset.issuePublicationDate": "Data de publicação da edição"
 }

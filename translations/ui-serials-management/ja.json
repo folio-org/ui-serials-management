@@ -101,5 +101,7 @@
     "ruleset.preview": "プレビュー",
     "ruleset.startDate": "開始日",
     "ruleset.generatePredictedPieces": "Generate predicted pieces",
-    "ruleset.generate": "Generate"
+    "ruleset.generate": "Generate",
+    "ruleset.issueCount": "Issue count",
+    "ruleset.issuePublicationDate": "Issue publication date"
 }
