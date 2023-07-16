@@ -101,5 +101,7 @@
     "ruleset.preview": "预览",
     "ruleset.startDate": "开始日期",
     "ruleset.generatePredictedPieces": "生成预期件",
-    "ruleset.generate": "生成"
+    "ruleset.generate": "生成",
+    "ruleset.issueCount": "Issue count",
+    "ruleset.issuePublicationDate": "Issue publication date"
 }

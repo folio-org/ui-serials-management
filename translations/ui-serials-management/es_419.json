@@ -101,5 +101,7 @@
     "ruleset.preview": "Vista previa",
     "ruleset.startDate": "Fecha de inicio",
     "ruleset.generatePredictedPieces": "Generar piezas previstas",
-    "ruleset.generate": "Genere"
+    "ruleset.generate": "Genere",
+    "ruleset.issueCount": "Recuento",
+    "ruleset.issuePublicationDate": "Fecha de publicación del número"
 }
