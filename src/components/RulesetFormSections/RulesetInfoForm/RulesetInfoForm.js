@@ -15,6 +15,7 @@ const RulesetInfoForm = () => {
     <Row>
       <Col xs={3}>
         <Field
+          autoFocus
           component={Select}
           dataOptions={[
             { value: '', label: '' },

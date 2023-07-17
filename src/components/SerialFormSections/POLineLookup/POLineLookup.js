@@ -41,6 +41,7 @@ const POLineLookup = ({
 
         const buttonProps = {
           'aria-haspopup': 'true',
+          autoFocus: true,
           buttonRef: triggerButton,
           buttonStyle: value ? 'default' : 'primary',
           disabled,

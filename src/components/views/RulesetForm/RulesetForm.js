@@ -6,18 +6,21 @@ import { AppIcon } from '@folio/stripes/core';
 
 import {
   Accordion,
+  AccordionSet,
+  AccordionStatus,
   Button,
+  Col,
+  ExpandAllButton,
+  HasCommand,
   IconButton,
   Pane,
   PaneFooter,
   PaneHeader,
   Paneset,
   PaneMenu,
+  Row,
   expandAllSections,
   collapseAllSections,
-  AccordionStatus,
-  AccordionSet,
-  HasCommand,
   checkScope,
 } from '@folio/stripes/components';
 
@@ -67,7 +70,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
         renderEnd={
           <>
             <Button
-              buttonStyle="primary mega"
+              buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
               disabled={pristine || invalid || submitting}
               marginBottom0
@@ -141,6 +144,11 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
         >
           <RulesetInfoForm />
           <AccordionStatus ref={accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
             <AccordionSet>
               <Accordion
                 label={
