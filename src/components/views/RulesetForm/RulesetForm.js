@@ -100,9 +100,9 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
   };
 
   const renderPaneTitle = () => (initialValues?.id ? (
-    <FormattedMessage id="ui-serials-management.rulesets.editRuleset" />
+    <FormattedMessage id="ui-serials-management.rulesets.editPublicationPattern" />
   ) : (
-    <FormattedMessage id="ui-serials-management.rulesets.newRuleset" />
+    <FormattedMessage id="ui-serials-management.rulesets.newPublicationPattern" />
   ));
 
   const renderFirstMenu = () => {
