@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -9,13 +10,15 @@ import {
   Button,
   Icon,
   MetaSection,
+  expandAllSections,
+  collapseAllSections,
+  HasCommand,
+  checkScope,
+  AccordionStatus,
+  AccordionSet,
 } from '@folio/stripes/components';
 
-import {
-  Rulesets,
-  SerialInfo,
-  SerialPOLine,
-} from '../../SerialSections';
+import { Rulesets, SerialInfo, SerialPOLine } from '../../SerialSections';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
@@ -34,6 +37,7 @@ const SerialView = ({
   const location = useLocation();
   const params = useParams();
   const stripes = useStripes();
+  const accordionStatusRef = createRef();
 
   const handleEdit = () => {
     history.push(`${urls.serialEdit(params?.id)}${location.search}`);
@@ -45,6 +49,18 @@ const SerialView = ({
       serial,
     };
   };
+
+  const shortcuts = [
+    { name: 'edit', handler: () => handleEdit() },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
+    },
+  ];
 
   const renderActionMenu = () => {
     const buttons = [];
@@ -69,24 +85,34 @@ const SerialView = ({
   }
 
   return (
-    <Pane
-      actionMenu={renderActionMenu}
-      defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
-      dismissible
-      onClose={onClose}
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
     >
-      <MetaSection
-        contentId="serialMetaContent"
-        createdDate={serial?.dateCreated}
-        hideSource
-        lastUpdatedDate={serial?.lastUpdated}
-      />
-      <SerialInfo {...getSectionProps('info')} />
-      {!!serial?.orderLine?.remoteId && (
-        <SerialPOLine {...getSectionProps('po-line')} />
-      )}
-      <Rulesets {...getSectionProps('recurrence-rulesets')} />
-    </Pane>
+      <Pane
+        actionMenu={renderActionMenu}
+        defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
+        dismissible
+        onClose={onClose}
+      >
+        <MetaSection
+          contentId="serialMetaContent"
+          createdDate={serial?.dateCreated}
+          hideSource
+          lastUpdatedDate={serial?.lastUpdated}
+        />
+        <SerialInfo {...getSectionProps('info')} />
+        {!!serial?.orderLine?.remoteId && (
+          <SerialPOLine {...getSectionProps('po-line')} />
+        )}
+        <AccordionStatus ref={accordionStatusRef}>
+          <AccordionSet>
+            <Rulesets {...getSectionProps('recurrence-rulesets')} />
+          </AccordionSet>
+        </AccordionStatus>
+      </Pane>
+    </HasCommand>
   );
 };
 

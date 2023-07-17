@@ -1,9 +1,11 @@
+import { createRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { useFormState } from 'react-final-form';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
+  AccordionStatus,
   Button,
   IconButton,
   Pane,
@@ -12,7 +14,14 @@ import {
   Paneset,
   PaneMenu,
   Accordion,
+  expandAllSections,
+  collapseAllSections,
+  checkScope,
+  HasCommand,
+  AccordionSet,
 } from '@folio/stripes/components';
+
+import { handleSaveKeyCommand } from '../../utils';
 
 import {
   POLineForm,
@@ -29,6 +38,22 @@ const propTypes = {
 
 const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, initialValues } = useFormState();
+  const accordionStatusRef = createRef();
+
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: (e) => handleSaveKeyCommand(e, onSubmit, pristine, submitting),
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
+    },
+  ];
 
   const renderPaneFooter = () => {
     return (
@@ -81,26 +106,38 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
   };
 
   return (
-    <Paneset>
-      <Pane
-        appIcon={<AppIcon app="serials-management" />}
-        centerContent
-        defaultWidth="100%"
-        firstMenu={renderFirstMenu()}
-        footer={renderPaneFooter()}
-        renderHeader={(renderProps) => (
-          <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
-        )}
-      >
-        <POLineForm />
-        <SerialInfoForm />
-        <Accordion
-          label={<FormattedMessage id="ui-serials-management.serials.notes" />}
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="serials-management" />}
+          centerContent
+          defaultWidth="100%"
+          firstMenu={renderFirstMenu()}
+          footer={renderPaneFooter()}
+          renderHeader={(renderProps) => (
+            <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
+          )}
         >
-          <SerialNoteFieldArray />
-        </Accordion>
-      </Pane>
-    </Paneset>
+          <POLineForm />
+          <SerialInfoForm />
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              <Accordion
+                label={
+                  <FormattedMessage id="ui-serials-management.serials.notes" />
+                }
+              >
+                <SerialNoteFieldArray />
+              </Accordion>
+            </AccordionSet>
+          </AccordionStatus>
+        </Pane>
+      </Paneset>
+    </HasCommand>
   );
 };
 

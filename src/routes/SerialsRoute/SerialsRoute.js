@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { Button, PaneMenu } from '@folio/stripes/components';
+import {
+  Button,
+  PaneMenu,
+  checkScope,
+  HasCommand,
+} from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
@@ -12,6 +17,7 @@ import {
   RouteSwitcher,
   SerialsFilters,
 } from '../../components/SearchAndFilter';
+import { focusSASQSearchField } from '../../components/utils';
 import urls from '../../components/utils/urls';
 import { SERIALS_ENDPOINT } from '../../constants/endpoints';
 
@@ -31,6 +37,15 @@ const SerialsRoute = ({ children, path }) => {
   const handleCreate = () => {
     history.push(`${urls.serialCreate()}${location.search}`);
   };
+
+  const shortcuts = [
+    { name: 'new', handler: () => handleCreate() },
+    {
+      name: 'search',
+      handler: () => focusSASQSearchField('serials'),
+    },
+  ];
+
   const renderLastMenu = (
     <PaneMenu>
       <FormattedMessage id="ui-serials-management.serials.newSerial">
@@ -104,29 +119,35 @@ const SerialsRoute = ({ children, path }) => {
   };
 
   return (
-    <SASQRoute
-      fetchParameters={fetchParameters}
-      FilterComponent={SerialsFilters}
-      FilterPaneHeaderComponent={renderHeaderComponent}
-      id="serials"
-      mainPaneProps={{
-        appIcon: (
-          <AppIcon app="serials-management" iconKey="app" size="small" />
-        ),
-        lastMenu: renderLastMenu,
-        paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
-      }}
-      mclProps={{
-        formatter,
-        columnWidths: { description: 500 },
-      }}
-      path={path}
-      resultColumns={resultColumns}
-      searchFieldAriaLabel="serials-search-field"
-      ViewComponent={SerialView}
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
     >
-      {children}
-    </SASQRoute>
+      <SASQRoute
+        fetchParameters={fetchParameters}
+        FilterComponent={SerialsFilters}
+        FilterPaneHeaderComponent={renderHeaderComponent}
+        id="serials"
+        mainPaneProps={{
+          appIcon: (
+            <AppIcon app="serials-management" iconKey="app" size="small" />
+          ),
+          lastMenu: renderLastMenu,
+          paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
+        }}
+        mclProps={{
+          formatter,
+          columnWidths: { description: 500 },
+        }}
+        path={path}
+        resultColumns={resultColumns}
+        searchFieldAriaLabel="serials-search-field"
+        ViewComponent={SerialView}
+      >
+        {children}
+      </SASQRoute>
+    </HasCommand>
   );
 };
 

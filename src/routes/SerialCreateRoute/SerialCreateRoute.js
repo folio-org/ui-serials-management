@@ -49,7 +49,7 @@ const SerialCreateRoute = () => {
         onSubmit={submitSerial}
       >
         {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
+          <form id="serial-form" onSubmit={handleSubmit}>
             <SerialForm
               handlers={{
                 onClose: handleClose,
