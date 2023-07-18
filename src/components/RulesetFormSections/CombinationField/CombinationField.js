@@ -144,7 +144,7 @@ const CombinationField = ({ name, index, combination }) => {
       fields: [
         renderWeekdayField(),
         renderWeekField(1, 4, 'inWeek'),
-        renderMonthField('inMonth'),
+        renderMonthField('ofMonth'),
       ],
     },
     day: {
@@ -157,7 +157,7 @@ const CombinationField = ({ name, index, combination }) => {
       fields: [renderWeekField(1, 52, 'week')],
     },
     week_month: {
-      fields: [renderWeekField(1, 4, 'week'), renderMonthField('inMonth')],
+      fields: [renderWeekField(1, 4, 'week'), renderMonthField('ofMonth')],
     },
     month: {
       fields: [renderMonthField('month')],
@@ -172,7 +172,7 @@ const CombinationField = ({ name, index, combination }) => {
       fields: [
         renderIssueField(),
         renderWeekField(1, 4, 'inWeek'),
-        renderMonthField('inMonth'),
+        renderMonthField('ofMonth'),
       ],
     },
     issue_month: {
