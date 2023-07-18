@@ -56,6 +56,9 @@ const RulesetCreateRoute = () => {
   return (
     <>
       <Form
+        initialValues={{
+          rulesetStatus: { value: 'active' },
+        }}
         keepDirtyOnReinitialize
         mutators={arrayMutators}
         onSubmit={submitSerial}

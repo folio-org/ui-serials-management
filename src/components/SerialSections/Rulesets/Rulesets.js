@@ -25,7 +25,7 @@ const Rulesets = ({ serial }) => {
           id="add-ruleset-button"
           to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
         >
-          <FormattedMessage id="ui-serials-management.serials.addRuleset" />
+          <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
         </Button>
       </>
     );
@@ -36,7 +36,7 @@ const Rulesets = ({ serial }) => {
       closedByDefault
       displayWhenClosed={renderBadge(serial?.serialRulesets)}
       displayWhenOpen={renderAddChargesButton()}
-      label={<FormattedMessage id="ui-serials-management.serials.rulesets" />}
+      label={<FormattedMessage id="ui-serials-management.serials.publicationPatterns" />}
     >
       <ul>
         {serial?.serialRulesets?.map((e) => (

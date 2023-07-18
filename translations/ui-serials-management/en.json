@@ -1,6 +1,8 @@
 {
   "meta.title": "Serials",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "found#Values": "Found {total} results",
   "new": "New",
   "edit": "Edit",
@@ -38,18 +40,19 @@
   "serials.notes": "Notes",
   "serials.addNote": "Add note",
   "serials.removeNoteIndex": "Remove note {index}",
-  "serials.addRuleset": "Add ruleset",
-  "serials.rulesets": "Rulesets",
+  "serials.addPublicationPattern": "Add publication pattern",
+  "serials.publicationPatterns": "Publication patterns",
 
-  "rulesets.newRuleset": "New ruleset",
+  "rulesets.newPublicationPattern": "New publication pattern",
   "rulesets.editRuleset": "Edit ruleset",
 
-  "poLine": "PO Line",
+  "poLine": "PO line",
   "poLine.noneLinked": "No PO line linked",
   "poLine.linkToStart": "Link a PO line to get started",
   "poLine.selectPOLine": "Select PO line",
   "poLine.noPlugin": "No \"find-po-line\" plugin is installed",
   "poLine.replacePOLine": "Replace PO line",
+  "poLine.removePOLine": "Remove PO line",
   "poLine.replacePOLineSpecific": "Replace PO line {identifier}",
   "poLine.title": "Title in PO line",
   "poLine.viewInInventory": "View in inventory",
