@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { Button, Card, Layout, Tooltip } from '@folio/stripes/components';
+import {
+  Button,
+  Card,
+  Layout,
+  Tooltip,
+  IconButton,
+  Row,
+} from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import { urls } from '../../utils';
@@ -18,6 +25,7 @@ const propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }),
   onResourceSelected: PropTypes.func,
+  removePOLine: PropTypes.func,
   resource: PropTypes.object,
 };
 
@@ -27,6 +35,7 @@ const POLineLookup = ({
   id,
   input: { name, value },
   onResourceSelected,
+  removePOLine,
   resource,
 }) => {
   let triggerButton = useRef(null);
@@ -53,22 +62,45 @@ const POLineLookup = ({
 
         if (value) {
           return (
-            <Tooltip
-              id={`${id}-po-line-button-tooltip`}
-              text={
-                <FormattedMessage
-                  id="ui-serials-management.poLine.replacePOLineSpecific"
-                  values={{ identifier: resource?.poLineNumber }}
-                />
-              }
-              triggerRef={triggerButton}
-            >
-              {({ ariaIds }) => (
-                <Button aria-labelledby={ariaIds.text} {...buttonProps}>
-                  <FormattedMessage id="ui-serials-management.poLine.replacePOLine" />
-                </Button>
-              )}
-            </Tooltip>
+            <Row>
+              <Tooltip
+                id={`${id}-po-line-replace-button-tooltip`}
+                text={
+                  <FormattedMessage
+                    id="ui-serials-management.poLine.replacePOLineSpecific"
+                    values={{ identifier: resource?.poLineNumber }}
+                  />
+                }
+                triggerRef={triggerButton}
+              >
+                {({ ariaIds }) => (
+                  <Button aria-labelledby={ariaIds.text} {...buttonProps}>
+                    <FormattedMessage id="ui-serials-management.poLine.replacePOLine" />
+                  </Button>
+                )}
+              </Tooltip>
+              {/* <Tooltip
+                id={`${id}-po-line-remove-button-tooltip`}
+                text={
+                  <FormattedMessage
+                    id="ui-serials-management.poLine.removePOLine"
+                  />
+                }
+                triggerRef={triggerButton}
+              >
+                {({ ariaIds }) => ( */}
+              <IconButton
+                // aria-labelledby={ariaIds.text}
+                icon="trash"
+                onClick={() => removePOLine()}
+                style={{ paddingLeft: '10px' }}
+                // {...buttonProps}
+              >
+                <FormattedMessage id="ui-serials-management.poLine.replacePOLine" />
+              </IconButton>
+              {/* )}
+              </Tooltip> */}
+            </Row>
           );
         }
         return (

@@ -39,6 +39,10 @@ const POLineForm = () => {
     order?.acqUnitIds
   );
 
+  const removePOLine = () => {
+    change('orderLine', undefined);
+  };
+
   const onPOLineSelected = (poLine) => {
     change('orderLine', poLine[0]);
   };
@@ -77,6 +81,7 @@ const POLineForm = () => {
             id="po-line-field"
             input={input}
             onResourceSelected={onPOLineSelected}
+            removePOLine={removePOLine}
             resource={values?.orderLine}
           >
             <Row>
