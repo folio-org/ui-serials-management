@@ -2,7 +2,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
 
-import { Select, Col, TextField, Row } from '@folio/stripes/components';
+import {
+  Select,
+  Col,
+  TextField,
+  Row,
+  Label,
+  InfoPopover,
+} from '@folio/stripes/components';
 
 import {
   requiredValidator,
@@ -37,6 +44,15 @@ const CombinationField = ({ name, index, combination }) => {
     COMBINATION_PATTERN_TYPES,
   ]);
   const patternTypes = useCombinationPatternTypes();
+
+  const validateNumberOfIssues = (value) => {
+    if (value) {
+      if (value < 2) {
+        return <FormattedMessage id="ui-serials-management.validate.greaterThanOne" />;
+      }
+    }
+    return undefined;
+  };
 
   const renderIssueField = () => {
     return (
@@ -166,12 +182,12 @@ const CombinationField = ({ name, index, combination }) => {
       fields: [renderIssueField()],
     },
     issue_week: {
-      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
+      fields: [renderIssueField(), renderWeekField(1, 52, 'ofWeek')],
     },
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 4, 'inWeek'),
+        renderWeekField(1, 4, 'ofWeek'),
         renderMonthField('ofMonth'),
       ],
     },
@@ -183,6 +199,19 @@ const CombinationField = ({ name, index, combination }) => {
   return (
     <>
       <Row>
+        <Col xs={12}>
+          <Label tagName="h4">
+            <FormattedMessage id="ui-serials-management.ruleset.firstIssue" />
+            <InfoPopover
+              content={
+                <FormattedMessage id="ui-serials-management.ruleset.firstIssuePopover" />
+              }
+              id="retrospective-oa-tooltip"
+            />
+          </Label>
+        </Col>
+      </Row>
+      <Row>
         <Col xs={3}>
           <Field
             component={Select}
@@ -193,7 +222,7 @@ const CombinationField = ({ name, index, combination }) => {
             }
             la
             label={
-              <FormattedMessage id="ui-serials-management.ruleset.firstIssueType" />
+              <FormattedMessage id="ui-serials-management.ruleset.combinationRuleType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
@@ -215,14 +244,15 @@ const CombinationField = ({ name, index, combination }) => {
             <Field
               component={TextField}
               label={
-                <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesToCombine" />
+                <FormattedMessage id="ui-serials-management.ruleset.totalNumberOfIssuesToCombine" />
               }
               name={`${name}[${index}].issuesToCombine`}
               required
               type="number"
               validate={composeValidators(
                 requiredValidator,
-                validateWholeNumber
+                validateWholeNumber,
+                validateNumberOfIssues
               )}
             />
           </Col>
