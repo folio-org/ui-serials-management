@@ -29,13 +29,13 @@ const CombinationFieldArray = () => {
             <EditCard
               deleteButtonTooltipText={
                 <FormattedMessage
-                  id="ui-serials-management.ruleset.removeCombination"
+                  id="ui-serials-management.ruleset.removeCombinationRule"
                   values={{ index: index + 1 }}
                 />
                 }
               header={
                 <FormattedMessage
-                  id="ui-serials-management.ruleset.combinationIndex"
+                  id="ui-serials-management.ruleset.combinationRuleIndex"
                   values={{ index: index + 1 }}
                 />
                 }
