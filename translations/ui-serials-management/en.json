@@ -81,9 +81,9 @@
   "ruleset.issueIndex": "Issue {index}",
 
   "ruleset.omissions": "Omissions",
-  "ruleset.omissionIndex": "Omission {index}",
-  "ruleset.omissionType": "Omission type",
-  "ruleset.removeOmission": "Remove omission {index}",
+  "ruleset.omissionRuleIndex": "Omission rule {index}",
+  "ruleset.omissionRuleType": "Omission rule type",
+  "ruleset.removeOmissionRule": "Remove omission rule {index}",
   "ruleset.addOmission": "Add omission",
   "ruleset.weekdays": "Weekday(s)",
   "ruleset.weeks": "Week(s)",

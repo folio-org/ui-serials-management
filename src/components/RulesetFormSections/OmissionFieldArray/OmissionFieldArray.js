@@ -33,13 +33,13 @@ const OmissionFieldArray = () => {
             <EditCard
               deleteButtonTooltipText={
                 <FormattedMessage
-                  id="ui-serials-management.ruleset.removeOmission"
+                  id="ui-serials-management.ruleset.removeOmissionRule"
                   values={{ index: index + 1 }}
                 />
                 }
               header={
                 <FormattedMessage
-                  id="ui-serials-management.ruleset.omissionIndex"
+                  id="ui-serials-management.ruleset.omissionRuleIndex"
                   values={{ index: index + 1 }}
                 />
                 }

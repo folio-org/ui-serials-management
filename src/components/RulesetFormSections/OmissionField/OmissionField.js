@@ -153,7 +153,7 @@ const OmissionsField = ({ name, index, omission }) => {
       fields: [
         renderWeekdayField(),
         renderWeekField(1, 4, 'inWeek'),
-        renderMonthField('inMonth'),
+        renderMonthField('ofMonth'),
       ],
     },
     day: {
@@ -174,7 +174,7 @@ const OmissionsField = ({ name, index, omission }) => {
       range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
     },
     week_month: {
-      fields: [renderWeekField(1, 4, 'week'), renderMonthField('inMonth')],
+      fields: [renderWeekField(1, 4, 'week'), renderMonthField('ofMonth')],
     },
     month: {
       fields: [
@@ -189,13 +189,13 @@ const OmissionsField = ({ name, index, omission }) => {
       fields: [renderIssueField()],
     },
     issue_week: {
-      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
+      fields: [renderIssueField(), renderWeekField(1, 52, 'ofWeek')],
     },
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 4, 'inWeek'),
-        renderMonthField('inMonth'),
+        renderWeekField(1, 4, 'ofWeek'),
+        renderMonthField('ofMonth'),
       ],
     },
     issue_month: {
@@ -215,7 +215,7 @@ const OmissionsField = ({ name, index, omission }) => {
               ]
             }
             label={
-              <FormattedMessage id="ui-serials-management.ruleset.omissionType" />
+              <FormattedMessage id="ui-serials-management.ruleset.omissionRuleType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
@@ -240,7 +240,7 @@ const OmissionsField = ({ name, index, omission }) => {
               label={
                 <FormattedMessage
                   id="ui-serials-management.ruleset.omitRangeOf"
-                  values={{ omissionType: omission?.patternType }}
+                  values={{ omissionType: `${omission?.patternType}s` }}
                 />
               }
               name={`${name}[${index}].pattern.isRange`}
