@@ -2,7 +2,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col } from '@folio/stripes/components';
+import { Button, Select, Row, Col, Tooltip } from '@folio/stripes/components';
 import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -20,6 +20,38 @@ const CombinationFieldArray = () => {
   const { items, onAddField, onDeleteField } =
     useKiwtFieldArray('combination.rules');
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
+
+  const renderAddCombinationButton = () => {
+    if (values?.omission) {
+      return (
+        <Tooltip
+          id="add-combination-button-disabled-tooltip"
+          placement="bottom-start"
+          text={
+            <FormattedMessage id="ui-serials-management.ruleset.addCombinationDisabledTooltip" />
+          }
+        >
+          {({ ref, ariaIds }) => (
+            <div
+              ref={ref}
+              aria-describedby={ariaIds.sub}
+              aria-labelledby={ariaIds.text}
+            >
+              <Button disabled>
+                <FormattedMessage id="ui-serials-management.ruleset.addCombination" />
+              </Button>
+            </div>
+          )}
+        </Tooltip>
+      );
+    } else {
+      return (
+        <Button onClick={() => onAddField({})}>
+          <FormattedMessage id="ui-serials-management.ruleset.addCombination" />
+        </Button>
+      );
+    }
+  };
 
   return (
     <>
@@ -88,9 +120,15 @@ const CombinationFieldArray = () => {
         })
         }
       </FieldArray>
-      <Button disabled={values?.omission} onClick={() => onAddField({})}>
-        <FormattedMessage id="ui-serials-management.ruleset.addCombination" />
-      </Button>
+      {!values?.combination && (
+        <>
+          <div>
+            <FormattedMessage id="ui-serials-management.ruleset.noCombinationRules" />
+          </div>
+          <br />
+        </>
+      )}
+      {renderAddCombinationButton()}
     </>
   );
 };

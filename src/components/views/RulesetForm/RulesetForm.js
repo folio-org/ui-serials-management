@@ -22,6 +22,7 @@ import {
   expandAllSections,
   collapseAllSections,
   checkScope,
+  InfoPopover,
 } from '@folio/stripes/components';
 
 import { handleSaveKeyCommand } from '../../utils';
@@ -163,14 +164,38 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
               </Accordion>
               <Accordion
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.omissions" />
+                  <>
+                    <FormattedMessage id="ui-serials-management.ruleset.omissionRules" />
+                    <InfoPopover
+                      content={
+                        <FormattedMessage
+                          id="ui-serials-management.ruleset.omissionRulesPopover"
+                          values={{
+                            br: <br />,
+                          }}
+                        />
+                      }
+                    />
+                  </>
                 }
               >
                 <OmissionFieldArray />
               </Accordion>
               <Accordion
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.combinations" />
+                  <>
+                    <FormattedMessage id="ui-serials-management.ruleset.combinationRules" />
+                    <InfoPopover
+                      content={
+                        <FormattedMessage
+                          id="ui-serials-management.ruleset.combinationRulesPopover"
+                          values={{
+                            br: <br />,
+                          }}
+                        />
+                      }
+                    />
+                  </>
                 }
               >
                 <CombinationFieldArray />
