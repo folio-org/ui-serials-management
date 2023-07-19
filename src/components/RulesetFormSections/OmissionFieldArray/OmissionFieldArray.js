@@ -2,15 +2,12 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col } from '@folio/stripes/components';
+import { Button, Select, Row, Col, Tooltip } from '@folio/stripes/components';
 import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import {
-  useSerialsManagementRefdata,
-  selectifyRefdata,
-} from '../../utils';
+import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 import { SORTED_OMISSION_TIME_UNITS } from '../../../constants/sortedArrays';
 
@@ -24,6 +21,38 @@ const OmissionFieldArray = () => {
   const { items, onAddField, onDeleteField } =
     useKiwtFieldArray('omission.rules');
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
+
+  const renderAddOmissionButton = () => {
+    if (values?.combination) {
+      return (
+        <Tooltip
+          id="add-omission-button-disabled-tooltip"
+          placement="bottom-start"
+          text={
+            <FormattedMessage id="ui-serials-management.ruleset.addOmissionDisabledTooltip" />
+          }
+        >
+          {({ ref, ariaIds }) => (
+            <div
+              ref={ref}
+              aria-describedby={ariaIds.sub}
+              aria-labelledby={ariaIds.text}
+            >
+              <Button disabled>
+                <FormattedMessage id="ui-serials-management.ruleset.addOmission" />
+              </Button>
+            </div>
+          )}
+        </Tooltip>
+      );
+    } else {
+      return (
+        <Button onClick={() => onAddField({})}>
+          <FormattedMessage id="ui-serials-management.ruleset.addOmission" />
+        </Button>
+      );
+    }
+  };
 
   return (
     <>
@@ -92,9 +121,15 @@ const OmissionFieldArray = () => {
         })
         }
       </FieldArray>
-      <Button disabled={values?.combination} onClick={() => onAddField({})}>
-        <FormattedMessage id="ui-serials-management.ruleset.addOmission" />
-      </Button>
+      {!values?.omission && (
+        <>
+          <div>
+            <FormattedMessage id="ui-serials-management.ruleset.noOmissionRules" />
+          </div>
+          <br />
+        </>
+      )}
+      {renderAddOmissionButton()}
     </>
   );
 };
