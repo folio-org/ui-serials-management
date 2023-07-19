@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState, useForm } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 
 import {
   Col,
-  IconButton,
   Label,
   Row,
   Select,
@@ -14,7 +13,6 @@ import {
   requiredValidator,
   composeValidators,
 } from '@folio/stripes-erm-components';
-import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import {
   useSerialsManagementRefdata,
@@ -28,7 +26,6 @@ import {
 } from '../../../constants/sortedArrays';
 
 const propTypes = {
-  issue: PropTypes.object,
   name: PropTypes.string,
   index: PropTypes.string,
   patternType: PropTypes.string,
@@ -36,11 +33,9 @@ const propTypes = {
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
-const IssuePublicationField = ({ issue, name, index, patternType }) => {
+const IssuePublicationField = ({ name, index, patternType }) => {
   const { values } = useFormState();
-  const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
-  const { onDeleteField } = useKiwtFieldArray(name);
 
   const renderDayField = (
     ordinal = false,
@@ -235,20 +230,6 @@ const IssuePublicationField = ({ issue, name, index, patternType }) => {
             !!patternTypeFormats[patternType]?.ordinal && (
               <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>
           )}
-          <Col xs={1}>
-            <IconButton
-              disabled={patternTypeFormats[patternType]?.disabled}
-              icon="trash"
-              onClick={() => {
-                onDeleteField(index, issue);
-                change(
-                  'recurrence.issues',
-                  String(values?.recurrence?.issues - 1)
-                );
-              }}
-              style={{ paddingTop: '25px' }}
-            />
-          </Col>
         </Row>
       )}
     </>

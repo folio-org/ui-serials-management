@@ -1,7 +1,14 @@
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Row, Col, Select, TextField } from '@folio/stripes/components';
+import {
+  Row,
+  Col,
+  Select,
+  TextField,
+  Label,
+  InfoPopover,
+} from '@folio/stripes/components';
 import {
   requiredValidator,
   composeValidators,
@@ -16,6 +23,8 @@ import {
 } from '../../utils';
 import useRecurrencePatternTypes from '../../../hooks/useRecurrencePatternTypes';
 import { SORTED_RECURRENCE_TIME_UNITS } from '../../../constants/sortedArrays';
+
+import css from './PatternTimePeriodForm.css';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
@@ -39,15 +48,19 @@ const PatternTimePeriodForm = () => {
   return (
     <>
       <Row>
-        <Col xs={12}>
-          <strong>
-            <FormattedMessage id="ui-serials-management.ruleset.patternTimePeriod" />
-          </strong>
+        <Col className={css.containerHeader} xs={6}>
+          <Label className={css.label} tagName="h4">
+            <FormattedMessage id="ui-serials-management.ruleset.cycleLength" />
+            <InfoPopover
+              content={
+                <FormattedMessage id="ui-serials-management.ruleset.cycleLengthPopover" />
+              }
+            />
+          </Label>
         </Col>
       </Row>
-      <br />
       <Row>
-        <Col xs={3}>
+        <Col className={css.containerTimeUnit} xs={3}>
           <Field
             name="recurrence.timeUnit.value"
             render={({ input, meta }) => (
@@ -88,7 +101,7 @@ const PatternTimePeriodForm = () => {
             validate={requiredValidator}
           />
         </Col>
-        <Col xs={3}>
+        <Col className={css.containerPeriod} xs={3}>
           <Field
             name="recurrence.period"
             render={({ input, meta }) => (
@@ -144,7 +157,14 @@ const PatternTimePeriodForm = () => {
                 disabled={!values?.recurrence?.timeUnit}
                 input={input}
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
+                  <>
+                    <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
+                    <InfoPopover
+                      content={
+                        <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesPopover" />
+                      }
+                    />
+                  </>
                 }
                 meta={meta}
                 onChange={(e) => {

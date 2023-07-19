@@ -103,11 +103,11 @@ const SerialView = ({
           lastUpdatedDate={serial?.lastUpdated}
         />
         <SerialInfo {...getSectionProps('info')} />
-        {!!serial?.orderLine?.remoteId && (
-          <SerialPOLine {...getSectionProps('po-line')} />
-        )}
         <AccordionStatus ref={accordionStatusRef}>
           <AccordionSet>
+            {!!serial?.orderLine?.remoteId && (
+              <SerialPOLine {...getSectionProps('po-line')} />
+            )}
             <Rulesets {...getSectionProps('recurrence-rulesets')} />
           </AccordionSet>
         </AccordionStatus>

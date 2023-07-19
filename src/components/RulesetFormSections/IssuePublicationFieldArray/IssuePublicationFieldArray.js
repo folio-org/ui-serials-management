@@ -2,7 +2,13 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Row, Col, Select } from '@folio/stripes/components';
+import {
+  Row,
+  Col,
+  Select,
+  Label,
+  InfoPopover,
+} from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -20,10 +26,17 @@ const IssuePublicationFieldArray = () => {
     <>
       <Row>
         <Col xs={12}>
-          <br />
-          <strong>
-            <FormattedMessage id="ui-serials-management.ruleset.issuePublication" />
-          </strong>
+          <Label tagName="h4">
+            <FormattedMessage id="ui-serials-management.ruleset.daysOfPublicationPerCycle" />
+            <InfoPopover
+              content={
+                <FormattedMessage
+                  id="ui-serials-management.ruleset.daysOfPublicationPerCyclePopover"
+                  values={{ br: <br /> }}
+                />
+              }
+            />
+          </Label>
         </Col>
       </Row>
       <br />
@@ -41,8 +54,9 @@ const IssuePublicationFieldArray = () => {
                     ]
                   }
                   input={input}
-                  // TODO Update to translated string when preffered name has been chosen
-                  label="Pattern type"
+                  label={
+                    <FormattedMessage id="ui-serials-management.ruleset.dayFormat" />
+                  }
                   meta={meta}
                   onChange={(e) => {
                     input.onChange(e);
@@ -78,7 +92,6 @@ const IssuePublicationFieldArray = () => {
               return (
                 <IssuePublicationField
                   index={index}
-                  issue={issue}
                   name="recurrence.rules"
                   patternType={values?.patternType}
                 />

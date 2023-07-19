@@ -152,7 +152,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
             <AccordionSet>
               <Accordion
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.recurrence" />
+                  <FormattedMessage id="ui-serials-management.ruleset.publicationCycle" />
                 }
               >
                 <PatternTimePeriodForm />
