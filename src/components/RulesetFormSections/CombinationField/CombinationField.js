@@ -182,12 +182,12 @@ const CombinationField = ({ name, index, combination }) => {
       fields: [renderIssueField()],
     },
     issue_week: {
-      fields: [renderIssueField(), renderWeekField(1, 52, 'ofWeek')],
+      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
     },
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 4, 'ofWeek'),
+        renderWeekField(1, 4, 'inWeek'),
         renderMonthField('ofMonth'),
       ],
     },
