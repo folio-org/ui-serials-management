@@ -22,24 +22,37 @@ const IssuePublicationFieldArray = () => {
   const { change } = useForm();
   const patternTypes = useRecurrencePatternTypes();
 
+  // Check if the cycle length is a daily issue, defined by timeUnit="Day" and period=1
+  // This will cause the "Days of publication, per cycle" section not to render if so
+  const dailyIssueCheck = () => {
+    return (
+      values?.patternType === 'day' &&
+      (values?.recurrence?.period <= 1 || !values?.recurrence?.period)
+    );
+  };
+
   return (
     <>
-      <Row>
-        <Col xs={12}>
-          <Label tagName="h4">
-            <FormattedMessage id="ui-serials-management.ruleset.daysOfPublicationPerCycle" />
-            <InfoPopover
-              content={
-                <FormattedMessage
-                  id="ui-serials-management.ruleset.daysOfPublicationPerCyclePopover"
-                  values={{ br: <br /> }}
+      {!dailyIssueCheck() && (
+        <>
+          <Row>
+            <Col xs={12}>
+              <Label tagName="h4">
+                <FormattedMessage id="ui-serials-management.ruleset.daysOfPublicationPerCycle" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage
+                      id="ui-serials-management.ruleset.daysOfPublicationPerCyclePopover"
+                      values={{ br: <br /> }}
+                    />
+                  }
                 />
-              }
-            />
-          </Label>
-        </Col>
-      </Row>
-      <br />
+              </Label>
+            </Col>
+          </Row>
+          <br />
+        </>
+      )}
       {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
         <Row>
           <Col xs={3}>
@@ -78,28 +91,20 @@ const IssuePublicationFieldArray = () => {
           </Col>
         </Row>
       )}
-      {values?.patternType === 'day' &&
-      (values?.recurrence?.period <= 1 || !values?.recurrence?.period) ? (
-        <IssuePublicationField
-          index={0}
-          issue={items[0]}
-          name="recurrence.rules"
-          patternType={values?.patternType}
-        />
-        ) : (
-          <FieldArray name="recurrence.rules">
-            {() => items.map((issue, index) => {
-              return (
-                <IssuePublicationField
-                  index={index}
-                  name="recurrence.rules"
-                  patternType={values?.patternType}
-                />
-              );
-            })
+      {!dailyIssueCheck() && (
+        <FieldArray name="recurrence.rules">
+          {() => items.map((issue, index) => {
+            return (
+              <IssuePublicationField
+                index={index}
+                name="recurrence.rules"
+                patternType={values?.patternType}
+              />
+            );
+          })
           }
-          </FieldArray>
-        )}
+        </FieldArray>
+      )}
     </>
   );
 };
