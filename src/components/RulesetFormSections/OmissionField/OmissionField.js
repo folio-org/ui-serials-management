@@ -147,12 +147,12 @@ const OmissionsField = ({ name, index, omission }) => {
       fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
     day_week: {
-      fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
+      fields: [renderWeekdayField(), renderWeekField(1, 53, 'inWeek')],
     },
     day_week_month: {
       fields: [
         renderWeekdayField(),
-        renderWeekField(1, 4, 'inWeek'),
+        renderWeekField(1, 5, 'inWeek'),
         renderMonthField('ofMonth'),
       ],
     },
@@ -166,15 +166,15 @@ const OmissionsField = ({ name, index, omission }) => {
       fields: [
         renderWeekField(
           1,
-          52,
+          53,
           !omission?.pattern?.isRange ? 'week' : 'weekFrom',
           'weekFrom'
         ),
       ],
-      range: [renderWeekField(1, 52, 'weekTo', 'weekTo')],
+      range: [renderWeekField(1, 53, 'weekTo', 'weekTo')],
     },
     week_month: {
-      fields: [renderWeekField(1, 4, 'week'), renderMonthField('ofMonth')],
+      fields: [renderWeekField(1, 5, 'week'), renderMonthField('ofMonth')],
     },
     month: {
       fields: [
@@ -189,12 +189,12 @@ const OmissionsField = ({ name, index, omission }) => {
       fields: [renderIssueField()],
     },
     issue_week: {
-      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
+      fields: [renderIssueField(), renderWeekField(1, 53, 'inWeek')],
     },
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 4, 'inWeek'),
+        renderWeekField(1, 5, 'inWeek'),
         renderMonthField('ofMonth'),
       ],
     },
