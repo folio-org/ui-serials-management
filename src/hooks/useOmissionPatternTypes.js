@@ -20,7 +20,7 @@ const useOmissionPatternTypes = () => {
           id: 'ui-serials-management.ruleset.day',
         })} (Mon-Sun), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+        })} (1-53)`,
         value: 'day_week',
       },
       {
@@ -28,7 +28,7 @@ const useOmissionPatternTypes = () => {
           id: 'ui-serials-management.ruleset.day',
         })} (Mon-Sun), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
+        })} (1-5), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.month',
         })} (Jan-Dec)`,
         value: 'day_week_month',
@@ -55,13 +55,13 @@ const useOmissionPatternTypes = () => {
       {
         label: `${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+        })} (1-53)`,
         value: 'week',
       },
       {
         label: `${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
+        })} (1-5), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.month',
         })} (Jan-Dec)`,
         value: 'week_month',
@@ -97,7 +97,7 @@ const useOmissionPatternTypes = () => {
           id: 'ui-serials-management.ruleset.issue',
         })} (1-n), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+        })} (1-53)`,
         value: 'issue_week',
       },
       {
@@ -105,7 +105,7 @@ const useOmissionPatternTypes = () => {
           id: 'ui-serials-management.ruleset.issue',
         })} (1-n), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
+        })} (1-5), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.month',
         })} (Jan-Dec)`,
         value: 'issue_week_month',
