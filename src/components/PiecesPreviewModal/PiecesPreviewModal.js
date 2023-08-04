@@ -73,12 +73,13 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
     },
     publicationDate: (e) => {
       if (e?.recurrencePieces) {
-        return e.recurrencePieces.map((d) => (
+        return (
           <>
-            <FormattedDate value={d?.date} />
+            <FormattedDate value={e?.recurrencePieces[0].date} />
             <br />
+            {`Combined pieces: ${e?.recurrencePieces.length}`}
           </>
-        ));
+        );
       }
       return <FormattedDate value={e?.date} />;
     },
