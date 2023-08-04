@@ -12,7 +12,7 @@ import { SORTED_COMBINATION_TIME_UNITS } from '../../../constants/sortedArrays';
 
 import CombinationField from '../CombinationField';
 
-const [TIME_UNITS] = ['OmissionRule.TimeUnits'];
+const [TIME_UNITS] = ['CombinationRule.TimeUnits'];
 
 const CombinationFieldArray = () => {
   const { values } = useFormState();
