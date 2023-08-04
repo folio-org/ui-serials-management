@@ -13,7 +13,7 @@ import {
   ModalFooter,
   Button,
   MultiColumnList,
-  FormattedUTCDate,
+  FormattedDate,
 } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -72,14 +72,19 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
       return e.rowIndex + 1;
     },
     publicationDate: (e) => {
-      return (
-        <FormattedUTCDate
-          value={`${e?.date?.year}/${e?.date?.monthValue}/${e?.date?.dayOfMonth}`}
-        />
-      );
+      if (e?.recurrencePieces) {
+        return (
+          <>
+            <FormattedDate value={e?.recurrencePieces[0].date} />
+            <br />
+            {`Combined pieces: ${e?.recurrencePieces.length}`}
+          </>
+        );
+      }
+      return <FormattedDate value={e?.date} />;
     },
     omitted: (e) => {
-      return e?.omitted && 'Omitted';
+      return e?.omissionOrigins && 'Omitted';
     },
   };
 
@@ -97,7 +102,7 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
               ),
               omitted: 'Omitted',
             }}
-            contentData={predictedPieces?.dates}
+            contentData={predictedPieces}
             formatter={formatter}
             interactive={false}
             visibleColumns={['issueCount', 'publicationDate', 'omitted']}
