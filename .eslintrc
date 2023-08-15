@@ -1,14 +1,21 @@
 {
-    "extends": "@folio/eslint-config-stripes",
-    "parser": "@babel/eslint-parser",
-    "rules": {
-      "react/jsx-sort-props": "error"
-    },
-    "env": {
-      "jest/globals": true
-    },
-    "plugins": [
-      "jest"
+  "extends": "@folio/eslint-config-stripes",
+  "parser": "@babel/eslint-parser",
+  "rules": {
+    "react/jsx-sort-props": "error",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "(React|^_)"
+      }
     ]
-  }
-  
+  },
+  "env": {
+    "jest": true
+  },
+  "plugins": [
+    "testing-library",
+    "jest-dom"
+  ]
+}
