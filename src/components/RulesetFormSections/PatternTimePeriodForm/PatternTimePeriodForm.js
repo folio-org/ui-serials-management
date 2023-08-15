@@ -17,7 +17,6 @@ import {
 import {
   useSerialsManagementRefdata,
   selectifyRefdata,
-  validateNotNegative,
   validateWholeNumber,
   validateWithinRange,
 } from '../../utils';
@@ -28,11 +27,12 @@ import css from './PatternTimePeriodForm.css';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
+// TODO Currently the frontend validation allows for an upper limit of 20 years, this may need changing in the future
 const TIME_UNIT_LIMITERS = {
-  day: 1,
-  week: 7,
-  month: 31,
-  year: 366,
+  day: { issues: 1, period: 365 },
+  week: { issues: 7, period: 52 },
+  month: { issues: 31, period: 12 },
+  year: { issues: 365, period: 20 },
 };
 
 const PatternTimePeriodForm = () => {
@@ -143,7 +143,10 @@ const PatternTimePeriodForm = () => {
             )}
             validate={composeValidators(
               requiredValidator,
-              validateNotNegative,
+              validateWithinRange(
+                1,
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value].period
+              ),
               validateWholeNumber
             )}
           />
@@ -170,13 +173,25 @@ const PatternTimePeriodForm = () => {
                 onChange={(e) => {
                   input.onChange(e);
                   // Create an array of empty objects corresponding to amount of issues
-                  change(
-                    'recurrence.rules',
-                    e?.target?.value > 0 &&
-                      Number.isInteger(Number(e?.target?.value))
-                      ? Array(Number(e?.target?.value)).fill({})
-                      : undefined
-                  );
+                  if (
+                    Number(e.target.value) <=
+                      Number(
+                        TIME_UNIT_LIMITERS[
+                          values?.recurrence?.timeUnit?.value
+                        ] * (values?.recurrence?.period || 1)
+                      ) &&
+                    Number(e.target.value) >= 1
+                  ) {
+                    change(
+                      'recurrence.rules',
+                      e?.target?.value > 0 &&
+                        Number.isInteger(Number(e?.target?.value))
+                        ? Array(Number(e?.target?.value)).fill({})
+                        : undefined
+                    );
+                  } else {
+                    change('recurrence.rules', undefined);
+                  }
                   if (patternTypes[values?.recurrence?.timeUnit?.value]) {
                     change('patternType', undefined);
                   }
@@ -187,13 +202,12 @@ const PatternTimePeriodForm = () => {
             )}
             validate={composeValidators(
               requiredValidator,
-              validateNotNegative,
-              validateWholeNumber,
               validateWithinRange(
                 1,
-                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value] *
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value].issues *
                   (values?.recurrence?.period || 1)
-              )
+              ),
+              validateWholeNumber
             )}
           />
         </Col>

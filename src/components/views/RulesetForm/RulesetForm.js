@@ -1,7 +1,7 @@
 import { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useFormState } from 'react-final-form';
+import { useFormState, useForm } from 'react-final-form';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -47,6 +47,7 @@ const propTypes = {
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, invalid, initialValues, values } =
     useFormState();
+  const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
@@ -158,7 +159,8 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
               >
                 <PatternTimePeriodForm />
                 {values?.recurrence?.timeUnit &&
-                  values?.recurrence?.issues >= 1 && (
+                  values?.recurrence?.issues >= 1 &&
+                  getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
                 )}
               </Accordion>
