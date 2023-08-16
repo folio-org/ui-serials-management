@@ -60,6 +60,7 @@
     "@folio/stripes-cli": "^3.0.0",
     "@folio/stripes-erm-components": "^9.0.0",
     "@folio/stripes-erm-testing": "^2.0.0",
+    "@folio/service-interaction": "^1.0.0",
     "@formatjs/cli": "^4.2.31",
     "@babel/eslint-parser": "^7.15.0",
     "core-js": "^3.6.1",
@@ -85,6 +86,7 @@
   "peerDependencies": {
     "@folio/stripes": "^9.0.0",
     "@folio/stripes-erm-components": "^9.0.0",
+    "@folio/service-interaction": "^1.0.0",
     "moment": "^2.29.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
