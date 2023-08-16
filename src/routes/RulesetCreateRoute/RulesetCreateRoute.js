@@ -4,6 +4,7 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import { useGenerateNumber } from '@folio/service-interaction';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
@@ -16,6 +17,14 @@ const RulesetCreateRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
+
+  const { generate } = useGenerateNumber({
+    callback: (string) => {
+      return string;
+    },
+    generator: 'serialsManagement_publicationPatternNumber',
+    sequence: 'publicationPatternNumber',
+  });
 
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
@@ -31,9 +40,11 @@ const RulesetCreateRoute = () => {
   );
 
   const submitSerial = async (values) => {
+    const generatedString = await generate();
     const submitValues = {
       ...values,
       owner: { id },
+      rulesetNumber: generatedString?.data,
     };
     submitValues?.recurrence?.rules?.forEach((e) => {
       // If no ordinal specified, assume ordinal is 1 for all rules
