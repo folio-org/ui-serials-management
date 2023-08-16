@@ -32,7 +32,7 @@ const TIME_UNIT_LIMITERS = {
   day: { issues: 1, period: 365 },
   week: { issues: 7, period: 52 },
   month: { issues: 31, period: 12 },
-  year: { issues: 365, period: 20 },
+  year: { issues: 365, period: 10 },
 };
 
 const PatternTimePeriodForm = () => {
