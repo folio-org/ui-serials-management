@@ -70,7 +70,7 @@ const ActivePublicationPattern = ({ serial }) => {
         <FormattedMessage id="ui-serials-management.serials.publicationPattern" />
       }
     >
-      {activeRuleset && (
+      {!!activeRuleset && (
         <>
           <Row start="xs">
             <Col xs={3}>
@@ -151,7 +151,7 @@ const ActivePublicationPattern = ({ serial }) => {
           </Row>
         </>
       )}
-      {!!draftRulesets.length && (
+      {!!draftRulesets?.length && (
         <>
           <Row>
             <Col xs={6}>
