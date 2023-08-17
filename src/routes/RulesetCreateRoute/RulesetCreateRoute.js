@@ -22,8 +22,8 @@ const RulesetCreateRoute = () => {
     callback: (string) => {
       return string;
     },
-    generator: 'serialsManagement_publicationPatternNumber',
-    sequence: 'publicationPatternNumber',
+    generator: 'serialsManagement_patternNumber',
+    sequence: 'patternNumber',
   });
 
   const handleClose = () => {

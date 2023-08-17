@@ -18,7 +18,11 @@ import {
   AccordionSet,
 } from '@folio/stripes/components';
 
-import { Rulesets, SerialInfo, SerialPOLine } from '../../SerialSections';
+import {
+  ActivePublicationPattern,
+  SerialInfo,
+  SerialPOLine,
+} from '../../SerialSections';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
@@ -108,7 +112,9 @@ const SerialView = ({
             {!!serial?.orderLine?.remoteId && (
               <SerialPOLine {...getSectionProps('po-line')} />
             )}
-            <Rulesets {...getSectionProps('recurrence-rulesets')} />
+            <ActivePublicationPattern
+              {...getSectionProps('active-publication-pattern')}
+            />
           </AccordionSet>
         </AccordionStatus>
       </Pane>

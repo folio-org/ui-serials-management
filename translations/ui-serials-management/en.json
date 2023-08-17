@@ -14,6 +14,7 @@
   "status": "Status",
   "description": "Description",
   "close" : "Close",
+  "lastUpdated": "Last updated",
 
   "refdata.label": "Label",
   "refdata.value": "Value",
@@ -41,7 +42,7 @@
   "serials.addNote": "Add note",
   "serials.removeNoteIndex": "Remove note {index}",
   "serials.addPublicationPattern": "Add publication pattern",
-  "serials.publicationPatterns": "Publication patterns",
+  "serials.publicationPattern": "Publication pattern",
 
   "rulesets.newPublicationPattern": "New publication pattern",
   "rulesets.editRuleset": "Edit ruleset",
@@ -83,6 +84,9 @@
   "ruleset.ofMonth": "Of month",
   "ruleset.ofYear": "Of year",
   "ruleset.issueIndex": "Issue {index}",
+  "ruleset.patternId": "Pattern ID",
+  "ruleset.patternDescription": "Pattern description",
+  "ruleset.draftPatterns": "Draft patterns",
 
   "ruleset.omissionRules": "Omission rules",
   "ruleset.omissionRulesPopover": "Running this publication pattern will generate a minimum of one year's worth of predicted issues. Omission rules can be applied to remove individual issues. {br} For example, to omit a public holiday, a specific month or week, or the \"nth\" issue from the year's set of predicted issues.",
