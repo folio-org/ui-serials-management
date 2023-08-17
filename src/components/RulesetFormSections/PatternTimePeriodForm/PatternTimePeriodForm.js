@@ -176,9 +176,8 @@ const PatternTimePeriodForm = () => {
                   if (
                     Number(e.target.value) <=
                       Number(
-                        TIME_UNIT_LIMITERS[
-                          values?.recurrence?.timeUnit?.value
-                        ] * (values?.recurrence?.period || 1)
+                        TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]
+                          ?.issues * (values?.recurrence?.period || 1)
                       ) &&
                     Number(e.target.value) >= 1
                   ) {
@@ -204,8 +203,8 @@ const PatternTimePeriodForm = () => {
               requiredValidator,
               validateWithinRange(
                 1,
-                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]?.issues *
-                  (values?.recurrence?.period || 1)
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]
+                  ?.issues * (values?.recurrence?.period || 1)
               ),
               validateWholeNumber
             )}
