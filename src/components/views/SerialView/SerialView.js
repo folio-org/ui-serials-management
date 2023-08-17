@@ -20,6 +20,7 @@ import {
 
 import {
   ActivePublicationPattern,
+  DeprecatedPublicationPatterns,
   SerialInfo,
   SerialPOLine,
 } from '../../SerialSections';
@@ -115,6 +116,13 @@ const SerialView = ({
             <ActivePublicationPattern
               {...getSectionProps('active-publication-pattern')}
             />
+            {!!serial?.serialRulesets?.find(
+              (sr) => sr?.rulesetStatus?.value === 'deprecated'
+            ) && (
+              <DeprecatedPublicationPatterns
+                {...getSectionProps('deprecated-publication-pattern')}
+              />
+            )}
           </AccordionSet>
         </AccordionStatus>
       </Pane>

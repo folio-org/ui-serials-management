@@ -48,7 +48,7 @@ const ActivePublicationPattern = ({ serial }) => {
     return <Badge>{draftRulesets?.length + (activeRuleset ? 1 : 0)}</Badge>;
   };
 
-  const renderAddChargesButton = () => {
+  const renderAddPublicationPatternButton = () => {
     return (
       <>
         <Button
@@ -65,7 +65,7 @@ const ActivePublicationPattern = ({ serial }) => {
     <Accordion
       closedByDefault
       displayWhenClosed={renderBadge()}
-      displayWhenOpen={renderAddChargesButton()}
+      displayWhenOpen={renderAddPublicationPatternButton()}
       label={
         <FormattedMessage id="ui-serials-management.serials.publicationPattern" />
       }
