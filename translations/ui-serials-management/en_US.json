@@ -91,7 +91,7 @@
     "ruleset.issuePublicationDate": "Issue publication date",
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "serials.addPublicationPattern": "Add publication pattern",
-    "serials.publicationPatterns": "Publication patterns",
+    "serials.publicationPattern": "Publication pattern",
     "rulesets.newPublicationPattern": "New publication pattern",
     "poLine.removePOLine": "Remove PO line",
     "ruleset.omissionRuleIndex": "Omission rule {index}",
