@@ -91,7 +91,6 @@
     "ruleset.issuePublicationDate": "期出版日期",
     "appMenu.keyboardShortcuts": "键盘快捷键",
     "serials.addPublicationPattern": "添加出版模式",
-    "serials.publicationPatterns": "出版模式",
     "rulesets.newPublicationPattern": "新建出版模式",
     "poLine.removePOLine": "移除订单行",
     "ruleset.omissionRuleIndex": "省略规则{index}",
@@ -118,5 +117,11 @@
     "ruleset.combinationRules": "组合规则",
     "ruleset.combinationRulesPopover": "运行此出版模式将生成至少一年的预计期。可以应用组合规则将期序列组合成单期。 {br}例如，组合几天、几周或几个月。 {br}时间单位“期”可用于选择预计期集合中的“第 n ”期。",
     "ruleset.noCombinationRules": "此出版模式没有组合规则",
-    "ruleset.addCombinationDisabledTooltip": "由于存在省略规则，无法添加组合规则"
+    "ruleset.addCombinationDisabledTooltip": "由于存在省略规则，无法添加组合规则",
+    "lastUpdated": "Last updated",
+    "serials.publicationPattern": "Publication pattern",
+    "ruleset.patternId": "Pattern ID",
+    "ruleset.patternDescription": "Pattern description",
+    "ruleset.draftPatterns": "Draft patterns",
+    "ruleset.deprecatedPublicationPatterns": "Deprecated publication patterns"
 }

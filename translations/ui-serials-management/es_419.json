@@ -91,7 +91,6 @@
     "ruleset.issuePublicationDate": "Fecha de publicación del número",
     "appMenu.keyboardShortcuts": "Atajos de teclado",
     "serials.addPublicationPattern": "Añadir patrón de publicación",
-    "serials.publicationPatterns": "Patrones de publicación",
     "rulesets.newPublicationPattern": "Nuevo modelo de publicación",
     "poLine.removePOLine": "Eliminar línea PO",
     "ruleset.omissionRuleIndex": "Regla de omisión {índice}",
@@ -118,5 +117,11 @@
     "ruleset.combinationRules": "Normas de combinación",
     "ruleset.combinationRulesPopover": "La ejecución de este patrón de publicación generará un mínimo de un año de números previstos. Pueden aplicarse reglas de combinación para combinar secuencias de números en un único número. {br} Por ejemplo, para combinar un número de días, semanas o meses. {br} La unidad temporal \"Número\" puede utilizarse para seleccionar el \"enésimo\" número del conjunto de números previstos.",
     "ruleset.noCombinationRules": "No hay reglas de combinación para este modelo de publicación",
-    "ruleset.addCombinationDisabledTooltip": "No se pueden añadir reglas de combinación porque existe una regla de omisión"
+    "ruleset.addCombinationDisabledTooltip": "No se pueden añadir reglas de combinación porque existe una regla de omisión",
+    "lastUpdated": "Última actualización",
+    "serials.publicationPattern": "Patrón de publicación",
+    "ruleset.patternId": "ID de patrón",
+    "ruleset.patternDescription": "Descripción del patrón",
+    "ruleset.draftPatterns": "Borrador de patrones",
+    "ruleset.deprecatedPublicationPatterns": "Patrones de publicación obsoletos"
 }

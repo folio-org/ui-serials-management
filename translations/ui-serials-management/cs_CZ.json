@@ -91,7 +91,6 @@
     "ruleset.issuePublicationDate": "Datum publikace vydání",
     "appMenu.keyboardShortcuts": "Klávesové zkratky",
     "serials.addPublicationPattern": "Přidat vzor publikace",
-    "serials.publicationPatterns": "Vzory publikací",
     "rulesets.newPublicationPattern": "Nový vzor publikace",
     "poLine.removePOLine": "Odstranění řádku NO",
     "ruleset.omissionRuleIndex": "Pravidlo vynechání {index}",
@@ -118,5 +117,11 @@
     "ruleset.combinationRules": "Pravidla spojení",
     "ruleset.combinationRulesPopover": "Spuštění tohoto publikačního vzoru vygeneruje předpokládané vydání minimálně za jeden rok. Pravidla spojení lze použít ke spojení sekvencí vydání do jednoho vydání. {br} Chcete-li například spojit několik dní, týdnů nebo měsíců. {br} Časovou jednotku \"Vydání\" lze použít k výběru \"n-tého\" vydání ze sady předpokládaných vydání.",
     "ruleset.noCombinationRules": "Pro tento vzor publikace neexistují žádná pravidla spojení",
-    "ruleset.addCombinationDisabledTooltip": "Pravidla spojení nelze přidat, protože existuje pravidlo vynechání"
+    "ruleset.addCombinationDisabledTooltip": "Pravidla spojení nelze přidat, protože existuje pravidlo vynechání",
+    "lastUpdated": "Poslední aktualizace",
+    "serials.publicationPattern": "Vzor publikace",
+    "ruleset.patternId": "ID vzoru",
+    "ruleset.patternDescription": "Popis vzoru",
+    "ruleset.draftPatterns": "Vzory konceptů",
+    "ruleset.deprecatedPublicationPatterns": "Zastaralé vzory publikací"
 }
