@@ -91,7 +91,6 @@
     "ruleset.issuePublicationDate": "Data de publicação do fascículo",
     "appMenu.keyboardShortcuts": "Atalhos do teclado",
     "serials.addPublicationPattern": "Adicionar padrão de publicação",
-    "serials.publicationPatterns": "Padrões de publicação",
     "rulesets.newPublicationPattern": "Novo padrão de publicação",
     "poLine.removePOLine": "Remover linha do pedido de compra",
     "ruleset.omissionRuleIndex": "Regra de omissão {index}",
@@ -118,5 +117,11 @@
     "ruleset.combinationRules": "Regras de combinação",
     "ruleset.combinationRulesPopover": "A execução desse padrão de publicação gerará um mínimo de um ano de fascículos previstos. As regras de combinação podem ser aplicadas para combinar sequências de fascículos em um único fascículo. {br} Por exemplo, para combinar um número de dias, semanas ou meses. {br} A unidade de tempo \"Fascículo\" pode ser usada para selecionar o \"enésimo\" fascículo no conjunto de fascículos previstos.",
     "ruleset.noCombinationRules": "Não há regras de combinação para esse padrão de publicação",
-    "ruleset.addCombinationDisabledTooltip": "As regras de combinação não podem ser adicionadas porque existe uma regra de omissão"
+    "ruleset.addCombinationDisabledTooltip": "As regras de combinação não podem ser adicionadas porque existe uma regra de omissão",
+    "lastUpdated": "Ultima atualização",
+    "serials.publicationPattern": "Padrão de publicação",
+    "ruleset.patternId": "ID do padrão",
+    "ruleset.patternDescription": "Descrição do padrão",
+    "ruleset.draftPatterns": "Padrões de rascunho",
+    "ruleset.deprecatedPublicationPatterns": "Padrões de publicação obsoletos"
 }
