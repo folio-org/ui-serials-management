@@ -47,7 +47,7 @@ const useRecurrencePatternTypes = () => {
       {
         label: `${intl.formatMessage({
           id: 'ui-serials-management.ruleset.day',
-        })} (1-31), ${intl.formatMessage({
+        })} (Mon-Sun), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.week',
         })} (1-4), ${intl.formatMessage({
           id: 'ui-serials-management.ruleset.month',
