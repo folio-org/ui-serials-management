@@ -2,5 +2,5 @@
 
 ## 1.0.0 IN PROGRESS
 
-* *BREAKING* bump `react-intl` to `v6.4.4`. Refs UISER-38.
+* *BREAKING* bump `react-intl` to `v6.4.7`. Refs UISER-38.
 
