@@ -128,6 +128,24 @@
   "ruleset.firstIssue": "First issue",
   "ruleset.firstIssuePopover": "The “Combination rule type” and associated fields will pinpoint the <strong>first issue</strong> to be included in the combination",
 
+  "ruleset.labelling": "Labelling",
+  "ruleset.removeLabel": "Remove label {index}",
+  "ruleset.labelIndex": "Label {index}",
+  "ruleset.labelStyle": "Label style",
+  "ruleset.noLabels": "No labels for this publication pattern",
+  "ruleset.addLabel": "Add label",
+  "ruleset.chronologyFormat": "Chronology format",
+  "ruleset.weekdayFormat": "Weekday format - WD",
+  "ruleset.monthDayFormat": "Month day format - MD",
+  "ruleset.monthFormat": "Month format - M",
+  "ruleset.yearFormat": "Year format - Y",
+  "ruleset.addLevel": "Add level",
+  "ruleset.level": "Level",
+  "ruleset.unitsPerYear": "Units per year",
+  "ruleset.format": "Format",
+  "ruleset.sequence": "Sequence",
+  "ruleset.internalNote": "Internal note",
+
 
   "expectedPieces": "Expected pieces",
 
