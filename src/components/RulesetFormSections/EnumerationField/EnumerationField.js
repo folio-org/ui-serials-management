@@ -14,6 +14,8 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
+import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
+
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationLevel.Format',
   'EnumerationLevel.Sequence',
@@ -36,7 +38,18 @@ const EnumerationField = ({ items, name, index, level, onDeleteField }) => {
             component={Select}
             dataOptions={[
               { value: '', label: '' },
-              ...selectifyRefdata(refdataValues, ENUMERATION_FORMAT, 'value'),
+              ...selectifyRefdata(
+                refdataValues,
+                ENUMERATION_FORMAT,
+                'value'
+              )?.map((o) => {
+                return {
+                  value: o?.value,
+                  label: ENUMERATION_NUMBER_FORMAT?.find(
+                    (e) => e?.value === o?.value
+                  )?.label,
+                };
+              }),
             ]}
             name={`${name}.format.value`}
             required
