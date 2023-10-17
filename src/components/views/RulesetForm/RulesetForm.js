@@ -33,6 +33,7 @@ import {
   IssuePublicationFieldArray,
   OmissionFieldArray,
   CombinationFieldArray,
+  LabelFieldArray,
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal/PiecesPreviewModal';
@@ -201,6 +202,13 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
                 }
               >
                 <CombinationFieldArray />
+              </Accordion>
+              <Accordion
+                label={
+                  <FormattedMessage id="ui-serials-management.ruleset.labelling" />
+                }
+              >
+                <LabelFieldArray />
               </Accordion>
             </AccordionSet>
           </AccordionStatus>

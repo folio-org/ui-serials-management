@@ -6,3 +6,7 @@ export { default as OmissionField } from './OmissionField';
 export { default as OmissionFieldArray } from './OmissionFieldArray';
 export { default as CombinationField } from './CombinationField';
 export { default as CombinationFieldArray } from './CombinationFieldArray';
+export { default as LabelFieldArray } from './LabelFieldArray';
+export { default as ChronologyField } from './ChronologyField';
+export { default as EnumerationFieldArray } from './EnumerationFieldArray';
+export { default as EnumerationField } from './EnumerationField';
