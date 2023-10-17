@@ -2,21 +2,18 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
-import {
-  Select,
-  Col,
-  Row,
-} from '@folio/stripes/components';
+import { Select, Col, Row } from '@folio/stripes/components';
+
+import { requiredValidator } from '@folio/stripes-erm-components';
+
+import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 import {
-  requiredValidator,
-} from '@folio/stripes-erm-components';
-
-import {
-  useSerialsManagementRefdata,
-  selectifyRefdata,
-} from '../../utils';
-
+  CHRONOLOGY_MONTH_DAY_FORMAT,
+  CHRONOLOGY_WEEKDAY_FORMAT,
+  CHRONOLOGY_MONTH_FORMAT,
+  CHRONOLOGY_YEAR_FORMAT,
+} from '../../../constants/selectOptionTranslations';
 
 const [WEEKDAY_FORMATS, MONTH_DAY_FORMATS, MONTH_FORMATS, YEAR_FORMATS] = [
   'Global.WeekdayFormat',
@@ -39,7 +36,16 @@ const ChronologyField = ({ name, label }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, WEEKDAY_FORMATS, 'value'),
+          ...selectifyRefdata(refdataValues, WEEKDAY_FORMATS, 'value')?.map(
+            (o) => {
+              return {
+                value: o?.value,
+                label: CHRONOLOGY_WEEKDAY_FORMAT?.find(
+                  (e) => e?.value === o?.value
+                )?.label,
+              };
+            }
+          ),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.weekdayFormat" />
@@ -57,7 +63,16 @@ const ChronologyField = ({ name, label }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, MONTH_DAY_FORMATS, 'value'),
+          ...selectifyRefdata(refdataValues, MONTH_DAY_FORMATS, 'value')?.map(
+            (o) => {
+              return {
+                value: o?.value,
+                label: CHRONOLOGY_MONTH_DAY_FORMAT?.find(
+                  (e) => e?.value === o?.value
+                )?.label,
+              };
+            }
+          ),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.monthDayFormat" />
@@ -75,7 +90,16 @@ const ChronologyField = ({ name, label }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, MONTH_FORMATS, 'value'),
+          ...selectifyRefdata(refdataValues, MONTH_FORMATS, 'value')?.map(
+            (o) => {
+              return {
+                value: o?.value,
+                label: CHRONOLOGY_MONTH_FORMAT?.find(
+                  (e) => e?.value === o?.value
+                )?.label,
+              };
+            }
+          ),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.monthFormat" />
@@ -93,7 +117,13 @@ const ChronologyField = ({ name, label }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, YEAR_FORMATS, 'value'),
+          ...selectifyRefdata(refdataValues, YEAR_FORMATS, 'value')?.map((o) => {
+            return {
+              value: o?.value,
+              label: CHRONOLOGY_YEAR_FORMAT?.find((e) => e?.value === o?.value)
+                ?.label,
+            };
+          }),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.yearFormat" />
