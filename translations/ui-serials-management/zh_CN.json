@@ -123,5 +123,22 @@
     "ruleset.patternId": "模式ID",
     "ruleset.patternDescription": "模式描述",
     "ruleset.draftPatterns": "草案模式",
-    "ruleset.deprecatedPublicationPatterns": "已弃用的出版模式"
+    "ruleset.deprecatedPublicationPatterns": "已弃用的出版模式",
+    "ruleset.labelling": "Labelling",
+    "ruleset.removeLabel": "Remove label {index}",
+    "ruleset.labelIndex": "Label {index}",
+    "ruleset.labelStyle": "Label style",
+    "ruleset.noLabels": "No labels for this publication pattern",
+    "ruleset.addLabel": "Add label",
+    "ruleset.chronologyFormat": "Chronology format",
+    "ruleset.weekdayFormat": "Weekday format",
+    "ruleset.monthDayFormat": "Month day format",
+    "ruleset.monthFormat": "Month format",
+    "ruleset.yearFormat": "Year format",
+    "ruleset.addLevel": "Add level",
+    "ruleset.level": "Level",
+    "ruleset.unitsPerYear": "Units per year",
+    "ruleset.format": "Format",
+    "ruleset.sequence": "Sequence",
+    "ruleset.internalNote": "Internal note"
 }

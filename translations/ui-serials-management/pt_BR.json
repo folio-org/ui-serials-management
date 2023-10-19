@@ -123,5 +123,22 @@
     "ruleset.patternId": "ID do padrão",
     "ruleset.patternDescription": "Descrição do padrão",
     "ruleset.draftPatterns": "Padrões de rascunho",
-    "ruleset.deprecatedPublicationPatterns": "Padrões de publicação obsoletos"
+    "ruleset.deprecatedPublicationPatterns": "Padrões de publicação obsoletos",
+    "ruleset.labelling": "Etiquetagem",
+    "ruleset.removeLabel": "Remover etiqueta {index}",
+    "ruleset.labelIndex": "Etiqueta {index}",
+    "ruleset.labelStyle": "Estilo da etiqueta",
+    "ruleset.noLabels": "Não há etiquetas para esse padrão de publicação",
+    "ruleset.addLabel": "Adicionar rótulo",
+    "ruleset.chronologyFormat": "Formato de cronologia",
+    "ruleset.weekdayFormat": "Formato de dia da semana",
+    "ruleset.monthDayFormat": "Formato do dia do mês",
+    "ruleset.monthFormat": "Formato do mês",
+    "ruleset.yearFormat": "Formato do ano",
+    "ruleset.addLevel": "Adicionar nível",
+    "ruleset.level": "Nível",
+    "ruleset.unitsPerYear": "Unidades por ano",
+    "ruleset.format": "Formato",
+    "ruleset.sequence": "Sequência",
+    "ruleset.internalNote": "Nota interna"
 }
