@@ -123,5 +123,22 @@
     "ruleset.patternId": "ID vzoru",
     "ruleset.patternDescription": "Popis vzoru",
     "ruleset.draftPatterns": "Vzory konceptů",
-    "ruleset.deprecatedPublicationPatterns": "Zastaralé vzory publikací"
+    "ruleset.deprecatedPublicationPatterns": "Zastaralé vzory publikací",
+    "ruleset.labelling": "Labelling",
+    "ruleset.removeLabel": "Remove label {index}",
+    "ruleset.labelIndex": "Label {index}",
+    "ruleset.labelStyle": "Label style",
+    "ruleset.noLabels": "No labels for this publication pattern",
+    "ruleset.addLabel": "Add label",
+    "ruleset.chronologyFormat": "Chronology format",
+    "ruleset.weekdayFormat": "Weekday format",
+    "ruleset.monthDayFormat": "Month day format",
+    "ruleset.monthFormat": "Month format",
+    "ruleset.yearFormat": "Year format",
+    "ruleset.addLevel": "Add level",
+    "ruleset.level": "Level",
+    "ruleset.unitsPerYear": "Units per year",
+    "ruleset.format": "Format",
+    "ruleset.sequence": "Sequence",
+    "ruleset.internalNote": "Internal note"
 }
