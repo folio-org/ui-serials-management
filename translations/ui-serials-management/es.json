@@ -126,9 +126,9 @@
     "ruleset.deprecatedPublicationPatterns": "Deprecated publication patterns",
     "ruleset.labelling": "Labelling",
     "ruleset.removeLabel": "Remove label {index}",
-    "ruleset.labelIndex": "Label {index}",
-    "ruleset.labelStyle": "Label style",
-    "ruleset.noLabels": "No labels for this publication pattern",
+    "ruleset.labelIndex": "Etiqueta {index}",
+    "ruleset.labelStyle": "Estilo de etiqueta",
+    "ruleset.noLabels": "No hay etiquetas para este patrón de publicación.",
     "ruleset.addLabel": "Add label",
     "ruleset.chronologyFormat": "Chronology format",
     "ruleset.weekdayFormat": "Weekday format",
@@ -138,7 +138,7 @@
     "ruleset.addLevel": "Add level",
     "ruleset.level": "Level",
     "ruleset.unitsPerYear": "Units per year",
-    "ruleset.format": "Format",
-    "ruleset.sequence": "Sequence",
-    "ruleset.internalNote": "Internal note"
+    "ruleset.format": "Formato",
+    "ruleset.sequence": "Secuencia",
+    "ruleset.internalNote": "Nota interna"
 }
