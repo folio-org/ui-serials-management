@@ -11,6 +11,7 @@ import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 
 import ChronologyField from '../ChronologyField';
 import EnumerationNumericFieldArray from '../EnumerationNumericFieldArray';
+import EnumerationCyclicalFieldArray from '../EnumerationCyclicalFieldArray';
 
 const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'TemplateMetadataRule.TemplateMetadataRuleType',
@@ -168,6 +169,14 @@ const LabelFieldArray = () => {
                   values?.templateConfig?.rules[index]?.ruleType
                     ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
                     <EnumerationNumericFieldArray
+                      name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+                    />
+              )}
+              {values?.templateConfig?.rules[index]
+                ?.templateMetadataRuleType === 'enumeration' &&
+                  values?.templateConfig?.rules[index]?.ruleType
+                    ?.templateMetadataRuleFormat === 'enumeration_cyclical' && (
+                    <EnumerationCyclicalFieldArray
                       name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
                     />
               )}
