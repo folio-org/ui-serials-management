@@ -22,7 +22,7 @@ const [WEEKDAY_FORMATS, MONTH_DAY_FORMATS, MONTH_FORMATS, YEAR_FORMATS] = [
   'Global.YearFormat',
 ];
 
-const ChronologyField = ({ name, label }) => {
+const ChronologyField = ({ name, templateConfig }) => {
   const refdataValues = useSerialsManagementRefdata([
     WEEKDAY_FORMATS,
     MONTH_DAY_FORMATS,
@@ -155,7 +155,7 @@ const ChronologyField = ({ name, label }) => {
   return (
     <>
       <Row>
-        {chronologyFormats[label?.style?.labelFormat]?.fields?.map((e) => {
+        {chronologyFormats[templateConfig?.ruleType?.templateMetadataRuleFormat]?.fields?.map((e) => {
           return <Col xs={3}>{e}</Col>;
         })}
       </Row>
@@ -165,7 +165,7 @@ const ChronologyField = ({ name, label }) => {
 
 ChronologyField.propTypes = {
   name: PropTypes.string,
-  label: PropTypes.object,
+  templateConfig: PropTypes.object,
 };
 
 export default ChronologyField;

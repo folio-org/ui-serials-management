@@ -135,6 +135,7 @@
   "ruleset.noLabels": "No labels for this publication pattern",
   "ruleset.addLabel": "Add label",
   "ruleset.chronologyFormat": "Chronology format",
+  "ruleset.enumerationFormat": "Enumeration format",
   "ruleset.weekdayFormat": "Weekday format",
   "ruleset.monthDayFormat": "Month day format",
   "ruleset.monthFormat": "Month format",
