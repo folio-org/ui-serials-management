@@ -2,7 +2,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col } from '@folio/stripes/components';
+import { Button, Select, Row, Col, TextArea } from '@folio/stripes/components';
 import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -33,6 +33,19 @@ const LabelFieldArray = () => {
 
   return (
     <>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={
+              <FormattedMessage id="ui-serials-management.ruleset.template" />
+            }
+            name="templateConfig.templateString"
+            required
+            validate={requiredValidator}
+          />
+        </Col>
+      </Row>
       <FieldArray name="templateConfig.rules">
         {() => items.map((templateConfig, index) => {
           return (
@@ -177,6 +190,7 @@ const LabelFieldArray = () => {
                   values?.templateConfig?.rules[index]?.ruleType
                     ?.templateMetadataRuleFormat === 'enumeration_cyclical' && (
                     <EnumerationCyclicalFieldArray
+                      index={index}
                       name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
                     />
               )}

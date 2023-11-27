@@ -83,8 +83,8 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
       }
       return <FormattedDate value={e?.date} />;
     },
-    omitted: (e) => {
-      return e?.omissionOrigins && 'Omitted';
+    label: (e) => {
+      return e?.label;
     },
   };
 
@@ -100,12 +100,14 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
               publicationDate: (
                 <FormattedMessage id="ui-serials-management.ruleset.issuePublicationDate" />
               ),
-              omitted: 'Omitted',
+              label: (
+                <FormattedMessage id="ui-serials-management.piece.label" />
+              ),
             }}
             contentData={predictedPieces}
             formatter={formatter}
             interactive={false}
-            visibleColumns={['issueCount', 'publicationDate', 'omitted']}
+            visibleColumns={['issueCount', 'publicationDate', 'label']}
           />
         </Col>
       </Row>

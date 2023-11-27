@@ -7,7 +7,8 @@ import { Button, Label, Row, Col } from '@folio/stripes/components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import EnumerationCyclicalField from '../EnumerationNumericField';
+
+import EnumerationCyclicalField from '../EnumerationCyclicalField';
 
 const EnumerationCyclicalFieldArray = ({ name }) => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
@@ -24,12 +25,12 @@ const EnumerationCyclicalFieldArray = ({ name }) => {
         </Col>
         <Col xs={2}>
           <Label required>
-            <FormattedMessage id="ui-serials-management.ruleset.unitsPerYear" />
+            <FormattedMessage id="ui-serials-management.ruleset.unitsPerCycle" />
           </Label>
         </Col>
         <Col xs={2}>
           <Label required>
-            <FormattedMessage id="ui-serials-management.ruleset.sequence" />
+            <FormattedMessage id="ui-serials-management.ruleset.value" />
           </Label>
         </Col>
         <Col xs={2}>

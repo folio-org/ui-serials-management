@@ -5,27 +5,14 @@ import { Field } from 'react-final-form';
 import {
   Row,
   Col,
-  Select,
   TextField,
   IconButton,
 } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
-
-import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
-
-const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
-  'EnumerationNumericLevelTMRF.Format',
-  'EnumerationNumericLevelTMRF.Sequence',
-];
 
 const EnumerationCyclicalField = ({ items, name, index, level, onDeleteField }) => {
-  const refdataValues = useSerialsManagementRefdata([
-    ENUMERATION_FORMAT,
-    ENUMERATION_SEQUENCE,
-  ]);
   return (
     <>
       <Row>
@@ -35,35 +22,8 @@ const EnumerationCyclicalField = ({ items, name, index, level, onDeleteField }) 
         </Col>
         <Col xs={2}>
           <Field
-            component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(
-                refdataValues,
-                ENUMERATION_FORMAT,
-                'value'
-              )?.map((o) => {
-                return {
-                  value: o?.value,
-                  label: ENUMERATION_NUMBER_FORMAT?.find(
-                    (e) => e?.value === o?.value
-                  )?.label,
-                };
-              }),
-            ]}
-            name={`${name}.format.value`}
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-        <Col xs={2}>
-          <Field
-            component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(refdataValues, ENUMERATION_SEQUENCE, 'value'),
-            ]}
-            name={`${name}.sequence.value`}
+            component={TextField}
+            name={`${name}.value`}
             required
             validate={requiredValidator}
           />
