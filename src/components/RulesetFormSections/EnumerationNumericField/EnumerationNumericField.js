@@ -17,11 +17,11 @@ import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
 import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
 
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
-  'EnumerationLevel.Format',
-  'EnumerationLevel.Sequence',
+  'EnumerationNumericLevelTMRF.Format',
+  'EnumerationNumericLevelTMRF.Sequence',
 ];
 
-const EnumerationField = ({ items, name, index, level, onDeleteField }) => {
+const EnumerationNumericField = ({ items, name, index, level, onDeleteField }) => {
   const refdataValues = useSerialsManagementRefdata([
     ENUMERATION_FORMAT,
     ENUMERATION_SEQUENCE,
@@ -84,7 +84,7 @@ const EnumerationField = ({ items, name, index, level, onDeleteField }) => {
   );
 };
 
-EnumerationField.propTypes = {
+EnumerationNumericField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
   index: PropTypes.string,
@@ -92,4 +92,4 @@ EnumerationField.propTypes = {
   onDeleteField: PropTypes.func,
 };
 
-export default EnumerationField;
+export default EnumerationNumericField;

@@ -135,6 +135,7 @@
   "ruleset.noLabels": "No labels for this publication pattern",
   "ruleset.addLabel": "Add label",
   "ruleset.chronologyFormat": "Chronology format",
+  "ruleset.enumerationFormat": "Enumeration format",
   "ruleset.weekdayFormat": "Weekday format",
   "ruleset.monthDayFormat": "Month day format",
   "ruleset.monthFormat": "Month format",
@@ -145,6 +146,10 @@
   "ruleset.format": "Format",
   "ruleset.sequence": "Sequence",
   "ruleset.internalNote": "Internal note",
+  "ruleset.unitsPerCycle": "Units per cycle",
+  "ruleset.value": "Value",
+  "ruleset.picklist": "Picklist",
+  "ruleset.template": "Template",
 
 
   "expectedPieces": "Expected pieces",
@@ -155,6 +160,8 @@
   "validate.notNegative": "Cannot be negative",
   "validate.wholeNumber": "Must be a whole number",
   "validate.mustEqual": "Must equal {value}",
-  "validate.greaterThanOne": "Must be greater than 1"
+  "validate.greaterThanOne": "Must be greater than 1",
+
+  "piece.label": "Label"
 
 }
