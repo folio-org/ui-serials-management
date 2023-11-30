@@ -10,3 +10,5 @@ export { default as LabelFieldArray } from './LabelFieldArray';
 export { default as ChronologyField } from './ChronologyField';
 export { default as EnumerationNumericFieldArray } from './EnumerationNumericFieldArray';
 export { default as EnumerationNumericField } from './EnumerationNumericField';
+export { default as EnumerationTextualFieldArray } from './EnumerationTextualFieldArray';
+export { default as EnumerationTextualField } from './EnumerationTextualField';

@@ -8,9 +8,9 @@ import { Button, Label, Row, Col } from '@folio/stripes/components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 
-import EnumerationCyclicalField from '../EnumerationCyclicalField';
+import EnumerationTextualField from '../EnumerationTextualField';
 
-const EnumerationCyclicalFieldArray = ({ name }) => {
+const EnumerationTextualFieldArray = ({ name }) => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     `${name}.levels`
   );
@@ -42,7 +42,7 @@ const EnumerationCyclicalFieldArray = ({ name }) => {
       <FieldArray name={`${name}.levels`}>
         {() => items?.map((level, index) => {
           return (
-            <EnumerationCyclicalField
+            <EnumerationTextualField
               index={index}
               items={items}
               level={level}
@@ -60,8 +60,8 @@ const EnumerationCyclicalFieldArray = ({ name }) => {
   );
 };
 
-EnumerationCyclicalFieldArray.propTypes = {
+EnumerationTextualFieldArray.propTypes = {
   name: PropTypes.string,
 };
 
-export default EnumerationCyclicalFieldArray;
+export default EnumerationTextualFieldArray;

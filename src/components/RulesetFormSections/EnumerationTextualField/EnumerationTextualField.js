@@ -12,7 +12,7 @@ import {
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 
-const EnumerationCyclicalField = ({ items, name, index, level, onDeleteField }) => {
+const EnumerationTextualField = ({ items, name, index, level, onDeleteField }) => {
   return (
     <>
       <Row>
@@ -44,7 +44,7 @@ const EnumerationCyclicalField = ({ items, name, index, level, onDeleteField }) 
   );
 };
 
-EnumerationCyclicalField.propTypes = {
+EnumerationTextualField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
   index: PropTypes.string,
@@ -52,4 +52,4 @@ EnumerationCyclicalField.propTypes = {
   onDeleteField: PropTypes.func,
 };
 
-export default EnumerationCyclicalField;
+export default EnumerationTextualField;
