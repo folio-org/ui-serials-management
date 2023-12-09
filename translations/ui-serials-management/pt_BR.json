@@ -140,5 +140,11 @@
     "ruleset.unitsPerYear": "Unidades por ano",
     "ruleset.format": "Formato",
     "ruleset.sequence": "Sequência",
-    "ruleset.internalNote": "Nota interna"
+    "ruleset.internalNote": "Nota interna",
+    "ruleset.enumerationFormat": "Formato de enumeração",
+    "ruleset.unitsPerCycle": "Unidades por ciclo",
+    "ruleset.value": "Valor",
+    "ruleset.picklist": "Lista de opções",
+    "ruleset.template": "Modelo",
+    "piece.label": "Etiqueta"
 }

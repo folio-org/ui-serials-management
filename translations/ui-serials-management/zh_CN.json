@@ -140,5 +140,11 @@
     "ruleset.unitsPerYear": "每年单位",
     "ruleset.format": "格式",
     "ruleset.sequence": "顺序",
-    "ruleset.internalNote": "内部附注"
+    "ruleset.internalNote": "内部附注",
+    "ruleset.enumerationFormat": "期次格式",
+    "ruleset.unitsPerCycle": "每周期单位",
+    "ruleset.value": "值",
+    "ruleset.picklist": "选取清单",
+    "ruleset.template": "模板",
+    "piece.label": "标签"
 }

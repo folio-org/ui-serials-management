@@ -140,5 +140,11 @@
     "ruleset.unitsPerYear": "Jednotek za rok",
     "ruleset.format": "Formát",
     "ruleset.sequence": "Pořadí",
-    "ruleset.internalNote": "Vnitřní poznámka"
+    "ruleset.internalNote": "Vnitřní poznámka",
+    "ruleset.enumerationFormat": "Formát výčtu",
+    "ruleset.unitsPerCycle": "Jednotky za cyklus",
+    "ruleset.value": "Hodnota",
+    "ruleset.picklist": "Výběrový seznam",
+    "ruleset.template": "Šablona",
+    "piece.label": "Štítek"
 }
