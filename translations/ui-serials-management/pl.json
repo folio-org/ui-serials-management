@@ -9,7 +9,7 @@
     "found#Values": "Found {total} results",
     "expectedPieces": "Expected pieces",
     "patterns": "Patterns",
-    "new": "New",
+    "new": "Nowy",
     "closeForm": "Close form",
     "serials.newSerial": "New serial",
     "poLine": "PO line",
@@ -35,7 +35,7 @@
     "actions": "Akcje",
     "save": "Save",
     "cancel": "Anuluj",
-    "refdata.label": "Label",
+    "refdata.label": "Etykieta",
     "refdata.value": "Value",
     "refdata.deleteRefdataValue": "Delete refdata value",
     "refdata.deleteRefdataValue.confirmMessage": "<strong>{name}</strong> will be deleted.",
@@ -54,7 +54,7 @@
     "validate.wholeNumber": "Must be a whole number",
     "validate.mustEqual": "Must equal {value}",
     "status": "Status",
-    "description": "Description",
+    "description": "Opis",
     "rulesets.editRuleset": "Edit ruleset",
     "ruleset.timeUnit": "Time unit",
     "ruleset.numberOfTimeUnit": "Number of {timeUnit}s",
@@ -84,7 +84,7 @@
     "ruleset.addCombination": "Add combination rule",
     "close": "Close",
     "ruleset.preview": "Preview",
-    "ruleset.startDate": "Start date",
+    "ruleset.startDate": "Data rozpoczęcia",
     "ruleset.generatePredictedPieces": "Generate predicted pieces",
     "ruleset.generate": "Generate",
     "ruleset.issueCount": "Issue count",
@@ -146,5 +146,5 @@
     "ruleset.value": "Value",
     "ruleset.picklist": "Picklist",
     "ruleset.template": "Template",
-    "piece.label": "Label"
+    "piece.label": "Etykieta"
 }
