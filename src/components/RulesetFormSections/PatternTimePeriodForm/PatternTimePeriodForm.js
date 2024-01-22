@@ -161,10 +161,10 @@ const PatternTimePeriodForm = () => {
                 input={input}
                 label={
                   <>
-                    <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
+                    <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesPerCycle" />
                     <InfoPopover
                       content={
-                        <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesPopover" />
+                        <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesPerCyclePopover" />
                       }
                     />
                   </>

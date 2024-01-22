@@ -24,7 +24,7 @@ const EnumerationNumericFieldArray = ({ name }) => {
         </Col>
         <Col xs={2}>
           <Label required>
-            <FormattedMessage id="ui-serials-management.ruleset.unitsPerYear" />
+            <FormattedMessage id="ui-serials-management.ruleset.numberOfUnits" />
           </Label>
         </Col>
         <Col xs={2}>

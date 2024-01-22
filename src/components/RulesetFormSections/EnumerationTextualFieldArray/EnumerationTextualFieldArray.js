@@ -20,17 +20,17 @@ const EnumerationTextualFieldArray = ({ name }) => {
       <Row>
         <Col xs={1}>
           <Label>
-            <FormattedMessage id="ui-serials-management.ruleset.level" />
+            <FormattedMessage id="ui-serials-management.ruleset.order" />
           </Label>
         </Col>
         <Col xs={2}>
           <Label required>
-            <FormattedMessage id="ui-serials-management.ruleset.unitsPerCycle" />
+            <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
           </Label>
         </Col>
         <Col xs={2}>
           <Label required>
-            <FormattedMessage id="ui-serials-management.ruleset.value" />
+            <FormattedMessage id="ui-serials-management.ruleset.labelText" />
           </Label>
         </Col>
         <Col xs={2}>
