@@ -61,6 +61,12 @@ const RulesetCreateRoute = () => {
     // POST Request can work without deleting patternType
     // Deleting just for clarity
     delete submitValues.patternType;
+    submitValues?.templateConfig?.rules?.forEach((r, ri) => {
+      r.index = ri;
+      r?.ruleType?.ruleFormat?.levels?.forEach((l, li) => {
+        l.index = li;
+      });
+    });
     await postSerial(submitValues);
   };
 
