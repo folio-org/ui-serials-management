@@ -7,7 +7,7 @@
     "serials.location": "Location",
     "serials.predictionPattern": "Prediction pattern",
     "found#Values": "Found {total} results",
-    "expectedPieces": "Expected pieces",
+    "predictedPieces": "Predicted pieces",
     "patterns": "Patterns",
     "new": "New",
     "closeForm": "Close form",
