@@ -152,7 +152,13 @@
   "ruleset.template": "Template",
 
 
-  "expectedPieces": "Expected pieces",
+  "predictedPieces": "Predicted pieces",
+  "predictedPieces.dateGenerated": "Date generated",
+  "predictedPieces.title": "Title",
+  "predictedPieces.total": "Total",
+  "predictedPieces.startDate": "Start date",
+  "predictedPieces.patternId": "Pattern ID",
+  "predictedPieces.note": "Note",
 
   "patterns": "Patterns",
 

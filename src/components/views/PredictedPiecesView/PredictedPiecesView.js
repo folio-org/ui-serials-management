@@ -8,18 +8,18 @@ const propTypes = {
   queryProps: PropTypes.object,
 };
 
-const ExpectedPiecesView = ({ resource, onClose, queryProps: { isLoading } }) => {
+const PredictedPiecesView = ({ resource, onClose, queryProps: { isLoading } }) => {
   if (isLoading) {
     return <LoadingPane dismissible onClose={onClose} />;
   }
 
   return (
     <Pane dismissible onClose={onClose}>
-      {resource?.expectedPieces}
+      {resource?.predictedPieces}
     </Pane>
   );
 };
 
-ExpectedPiecesView.propTypes = propTypes;
+PredictedPiecesView.propTypes = propTypes;
 
-export default ExpectedPiecesView;
+export default PredictedPiecesView;
