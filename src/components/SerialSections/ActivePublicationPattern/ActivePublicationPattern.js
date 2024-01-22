@@ -143,7 +143,7 @@ const ActivePublicationPattern = ({ serial }) => {
             <Col xs={4}>
               <KeyValue
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues" />
+                  <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesPerCycle" />
                 }
                 value={activeRuleset?.recurrence?.issues}
               />

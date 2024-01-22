@@ -76,7 +76,7 @@ const PieceSetsRoute = ({ children, path }) => {
       id="piece-sets"
       mainPaneProps={{
         paneTitle: (
-          <FormattedMessage id="ui-serials-management.pieceSets" />
+          <FormattedMessage id="ui-serials-management.pieceSets.predictedPieceSets" />
         ),
       }}
       mclProps={{ formatter }}

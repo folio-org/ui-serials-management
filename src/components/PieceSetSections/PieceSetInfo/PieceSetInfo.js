@@ -40,6 +40,7 @@ const PieceSetInfo = ({ pieceSet, id }) => {
           </KeyValue>
         </Col>
         <Col xs={3}>
+          {/* TODO Implement pattern Id */}
           <KeyValue
             label={
               <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
