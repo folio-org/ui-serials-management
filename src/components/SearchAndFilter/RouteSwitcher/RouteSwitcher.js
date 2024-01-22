@@ -18,7 +18,7 @@ const RouteSwitcher = ({ primary }) => {
     case 'serials':
       selectedIndex = 0;
       break;
-    case 'predictedPieces':
+    case 'pieceSets':
       selectedIndex = 1;
       break;
     case 'patterns':
@@ -38,11 +38,11 @@ const RouteSwitcher = ({ primary }) => {
         <FormattedMessage id="ui-serials-management.serials" />
       </Button>
       <Button
-        key="clickable-nav-predicted-pieces"
-        id="clickable-nav-predicted-pieces"
-        to={primary === 'predictedPieces' ? null : urls.predictedPieces()}
+        key="clickable-nav-piece-sets"
+        id="clickable-nav-piece-sets"
+        to={primary === 'pieceSets' ? null : urls.pieceSets()}
       >
-        <FormattedMessage id="ui-serials-management.predictedPieces" />
+        <FormattedMessage id="ui-serials-management.pieceSets" />
       </Button>
       <Button
         key="clickable-nav-patterns"

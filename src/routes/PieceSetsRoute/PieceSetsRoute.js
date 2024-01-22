@@ -3,57 +3,57 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
-import { PredictedPiecesView } from '../../components/views';
+import { PieceSetView } from '../../components/views';
 import { RouteSwitcher } from '../../components/SearchAndFilter';
 
-import { PREDICTED_PIECES_ENDPOINT } from '../../constants/endpoints';
+import { PIECE_SETS_ENDPOINT } from '../../constants/endpoints';
 
-const PredictedPiecesRoute = ({ children, path }) => {
+const PieceSetsRoute = ({ children, path }) => {
   const fetchParameters = {
-    endpoint: PREDICTED_PIECES_ENDPOINT,
+    endpoint: PIECE_SETS_ENDPOINT,
     SASQ_MAP: {
       searchKey: 'id',
     },
   };
   const renderHeaderComponent = () => {
-    return <RouteSwitcher primary="predictedPieces" />;
+    return <RouteSwitcher primary="pieceSets" />;
   };
 
   const resultColumns = [
     {
       propertyPath: 'dateCreated',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.dateGenerated" />
+        <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
       ),
     },
     {
       propertyPath: 'title',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.title" />
+        <FormattedMessage id="ui-serials-management.pieceSets.title" />
       ),
     },
     {
       propertyPath: 'total',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.total" />
+        <FormattedMessage id="ui-serials-management.pieceSets.total" />
       ),
     },
     {
       propertyPath: 'startDate',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.startDate" />
+        <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
       ),
     },
     {
       propertyPath: 'patternId',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.patternId" />
+        <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
       ),
     },
     {
       propertyPath: 'note',
       label: (
-        <FormattedMessage id="ui-serials-management.predictedPieces.note" />
+        <FormattedMessage id="ui-serials-management.pieceSets.note" />
       ),
     },
   ];
@@ -73,26 +73,26 @@ const PredictedPiecesRoute = ({ children, path }) => {
     <SASQRoute
       fetchParameters={fetchParameters}
       FilterPaneHeaderComponent={renderHeaderComponent}
-      id="predicted-pieces"
+      id="piece-sets"
       mainPaneProps={{
         paneTitle: (
-          <FormattedMessage id="ui-serials-management.predictedPieces" />
+          <FormattedMessage id="ui-serials-management.pieceSets" />
         ),
       }}
       mclProps={{ formatter }}
       path={path}
       resultColumns={resultColumns}
-      searchFieldAriaLabel="predicted-pieces-search-field"
-      ViewComponent={PredictedPiecesView}
+      searchFieldAriaLabel="piece-sets-search-field"
+      ViewComponent={PieceSetView}
     >
       {children}
     </SASQRoute>
   );
 };
 
-PredictedPiecesRoute.propTypes = {
+PieceSetsRoute.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   path: PropTypes.string.isRequired,
 };
 
-export default PredictedPiecesRoute;
+export default PieceSetsRoute;

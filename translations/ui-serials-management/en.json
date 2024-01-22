@@ -152,13 +152,14 @@
   "ruleset.template": "Template",
 
 
-  "predictedPieces": "Predicted pieces",
-  "predictedPieces.dateGenerated": "Date generated",
-  "predictedPieces.title": "Title",
-  "predictedPieces.total": "Total",
-  "predictedPieces.startDate": "Start date",
-  "predictedPieces.patternId": "Pattern ID",
-  "predictedPieces.note": "Note",
+  "pieceSets": "Piece sets",
+  "pieceSets.dateGenerated": "Date generated",
+  "pieceSets.title": "Title",
+  "pieceSets.total": "Total",
+  "pieceSets.startDate": "Start date",
+  "pieceSets.patternId": "Pattern ID",
+  "pieceSets.note": "Note",
+  "pieceSets.totalPieces": "Total pieces",
 
   "patterns": "Patterns",
 
