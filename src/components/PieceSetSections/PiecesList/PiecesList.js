@@ -50,10 +50,15 @@ const PiecesList = ({ pieceSet, id }) => {
                 <FormattedMessage id="ui-serials-management.pieceSets.generatedInReceiving" />
               ),
             }}
-            contentData={pieceSet?.pieces}
+            contentData={pieceSet?.pieces.sort((a, b) => (a?.date < b?.date ? -1 : 1))}
             formatter={formatter}
             interactive={false}
-            visibleColumns={['issueCount', 'publicationDate', 'label', 'generatedInReceiving']}
+            visibleColumns={[
+              'issueCount',
+              'publicationDate',
+              'label',
+              'generatedInReceiving',
+            ]}
           />
         </Col>
       </Row>
