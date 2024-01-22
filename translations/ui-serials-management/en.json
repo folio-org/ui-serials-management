@@ -155,6 +155,7 @@
   
 
   "pieceSets": "Piece sets",
+  "pieceSets.predictedPieceSets": "Predicted piece sets",
   "pieceSets.dateGenerated": "Date generated",
   "pieceSets.title": "Title",
   "pieceSets.total": "Total",
