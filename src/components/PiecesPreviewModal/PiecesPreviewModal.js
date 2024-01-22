@@ -66,7 +66,7 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
 
   // The following predicted pieces are currently placeholders for testing
   // Will be replaced with more concrete designs later
-
+  // FIXME COMBINED PIECES TRANSLATION
   const formatter = {
     issueCount: (e) => {
       return e.rowIndex + 1;

@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
 
-import {
-  Pane,
-  LoadingPane,
-} from '@folio/stripes/components';
+import { Pane, LoadingPane } from '@folio/stripes/components';
 
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
-import PieceSetInfo from '../../PieceSetSections';
+import { PieceSetInfo, PiecesList } from '../../PieceSetSections';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -33,6 +30,7 @@ const PieceSetView = ({
   return (
     <Pane defaultWidth={DEFAULT_VIEW_PANE_WIDTH} dismissible onClose={onClose}>
       <PieceSetInfo {...getSectionProps('info')} />
+      <PiecesList {...getSectionProps('pieces-list')} />
     </Pane>
   );
 };
