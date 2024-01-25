@@ -7,6 +7,7 @@ const urls = {
   rulesetCreate: (id) => `/serials-management/serials/${id}/rulesets/create`,
 
   pieceSets: () => '/serials-management/pieceSets',
+  pieceSetView: (id) => `/serials-management/pieceSets/${id}`,
   patterns: () => '/serials-management/patterns',
 
   inventoryView: (id) => `/inventory/view/${id}`,

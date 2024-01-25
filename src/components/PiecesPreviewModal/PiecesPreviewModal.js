@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useOkapiKy } from '@folio/stripes/core';
@@ -10,7 +12,6 @@ import {
   Datepicker,
   Row,
   Col,
-  ModalFooter,
   Button,
   MultiColumnList,
   FormattedDate,
@@ -18,17 +19,28 @@ import {
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import { useState } from 'react';
-import { GENERATE_PIECES_PREVIEW } from '../../constants/endpoints';
+import { urls } from '../utils';
+
+import {
+  CREATE_PREDICTED_PIECES,
+  GENERATE_PIECES_PREVIEW,
+} from '../../constants/endpoints';
 
 const propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   ruleset: PropTypes.object,
+  allowCreation: PropTypes.bool,
 };
 
-const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
+const PiecesPreviewModal = ({
+  showModal,
+  setShowModal,
+  ruleset,
+  allowCreation = false,
+}) => {
   const ky = useOkapiKy();
+  const history = useHistory();
   const [predictedPieces, setPredictedPieces] = useState(null);
 
   const closeModal = () => {
@@ -37,14 +49,30 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
   };
 
   const { mutateAsync: generatePieces } = useMutation(
-    ['ui-serials-management', 'PiecesPreviewModal', 'generatePreview'],
+    ['ui-serials-management', 'PiecesPreviewModal', 'generatePieces'],
     (data) => ky
       .post(GENERATE_PIECES_PREVIEW, { json: data })
       .json()
       .then((res) => setPredictedPieces(res))
   );
 
-  const submitRecurrence = async (values) => {
+  const { mutateAsync: createPieces } = useMutation(
+    ['ui-serials-management', 'PiecesPreviewModal', 'createPieces'],
+    (data) => ky
+      .post(CREATE_PREDICTED_PIECES, { json: data })
+      .json()
+      .then((res) => history.push(urls.pieceSetView(res?.id)))
+  );
+
+  const handleCreation = async (values) => {
+    const submitValues = {
+      ruleset: { id: ruleset?.id },
+      startDate: values?.startDate,
+    };
+    await createPieces(submitValues);
+  };
+
+  const handleGeneration = async (values) => {
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
@@ -115,22 +143,37 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
   };
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
-    const { invalid, pristine, submitting } = formState;
+    const { invalid, pristine, submitting, values } = formState;
     return (
-      <ModalFooter>
+      <>
+        {allowCreation && (
+          <div style={{ marginLeft: '0.5rem' }}>
+            <Button
+              buttonStyle="primary"
+              disabled={submitting || invalid || pristine}
+              marginBottom0
+              onClick={handleSubmit}
+              type="submit"
+            >
+              <FormattedMessage id="ui-serials-management.ruleset.generate" />
+            </Button>
+          </div>
+        )}
         <Button
-          buttonStyle="primary"
+          buttonStyle="default"
           disabled={submitting || invalid || pristine}
           marginBottom0
-          onClick={handleSubmit}
+          onClick={() => handleGeneration(values)}
           type="submit"
         >
-          <FormattedMessage id="ui-serials-management.ruleset.generate" />
+          <FormattedMessage id="ui-serials-management.ruleset.preview" />
         </Button>
-        <Button marginBottom0 onClick={handleClose}>
-          <FormattedMessage id="ui-serials-management.close" />
-        </Button>
-      </ModalFooter>
+        <div style={{ flex: 1 }}>
+          <Button marginBottom0 onClick={handleClose}>
+            <FormattedMessage id="ui-serials-management.close" />
+          </Button>
+        </div>
+      </>
     );
   };
 
@@ -145,7 +188,7 @@ const PiecesPreviewModal = ({ showModal, setShowModal, ruleset }) => {
         footer: renderFooter,
       }}
       mutators={arrayMutators}
-      onSubmit={submitRecurrence}
+      onSubmit={handleCreation}
     >
       <Row>
         <Col xs={4}>
