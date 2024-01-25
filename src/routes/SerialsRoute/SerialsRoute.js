@@ -29,6 +29,7 @@ const SerialsRoute = ({ children, path }) => {
     SASQ_MAP: {
       searchKey: 'id',
       filterKeys: {
+        serialStatus: 'serialStatus.value',
         orderLine: 'orderLine.remoteId',
       },
     },
