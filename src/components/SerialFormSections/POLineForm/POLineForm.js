@@ -95,7 +95,7 @@ const POLineForm = () => {
 
   return (
     <>
-      <Field name="orderLine" required validate={requiredValidator}>
+      <Field name="orderLine">
         {({ input }) => {
           return (
             <POLineLookup
