@@ -36,7 +36,7 @@ import {
   LabelFieldArray,
 } from '../../RulesetFormSections';
 
-import PiecesPreviewModal from '../../PiecesPreviewModal/PiecesPreviewModal';
+import PiecesPreviewModal from '../../PiecesPreviewModal';
 
 const propTypes = {
   handlers: PropTypes.shape({

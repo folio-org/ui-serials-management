@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -24,6 +24,7 @@ import {
   SerialInfo,
   SerialPOLine,
 } from '../../SerialSections';
+import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
@@ -43,6 +44,8 @@ const SerialView = ({
   const params = useParams();
   const stripes = useStripes();
   const accordionStatusRef = createRef();
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleEdit = () => {
     history.push(`${urls.serialEdit(params?.id)}${location.search}`);
@@ -81,6 +84,19 @@ const SerialView = ({
           </Icon>
         </Button>
       );
+      if (stripes.hasPerm('serials-management.predictedPieces.edit')) {
+        buttons.push(
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-generate-pieces"
+            onClick={() => setShowModal(true)}
+          >
+            <Icon icon="replace">
+              <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+            </Icon>
+          </Button>
+        );
+      }
     }
     return buttons.length ? buttons : null;
   };
@@ -90,43 +106,53 @@ const SerialView = ({
   }
 
   return (
-    <HasCommand
-      commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
-    >
-      <Pane
-        actionMenu={renderActionMenu}
-        defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
-        dismissible
-        onClose={onClose}
+    <>
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
-        <MetaSection
-          contentId="serialMetaContent"
-          createdDate={serial?.dateCreated}
-          hideSource
-          lastUpdatedDate={serial?.lastUpdated}
-        />
-        <SerialInfo {...getSectionProps('info')} />
-        <AccordionStatus ref={accordionStatusRef}>
-          <AccordionSet>
-            {!!serial?.orderLine?.remoteId && (
-              <SerialPOLine {...getSectionProps('po-line')} />
-            )}
-            <ActivePublicationPattern
-              {...getSectionProps('active-publication-pattern')}
-            />
-            {!!serial?.serialRulesets?.find(
-              (sr) => sr?.rulesetStatus?.value === 'deprecated'
-            ) && (
-              <DeprecatedPublicationPatterns
-                {...getSectionProps('deprecated-publication-pattern')}
+        <Pane
+          actionMenu={renderActionMenu}
+          defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
+          dismissible
+          onClose={onClose}
+        >
+          <MetaSection
+            contentId="serialMetaContent"
+            createdDate={serial?.dateCreated}
+            hideSource
+            lastUpdatedDate={serial?.lastUpdated}
+          />
+          <SerialInfo {...getSectionProps('info')} />
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              {!!serial?.orderLine?.remoteId && (
+                <SerialPOLine {...getSectionProps('po-line')} />
+              )}
+              <ActivePublicationPattern
+                {...getSectionProps('active-publication-pattern')}
               />
-            )}
-          </AccordionSet>
-        </AccordionStatus>
-      </Pane>
-    </HasCommand>
+              {!!serial?.serialRulesets?.find(
+                (sr) => sr?.rulesetStatus?.value === 'deprecated'
+              ) && (
+                <DeprecatedPublicationPatterns
+                  {...getSectionProps('deprecated-publication-pattern')}
+                />
+              )}
+            </AccordionSet>
+          </AccordionStatus>
+        </Pane>
+      </HasCommand>
+      <PiecesPreviewModal
+        allowCreation
+        ruleset={serial?.serialRulesets?.find(
+          (sr) => sr?.rulesetStatus?.value === 'active'
+        )}
+        setShowModal={setShowModal}
+        showModal={showModal}
+      />
+    </>
   );
 };
 
