@@ -17,3 +17,4 @@ export const VENDOR_ENDPOINT = 'organizations/organizations';
 export const MATERIAL_TYPE_ENDPOINT = 'material-types';
 export const IDENTIFIER_TYPES_ENDPOINT = 'identifier-types';
 export const ACQUISITIONS_UNITS_API = 'acquisitions-units/units';
+export const TITLES_ENDPOINT = 'orders/titles';
