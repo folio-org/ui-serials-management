@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import {
   Accordion,
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import { FormattedMessage } from 'react-intl';
+
+import { CheckboxFilter } from '@folio/stripes/smart-components';
+
+import { selectifyRefdata } from '@folio/stripes-erm-components';
 
 import POLineFilter from '../POLineFilter';
+import { useSerialsManagementRefdata } from '../../utils';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -14,6 +20,15 @@ const propTypes = {
 };
 
 const SerialsFilters = ({ activeFilters, filterHandlers }) => {
+  const [SERIAL_STATUS] = ['Serial.SerialStatus'];
+
+  const refdataValues = useSerialsManagementRefdata([SERIAL_STATUS]);
+
+  const serialStatusValues = selectifyRefdata(
+    refdataValues,
+    SERIAL_STATUS,
+    'value'
+  );
   const renderPOLineFilter = () => {
     return (
       <Accordion
@@ -36,9 +51,39 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     );
   };
 
+  const renderRequestStatusFilter = () => {
+    return (
+      <Accordion
+        displayClearButton={activeFilters?.serialStatus?.length > 0}
+        header={FilterAccordionHeader}
+        id="status-status-filter-accordion"
+        label={<FormattedMessage id="ui-serials-management.serials.status" />}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('serialStatus');
+        }}
+        separator={false}
+      >
+        <CheckboxFilter
+          dataOptions={serialStatusValues}
+          name="serialStatus"
+          onChange={(s) => {
+            filterHandlers.state({
+              ...activeFilters,
+              serialStatus: s?.values,
+            });
+          }}
+          selectedValues={activeFilters?.serialStatus || []}
+        />
+      </Accordion>
+    );
+  };
+
   return (
     <>
-      <AccordionSet>{renderPOLineFilter()}</AccordionSet>
+      <AccordionSet>
+        {renderRequestStatusFilter()}
+        {renderPOLineFilter()}
+      </AccordionSet>
     </>
   );
 };
