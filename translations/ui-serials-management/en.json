@@ -64,7 +64,9 @@
   "poLine.materialType": "Material type",
   "poLine.funds": "Funds",
   "poLine.productIds": "Product IDs",
+  "poLine.package": "Package",
 
+  "ruleset.title": "Title",
   "ruleset.publicationCycle": "Publication cycle",
   "ruleset.timeUnit": "Time unit",
   "ruleset.numberOfTimeUnit": "Number of {timeUnit}s",
