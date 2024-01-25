@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import { Row, Col, MultiColumnList } from '@folio/stripes/components';
+import { InfoBox } from '@folio/stripes-erm-components';
 
 const propTypes = {
   pieceSet: PropTypes.object,
@@ -12,7 +13,7 @@ const propTypes = {
 const PiecesList = ({ pieceSet, id }) => {
   const formatter = {
     issueCount: (e) => {
-      return e.rowIndex + 1;
+      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
     publicationDate: (e) => {
       if (e?.recurrencePieces) {
@@ -24,7 +25,16 @@ const PiecesList = ({ pieceSet, id }) => {
           </>
         );
       }
-      return <FormattedDate value={e?.date} />;
+      return (
+        <>
+          <FormattedDate value={e?.date} />
+          {e?.omissionOrigins && (
+            <InfoBox type="success">
+              <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
+            </InfoBox>
+          )}
+        </>
+      );
     },
     label: (e) => {
       return e?.label;
@@ -49,6 +59,9 @@ const PiecesList = ({ pieceSet, id }) => {
               generatedInReceiving: (
                 <FormattedMessage id="ui-serials-management.pieceSets.generatedInReceiving" />
               ),
+            }}
+            columnWidths={{
+              publicationDate: { min: 100, max: 165 },
             }}
             contentData={pieceSet?.pieces.sort((a, b) => (a?.date < b?.date ? -1 : 1))}
             formatter={formatter}

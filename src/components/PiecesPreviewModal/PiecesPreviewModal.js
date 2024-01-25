@@ -17,7 +17,7 @@ import {
   FormattedDate,
 } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
 
 import { urls } from '../utils';
 
@@ -96,8 +96,9 @@ const PiecesPreviewModal = ({
   // Will be replaced with more concrete designs later
   // FIXME COMBINED PIECES TRANSLATION
   const formatter = {
+    // If omissionOrigins exist then piece is omitted
     issueCount: (e) => {
-      return e.rowIndex + 1;
+      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
     publicationDate: (e) => {
       if (e?.recurrencePieces) {
@@ -109,7 +110,16 @@ const PiecesPreviewModal = ({
           </>
         );
       }
-      return <FormattedDate value={e?.date} />;
+      return (
+        <>
+          <FormattedDate value={e?.date} />
+          {e?.omissionOrigins && (
+            <InfoBox type="success">
+              <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
+            </InfoBox>
+          )}
+        </>
+      );
     },
     label: (e) => {
       return e?.label;
@@ -131,6 +141,9 @@ const PiecesPreviewModal = ({
               label: (
                 <FormattedMessage id="ui-serials-management.piece.label" />
               ),
+            }}
+            columnWidths={{
+              publicationDate: { min: 100, max: 165 },
             }}
             contentData={predictedPieces}
             formatter={formatter}
