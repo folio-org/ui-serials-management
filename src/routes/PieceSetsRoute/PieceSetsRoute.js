@@ -28,15 +28,11 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'title',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.title" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.title" />,
     },
     {
       propertyPath: 'total',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.total" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.total" />,
     },
     {
       propertyPath: 'startDate',
@@ -52,9 +48,7 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'note',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.note" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.note" />,
     },
   ];
 
@@ -67,6 +61,7 @@ const PieceSetsRoute = ({ children, path }) => {
     startDate: (d) => {
       return <FormattedDate value={d?.startDate} />;
     },
+    patternId: (d) => d?.ruleset?.rulesetNumber,
   };
 
   return (
