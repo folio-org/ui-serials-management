@@ -8,7 +8,6 @@ const urls = {
 
   pieceSets: () => '/serials-management/pieceSets',
   pieceSetView: (id) => `/serials-management/pieceSets/${id}`,
-  patterns: () => '/serials-management/patterns',
 
   inventoryView: (id) => `/inventory/view/${id}`,
   poLineView: (id) => `/orders/lines/view/${id}`,

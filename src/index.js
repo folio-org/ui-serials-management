@@ -24,7 +24,6 @@ import {
   SerialEditRoute,
   RulesetCreateRoute,
   PieceSetsRoute,
-  PatternsRoute,
 } from './routes';
 
 import Settings from './settings';
@@ -111,7 +110,6 @@ const App = (props) => {
               />
               <SerialsRoute path={`${path}/serials`} />
               <PieceSetsRoute path={`${path}/pieceSets`} />
-              <PatternsRoute path={`${path}/patterns`} />
             </Switch>
           </Suspense>
         </HasCommand>
