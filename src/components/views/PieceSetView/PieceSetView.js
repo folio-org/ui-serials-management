@@ -49,7 +49,7 @@ const PieceSetView = ({
     buttons.push(
       <Button
         buttonStyle="dropdownItem"
-        disabled={serial?.orderLine?.remoteId_object && !serialLoading}
+        disabled={serial?.orderLine?.remoteId_object || serialLoading}
         id="clickable-dropdown-edit-serial"
         onClick={() => setShowReceivingModal(true)}
       >

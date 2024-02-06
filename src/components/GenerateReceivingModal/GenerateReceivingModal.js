@@ -47,9 +47,7 @@ const GenerateReceivingModal = ({
 }) => {
   const ky = useOkapiKy();
   const { data: locations } = useLocations();
-  const { data: holdings } = useHoldings();
 
-  console.log(locations);
   const [successfulReceiving, setSuccessfulReceiving] = useState([]);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
@@ -106,14 +104,9 @@ const GenerateReceivingModal = ({
         return { label: location?.name, value: location?.id };
       });
     } else if (serial?.orderLine?.remoteId_object?.locations[0]?.holdingId) {
+      // FIXME Looking for clarifaction on where the name comes from within holdings
       return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
-        console.log(e);
-        const location = locations?.locations?.find(
-          (l) => e?.holdingId === l?.id
-        );
-        console.log(location);
-
-        return { label: location?.name, value: location?.id };
+        return { label: e?.id, value: e?.id };
       });
     } else {
       return [];
@@ -147,7 +140,7 @@ const GenerateReceivingModal = ({
             supplement: values?.supplement,
             displaySummary: pieceInfo?.label,
             receiptDate: pieceInfo?.date,
-            // holdingId: '82ffbc1a-dd45-4796-9956-2800fc9b6958',
+            holdingId: values?.holding,
           },
           piece,
         };
@@ -303,6 +296,9 @@ const GenerateReceivingModal = ({
             <Field
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...formatHolding()]}
+              disabled={
+                serial?.orderLine?.remoteId_object?.locations?.length === 1
+              }
               label={
                 <FormattedMessage id="ui-serials-management.pieceSets.holding" />
               }
