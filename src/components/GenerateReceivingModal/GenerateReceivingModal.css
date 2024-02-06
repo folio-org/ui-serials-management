@@ -1,21 +1,18 @@
 @import '@folio/stripes-components/lib/variables.css';
 
-.containerHeader {
+.container {
   background-color: #0000000e;
-  border-radius: 0.5rem 0.5rem 0px 0px;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  margin-bottom: 15px;
 }
 
-.containerTimeUnit {
-  background-color: #0000000e;
-  border-radius: 0px 0px 0px 0.5rem;
+.firstRow {
+  padding-left: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
 }
 
-.containerPeriod {
-  background-color: #0000000e;
-  border-radius: 0px 0px 0.5rem 0px;
+.secondRow {
+  padding-left: 10px;
 }
 
-.label {
-  height: 0.25rem;
-  padding-bottom: 1rem;
-}

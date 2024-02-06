@@ -30,10 +30,8 @@ const PieceSetView = ({
       'GenerateReceivingModal',
       pieceSet?.ruleset?.owner?.id,
     ],
-    () => ky(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json()
+    () => ky.get(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json()
   );
-
-  console.log(serial);
 
   const getSectionProps = (name) => {
     return {
@@ -51,7 +49,7 @@ const PieceSetView = ({
     buttons.push(
       <Button
         buttonStyle="dropdownItem"
-        disabled={!serial?.orderLine?.remoteId_object || serialLoading}
+        disabled={serial?.orderLine?.remoteId_object && !serialLoading}
         id="clickable-dropdown-edit-serial"
         onClick={() => setShowReceivingModal(true)}
       >

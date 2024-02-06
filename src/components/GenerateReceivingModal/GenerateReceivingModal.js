@@ -20,11 +20,17 @@ import {
   Select,
   Checkbox,
   Label,
+  MessageBanner,
 } from '@folio/stripes/components';
+
+import { useHoldings, useLocations } from '../../hooks';
+
 import {
   PIECE_SET_ENDPOINT,
   RECEIVING_PIECES_ENDPOINT,
 } from '../../constants/endpoints';
+
+import css from './GenerateReceivingModal.css';
 
 const propTypes = {
   serial: PropTypes.object,
@@ -40,12 +46,11 @@ const GenerateReceivingModal = ({
   pieceSet,
 }) => {
   const ky = useOkapiKy();
-  const [successfulReceiving, setSuccessfulReceiving] = useState([]);
+  const { data: locations } = useLocations();
+  const { data: holdings } = useHoldings();
 
-  const closeModal = () => {
-    setSuccessfulReceiving([]);
-    setShowModal(false);
-  };
+  console.log(locations);
+  const [successfulReceiving, setSuccessfulReceiving] = useState([]);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
@@ -73,6 +78,53 @@ const GenerateReceivingModal = ({
     (data) => ky.put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data }).json()
   );
 
+  const getInitialValues = () => {
+    let holdingOrLocationId;
+    if (serial?.orderLine?.remoteId_object?.locations?.length === 1) {
+      if (serial?.orderLine?.remoteId_object?.locations[0]?.locationId) {
+        holdingOrLocationId =
+          serial?.orderLine?.remoteId_object?.locations[0]?.locationId;
+      } else {
+        holdingOrLocationId =
+          serial?.orderLine?.remoteId_object?.locations[0]?.holdingId;
+      }
+    }
+    return {
+      holding: holdingOrLocationId,
+      format: 'Physical',
+      supplement: false,
+      displayOnHolding: false,
+    };
+  };
+
+  const formatHolding = () => {
+    if (serial?.orderLine?.remoteId_object?.locations[0]?.locationId) {
+      return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
+        const location = locations?.locations?.find(
+          (l) => e?.locationId === l?.id
+        );
+        return { label: location?.name, value: location?.id };
+      });
+    } else if (serial?.orderLine?.remoteId_object?.locations[0]?.holdingId) {
+      return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
+        console.log(e);
+        const location = locations?.locations?.find(
+          (l) => e?.holdingId === l?.id
+        );
+        console.log(location);
+
+        return { label: location?.name, value: location?.id };
+      });
+    } else {
+      return [];
+    }
+  };
+
+  const closeModal = () => {
+    setSuccessfulReceiving([]);
+    setShowModal(false);
+  };
+
   const handleGeneration = async (values) => {
     const piecesArray = [];
     for (let i = 0; i < pieceSet?.pieces?.length; i++) {
@@ -95,7 +147,7 @@ const GenerateReceivingModal = ({
             supplement: values?.supplement,
             displaySummary: pieceInfo?.label,
             receiptDate: pieceInfo?.date,
-            holdingId: '82ffbc1a-dd45-4796-9956-2800fc9b6958',
+            // holdingId: '82ffbc1a-dd45-4796-9956-2800fc9b6958',
           },
           piece,
         };
@@ -112,65 +164,73 @@ const GenerateReceivingModal = ({
   const renderPredictedPiecesInformation = () => {
     return (
       <>
-        <Row>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.totalPieces" />
-              }
-            >
-              {pieceSet?.pieces?.length}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.pieceSetGenerated" />
-              }
-            >
-              {pieceSet?.dateCreated}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
-              }
-            >
-              {pieceSet?.startDate}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
-              }
-            >
-              {pieceSet?.ruleset?.rulesetNumber}
-            </KeyValue>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.firstPiece" />
-              }
-            >
-              {pieceSet?.pieces[0]?.date}, {pieceSet?.pieces[0]?.label}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
-              }
-            >
-              {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.date},
-              {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.label}
-            </KeyValue>
-          </Col>
-        </Row>
+        {/* {!canCreate && !values?.invoiceLine && ( */}
+        <MessageBanner type="warning">
+          <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />
+        </MessageBanner>
+        <br />
+        {/* )} */}
+        <div className={css.container}>
+          <Row className={css.firstRow}>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.totalPieces" />
+                }
+              >
+                {pieceSet?.pieces?.length}
+              </KeyValue>
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.pieceSetGenerated" />
+                }
+              >
+                {pieceSet?.dateCreated}
+              </KeyValue>
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
+                }
+              >
+                {pieceSet?.startDate}
+              </KeyValue>
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
+                }
+              >
+                {pieceSet?.ruleset?.rulesetNumber}
+              </KeyValue>
+            </Col>
+          </Row>
+          <Row className={css.secondRow}>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.firstPiece" />
+                }
+              >
+                {pieceSet?.pieces[0]?.date}, {pieceSet?.pieces[0]?.label}
+              </KeyValue>
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
+                }
+              >
+                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.date},
+                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.label}
+              </KeyValue>
+            </Col>
+          </Row>
+        </div>
       </>
     );
   };
@@ -242,11 +302,13 @@ const GenerateReceivingModal = ({
           <Col xs={6}>
             <Field
               component={Select}
-              dataOptions={[{}]}
+              dataOptions={[{ label: '', value: '' }, ...formatHolding()]}
               label={
                 <FormattedMessage id="ui-serials-management.pieceSets.holding" />
               }
               name="holding"
+              required
+              validate={requiredValidator}
             />
           </Col>
           <Col xs={3}>
@@ -304,11 +366,7 @@ const GenerateReceivingModal = ({
 
   return (
     <FormModal
-      initialValues={{
-        format: 'Physical',
-        supplement: false,
-        displayOnHolding: false,
-      }}
+      initialValues={getInitialValues()}
       modalProps={{
         onClose: closeModal,
         open: showModal,

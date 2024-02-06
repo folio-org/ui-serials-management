@@ -180,6 +180,7 @@
   "pieceSets.holding": "Holding",
   "pieceSets.displayInHolding": "Display in holding",
   "pieceSets.supplement": "Supplement",
+  "pieceSets.noOrderLineLocationsOrHoldings": "There are no locations or holdings for the linked POL and receiving pieces cannot be created with no location or holding. To add a location or holding please update the PO line.",
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
   "validate.notNegative": "Cannot be negative",
