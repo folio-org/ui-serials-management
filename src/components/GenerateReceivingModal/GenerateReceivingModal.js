@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
-import { Field, useForm } from 'react-final-form';
+import { useMutation } from 'react-query';
+import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
+
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -17,22 +21,92 @@ import {
   Checkbox,
   Label,
 } from '@folio/stripes/components';
+import {
+  PIECE_SET_ENDPOINT,
+  RECEIVING_PIECES_ENDPOINT,
+} from '../../constants/endpoints';
 
 const propTypes = {
+  serial: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   pieceSet: PropTypes.object,
 };
 
-const GenerateReceivingModal = ({ showModal, setShowModal, pieceSet }) => {
-  const { change } = useForm();
+const GenerateReceivingModal = ({
+  serial,
+  showModal,
+  setShowModal,
+  pieceSet,
+}) => {
+  const ky = useOkapiKy();
+  const [successfulReceiving, setSuccessfulReceiving] = useState([]);
+
   const closeModal = () => {
+    setSuccessfulReceiving([]);
     setShowModal(false);
   };
 
+  const { mutateAsync: submitReceivingPiece } = useMutation(
+    [
+      'ui-serials-management',
+      'GeneratingReceivingModal',
+      'submitReceivingPiece',
+    ],
+    (data) => ky
+      .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
+      .json()
+      .then((res) => {
+        if (successfulReceiving?.length) {
+          setSuccessfulReceiving([
+            ...successfulReceiving,
+            { ...data?.piece, receivingId: res?.id },
+          ]);
+        } else {
+          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
+        }
+      })
+  );
+
+  const { mutateAsync: submitReceivingIds } = useMutation(
+    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
+    (data) => ky.put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data }).json()
+  );
+
   const handleGeneration = async (values) => {
-    console.log(values);
-    closeModal();
+    const piecesArray = [];
+    for (let i = 0; i < pieceSet?.pieces?.length; i++) {
+      const piece = pieceSet?.pieces[i];
+
+      if (!piece?.omissionOrigins) {
+        const pieceInfo = piece?.combinationOrigins
+          ? {
+            date: piece?.recurrencePieces[0]?.date,
+            label: piece?.recurrencePieces[0]?.date,
+          }
+          : { date: piece?.date, label: piece?.label };
+
+        const submitValues = {
+          receiving: {
+            poLineId: serial?.orderLine?.remoteId,
+            titleId: serial?.orderLine?.titleId,
+            format: values?.format,
+            displayOnHolding: values?.displayOnHolding,
+            supplement: values?.supplement,
+            displaySummary: pieceInfo?.label,
+            receiptDate: pieceInfo?.date,
+            holdingId: '82ffbc1a-dd45-4796-9956-2800fc9b6958',
+          },
+          piece,
+        };
+        piecesArray.push(submitValues);
+      }
+    }
+    for (let i = 0; i < piecesArray?.length; i++) {
+      await submitReceivingPiece(piecesArray[i]);
+    }
+    const submitPieceSet = { ...pieceSet, pieces: successfulReceiving };
+    await submitReceivingIds(submitPieceSet);
   };
 
   const renderPredictedPiecesInformation = () => {
@@ -102,93 +176,108 @@ const GenerateReceivingModal = ({ showModal, setShowModal, pieceSet }) => {
   };
 
   const renderFields = () => {
-    <>
-      <Row>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            label={
-              <>
-                <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceipt" />
-                <InfoPopover
-                  content={
-                    <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceiptPopover" />
-                  }
+    return (
+      <>
+        <Row>
+          <Col xs={6}>
+            <Field
+              component={TextField}
+              label={
+                <>
+                  <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceipt" />
+                  <InfoPopover
+                    content={
+                      <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceiptPopover" />
+                    }
+                  />
+                </>
+              }
+              name="interval"
+              required
+              type="number"
+              validate={requiredValidator}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <Field
+              component={Select}
+              dataOptions={[{ label: 'Physical', value: 'Physical' }]}
+              disabled
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.pieceFormat" />
+              }
+              name="format"
+            />
+          </Col>
+          <Col xs={3}>
+            <Label>
+              <FormattedMessage id="ui-serials-management.pieceSets.supplement" />
+              <InfoPopover
+                content={
+                  <FormattedMessage id="ui-serials-management.pieceSets.supplementPopover" />
+                }
+                id="supplement-tooltip"
+              />
+            </Label>
+
+            <Field
+              name="supplement"
+              render={({ input, meta }) => (
+                <Checkbox
+                  component={Checkbox}
+                  input={input}
+                  meta={meta}
+                  onChange={(e) => {
+                    input.onChange(e.target.checked);
+                  }}
+                  type="checkbox"
                 />
-              </>
-            }
-            name="interval"
-            required
-            type="number"
-            validate={requiredValidator}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <Field
-            component={Select}
-            label={
-              <FormattedMessage id="ui-serials-management.pieceSets.pieceFormat" />
-            }
-            name="pieceFormat"
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-        <Col xs={3}>
-          <Label>
-            <FormattedMessage id="ui-serials-management.pieceSets.supplement" />
-            <InfoPopover
-              content={
-                <FormattedMessage id="ui-serials-management.pieceSets.supplementPopover" />
-              }
-              id="supplement-tooltip"
+              )}
             />
-          </Label>
-
-          <Field
-            component={Checkbox}
-            name="supplement"
-            onChange={(e) => {
-              change('supplement', e.target.checked);
-            }}
-            type="checkbox"
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <Field
-            component={Select}
-            label={
-              <FormattedMessage id="ui-serials-management.pieceSets.holding" />
-            }
-            name="holding"
-          />
-        </Col>
-        <Col xs={3}>
-          <Label>
-            <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
-            <InfoPopover
-              content={
-                <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <Field
+              component={Select}
+              dataOptions={[{}]}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.holding" />
               }
-              id="display-on-holding-tooltip"
+              name="holding"
             />
-          </Label>
+          </Col>
+          <Col xs={3}>
+            <Label>
+              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
+              <InfoPopover
+                content={
+                  <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
+                }
+                id="display-on-holding-tooltip"
+              />
+            </Label>
 
-          <Field
-            component={Checkbox}
-            name="displayOnHolding"
-            onChange={(e) => {
-              change('displayOnHolding', e.target.checked);
-            }}
-            type="checkbox"
-          />
-        </Col>
-      </Row>
-    </>;
+            <Field
+              name="displayOnHolding"
+              render={({ input, meta }) => (
+                <Checkbox
+                  component={Checkbox}
+                  input={input}
+                  meta={meta}
+                  onChange={(e) => {
+                    input.onChange(e.target.checked);
+                  }}
+                  type="checkbox"
+                />
+              )}
+            />
+          </Col>
+        </Row>
+      </>
+    );
   };
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
@@ -215,6 +304,11 @@ const GenerateReceivingModal = ({ showModal, setShowModal, pieceSet }) => {
 
   return (
     <FormModal
+      initialValues={{
+        format: 'Physical',
+        supplement: false,
+        displayOnHolding: false,
+      }}
       modalProps={{
         onClose: closeModal,
         open: showModal,

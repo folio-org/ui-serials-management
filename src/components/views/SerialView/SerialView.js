@@ -88,6 +88,7 @@ const SerialView = ({
         buttons.push(
           <Button
             buttonStyle="dropdownItem"
+            disabled={!serial?.serialRulesets}
             id="clickable-dropdown-generate-pieces"
             onClick={() => setShowModal(true)}
           >

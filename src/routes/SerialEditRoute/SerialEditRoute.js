@@ -50,7 +50,11 @@ const SerialEditRoute = () => {
         ? { serialStatus: null }
         : { serialStatus: { value: values?.serialStatus?.value } }),
       ...(values?.orderLine && {
-        orderLine: { remoteId: values?.orderLine?.id },
+        orderLine: {
+          remoteId: values?.orderLine?.id,
+          title: values?.title?.title,
+          titleId: values?.title?.id,
+        },
       }),
     };
     await putSerial(submitValues);
