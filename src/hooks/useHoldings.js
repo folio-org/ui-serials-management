@@ -4,17 +4,24 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { HOLDINGS_ENDPOINT } from '../constants/endpoints';
 
-export const useHoldings = () => {
+export const useHoldings = (holdingIds) => {
   const ky = useOkapiKy();
 
-  const { isLoading, data = {} } = useQuery(
-    ['ui-serials-management', HOLDINGS_ENDPOINT],
-    () => ky.get(`${HOLDINGS_ENDPOINT}`).json(),
+  const queryString =
+    'id==(' + holdingIds?.map((e) => `"${e}"`).join(' or ') + ')';
+
+  // Using query string within query keys to ensure it is fired when locationIds are changed
+  // May be a better alternative for locationIds specified query keys
+
+  const { isLoading, data = [] } = useQuery(
+    ['ui-serials-management', HOLDINGS_ENDPOINT, queryString],
+    () => ky.get(`${HOLDINGS_ENDPOINT}?query=${queryString}`).json(),
+    { enabled: !!holdingIds?.length }
   );
 
   return {
     isLoading,
-    data,
+    data: data?.holdingsRecords,
   };
 };
 
