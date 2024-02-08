@@ -37,6 +37,7 @@ const propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   pieceSet: PropTypes.object,
+  holdingIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 const GenerateReceivingModal = ({
@@ -44,9 +45,11 @@ const GenerateReceivingModal = ({
   showModal,
   setShowModal,
   pieceSet,
+  holdingIds,
 }) => {
   const ky = useOkapiKy();
   const { data: locations } = useLocations();
+  const { data: holdings } = useHoldings(holdingIds);
 
   const [successfulReceiving, setSuccessfulReceiving] = useState([]);
 
@@ -77,40 +80,48 @@ const GenerateReceivingModal = ({
   );
 
   const getInitialValues = () => {
-    let holdingOrLocationId;
-    if (serial?.orderLine?.remoteId_object?.locations?.length === 1) {
-      if (serial?.orderLine?.remoteId_object?.locations[0]?.locationId) {
-        holdingOrLocationId =
-          serial?.orderLine?.remoteId_object?.locations[0]?.locationId;
-      } else {
-        holdingOrLocationId =
-          serial?.orderLine?.remoteId_object?.locations[0]?.holdingId;
-      }
-    }
-    return {
-      holding: holdingOrLocationId,
+    const fixedInitialValues = {
       format: 'Physical',
       supplement: false,
       displayOnHolding: false,
     };
+    if (serial?.orderLine?.remoteId_object?.locations?.length === 1) {
+      if (holdingIds) {
+        return {
+          holdingId: holdingIds[0],
+          ...fixedInitialValues,
+        };
+      } else {
+        return {
+          locationId:
+            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          ...fixedInitialValues,
+        };
+      }
+    }
+    return { ...fixedInitialValues };
   };
 
-  const formatHolding = () => {
-    if (serial?.orderLine?.remoteId_object?.locations[0]?.locationId) {
-      return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
-        const location = locations?.locations?.find(
-          (l) => e?.locationId === l?.id
-        );
-        return { label: location?.name, value: location?.id };
-      });
-    } else if (serial?.orderLine?.remoteId_object?.locations[0]?.holdingId) {
-      // FIXME Looking for clarifaction on where the name comes from within holdings
-      return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
-        return { label: e?.id, value: e?.id };
-      });
-    } else {
-      return [];
+  const formatDataOptions = () => {
+    if (serial?.orderLine?.remoteId_object?.locations?.length) {
+      if (!holdingIds && locations?.length) {
+        return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
+          const location = locations?.find((l) => e?.locationId === l?.id);
+          return { label: location?.name, value: location?.id };
+        });
+      } else if (locations?.length && holdings?.length) {
+        return holdings?.map((h) => {
+          const holdingLocation = locations.find(
+            (l) => h?.permanentLocationId === l?.id
+          );
+          return {
+            label: `${holdingLocation?.name} > ${h?.callNumber}`,
+            value: h?.id,
+          };
+        });
+      }
     }
+    return [];
   };
 
   const closeModal = () => {
@@ -140,7 +151,8 @@ const GenerateReceivingModal = ({
             supplement: values?.supplement,
             displaySummary: pieceInfo?.label,
             receiptDate: pieceInfo?.date,
-            holdingId: values?.holding,
+            ...(values?.holdingId && { holdingId: values?.holdingId }),
+            ...(values?.locationId && { locationId: values?.locationId }),
           },
           piece,
         };
@@ -151,18 +163,20 @@ const GenerateReceivingModal = ({
       await submitReceivingPiece(piecesArray[i]);
     }
     const submitPieceSet = { ...pieceSet, pieces: successfulReceiving };
-    await submitReceivingIds(submitPieceSet);
+    // await submitReceivingIds(submitPieceSet);
   };
 
   const renderPredictedPiecesInformation = () => {
     return (
       <>
-        {/* {!canCreate && !values?.invoiceLine && ( */}
-        <MessageBanner type="warning">
-          <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />
-        </MessageBanner>
-        <br />
-        {/* )} */}
+        {!serial?.orderLine?.remoteId_object?.locations?.length && (
+          <>
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />
+            </MessageBanner>
+            <br />
+          </>
+        )}
         <div className={css.container}>
           <Row className={css.firstRow}>
             <Col xs={3}>
@@ -292,47 +306,54 @@ const GenerateReceivingModal = ({
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={[{ label: '', value: '' }, ...formatHolding()]}
-              disabled={
-                serial?.orderLine?.remoteId_object?.locations?.length === 1
-              }
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.holding" />
-              }
-              name="holding"
-              required
-              validate={requiredValidator}
-            />
-          </Col>
-          <Col xs={3}>
-            <Label>
-              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
-              <InfoPopover
-                content={
-                  <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
+          {serial?.orderLine?.remoteId_object?.locations?.length && (
+            <Col xs={6}>
+              <Field
+                component={Select}
+                dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
+                disabled={
+                  serial?.orderLine?.remoteId_object?.locations?.length === 1
                 }
-                id="display-on-holding-tooltip"
+                label={
+                  holdingIds ? (
+                    <FormattedMessage id="ui-serials-management.pieceSets.holding" />
+                  ) : (
+                    <FormattedMessage id="ui-serials-management.pieceSets.location" />
+                  )
+                }
+                name={holdingIds ? 'holdingId' : 'locationId'}
+                required
+                validate={requiredValidator}
               />
-            </Label>
-
-            <Field
-              name="displayOnHolding"
-              render={({ input, meta }) => (
-                <Checkbox
-                  component={Checkbox}
-                  input={input}
-                  meta={meta}
-                  onChange={(e) => {
-                    input.onChange(e.target.checked);
-                  }}
-                  type="checkbox"
+            </Col>
+          )}
+          {holdingIds?.length && (
+            <Col xs={3}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
+                  }
+                  id="display-on-holding-tooltip"
                 />
-              )}
-            />
-          </Col>
+              </Label>
+              <Field
+                name="displayOnHolding"
+                render={({ input, meta }) => (
+                  <Checkbox
+                    component={Checkbox}
+                    input={input}
+                    meta={meta}
+                    onChange={(e) => {
+                      input.onChange(e.target.checked);
+                    }}
+                    type="checkbox"
+                  />
+                )}
+              />
+            </Col>
+          )}
         </Row>
       </>
     );
