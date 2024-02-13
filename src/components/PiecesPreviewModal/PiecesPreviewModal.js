@@ -80,6 +80,7 @@ const PiecesPreviewModal = ({
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
+      startingValues: values?.startingValues
     };
     submitValues?.recurrence?.rules?.forEach((e) => {
       // If no ordinal specified, assume ordinal is 1 for all rules
@@ -184,7 +185,7 @@ const PiecesPreviewModal = ({
                       values={{ index: e?.index + 1 }}
                     />
                   }
-                  name={`enumeration[${formatValues?.index}].level[${i}].value`}
+                  name={`startingValues.enumeration[${formatValues?.index}].level[${i}].value`}
                 />
               </Col>
             );
