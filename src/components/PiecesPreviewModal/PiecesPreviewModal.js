@@ -15,11 +15,15 @@ import {
   Button,
   MultiColumnList,
   FormattedDate,
+  Label,
+  TextField,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
 
 import { urls } from '../utils';
+
+import css from './PiecesPreviewModal.css';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -155,6 +159,67 @@ const PiecesPreviewModal = ({
     );
   };
 
+  const renderEnumerationNumericField = (formatValues) => {
+    return (
+      <>
+        <Row>
+          <Col xs={3}>
+            <Label>
+              <FormattedMessage
+                id="ui-serials-management.ruleset.labelIndex"
+                values={{ index: formatValues?.index + 1 }}
+              />
+            </Label>
+          </Col>
+        </Row>
+        <Row>
+          {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
+            return (
+              <Col xs={3}>
+                <Field
+                  component={TextField}
+                  label={
+                    <FormattedMessage
+                      id="ui-serials-management.ruleset.levelIndex"
+                      values={{ index: e?.index + 1 }}
+                    />
+                  }
+                  name={`enumeration[${formatValues?.index}].level[${i}].value`}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </>
+    );
+  };
+
+  const renderTemplateStartingValues = () => {
+    return (
+      <>
+        <div className={css.container}>
+          <Row>
+            <Col xs={12}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.ruleset.valuesToUseForFirstIssue" />
+              </Label>
+            </Col>
+          </Row>
+          <br />
+          {ruleset?.templateConfig?.rules?.map((e) => {
+            if (
+              e?.ruleType?.templateMetadataRuleFormat?.value ===
+              'enumeration_numeric'
+            ) {
+              return <>{renderEnumerationNumericField(e)}</>;
+            }
+            return null;
+          })}
+        </div>
+      </>
+    );
+  };
+
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
     return (
@@ -218,6 +283,8 @@ const PiecesPreviewModal = ({
           />
         </Col>
       </Row>
+      {!!ruleset?.templateConfig?.rules?.length &&
+        renderTemplateStartingValues()}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
