@@ -1,9 +1,10 @@
 import { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useQuery } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { useStripes } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   Pane,
   LoadingPane,
@@ -23,10 +24,12 @@ import {
   DeprecatedPublicationPatterns,
   SerialInfo,
   SerialPOLine,
+  SerialPieceSets,
 } from '../../SerialSections';
 import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
+import { PIECE_SETS_ENDPOINT } from '../../../constants/endpoints';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -44,8 +47,16 @@ const SerialView = ({
   const params = useParams();
   const stripes = useStripes();
   const accordionStatusRef = createRef();
+  const ky = useOkapiKy();
 
   const [showModal, setShowModal] = useState(false);
+
+  const { data: pieceSets, pieceSetsLoading } = useQuery(
+    ['ui-serials-management', 'SerialView', serial?.id],
+    () => ky
+      .get(`${PIECE_SETS_ENDPOINT}?filters=ruleset.owner.id==${serial?.id}`)
+      .json()
+  );
 
   const handleEdit = () => {
     history.push(`${urls.serialEdit(params?.id)}${location.search}`);
@@ -139,6 +150,12 @@ const SerialView = ({
               ) && (
                 <DeprecatedPublicationPatterns
                   {...getSectionProps('deprecated-publication-pattern')}
+                />
+              )}
+              {pieceSets && !pieceSetsLoading && (
+                <SerialPieceSets
+                  id="serial-section-serial-piece-sets"
+                  pieceSets={pieceSets}
                 />
               )}
             </AccordionSet>
