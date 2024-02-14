@@ -123,7 +123,7 @@ const PiecesPreviewModal = ({
         </>
       );
     },
-    label: (e) => {
+    displaySummary: (e) => {
       return e?.label;
     },
   };
@@ -140,8 +140,8 @@ const PiecesPreviewModal = ({
               publicationDate: (
                 <FormattedMessage id="ui-serials-management.ruleset.issuePublicationDate" />
               ),
-              label: (
-                <FormattedMessage id="ui-serials-management.piece.label" />
+              displaySummary: (
+                <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
             }}
             columnWidths={{
@@ -150,7 +150,7 @@ const PiecesPreviewModal = ({
             contentData={predictedPieces}
             formatter={formatter}
             interactive={false}
-            visibleColumns={['issueCount', 'publicationDate', 'label']}
+            visibleColumns={['issueCount', 'publicationDate', 'displaySummary']}
           />
         </Col>
       </Row>
