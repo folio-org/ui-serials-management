@@ -15,6 +15,7 @@ import {
   Button,
   MultiColumnList,
   FormattedDate,
+  TextArea,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
@@ -68,6 +69,7 @@ const PiecesPreviewModal = ({
     const submitValues = {
       ruleset: { id: ruleset?.id },
       startDate: values?.startDate,
+      note: values?.note,
     };
     await createPieces(submitValues);
   };
@@ -218,6 +220,19 @@ const PiecesPreviewModal = ({
           />
         </Col>
       </Row>
+      {allowCreation &&
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={
+              <FormattedMessage id="ui-serials-management.pieceSets.note" />
+            }
+            name="note"
+          />
+        </Col>
+      </Row>
+}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
