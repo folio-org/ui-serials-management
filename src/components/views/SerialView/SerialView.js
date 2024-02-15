@@ -152,7 +152,7 @@ const SerialView = ({
                   {...getSectionProps('deprecated-publication-pattern')}
                 />
               )}
-              {pieceSets && !pieceSetsLoading && (
+              {!!pieceSets?.length && !pieceSetsLoading && (
                 <SerialPieceSets
                   id="serial-section-serial-piece-sets"
                   pieceSets={pieceSets}
