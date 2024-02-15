@@ -36,7 +36,7 @@ const PiecesList = ({ pieceSet, id }) => {
         </>
       );
     },
-    label: (e) => {
+    displaySummary: (e) => {
       return e?.label;
     },
   };
@@ -53,8 +53,8 @@ const PiecesList = ({ pieceSet, id }) => {
               publicationDate: (
                 <FormattedMessage id="ui-serials-management.pieceSets.publicationDate" />
               ),
-              label: (
-                <FormattedMessage id="ui-serials-management.pieceSets.label" />
+              displaySummary: (
+                <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
               generatedInReceiving: (
                 <FormattedMessage id="ui-serials-management.pieceSets.generatedInReceiving" />
@@ -69,7 +69,7 @@ const PiecesList = ({ pieceSet, id }) => {
             visibleColumns={[
               'issueCount',
               'publicationDate',
-              'label',
+              'displaySummary',
               'generatedInReceiving',
             ]}
           />

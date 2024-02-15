@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import { Row, Col, KeyValue } from '@folio/stripes/components';
+import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 const propTypes = {
   pieceSet: PropTypes.object,
@@ -18,7 +19,7 @@ const PieceSetInfo = ({ pieceSet, id }) => {
               <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
             }
           >
-            <FormattedDate value={pieceSet?.dateCreated} />
+            <FormattedDateTime value={pieceSet?.dateCreated} />
           </KeyValue>
         </Col>
         <Col xs={3}>

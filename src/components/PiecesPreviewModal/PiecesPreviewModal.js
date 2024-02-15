@@ -15,6 +15,7 @@ import {
   Button,
   MultiColumnList,
   FormattedDate,
+  TextArea,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
@@ -68,6 +69,7 @@ const PiecesPreviewModal = ({
     const submitValues = {
       ruleset: { id: ruleset?.id },
       startDate: values?.startDate,
+      note: values?.note,
     };
     await createPieces(submitValues);
   };
@@ -121,7 +123,7 @@ const PiecesPreviewModal = ({
         </>
       );
     },
-    label: (e) => {
+    displaySummary: (e) => {
       return e?.label;
     },
   };
@@ -138,8 +140,8 @@ const PiecesPreviewModal = ({
               publicationDate: (
                 <FormattedMessage id="ui-serials-management.ruleset.issuePublicationDate" />
               ),
-              label: (
-                <FormattedMessage id="ui-serials-management.piece.label" />
+              displaySummary: (
+                <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
             }}
             columnWidths={{
@@ -148,7 +150,7 @@ const PiecesPreviewModal = ({
             contentData={predictedPieces}
             formatter={formatter}
             interactive={false}
-            visibleColumns={['issueCount', 'publicationDate', 'label']}
+            visibleColumns={['issueCount', 'publicationDate', 'displaySummary']}
           />
         </Col>
       </Row>
@@ -217,6 +219,17 @@ const PiecesPreviewModal = ({
             validate={requiredValidator}
           />
         </Col>
+        {allowCreation && (
+          <Col xs={8}>
+            <Field
+              component={TextArea}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.note" />
+              }
+              name="note"
+            />
+          </Col>
+        )}
       </Row>
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
