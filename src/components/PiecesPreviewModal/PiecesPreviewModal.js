@@ -219,20 +219,18 @@ const PiecesPreviewModal = ({
             validate={requiredValidator}
           />
         </Col>
+        {allowCreation && (
+          <Col xs={8}>
+            <Field
+              component={TextArea}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.note" />
+              }
+              name="note"
+            />
+          </Col>
+        )}
       </Row>
-      {allowCreation &&
-      <Row>
-        <Col xs={12}>
-          <Field
-            component={TextArea}
-            label={
-              <FormattedMessage id="ui-serials-management.pieceSets.note" />
-            }
-            name="note"
-          />
-        </Col>
-      </Row>
-}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
