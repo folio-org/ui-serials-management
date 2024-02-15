@@ -1,6 +1,6 @@
-/* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import {
   Accordion,
@@ -9,22 +9,28 @@ import {
   Row,
   MultiColumnList,
 } from '@folio/stripes/components';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { FormattedDateTime } from '@folio/stripes-erm-components';
+
+import { urls } from '../../utils';
 
 const proptypes = {
   pieceSets: PropTypes.arrayOf(PropTypes.object),
 };
 
 const SerialPieceSets = ({ pieceSets }) => {
-  const history = useHistory();
-
   const renderBadge = () => {
     return <Badge>{pieceSets?.length}</Badge>;
   };
 
   const formatter = {
     dateGenerated: (p) => {
-      return p.dateCreated;
+      return (
+        <>
+          <Link to={urls.pieceSetView(p?.id)}>
+            <FormattedDateTime value={p?.dateCreated} />
+          </Link>
+        </>
+      );
     },
     startDate: (p) => {
       return <FormattedDate value={p?.startDate} />;

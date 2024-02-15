@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -9,6 +9,8 @@ import {
   Row,
   MultiColumnList,
 } from '@folio/stripes/components';
+
+import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 
 const proptypes = {
@@ -25,7 +27,7 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDate value={e?.lastUpdated} />;
+      return <FormattedDateTime value={e?.lastUpdated} />;
     },
     description: (e) => {
       return e?.description;
