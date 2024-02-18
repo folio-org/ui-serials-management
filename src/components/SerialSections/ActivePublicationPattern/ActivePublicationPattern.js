@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -14,6 +14,8 @@ import {
   InfoPopover,
   MultiColumnList,
 } from '@folio/stripes/components';
+
+import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 import { urls } from '../../utils';
 
@@ -37,7 +39,7 @@ const ActivePublicationPattern = ({ serial }) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDate value={e?.lastUpdated} />;
+      return <FormattedDateTime value={e?.lastUpdated} />;
     },
     description: (e) => {
       return e?.description;
@@ -92,7 +94,7 @@ const ActivePublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDate value={activeRuleset?.lastUpdated} />}
+                value={<FormattedDateTime value={activeRuleset?.lastUpdated} />}
               />
             </Col>
           </Row>

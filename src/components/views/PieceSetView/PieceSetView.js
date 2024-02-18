@@ -76,6 +76,7 @@ const PieceSetView = ({
         defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
         dismissible
         onClose={onClose}
+        paneTitle={serial?.orderLine?.title}
       >
         <PieceSetInfo {...getSectionProps('info')} />
         <PiecesList {...getSectionProps('pieces-list')} />

@@ -168,7 +168,7 @@
   "pieceSets.note": "Note",
   "pieceSets.totalPieces": "Total pieces",
   "pieceSets.issueCount": "Issue count",
-  "pieceSets.label": "Label",
+  "pieceSets.displaySummary": "Display summary",
   "pieceSets.publicationDate": "Publication date",
   "pieceSets.generatedInReceiving": "Generated in receiving",
   "pieceSets.omitted": "Omitted",
