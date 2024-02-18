@@ -144,6 +144,7 @@
   "ruleset.yearFormat": "Year format",
   "ruleset.addLevel": "Add level",
   "ruleset.level": "Level",
+  "ruleset.levelIndex": "Level {index}",
   "ruleset.format": "Format",
   "ruleset.sequence": "Sequence",
   "ruleset.internalNote": "Internal note",
@@ -154,6 +155,7 @@
   "ruleset.labelText": "Label text",
   "ruleset.numberOfIssues": "No. of issues",
   "ruleset.numberOfUnits": "No. of units",
+  "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
   
 
   "pieceSets": "Piece sets",

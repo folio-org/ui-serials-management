@@ -15,12 +15,17 @@ import {
   Button,
   MultiColumnList,
   FormattedDate,
+  Label,
+  TextField,
+  Layout,
   TextArea,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
 
-import { urls } from '../utils';
+import { urls, validateWithinRange } from '../utils';
+
+import css from './PiecesPreviewModal.css';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -74,6 +79,8 @@ const PiecesPreviewModal = ({
     await createPieces(submitValues);
   };
 
+  // TODO This could be put into some nice util functions to handle
+
   const handleGeneration = async (values) => {
     const submitValues = {
       ...ruleset,
@@ -90,6 +97,25 @@ const PiecesPreviewModal = ({
         e.pattern = {};
       }
       e.patternType = submitValues?.patternType;
+    });
+    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+      if (values?.startingValues) {
+        if (
+          values?.startingValues[ruleIndex]?.levels?.length &&
+          rule?.ruleType?.ruleFormat?.levels?.length
+        ) {
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.startingValue =
+              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+          });
+        }
+      }
+    });
+    submitValues?.templateConfig?.rules?.forEach((r, ri) => {
+      r.index = ri;
+      r?.ruleType?.ruleFormat?.levels?.forEach((l, li) => {
+        l.index = li;
+      });
     });
     await generatePieces(submitValues);
   };
@@ -154,6 +180,79 @@ const PiecesPreviewModal = ({
           />
         </Col>
       </Row>
+    );
+  };
+
+  const renderEnumerationNumericField = (formatValues, index) => {
+    return (
+      <>
+        <Row>
+          <Col xs={2}>
+            <Layout className="textCentered padding-top-gutter">
+              <strong>
+                <FormattedMessage
+                  id="ui-serials-management.ruleset.labelIndex"
+                  values={{ index: index + 1 }}
+                />
+              </strong>
+            </Layout>
+          </Col>
+          {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
+            return (
+              <Col xs={2}>
+                <Field
+                  component={TextField}
+                  label={
+                    <FormattedMessage
+                      id="ui-serials-management.ruleset.levelIndex"
+                      values={{ index: i + 1 }}
+                    />
+                  }
+                  name={`startingValues[${index}].levels[${i}].value`}
+                  type="number"
+                  validate={
+                    e?.sequence?.value === 'reset'
+                      ? validateWithinRange(1, e?.units)
+                      : null
+                  }
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </>
+    );
+  };
+
+  const renderTemplateStartingValues = () => {
+    return (
+      <>
+        <div className={css.container}>
+          <Row>
+            <Col xs={12}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.ruleset.valuesToUseForFirstIssue" />
+              </Label>
+            </Col>
+          </Row>
+          <br />
+          {ruleset?.templateConfig?.rules?.map((e, i) => {
+            if (
+              e?.ruleType?.templateMetadataRuleFormat?.value ===
+                'enumeration_numeric' ||
+              e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+            ) {
+              return (
+                <>
+                  {renderEnumerationNumericField(e, i)}
+                  <br />
+                </>
+              );
+            }
+            return null;
+          })}
+        </div>
+      </>
     );
   };
 
@@ -231,6 +330,8 @@ const PiecesPreviewModal = ({
           </Col>
         )}
       </Row>
+      {!!ruleset?.templateConfig?.rules?.length &&
+        renderTemplateStartingValues()}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
