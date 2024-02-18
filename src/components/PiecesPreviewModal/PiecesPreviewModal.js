@@ -17,11 +17,12 @@ import {
   FormattedDate,
   Label,
   TextField,
+  Layout,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
 
-import { urls } from '../utils';
+import { urls, validateWithinRange } from '../utils';
 
 import css from './PiecesPreviewModal.css';
 
@@ -76,11 +77,12 @@ const PiecesPreviewModal = ({
     await createPieces(submitValues);
   };
 
+  // TODO This could be put into some nice util functions to handle
+
   const handleGeneration = async (values) => {
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
-      startingValues: values?.startingValues
     };
     submitValues?.recurrence?.rules?.forEach((e) => {
       // If no ordinal specified, assume ordinal is 1 for all rules
@@ -93,6 +95,25 @@ const PiecesPreviewModal = ({
         e.pattern = {};
       }
       e.patternType = submitValues?.patternType;
+    });
+    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+      if (values?.startingValues) {
+        if (
+          values?.startingValues[ruleIndex]?.levels?.length &&
+          rule?.ruleType?.ruleFormat?.levels?.length
+        ) {
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.startingValue =
+              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+          });
+        }
+      }
+    });
+    submitValues?.templateConfig?.rules?.forEach((r, ri) => {
+      r.index = ri;
+      r?.ruleType?.ruleFormat?.levels?.forEach((l, li) => {
+        l.index = li;
+      });
     });
     await generatePieces(submitValues);
   };
@@ -160,32 +181,38 @@ const PiecesPreviewModal = ({
     );
   };
 
-  const renderEnumerationNumericField = (formatValues) => {
+  const renderEnumerationNumericField = (formatValues, index) => {
     return (
       <>
         <Row>
-          <Col xs={3}>
-            <Label>
-              <FormattedMessage
-                id="ui-serials-management.ruleset.labelIndex"
-                values={{ index: formatValues?.index + 1 }}
-              />
-            </Label>
+          <Col xs={2}>
+            <Layout className="textCentered padding-top-gutter">
+              <strong>
+                <FormattedMessage
+                  id="ui-serials-management.ruleset.labelIndex"
+                  values={{ index: index + 1 }}
+                />
+              </strong>
+            </Layout>
           </Col>
-        </Row>
-        <Row>
           {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
             return (
-              <Col xs={3}>
+              <Col xs={2}>
                 <Field
                   component={TextField}
                   label={
                     <FormattedMessage
                       id="ui-serials-management.ruleset.levelIndex"
-                      values={{ index: e?.index + 1 }}
+                      values={{ index: i + 1 }}
                     />
                   }
-                  name={`startingValues.enumeration[${formatValues?.index}].level[${i}].value`}
+                  name={`startingValues[${index}].levels[${i}].value`}
+                  type="number"
+                  validate={
+                    e?.sequence?.value === 'reset'
+                      ? validateWithinRange(1, e?.units)
+                      : null
+                  }
                 />
               </Col>
             );
@@ -207,12 +234,18 @@ const PiecesPreviewModal = ({
             </Col>
           </Row>
           <br />
-          {ruleset?.templateConfig?.rules?.map((e) => {
+          {ruleset?.templateConfig?.rules?.map((e, i) => {
             if (
               e?.ruleType?.templateMetadataRuleFormat?.value ===
-              'enumeration_numeric'
+                'enumeration_numeric' ||
+              e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
             ) {
-              return <>{renderEnumerationNumericField(e)}</>;
+              return (
+                <>
+                  {renderEnumerationNumericField(e, i)}
+                  <br />
+                </>
+              );
             }
             return null;
           })}
