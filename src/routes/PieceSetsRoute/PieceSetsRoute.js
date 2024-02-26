@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
+import { FormattedDateTime } from '@folio/stripes-erm-components';
+
 import { SASQRoute } from '@k-int/stripes-kint-components';
+
 import { PieceSetView } from '../../components/views';
 import { RouteSwitcher } from '../../components/SearchAndFilter';
 
@@ -54,7 +57,7 @@ const PieceSetsRoute = ({ children, path }) => {
 
   const formatter = {
     dateCreated: (d) => {
-      return <FormattedDate value={d?.dateCreated} />;
+      return <FormattedDateTime value={d?.dateCreated} />;
     },
     // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
     total: (d) => d?.pieces?.length,

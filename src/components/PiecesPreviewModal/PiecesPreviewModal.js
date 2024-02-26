@@ -15,11 +15,17 @@ import {
   Button,
   MultiColumnList,
   FormattedDate,
+  Label,
+  TextField,
+  Layout,
+  TextArea,
 } from '@folio/stripes/components';
 
 import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
 
-import { urls } from '../utils';
+import { urls, validateWithinRange } from '../utils';
+
+import css from './PiecesPreviewModal.css';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -66,11 +72,27 @@ const PiecesPreviewModal = ({
 
   const handleCreation = async (values) => {
     const submitValues = {
-      ruleset: { id: ruleset?.id },
+      ...ruleset,
       startDate: values?.startDate,
+      note: values?.note,
     };
+    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+      if (values?.startingValues) {
+        if (
+          values?.startingValues[ruleIndex]?.levels?.length &&
+          rule?.ruleType?.ruleFormat?.levels?.length
+        ) {
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.startingValue =
+              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+          });
+        }
+      }
+    });
     await createPieces(submitValues);
   };
+
+  // TODO This could be put into some nice util functions to handle
 
   const handleGeneration = async (values) => {
     const submitValues = {
@@ -89,11 +111,28 @@ const PiecesPreviewModal = ({
       }
       e.patternType = submitValues?.patternType;
     });
+    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+      if (values?.startingValues) {
+        if (
+          values?.startingValues[ruleIndex]?.levels?.length &&
+          rule?.ruleType?.ruleFormat?.levels?.length
+        ) {
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.startingValue =
+              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+          });
+        }
+      }
+    });
+    submitValues?.templateConfig?.rules?.forEach((r, ri) => {
+      r.index = ri;
+      r?.ruleType?.ruleFormat?.levels?.forEach((l, li) => {
+        l.index = li;
+      });
+    });
     await generatePieces(submitValues);
   };
 
-  // The following predicted pieces are currently placeholders for testing
-  // Will be replaced with more concrete designs later
   // FIXME COMBINED PIECES TRANSLATION
   const formatter = {
     // If omissionOrigins exist then piece is omitted
@@ -121,7 +160,7 @@ const PiecesPreviewModal = ({
         </>
       );
     },
-    label: (e) => {
+    displaySummary: (e) => {
       return e?.label;
     },
   };
@@ -138,8 +177,8 @@ const PiecesPreviewModal = ({
               publicationDate: (
                 <FormattedMessage id="ui-serials-management.ruleset.issuePublicationDate" />
               ),
-              label: (
-                <FormattedMessage id="ui-serials-management.piece.label" />
+              displaySummary: (
+                <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
             }}
             columnWidths={{
@@ -148,10 +187,83 @@ const PiecesPreviewModal = ({
             contentData={predictedPieces}
             formatter={formatter}
             interactive={false}
-            visibleColumns={['issueCount', 'publicationDate', 'label']}
+            visibleColumns={['issueCount', 'publicationDate', 'displaySummary']}
           />
         </Col>
       </Row>
+    );
+  };
+
+  const renderEnumerationNumericField = (formatValues, index) => {
+    return (
+      <>
+        <Row>
+          <Col xs={2}>
+            <Layout className="textCentered padding-top-gutter">
+              <strong>
+                <FormattedMessage
+                  id="ui-serials-management.ruleset.labelIndex"
+                  values={{ index: index + 1 }}
+                />
+              </strong>
+            </Layout>
+          </Col>
+          {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
+            return (
+              <Col xs={2}>
+                <Field
+                  component={TextField}
+                  label={
+                    <FormattedMessage
+                      id="ui-serials-management.ruleset.levelIndex"
+                      values={{ index: i + 1 }}
+                    />
+                  }
+                  name={`startingValues[${index}].levels[${i}].value`}
+                  type="number"
+                  validate={
+                    e?.sequence?.value === 'reset'
+                      ? validateWithinRange(1, e?.units)
+                      : null
+                  }
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </>
+    );
+  };
+
+  const renderTemplateStartingValues = () => {
+    return (
+      <>
+        <div className={css.container}>
+          <Row>
+            <Col xs={12}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.ruleset.valuesToUseForFirstIssue" />
+              </Label>
+            </Col>
+          </Row>
+          <br />
+          {ruleset?.templateConfig?.rules?.map((e, i) => {
+            if (
+              e?.ruleType?.templateMetadataRuleFormat?.value ===
+                'enumeration_numeric' ||
+              e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+            ) {
+              return (
+                <>
+                  {renderEnumerationNumericField(e, i)}
+                  <br />
+                </>
+              );
+            }
+            return null;
+          })}
+        </div>
+      </>
     );
   };
 
@@ -217,7 +329,20 @@ const PiecesPreviewModal = ({
             validate={requiredValidator}
           />
         </Col>
+        {allowCreation && (
+          <Col xs={8}>
+            <Field
+              component={TextArea}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.note" />
+              }
+              name="note"
+            />
+          </Col>
+        )}
       </Row>
+      {!!ruleset?.templateConfig?.rules?.length &&
+        renderTemplateStartingValues()}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
