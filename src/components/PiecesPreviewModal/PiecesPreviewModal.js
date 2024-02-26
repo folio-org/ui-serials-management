@@ -133,8 +133,6 @@ const PiecesPreviewModal = ({
     await generatePieces(submitValues);
   };
 
-  // The following predicted pieces are currently placeholders for testing
-  // Will be replaced with more concrete designs later
   // FIXME COMBINED PIECES TRANSLATION
   const formatter = {
     // If omissionOrigins exist then piece is omitted
