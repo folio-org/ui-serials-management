@@ -72,10 +72,23 @@ const PiecesPreviewModal = ({
 
   const handleCreation = async (values) => {
     const submitValues = {
-      ruleset: { id: ruleset?.id },
+      ...ruleset,
       startDate: values?.startDate,
       note: values?.note,
     };
+    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+      if (values?.startingValues) {
+        if (
+          values?.startingValues[ruleIndex]?.levels?.length &&
+          rule?.ruleType?.ruleFormat?.levels?.length
+        ) {
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.startingValue =
+              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+          });
+        }
+      }
+    });
     await createPieces(submitValues);
   };
 
