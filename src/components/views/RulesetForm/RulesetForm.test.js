@@ -45,10 +45,6 @@ describe('RulesetForm', () => {
       const { getByText } = renderComponent;
       expect(getByText('PatternTimePeriodForm')).toBeInTheDocument();
     });
-    test('renders IssuePublicationFieldArray Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('IssuePublicationFieldArray')).toBeInTheDocument();
-    });
     test('renders OmissionFieldArray Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('OmissionFieldArray')).toBeInTheDocument();

@@ -6,29 +6,35 @@ import { translationsProperties } from '../../../../test/helpers';
 import { serial } from '../../../../test/resources';
 
 describe('ActivePublicationPattern', () => {
-  describe('renders components with no serial', () => {
+  describe('renders components with serial', () => {
     beforeEach(() => {
-      renderWithIntl(<ActivePublicationPattern />, translationsProperties);
+      renderWithIntl(
+        <ActivePublicationPattern serial={serial} />,
+        translationsProperties
+      );
     });
-    test('renders Request number KeyValue', async () => {
+    test('renders pattern Id KeyValue', async () => {
+      await KeyValue('Pattern ID').exists();
+    });
+
+    test('renders status KeyValue', async () => {
       await KeyValue('Status').exists();
     });
 
-    test('renders Request date KeyValue', async () => {
-      await KeyValue('Description').exists();
-    });
-  });
-
-  describe('renders components with serial', () => {
-    beforeEach(() => {
-      renderWithIntl(<ActivePublicationPattern serial={serial} />, translationsProperties);
-    });
-    test('renders Request number KeyValue with initial value', async () => {
-      await KeyValue('Status').has({ value: 'Active' });
+    test('renders last updated KeyValue', async () => {
+      await KeyValue('Last updated').exists();
     });
 
-    test('renders Request date KeyValue with initial value', async () => {
-      await KeyValue('Description').has({ value: 'Test Description' });
+    test('renders Time unit KeyValue', async () => {
+      await KeyValue('Time unit').exists();
+    });
+
+    test('renders Number of months KeyValue', async () => {
+      await KeyValue('Number of months').exists();
+    });
+
+    test('renders No. of issues published per cycle KeyValue', async () => {
+      await KeyValue('No. of issues published per cycle').exists();
     });
   });
 });

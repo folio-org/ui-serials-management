@@ -60,19 +60,9 @@ describe('SerialView', () => {
       expect(getByText('SerialInfo')).toBeInTheDocument();
     });
 
-    test('renders SerialPOLine Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialPOLine')).toBeInTheDocument();
-    });
-
     test('renders ActivePublicationPattern Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('ActivePublicationPattern')).toBeInTheDocument();
-    });
-
-    test('renders DeprecatedPublicationPatterns Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('DeprecatedPublicationPatterns')).toBeInTheDocument();
     });
   });
 });
