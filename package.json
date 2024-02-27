@@ -114,7 +114,7 @@
       },
       {
         "permissionName": "ui-serials-management.picklists.manage",
-        "displayName": "Settings (Serials): View pick lists and values",
+        "displayName": "Settings (Serials): Manage pick lists and values",
         "description": "Grants all permissions included in 'Settings (Serials): View pick lists and values' plus the ability to manage pick lists and pick list values.",
         "visible": true,
         "subPermissions": [
