@@ -27,7 +27,7 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDateTime value={e?.lastUpdated} />;
+      return <FormattedDateTime date={e?.lastUpdated} />;
     },
     description: (e) => {
       return e?.description;
