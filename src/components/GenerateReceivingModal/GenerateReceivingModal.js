@@ -129,6 +129,12 @@ const GenerateReceivingModal = ({
     setShowModal(false);
   };
 
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + Number(days));
+    return result;
+  };
+
   const handleGeneration = async (values) => {
     const piecesArray = [];
     for (let i = 0; i < pieceSet?.pieces?.length; i++) {
@@ -137,10 +143,13 @@ const GenerateReceivingModal = ({
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
           ? {
-            date: piece?.recurrencePieces[0]?.date,
-            label: piece?.recurrencePieces[0]?.date,
+            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+            label: piece?.recurrencePieces[0]?.label,
           }
-          : { date: piece?.date, label: piece?.label };
+          : {
+            date: addDays(piece?.date, values?.interval),
+            label: piece?.label,
+          };
 
         const submitValues = {
           receiving: {
@@ -232,7 +241,7 @@ const GenerateReceivingModal = ({
                   <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
                 }
               >
-                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.date},
+                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.date},{' '}
                 {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.label}
               </KeyValue>
             </Col>
