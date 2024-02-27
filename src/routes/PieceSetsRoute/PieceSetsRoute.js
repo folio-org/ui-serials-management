@@ -57,7 +57,7 @@ const PieceSetsRoute = ({ children, path }) => {
 
   const formatter = {
     dateCreated: (d) => {
-      return <FormattedDateTime value={d?.dateCreated} />;
+      return <FormattedDateTime date={d?.dateCreated} />;
     },
     // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
     total: (d) => d?.pieces?.length,
