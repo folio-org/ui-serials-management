@@ -39,7 +39,7 @@ const ActivePublicationPattern = ({ serial }) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDateTime value={e?.lastUpdated} />;
+      return <FormattedDateTime date={e?.lastUpdated} />;
     },
     description: (e) => {
       return e?.description;
@@ -94,7 +94,7 @@ const ActivePublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDateTime value={activeRuleset?.lastUpdated} />}
+                value={<FormattedDateTime date={activeRuleset?.lastUpdated} />}
               />
             </Col>
           </Row>

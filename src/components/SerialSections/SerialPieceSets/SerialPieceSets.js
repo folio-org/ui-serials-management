@@ -27,7 +27,7 @@ const SerialPieceSets = ({ pieceSets }) => {
       return (
         <>
           <Link to={urls.pieceSetView(p?.id)}>
-            <FormattedDateTime value={p?.dateCreated} />
+            <FormattedDateTime date={p?.dateCreated} />
           </Link>
         </>
       );
