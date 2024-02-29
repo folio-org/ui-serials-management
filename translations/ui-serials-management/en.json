@@ -164,8 +164,8 @@
   "ruleset.numberOfIssues": "No. of issues",
   "ruleset.numberOfUnits": "No. of units",
   "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
+  "ruleset.refdataCategory": "Refdata category",
   
-
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",
   "pieceSets.dateGenerated": "Date generated",
