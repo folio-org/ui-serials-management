@@ -30,7 +30,7 @@ const RulesetCreateRoute = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
 
-  const { mutateAsync: postSerial } = useMutation(
+  const { mutateAsync: postRuleset } = useMutation(
     ['ui-serials-management', 'RulesetCreateRoute', 'postRuleset'],
     (data) => {
       ky.post(RULESETS_ENDPOINT, { json: data })
@@ -39,7 +39,7 @@ const RulesetCreateRoute = () => {
     }
   );
 
-  const submitSerial = async (values) => {
+  const submitRuleset = async (values) => {
     const generatedString = await generate();
     const submitValues = {
       ...values,
@@ -67,7 +67,7 @@ const RulesetCreateRoute = () => {
         l.index = li;
       });
     });
-    await postSerial(submitValues);
+    await postRuleset(submitValues);
   };
 
   return (
@@ -78,7 +78,7 @@ const RulesetCreateRoute = () => {
         }}
         keepDirtyOnReinitialize
         mutators={arrayMutators}
-        onSubmit={submitSerial}
+        onSubmit={submitRuleset}
       >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
