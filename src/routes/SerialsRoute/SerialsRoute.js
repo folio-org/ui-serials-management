@@ -27,7 +27,7 @@ const SerialsRoute = ({ children, path }) => {
   const fetchParameters = {
     endpoint: SERIALS_ENDPOINT,
     SASQ_MAP: {
-      searchKey: 'id',
+      searchKey: 'id,description,orderLine.title',
       filterKeys: {
         serialStatus: 'serialStatus.value',
         orderLine: 'orderLine.remoteId',
@@ -80,36 +80,16 @@ const SerialsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'description',
-      label: <FormattedMessage id="ui-serials-management.serials.description" />,
+      label: (
+        <FormattedMessage id="ui-serials-management.serials.description" />
+      ),
     },
-    // {
-    //   propertyPath: 'productIDs',
-    //   label: <FormattedMessage id="ui-serials-management.serials.productIDs" />,
-    // },
-    // {
-    //   propertyPath: 'poLineNumber',
-    //   label: (
-    //     <FormattedMessage id="ui-serials-management.serials.poLineNumber" />
-    //   ),
-    // },
-    // {
-    //   propertyPath: 'location',
-    //   label: <FormattedMessage id="ui-serials-management.serials.location" />,
-    // },
-    // {
-    //   propertyPath: 'predictionPattern',
-    //   label: (
-    //     <FormattedMessage id="ui-serials-management.serials.predictionPattern" />
-    //   ),
-    // },
   ];
 
   const formatter = {
     id: (d) => d?.id,
     serialStatus: (d) => d?.serialStatus?.label,
-    title: (d) => d?.orderLine?.title,
-    // productIds: (d) => d?.orderLine?.remoteId_object?.details?.productIds?.map((p) => p?.productId)?.join(';'),
-    // poLineNumber: (d) => d?.orderLine?.remoteId_object?.poLineNumber,
+    title: (d) => d?.orderLine?.title ?? d?.id,
   };
 
   return (
