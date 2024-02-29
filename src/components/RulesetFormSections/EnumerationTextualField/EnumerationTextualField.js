@@ -7,12 +7,19 @@ import {
   Col,
   TextField,
   IconButton,
+  Select,
 } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-
-const EnumerationTextualField = ({ items, name, index, level, onDeleteField }) => {
+const EnumerationTextualField = ({
+  items,
+  name,
+  index,
+  level,
+  onDeleteField,
+  dataOptions,
+}) => {
   return (
     <>
       <Row>
@@ -22,7 +29,9 @@ const EnumerationTextualField = ({ items, name, index, level, onDeleteField }) =
         </Col>
         <Col xs={2}>
           <Field
-            component={TextField}
+            component={Select}
+            dataOptions={[{ label: '', value: '' }, ...dataOptions]}
+            disabled={!dataOptions}
             name={`${name}.value`}
             required
             validate={requiredValidator}
@@ -50,6 +59,7 @@ EnumerationTextualField.propTypes = {
   index: PropTypes.string,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
+  dataOptions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default EnumerationTextualField;

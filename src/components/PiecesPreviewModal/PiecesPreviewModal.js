@@ -341,8 +341,10 @@ const PiecesPreviewModal = ({
           </Col>
         )}
       </Row>
-      {!!ruleset?.templateConfig?.rules?.length &&
-        renderTemplateStartingValues()}
+      {!!ruleset?.templateConfig?.rules?.some(
+        (e) => e?.ruleType?.templateMetadataRuleFormat?.value === 'enumeration_numeric' ||
+          e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+      ) && renderTemplateStartingValues()}
       {!!predictedPieces && renderPiecesTable()}
     </FormModal>
   );
