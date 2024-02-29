@@ -28,6 +28,18 @@
     "okapiInterfaces": {
       "serials-management": "1.0"
     },
+    "optionalOkapiInterfaces": {
+      "orders": "12.1",
+      "order-lines": "3.0",
+      "organizations": "2.0",
+      "material-types": "2.2",
+      "pieces": "3.0",
+      "acquisitions-units": "1.1",
+      "holdings-storage": "6.0",
+      "locations": "3.0",
+      "titles": "1.2",
+      "identifier-types": "1.2"
+    },
     "stripesDeps": [
       "@folio/stripes-erm-components",
       "@k-int/stripes-kint-components"
