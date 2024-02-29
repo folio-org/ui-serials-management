@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 
 import { useSettings } from '@k-int/stripes-kint-components';
 
-import PickListValues from './routes';
+import { PickListValues, PickListSettings } from './routes';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 
 const propTypes = {
@@ -22,8 +22,18 @@ const SerialsManagementSettings = (props) => {
   const persistentPages = [];
 
   persistentPages.push({
+    component: PickListSettings,
+    label: intl.formatMessage({
+      id: 'ui-serials-management.settings.refdata.pickLists',
+    }),
+    route: 'pick-lists',
+  });
+
+  persistentPages.push({
     component: PickListValues,
-    label: intl.formatMessage({ id: 'ui-serials-management.settings.refdata.picklistValues' }),
+    label: intl.formatMessage({
+      id: 'ui-serials-management.settings.refdata.picklistValues',
+    }),
     route: 'pick-list-values',
   });
 
