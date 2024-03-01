@@ -151,7 +151,6 @@
     "pieceSets.note": "Note",
     "pieceSets.totalPieces": "Total pieces",
     "pieceSets.issueCount": "Issue count",
-    "pieceSets.label": "Label",
     "pieceSets.publicationDate": "Publication date",
     "pieceSets.generatedInReceiving": "Generated in receiving",
     "ruleset.numberOfIssuesPerCycle": "No. of issues published per cycle",
@@ -174,5 +173,17 @@
     "pieceSets.displayInHolding": "Display in holding",
     "pieceSets.supplement": "Supplement",
     "pieceSets.noOrderLineLocationsOrHoldings": "There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.",
-    "pieceSets.location": "Location"
+    "pieceSets.location": "Location",
+    "pieceSets.displaySummary": "Display summary",
+    "ruleset.levelIndex": "Level {index}",
+    "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
+    "ruleset.refdataCategory": "Refdata category",
+    "refdataCategory.refdataCategory": "Category",
+    "refdataCategory.noOfValues": "# of values",
+    "refdataCategory.refdataCategories": "Categories",
+    "refdataCategory.deleteAriaLabel": "Delete value {label}",
+    "refdataCategory.deleteRefdataCategory": "Delete pick list category",
+    "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> will be deleted.",
+    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Error</strong>: Pick list <strong>{label}</strong> was not deleted.",
+    "settings.refdata.pickLists": "Pick lists"
 }
