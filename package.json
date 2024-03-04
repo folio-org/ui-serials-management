@@ -177,5 +177,8 @@
     "react-intl": "^6.4.7",
     "react-query": "^3.9.0",
     "react-router-dom": "^5.2.0"
+  },
+  "optionalDependencies": {
+    "@folio/plugin-find-po-line": "^5.0.0"
   }
 }
