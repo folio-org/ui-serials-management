@@ -63,14 +63,9 @@ const GenerateReceivingModal = ({
       .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
       .json()
       .then((res) => {
-        if (successfulReceiving?.length) {
-          setSuccessfulReceiving([
-            ...successfulReceiving,
-            { ...data?.piece, receivingId: res?.id },
-          ]);
-        } else {
-          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
-        }
+        const newReceiving = [...successfulReceiving];
+        newReceiving.push({ id: data?.piece?.id, receivingId: res?.id });
+        setSuccessfulReceiving(newReceiving);
       })
   );
 
@@ -137,9 +132,7 @@ const GenerateReceivingModal = ({
 
   const handleGeneration = async (values) => {
     const piecesArray = [];
-    for (let i = 0; i < pieceSet?.pieces?.length; i++) {
-      const piece = pieceSet?.pieces[i];
-
+    for (const piece of pieceSet?.pieces) {
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
           ? {
@@ -168,11 +161,11 @@ const GenerateReceivingModal = ({
         piecesArray.push(submitValues);
       }
     }
-    for (let i = 0; i < piecesArray?.length; i++) {
-      await submitReceivingPiece(piecesArray[i]);
+    for (const receivingPiece of piecesArray) {
+      await submitReceivingPiece(receivingPiece);
     }
-    const submitPieceSet = { ...pieceSet, pieces: successfulReceiving };
-    // await submitReceivingIds(submitPieceSet);
+    const submitPieceSet = { id: pieceSet?.id, pieces: successfulReceiving };
+    await submitReceivingIds(submitPieceSet);
   };
 
   const renderPredictedPiecesInformation = () => {
