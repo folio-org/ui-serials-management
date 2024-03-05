@@ -15,6 +15,9 @@ In order to view and log into the platform being served up, a suitable Okapi bac
 
 Additionally, until it is part of the Okapi backends, the [mod-serials-management](https://github.com/folio-org/mod-serials-management) module needs to be running.
 
+## Optional dependencies
+This module has an optional dependency on [plugin-find-po-line](https://github.com/folio-org/ui-plugin-find-po-line). Some functionality in the module is only available if this optional dependency is installed.
+
 ## Running
 
 Note that the following commands require that [`stripes-cli`](https://github.com/folio-org/stripes-cli) is installed globally.
@@ -41,3 +44,5 @@ Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes
 Other [modules](https://dev.folio.org/source-code/#client-side).
 
 Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)
+
+### Optional dependencies
