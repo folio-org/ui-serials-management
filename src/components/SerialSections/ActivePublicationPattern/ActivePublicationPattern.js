@@ -65,7 +65,6 @@ const ActivePublicationPattern = ({ serial }) => {
 
   return (
     <Accordion
-      closedByDefault
       displayWhenClosed={renderBadge()}
       displayWhenOpen={renderAddPublicationPatternButton()}
       label={
