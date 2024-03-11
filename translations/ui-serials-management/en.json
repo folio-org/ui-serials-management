@@ -180,6 +180,7 @@
   "pieceSets.publicationDate": "Publication date",
   "pieceSets.generatedInReceiving": "Generated in receiving",
   "pieceSets.omitted": "Omitted",
+  "pieceSets.combinedPieces": "Combined pieces: {length}",
   "pieceSets.generateReceivingPieces": "Generate receiving pieces",
   "pieceSets.pieceSetGenerated": "Piece set generated",
   "pieceSets.firstPiece": "First piece",

@@ -27,7 +27,7 @@ import css from './PatternTimePeriodForm.css';
 
 const [TIME_UNITS] = ['Recurrence.TimeUnits'];
 
-// TODO Currently the frontend validation allows for an upper limit of 20 years, this may need changing in the future
+// Currently the frontend validation allows for an upper limit of 20 years, this may need changing in the future
 const TIME_UNIT_LIMITERS = {
   day: { issues: 1, period: 365 },
   week: { issues: 7, period: 52 },

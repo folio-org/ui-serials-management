@@ -1,4 +1,4 @@
-// TODO this can probably be moved to stripes-kint-components
+// TODO Use stripes-erm-components-imports
 const selectifyRefdata = (
   refdataRecords = [],
   category = null,

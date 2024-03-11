@@ -234,8 +234,8 @@ const CombinationField = ({ name, index, combination }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[combination?.patternType]?.fields?.map((e) => {
-          return <Col xs={3}>{e}</Col>;
+        {patternTypeFormats[combination?.patternType]?.fields?.map((combinationField, fieldIndex) => {
+          return <Col key={`combination-field-${fieldIndex}`} xs={3}>{combinationField}</Col>;
         })}
       </Row>
       {combination?.patternType && (

@@ -38,7 +38,7 @@ const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = [
 // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
 // This should be fixed on backend then tweaked here
 
-const OmissionsField = ({ name, index, omission }) => {
+const OmissionField = ({ name, index, omission }) => {
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
@@ -227,9 +227,15 @@ const OmissionsField = ({ name, index, omission }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[omission?.patternType]?.fields?.map((e) => {
-          return <Col xs={3}>{e}</Col>;
-        })}
+        {patternTypeFormats[omission?.patternType]?.fields?.map(
+          (omissionField, fieldIndex) => {
+            return (
+              <Col key={`omission-field-${fieldIndex}`} xs={3}>
+                {omissionField}
+              </Col>
+            );
+          }
+        )}
       </Row>
       {(omission?.patternType === 'week' ||
         omission?.patternType === 'month') && (
@@ -264,19 +270,25 @@ const OmissionsField = ({ name, index, omission }) => {
             />
           </Col>
           {omission?.pattern?.isRange &&
-            patternTypeFormats[omission?.patternType]?.range?.map((e) => {
-              return <Col xs={3}>{e}</Col>;
-            })}
+            patternTypeFormats[omission?.patternType]?.range?.map(
+              (omissionField, fieldIndex) => {
+                return (
+                  <Col key={`omission-field-${fieldIndex}`} xs={3}>
+                    {omissionField}
+                  </Col>
+                );
+              }
+            )}
         </Row>
       )}
     </>
   );
 };
 
-OmissionsField.propTypes = {
+OmissionField.propTypes = {
   name: PropTypes.string,
   index: PropTypes.string,
   omission: PropTypes.object,
 };
 
-export default OmissionsField;
+export default OmissionField;

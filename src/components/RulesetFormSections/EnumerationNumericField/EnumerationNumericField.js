@@ -33,60 +33,56 @@ const EnumerationNumericField = ({
     ENUMERATION_SEQUENCE,
   ]);
   return (
-    <>
-      <Row>
-        <Col xs={1}>{index + 1}</Col>
-        <Col xs={2}>
-          <Field component={TextField} name={`${name}.units`} />
-        </Col>
-        <Col xs={2}>
-          <Field
-            component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(
-                refdataValues,
-                ENUMERATION_FORMAT,
-                'value'
-              ).map((o) => {
+    <Row>
+      <Col xs={1}>{index + 1}</Col>
+      <Col xs={2}>
+        <Field component={TextField} name={`${name}.units`} />
+      </Col>
+      <Col xs={2}>
+        <Field
+          component={Select}
+          dataOptions={[
+            { value: '', label: '' },
+            ...selectifyRefdata(refdataValues, ENUMERATION_FORMAT, 'value').map(
+              (o) => {
                 return {
                   value: o?.value,
                   label: ENUMERATION_NUMBER_FORMAT?.find(
                     (e) => e?.value === o?.value
                   )?.label,
                 };
-              }),
-            ]}
-            name={`${name}.format.value`}
-            required
-            validate={requiredValidator}
-          />
-        </Col>
+              }
+            ),
+          ]}
+          name={`${name}.format.value`}
+          required
+          validate={requiredValidator}
+        />
+      </Col>
+      <Col xs={2}>
+        <Field
+          component={Select}
+          dataOptions={[
+            { value: '', label: '' },
+            ...selectifyRefdata(refdataValues, ENUMERATION_SEQUENCE, 'value'),
+          ]}
+          name={`${name}.sequence.value`}
+          required
+          validate={requiredValidator}
+        />
+      </Col>
+      <Col xs={3}>
+        <Field component={TextField} name={`${name}.internalNote`} />
+      </Col>
+      {items?.length > 1 && (
         <Col xs={2}>
-          <Field
-            component={Select}
-            dataOptions={[
-              { value: '', label: '' },
-              ...selectifyRefdata(refdataValues, ENUMERATION_SEQUENCE, 'value'),
-            ]}
-            name={`${name}.sequence.value`}
-            required
-            validate={requiredValidator}
+          <IconButton
+            icon="trash"
+            onClick={() => onDeleteField(index, level)}
           />
         </Col>
-        <Col xs={3}>
-          <Field component={TextField} name={`${name}.internalNote`} />
-        </Col>
-        {items?.length > 1 && (
-          <Col xs={2}>
-            <IconButton
-              icon="trash"
-              onClick={() => onDeleteField(index, level)}
-            />
-          </Col>
-        )}
-      </Row>
-    </>
+      )}
+    </Row>
   );
 };
 

@@ -133,33 +133,38 @@ const PiecesPreviewModal = ({
     await generatePieces(submitValues);
   };
 
-  // FIXME COMBINED PIECES TRANSLATION
-  const formatter = {
-    // If omissionOrigins exist then piece is omitted
-    issueCount: (e) => {
-      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
-    },
-    publicationDate: (e) => {
-      if (e?.recurrencePieces) {
-        return (
-          <>
-            <FormattedDate value={e?.recurrencePieces[0].date} />
-            <br />
-            {`Combined pieces: ${e?.recurrencePieces.length}`}
-          </>
-        );
-      }
+  const renderPublicationDate = (piece) => {
+    if (piece?.recurrencePieces) {
       return (
         <>
-          <FormattedDate value={e?.date} />
-          {e?.omissionOrigins && (
+          <FormattedDate value={piece?.recurrencePieces[0].date} />
+          <br />
+          <FormattedMessage
+            id="ui-serials-management.pieceSets.combinedPieces"
+            values={{ length: piece?.recurrencePieces.length }}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <FormattedDate value={piece?.date} />
+          {piece?.omissionOrigins && (
             <InfoBox type="success">
               <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
             </InfoBox>
           )}
         </>
       );
+    }
+  };
+
+  const formatter = {
+    // If omissionOrigins exist then piece is omitted
+    issueCount: (e) => {
+      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
+    publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
       return e?.label;
     },
@@ -196,74 +201,70 @@ const PiecesPreviewModal = ({
 
   const renderEnumerationNumericField = (formatValues, index) => {
     return (
-      <>
-        <Row>
-          <Col xs={2}>
-            <Layout className="textCentered padding-top-gutter">
-              <strong>
-                <FormattedMessage
-                  id="ui-serials-management.ruleset.labelIndex"
-                  values={{ index: index + 1 }}
-                />
-              </strong>
-            </Layout>
-          </Col>
-          {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
-            return (
-              <Col xs={2}>
-                <Field
-                  component={TextField}
-                  label={
-                    <FormattedMessage
-                      id="ui-serials-management.ruleset.levelIndex"
-                      values={{ index: i + 1 }}
-                    />
-                  }
-                  name={`startingValues[${index}].levels[${i}].value`}
-                  type="number"
-                  validate={
-                    e?.sequence?.value === 'reset'
-                      ? validateWithinRange(1, e?.units)
-                      : null
-                  }
-                />
-              </Col>
-            );
-          })}
-        </Row>
-      </>
+      <Row>
+        <Col xs={2}>
+          <Layout className="textCentered padding-top-gutter">
+            <strong>
+              <FormattedMessage
+                id="ui-serials-management.ruleset.labelIndex"
+                values={{ index: index + 1 }}
+              />
+            </strong>
+          </Layout>
+        </Col>
+        {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
+          return (
+            <Col key={`${index}-${i}`} xs={2}>
+              <Field
+                component={TextField}
+                label={
+                  <FormattedMessage
+                    id="ui-serials-management.ruleset.levelIndex"
+                    values={{ index: i + 1 }}
+                  />
+                }
+                name={`startingValues[${index}].levels[${i}].value`}
+                type="number"
+                validate={
+                  e?.sequence?.value === 'reset'
+                    ? validateWithinRange(1, e?.units)
+                    : null
+                }
+              />
+            </Col>
+          );
+        })}
+      </Row>
     );
   };
 
   const renderTemplateStartingValues = () => {
     return (
-      <>
-        <div className={css.container}>
-          <Row>
-            <Col xs={12}>
-              <Label>
-                <FormattedMessage id="ui-serials-management.ruleset.valuesToUseForFirstIssue" />
-              </Label>
-            </Col>
-          </Row>
-          <br />
-          {ruleset?.templateConfig?.rules?.map((e, i) => {
-            if (
-              e?.ruleType?.templateMetadataRuleFormat?.value ===
-                'enumeration_numeric' ||
-              e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
-            ) {
-              return (
-                <>
-                  {renderEnumerationNumericField(e, i)}
-                  <br />
-                </>
-              );
-            }
-            return null;
-          })}
-        </div>
-      </>
+      <div className={css.container}>
+        <Row>
+          <Col xs={12}>
+            <Label>
+              <FormattedMessage id="ui-serials-management.ruleset.valuesToUseForFirstIssue" />
+            </Label>
+          </Col>
+        </Row>
+        <br />
+        {ruleset?.templateConfig?.rules?.map((e, i) => {
+          if (
+            e?.ruleType?.templateMetadataRuleFormat?.value ===
+              'enumeration_numeric' ||
+            e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+          ) {
+            return (
+              <>
+                {renderEnumerationNumericField(e, i)}
+                <br />
+              </>
+            );
+          }
+          return null;
+        })}
+      </div>
     );
   };
 
@@ -342,7 +343,8 @@ const PiecesPreviewModal = ({
         )}
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
-        (e) => e?.ruleType?.templateMetadataRuleFormat?.value === 'enumeration_numeric' ||
+        (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
+            'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {!!predictedPieces && renderPiecesTable()}
