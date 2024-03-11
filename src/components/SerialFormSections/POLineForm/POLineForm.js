@@ -249,25 +249,21 @@ const POLineForm = () => {
             />
           )}
           {titles?.titles?.length === 1 && (
-            <>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.title" />
-                }
-              >
-                {titles?.titles[0]?.instanceId ? (
-                  <AppIcon app="inventory" iconKey="instance" size="small">
-                    <Link
-                      to={urls.inventoryView(titles?.titles[0]?.instanceId)}
-                    >
-                      {titles?.titles[0]?.title}
-                    </Link>
-                  </AppIcon>
-                ) : (
-                  <>{titles?.titles[0]?.title}</>
-                )}
-              </KeyValue>
-            </>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.ruleset.title" />
+              }
+            >
+              {titles?.titles[0]?.instanceId ? (
+                <AppIcon app="inventory" iconKey="instance" size="small">
+                  <Link to={urls.inventoryView(titles?.titles[0]?.instanceId)}>
+                    {titles?.titles[0]?.title}
+                  </Link>
+                </AppIcon>
+              ) : (
+                <>{titles?.titles[0]?.title}</>
+              )}
+            </KeyValue>
           )}
         </Col>
       </Row>

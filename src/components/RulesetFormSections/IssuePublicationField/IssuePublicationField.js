@@ -2,13 +2,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
-import {
-  Col,
-  Label,
-  Row,
-  Select,
-  TextField,
-} from '@folio/stripes/components';
+import { Col, Label, Row, Select, TextField } from '@folio/stripes/components';
 import {
   requiredValidator,
   composeValidators,
@@ -92,9 +86,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
     return (
       <Field
         component={TextField}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.ofWeek" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
         name={
           ordinal
             ? `${name}[${index}].ordinal`
@@ -123,9 +115,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
             );
           }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.ofMonth" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.ofMonth" />}
         name={
           ordinal
             ? `${name}[${index}].ordinal`
@@ -149,9 +139,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
     return (
       <Field
         component={TextField}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.ofYear" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
         name={
           ordinal
             ? `${name}[${index}].ordinal`
@@ -223,9 +211,15 @@ const IssuePublicationField = ({ name, index, patternType }) => {
               />
             </Label>
           </Col>
-          {patternTypeFormats[patternType]?.fields?.map((e) => {
-            return <Col xs={2}>{e}</Col>;
-          })}
+          {patternTypeFormats[patternType]?.fields?.map(
+            (patternTypeField, fieldIndex) => {
+              return (
+                <Col key={`pattern-type-field-${fieldIndex}`} xs={2}>
+                  {patternTypeField}
+                </Col>
+              );
+            }
+          )}
           {values?.recurrence?.period > 1 &&
             !!patternTypeFormats[patternType]?.ordinal && (
               <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>

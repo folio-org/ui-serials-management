@@ -21,35 +21,33 @@ const EnumerationTextualField = ({
   dataOptions,
 }) => {
   return (
-    <>
-      <Row>
-        <Col xs={1}>{index + 1}</Col>
+    <Row>
+      <Col xs={1}>{index + 1}</Col>
+      <Col xs={2}>
+        <Field component={TextField} name={`${name}.units`} />
+      </Col>
+      <Col xs={2}>
+        <Field
+          component={Select}
+          dataOptions={[{ label: '', value: '' }, ...dataOptions]}
+          disabled={!dataOptions}
+          name={`${name}.value`}
+          required
+          validate={requiredValidator}
+        />
+      </Col>
+      <Col xs={3}>
+        <Field component={TextField} name={`${name}.internalNote`} />
+      </Col>
+      {items?.length > 1 && (
         <Col xs={2}>
-          <Field component={TextField} name={`${name}.units`} />
-        </Col>
-        <Col xs={2}>
-          <Field
-            component={Select}
-            dataOptions={[{ label: '', value: '' }, ...dataOptions]}
-            disabled={!dataOptions}
-            name={`${name}.value`}
-            required
-            validate={requiredValidator}
+          <IconButton
+            icon="trash"
+            onClick={() => onDeleteField(index, level)}
           />
         </Col>
-        <Col xs={3}>
-          <Field component={TextField} name={`${name}.internalNote`} />
-        </Col>
-        {items?.length > 1 && (
-          <Col xs={2}>
-            <IconButton
-              icon="trash"
-              onClick={() => onDeleteField(index, level)}
-            />
-          </Col>
-        )}
-      </Row>
-    </>
+      )}
+    </Row>
   );
 };
 

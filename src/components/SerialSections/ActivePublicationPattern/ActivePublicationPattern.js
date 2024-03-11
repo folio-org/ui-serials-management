@@ -52,14 +52,12 @@ const ActivePublicationPattern = ({ serial }) => {
 
   const renderAddPublicationPatternButton = () => {
     return (
-      <>
-        <Button
-          id="add-ruleset-button"
-          to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
-        >
-          <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
-        </Button>
-      </>
+      <Button
+        id="add-ruleset-button"
+        to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
+      >
+        <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
+      </Button>
     );
   };
 

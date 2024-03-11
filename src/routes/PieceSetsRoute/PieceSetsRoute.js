@@ -56,14 +56,10 @@ const PieceSetsRoute = ({ children, path }) => {
   ];
 
   const formatter = {
-    dateCreated: (d) => {
-      return <FormattedDateTime date={d?.dateCreated} />;
-    },
+    dateCreated: (d) => <FormattedDateTime date={d?.dateCreated} />,
     // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
     total: (d) => d?.pieces?.length,
-    startDate: (d) => {
-      return <FormattedDate value={d?.startDate} />;
-    },
+    startDate: (d) => <FormattedDate value={d?.startDate} />,
     patternId: (d) => d?.ruleset?.rulesetNumber,
   };
 
