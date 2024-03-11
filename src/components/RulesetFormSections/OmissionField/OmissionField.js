@@ -228,9 +228,9 @@ const OmissionField = ({ name, index, omission }) => {
           />
         </Col>
         {patternTypeFormats[omission?.patternType]?.fields?.map(
-          (omissionField, fieldIndex) => {
+          (omissionField) => {
             return (
-              <Col key={`omission-field-${fieldIndex}`} xs={3}>
+              <Col key={`omission-field-${omissionField}`} xs={3}>
                 {omissionField}
               </Col>
             );
@@ -271,9 +271,9 @@ const OmissionField = ({ name, index, omission }) => {
           </Col>
           {omission?.pattern?.isRange &&
             patternTypeFormats[omission?.patternType]?.range?.map(
-              (omissionField, fieldIndex) => {
+              (omissionField) => {
                 return (
-                  <Col key={`omission-field-${fieldIndex}`} xs={3}>
+                  <Col key={`omission-field-${omissionField}`} xs={3}>
                     {omissionField}
                   </Col>
                 );

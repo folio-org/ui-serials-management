@@ -212,9 +212,9 @@ const IssuePublicationField = ({ name, index, patternType }) => {
             </Label>
           </Col>
           {patternTypeFormats[patternType]?.fields?.map(
-            (patternTypeField, fieldIndex) => {
+            (patternTypeField) => {
               return (
-                <Col key={`pattern-type-field-${fieldIndex}`} xs={2}>
+                <Col key={`pattern-type-field-${name}`} xs={2}>
                   {patternTypeField}
                 </Col>
               );
