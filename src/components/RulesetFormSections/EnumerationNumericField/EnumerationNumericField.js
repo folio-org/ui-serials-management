@@ -21,7 +21,13 @@ const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationNumericLevelTMRF.Sequence',
 ];
 
-const EnumerationNumericField = ({ items, name, index, level, onDeleteField }) => {
+const EnumerationNumericField = ({
+  items,
+  name,
+  index,
+  level,
+  onDeleteField,
+}) => {
   const refdataValues = useSerialsManagementRefdata([
     ENUMERATION_FORMAT,
     ENUMERATION_SEQUENCE,
@@ -42,7 +48,7 @@ const EnumerationNumericField = ({ items, name, index, level, onDeleteField }) =
                 refdataValues,
                 ENUMERATION_FORMAT,
                 'value'
-              )?.map((o) => {
+              ).map((o) => {
                 return {
                   value: o?.value,
                   label: ENUMERATION_NUMBER_FORMAT?.find(
