@@ -19,7 +19,10 @@ const PieceSetInfo = ({ pieceSet, id }) => {
               <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
             }
           >
-            <FormattedDateTime date={pieceSet?.dateCreated} />
+            <FormattedDateTime
+              date={pieceSet?.dateCreated}
+              id="piece=sets-date-generated"
+            />
           </KeyValue>
         </Col>
         <Col xs={3}>
