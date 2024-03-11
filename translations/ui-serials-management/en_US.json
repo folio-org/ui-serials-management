@@ -177,7 +177,7 @@
     "pieceSets.displaySummary": "Display summary",
     "ruleset.levelIndex": "Level {index}",
     "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
-    "ruleset.refdataCategory": "Refdata category",
+    "ruleset.pickList": "Pick list",
     "refdataCategory.refdataCategory": "Category",
     "refdataCategory.noOfValues": "# of values",
     "refdataCategory.refdataCategories": "Categories",
