@@ -57,7 +57,7 @@ const OmissionFieldArray = () => {
   const renderOmissionRule = (omission, index) => {
     return (
       <EditCard
-        key={`omission-rule-card-${index}`}
+        key={`omission-rule-card-${omission}`}
         deleteButtonTooltipText={
           <FormattedMessage
             id="ui-serials-management.ruleset.removeOmissionRule"
