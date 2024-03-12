@@ -39,92 +39,7 @@ const RECURRENCE_PATTERN_TYPES = {
   ],
 };
 
-const OMISSION_PATTERN_TYPES = {
-  day: [
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.day.monthRange' },
-        { id: 'ui-serials-management.ruleset.month.yearRange' },
-      ],
-      value: 'day_month',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.day.weekdayRange' },
-        { id: 'ui-serials-management.ruleset.week.yearRange' },
-      ],
-      value: 'day_week',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.day.weekdayRange' },
-        { id: 'ui-serials-management.ruleset.week.monthRange' },
-        { id: 'ui-serials-management.ruleset.month.yearRange' },
-      ],
-      value: 'day_week_month',
-    },
-    {
-      labels: [{ id: 'ui-serials-management.ruleset.day.monthRange' }],
-      value: 'day',
-    },
-    {
-      labels: [{ id: 'ui-serials-management.ruleset.day.weekdayRange' }],
-      value: 'day_weekday',
-    },
-  ],
-
-  week: [
-    {
-      labels: [{ id: 'ui-serials-management.ruleset.week.yearRange' }],
-      value: 'week',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.week.monthRange' },
-        { id: 'ui-serials-management.ruleset.month.yearRange' },
-      ],
-      value: 'week_month',
-    },
-  ],
-
-  month: [
-    {
-      labels: [{ id: 'ui-serials-management.ruleset.month.yearRange' }],
-      value: 'month',
-    },
-  ],
-
-  issue: [
-    {
-      labels: [{ id: 'ui-serials-management.ruleset.issue.nRange' }],
-      value: 'issue',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.issue.nRange' },
-        { id: 'ui-serials-management.ruleset.week.yearRange' },
-      ],
-      value: 'issue_week',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.issue.nRange' },
-        { id: 'ui-serials-management.ruleset.week.monthRange' },
-        { id: 'ui-serials-management.ruleset.month.yearRange' },
-      ],
-      value: 'issue_week_month',
-    },
-    {
-      labels: [
-        { id: 'ui-serials-management.ruleset.issue.nRange' },
-        { id: 'ui-serials-management.ruleset.month.yearRange' },
-      ],
-      value: 'issue_month',
-    },
-  ],
-};
-
-const COMBINATION_PATTERN_TYPES = {
+const OMISSION_COMBINATION_PATTERN_TYPES = {
   day: [
     {
       labels: [
@@ -211,6 +126,5 @@ const COMBINATION_PATTERN_TYPES = {
 
 export {
   RECURRENCE_PATTERN_TYPES,
-  OMISSION_PATTERN_TYPES,
-  COMBINATION_PATTERN_TYPES
+  OMISSION_COMBINATION_PATTERN_TYPES,
 };

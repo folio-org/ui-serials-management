@@ -27,7 +27,7 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-import { OMISSION_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
 
 const [MONTHS, WEEKDAYS] = [
   'Global.Month',
@@ -43,7 +43,7 @@ const OmissionField = ({ name, index, omission }) => {
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
     WEEKDAYS,
-    OMISSION_PATTERN_TYPES,
+    OMISSION_COMBINATION_PATTERN_TYPES,
   ]);
 
   const renderIssueField = () => {
@@ -210,7 +210,7 @@ const OmissionField = ({ name, index, omission }) => {
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...OMISSION_PATTERN_TYPES[omission?.timeUnit?.value].map((e) => {
+              ...OMISSION_COMBINATION_PATTERN_TYPES[omission?.timeUnit?.value].map((e) => {
                 return {
                   value: e?.value,
                   label: e?.labels
