@@ -36,6 +36,7 @@
   "settings.refdata.pickLists": "Pick lists",
 
   "serials": "Serials",
+  "serials.serial": "Serial",
   "serials.newSerial": "New serial",
   "serials.editSerial": "Edit serial",
   "serials.poLineNumber": "PO line number",
