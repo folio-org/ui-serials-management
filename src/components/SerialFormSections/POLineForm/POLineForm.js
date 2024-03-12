@@ -3,45 +3,23 @@ import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { Row, Col, KeyValue, Loading } from '@folio/stripes/components';
+import { Row, Col, KeyValue } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
 import { Typedown } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import { urls } from '../../utils';
+
+import SerialPOLineInfo from '../../SerialPOLineInfo';
 import POLineLookup from '../POLineLookup';
 import {
-  useOrder,
-  useVendor,
-  useMaterialType,
-  useIdentifierTypes,
-  useAcqUnits,
   useTitles,
 } from '../../../hooks';
+import { urls } from '../../utils';
 
-// The card contents within this is a duplicate of the serials PO Line view
-// If both are the same contents in the future, this can be moved to seperate component
 
 const POLineForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
-
-  const { isLoading: orderLoading, data: order } = useOrder(
-    values?.orderLine?.purchaseOrderId
-  );
-  const { isLoading: vendorLoading, data: vendor } = useVendor(order?.vendor);
-
-  const { isLoading: materialTypeLoading, data: materialType } =
-    useMaterialType(values?.orderLine?.physical?.materialType);
-
-  const { isLoading: identifierTypeLoading, data: identifierTypes } =
-    useIdentifierTypes(
-      values?.orderLine?.details?.productIds?.map((e) => e?.productIdType)
-    );
-
-  const { isLoading: acqUnitsLoading, data: acqUnits } = useAcqUnits(
-    order?.acqUnitIds
-  );
 
   const { isLoading: titlesLoading, data: titles } = useTitles(
     values?.orderLine?.id
@@ -61,32 +39,6 @@ const POLineForm = () => {
 
   const onPOLineSelected = (poLine) => {
     change('orderLine', poLine[0]);
-  };
-
-  const renderIdentifierTypes = () => {
-    if (identifierTypes?.length && !identifierTypeLoading) {
-      return values?.orderLine?.details?.productIds?.map((type) => {
-        return (
-          <li key={type?.id}>
-            {identifierTypes?.find((e) => e?.id === type?.productIdType)?.name +
-              ': '}
-            {type?.productId}
-          </li>
-        );
-      });
-    } else {
-      return <Loading />;
-    }
-  };
-
-  const renderAcqUnits = () => {
-    if (acqUnits?.length && !acqUnitsLoading) {
-      return acqUnits?.map((unit) => {
-        return <li key={unit?.id}>{unit?.name}</li>;
-      });
-    } else {
-      return <Loading />;
-    }
   };
 
   const renderListItem = (title) => {
@@ -137,97 +89,7 @@ const POLineForm = () => {
               </Row>
               {/* This conditional is a bit tacky, possible a better way of implementing this */}
               {!!values?.orderLine?.instanceId && <br />}
-              <Row>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.orderNumber" />
-                    }
-                    value={orderLoading ? <Loading /> : order?.poNumber}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.orderStatus" />
-                    }
-                    value={orderLoading ? <Loading /> : order?.workflowStatus}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.acqUnits" />
-                    }
-                    value={
-                      order?.acqUnitIds?.length || orderLoading
-                        ? renderAcqUnits()
-                        : null
-                    }
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.productIds" />
-                    }
-                    value={
-                      // Add Loading
-                      values?.orderLine?.details?.productIds?.length
-                        ? renderIdentifierTypes()
-                        : null
-                    }
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.vendor" />
-                    }
-                    value={
-                      vendorLoading || orderLoading ? (
-                        <Loading />
-                      ) : (
-                        <Link to={urls.organisationView(vendor?.id)}>
-                          {vendor?.name + ' (' + vendor?.code + ')'}
-                        </Link>
-                      )
-                    }
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.funds" />
-                    }
-                    value={
-                      values?.orderLine?.fundDistribution?.length
-                        ? values?.orderLine?.fundDistribution.map((fund) => {
-                          return (
-                            <li key={fund?.id}>
-                              <Link to={urls.fundView(fund?.fundId)}>
-                                {fund?.code}
-                              </Link>
-                            </li>
-                          );
-                        })
-                        : null
-                    }
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={
-                      <FormattedMessage id="ui-serials-management.poLine.materialType" />
-                    }
-                    value={
-                      materialTypeLoading ? <Loading /> : materialType?.name
-                    }
-                  />
-                </Col>
-              </Row>
+              <SerialPOLineInfo orderLine={values?.orderLine} />
             </POLineLookup>
           );
         }}
