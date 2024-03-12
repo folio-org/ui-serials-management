@@ -157,6 +157,7 @@
   "ruleset.monthFormat": "Month format",
   "ruleset.yearFormat": "Year format",
   "ruleset.addLevel": "Add level",
+  "ruleset.addValue": "Add value",
   "ruleset.level": "Level",
   "ruleset.levelIndex": "Level {index}",
   "ruleset.format": "Format",
@@ -170,7 +171,7 @@
   "ruleset.numberOfIssues": "No. of issues",
   "ruleset.numberOfUnits": "No. of units",
   "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
-  "ruleset.refdataCategory": "Refdata category",
+  "ruleset.pickList": "Pick list",
   
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",

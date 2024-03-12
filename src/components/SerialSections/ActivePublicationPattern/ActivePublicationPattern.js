@@ -23,6 +23,8 @@ const proptypes = {
   serial: PropTypes.object,
 };
 
+// TODO Change to publication pattern
+
 const ActivePublicationPattern = ({ serial }) => {
   const location = useLocation();
 
@@ -63,7 +65,6 @@ const ActivePublicationPattern = ({ serial }) => {
 
   return (
     <Accordion
-      closedByDefault
       displayWhenClosed={renderBadge()}
       displayWhenOpen={renderAddPublicationPatternButton()}
       label={

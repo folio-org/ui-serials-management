@@ -34,7 +34,7 @@ const LabelFieldArray = () => {
   const renderLabelRule = (templateConfig, index) => {
     return (
       <EditCard
-        key={`label-rule-card-${index}`}
+        key={`label-rule-card-${templateConfig}`}
         deleteButtonTooltipText={
           <FormattedMessage
             id="ui-serials-management.ruleset.removeLabel"
