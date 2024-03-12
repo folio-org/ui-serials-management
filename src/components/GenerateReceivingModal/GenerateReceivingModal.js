@@ -59,20 +59,19 @@ const GenerateReceivingModal = ({
       'GeneratingReceivingModal',
       'submitReceivingPiece',
     ],
-    (data) =>
-      ky
-        .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
-        .json()
-        .then((res) => {
-          if (successfulReceiving?.length) {
-            setSuccessfulReceiving([
-              ...successfulReceiving,
-              { ...data?.piece, receivingId: res?.id },
-            ]);
-          } else {
-            setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
-          }
-        })
+    (data) => ky
+      .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
+      .json()
+      .then((res) => {
+        if (successfulReceiving?.length) {
+          setSuccessfulReceiving([
+            ...successfulReceiving,
+            { ...data?.piece, receivingId: res?.id },
+          ]);
+        } else {
+          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
+        }
+      })
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -144,13 +143,13 @@ const GenerateReceivingModal = ({
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
           ? {
-              date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-              label: piece?.recurrencePieces[0]?.label,
-            }
+            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+            label: piece?.recurrencePieces[0]?.label,
+          }
           : {
-              date: addDays(piece?.date, values?.interval),
-              label: piece?.label,
-            };
+            date: addDays(piece?.date, values?.interval),
+            label: piece?.label,
+          };
 
         const submitValues = {
           receiving: {
@@ -298,21 +297,25 @@ const GenerateReceivingModal = ({
                 id="supplement-tooltip"
               />
             </Label>
-
-            <Field
-              name="supplement"
-              render={({ input, meta }) => (
-                <Checkbox
-                  component={Checkbox}
-                  input={input}
-                  meta={meta}
-                  onChange={(e) => {
-                    input.onChange(e.target.checked);
-                  }}
-                  type="checkbox"
+            <FormattedMessage id="ui-serials-management.pieceSets.supplement">
+              {(ariaLabel) => (
+                <Field
+                  name="supplement"
+                  render={({ input, meta }) => (
+                    <Checkbox
+                      aria-label={ariaLabel}
+                      component={Checkbox}
+                      input={input}
+                      meta={meta}
+                      onChange={(e) => {
+                        input.onChange(e.target.checked);
+                      }}
+                      type="checkbox"
+                    />
+                  )}
                 />
               )}
-            />
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
@@ -348,20 +351,25 @@ const GenerateReceivingModal = ({
                   id="display-on-holding-tooltip"
                 />
               </Label>
-              <Field
-                name="displayOnHolding"
-                render={({ input, meta }) => (
-                  <Checkbox
-                    component={Checkbox}
-                    input={input}
-                    meta={meta}
-                    onChange={(e) => {
-                      input.onChange(e.target.checked);
-                    }}
-                    type="checkbox"
+              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
+                {(ariaLabel) => (
+                  <Field
+                    name="displayOnHolding"
+                    render={({ input, meta }) => (
+                      <Checkbox
+                        aria-label={ariaLabel}
+                        component={Checkbox}
+                        input={input}
+                        meta={meta}
+                        onChange={(e) => {
+                          input.onChange(e.target.checked);
+                        }}
+                        type="checkbox"
+                      />
+                    )}
                   />
                 )}
-              />
+              </FormattedMessage>
             </Col>
           )}
         </Row>
