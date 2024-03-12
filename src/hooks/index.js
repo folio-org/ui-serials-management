@@ -6,6 +6,3 @@ export { default as useAcqUnits } from './useAcqUnits';
 export { default as useTitles } from './useTitles';
 export { default as useLocations } from './useLocations';
 export { default as useHoldings } from './useHoldings';
-export { default as useRecurrencePatternTypes } from './useRecurrencePatternTypes';
-export { default as useOmissionPatternTypes } from './useOmissionPatternTypes';
-export { default as useCombinationPatternTypes } from './useOmissionPatternTypes';
