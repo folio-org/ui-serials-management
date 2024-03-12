@@ -11,16 +11,16 @@ const useRecurrencePatternTypes = () => {
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (1-31)`,
+          id: 'ui-serials-management.ruleset.day.monthRange',
+        })}`,
         value: 'month_date',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-4)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.monthRange',
+        })}`,
         value: 'month_weekday',
       },
     ],
@@ -32,26 +32,28 @@ const useRecurrencePatternTypes = () => {
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (1-31), Month (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.day.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'year_date',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.yearRange',
+        })}`,
         value: 'year_weekday',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'year_month_weekday',
       },
     ],

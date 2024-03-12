@@ -5,44 +5,43 @@ const useCombinationPatternTypes = () => {
 
   return {
     day: [
-      {
-        label: '',
-        value: '',
-      },
+      { label: '', value: '' },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (1-31), Month (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.day.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'day_month',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.yearRange',
+        })}`,
         value: 'day_week',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'day_week_month',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (1-31)`,
+          id: 'ui-serials-management.ruleset.day.monthRange',
+        })}`,
         value: 'day',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.day',
-        })} (Mon-Sun)`,
+          id: 'ui-serials-management.ruleset.day.weekdayRange',
+        })}`,
         value: 'day_weekday',
       },
     ],
@@ -54,16 +53,16 @@ const useCombinationPatternTypes = () => {
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+          id: 'ui-serials-management.ruleset.week.yearRange',
+        })}`,
         value: 'week',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.week.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'week_month',
       },
     ],
@@ -75,8 +74,8 @@ const useCombinationPatternTypes = () => {
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'month',
       },
     ],
@@ -88,34 +87,34 @@ const useCombinationPatternTypes = () => {
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.issue',
-        })} (1-n)`,
+          id: 'ui-serials-management.ruleset.issue.nRange',
+        })}`,
         value: 'issue',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.issue',
-        })} (1-n), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-52)`,
+          id: 'ui-serials-management.ruleset.issue.nRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.yearRange',
+        })}`,
         value: 'issue_week',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.issue',
-        })} (1-n), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.week',
-        })} (1-4), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.issue.nRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.week.monthRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'issue_week_month',
       },
       {
         label: `${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.issue',
-        })} (1-n), ${intl.formatMessage({
-          id: 'ui-serials-management.ruleset.month',
-        })} (Jan-Dec)`,
+          id: 'ui-serials-management.ruleset.issue.nRange',
+        })}, ${intl.formatMessage({
+          id: 'ui-serials-management.ruleset.month.yearRange',
+        })}`,
         value: 'issue_month',
       },
     ],
