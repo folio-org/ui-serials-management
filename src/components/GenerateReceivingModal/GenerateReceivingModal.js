@@ -136,13 +136,13 @@ const GenerateReceivingModal = ({
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
           ? {
-              date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-              label: piece?.recurrencePieces[0]?.label,
-            }
+            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+            label: piece?.recurrencePieces[0]?.label,
+          }
           : {
-              date: addDays(piece?.date, values?.interval),
-              label: piece?.label,
-            };
+            date: addDays(piece?.date, values?.interval),
+            label: piece?.label,
+          };
 
         const submitValues = {
           receiving: {
