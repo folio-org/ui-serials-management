@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
 
 import {
@@ -27,25 +27,24 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-import { useOmissionPatternTypes } from '../../../hooks';
+import { OMISSION_PATTERN_TYPES } from '../../../constants/patternTypes';
 
-const [MONTHS, WEEKDAYS, OMISSION_PATTERN_TYPES] = [
+const [MONTHS, WEEKDAYS] = [
   'Global.Month',
   'Global.Weekday',
-  'OmissionRule.PatternType',
 ];
 
 // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
 // This should be fixed on backend then tweaked here
 
 const OmissionField = ({ name, index, omission }) => {
+  const intl = useIntl();
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
     WEEKDAYS,
     OMISSION_PATTERN_TYPES,
   ]);
-  const patternTypes = useOmissionPatternTypes();
 
   const renderIssueField = () => {
     return (
@@ -209,11 +208,17 @@ const OmissionField = ({ name, index, omission }) => {
         <Col xs={3}>
           <Field
             component={Select}
-            dataOptions={
-              patternTypes[omission?.timeUnit?.value] || [
-                { label: '', value: '' },
-              ]
-            }
+            dataOptions={[
+              { label: '', value: '' },
+              ...OMISSION_PATTERN_TYPES[omission?.timeUnit?.value].map((e) => {
+                return {
+                  value: e?.value,
+                  label: e?.labels
+                    ?.map((l) => intl.formatMessage({ id: l?.id }))
+                    ?.join(', '),
+                };
+              }),
+            ]}
             label={
               <FormattedMessage id="ui-serials-management.ruleset.omissionRuleType" />
             }
