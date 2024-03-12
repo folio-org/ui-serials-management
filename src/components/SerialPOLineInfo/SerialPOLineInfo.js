@@ -36,17 +36,35 @@ const SerialPOLineInfo = ({ orderLine }) => {
     order?.acqUnitIds
   );
 
+  const renderFundDistribution = () => {
+    return (
+      <ul>
+        {orderLine.fundDistribution.map((fund) => {
+          return (
+            <li key={fund?.id}>
+              <Link to={urls.fundView(fund?.fundId)}>{fund?.code}</Link>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
   const renderIdentifierTypes = () => {
     if (identifierTypes?.length && !identifierTypeLoading) {
-      return orderLine?.details?.productIds?.map((type) => {
-        return (
-          <li key={type?.id}>
-            {identifierTypes?.find((e) => e?.id === type?.productIdType)?.name +
-              ': '}
-            {type?.productId}
-          </li>
-        );
-      });
+      return (
+        <ul>
+          {orderLine?.details?.productIds?.map((type) => {
+            return (
+              <li key={type?.id}>
+                {identifierTypes?.find((e) => e?.id === type?.productIdType)
+                  ?.name + ': '}
+                {type?.productId}
+              </li>
+            );
+          })}
+        </ul>
+      );
     } else {
       return <Loading />;
     }
@@ -54,9 +72,13 @@ const SerialPOLineInfo = ({ orderLine }) => {
 
   const renderAcqUnits = () => {
     if (acqUnits?.length && !acqUnitsLoading) {
-      return acqUnits?.map((unit) => {
-        return <li key={unit?.id}>{unit?.name}</li>;
-      });
+      return (
+        <ul>
+          {acqUnits?.map((unit) => {
+            return <li key={unit?.id}>{unit?.name}</li>;
+          })}
+        </ul>
+      );
     } else {
       return <Loading />;
     }
@@ -101,7 +123,9 @@ const SerialPOLineInfo = ({ orderLine }) => {
               <FormattedMessage id="ui-serials-management.poLine.productIds" />
             }
             value={
-              orderLine.details?.productIds?.length && renderIdentifierTypes()
+              orderLine.details?.productIds?.length
+                ? renderIdentifierTypes()
+                : null
             }
           />
         </Col>
@@ -126,15 +150,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
             label={<FormattedMessage id="ui-serials-management.poLine.funds" />}
             value={
               orderLine.fundDistribution?.length
-                ? orderLine.fundDistribution.map((fund) => {
-                  return (
-                    <li key={fund?.id}>
-                      <Link to={urls.fundView(fund?.fundId)}>
-                        {fund?.code}
-                      </Link>
-                    </li>
-                  );
-                })
+                ? renderFundDistribution()
                 : null
             }
           />
