@@ -78,144 +78,141 @@ const SerialPOLine = ({ serial, id }) => {
     }
   };
   return (
-    <>
-      <Accordion
+    <Accordion
+      id={id}
+      label={<FormattedMessage id="ui-serials-management.poLine" />}
+    >
+      <Card
+        cardStyle="positive"
+        headerStart={
+          <AppIcon app="orders" size="small">
+            <Link to={urls.poLineView(serial?.orderLine?.remoteId)}>
+              <strong>
+                <FormattedMessage id="ui-serials-management.poLine" />
+                {': ' + serial?.orderLine?.remoteId_object?.poLineNumber}
+              </strong>
+            </Link>
+          </AppIcon>
+        }
         id={id}
-        label={<FormattedMessage id="ui-serials-management.poLine" />}
+        roundedBorder
       >
-        <Card
-          cardStyle="positive"
-          headerStart={
-            <AppIcon app="orders" size="small">
-              <Link to={urls.poLineView(serial?.orderLine?.remoteId)}>
-                <strong>
-                  <FormattedMessage id="ui-serials-management.poLine" />
-                  {': ' + serial?.orderLine?.remoteId_object?.poLineNumber}
-                </strong>
-              </Link>
-            </AppIcon>
-          }
-          id={id}
-          roundedBorder
-        >
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.title" />
-                }
-                value={serial?.orderLine?.remoteId_object?.titleOrPackage}
-              />
-              {!!serial?.orderLine?.remoteId_object?.instanceId && (
-                <AppIcon app="inventory" iconKey="instance" size="small">
-                  <Link
-                    to={urls.inventoryView(
-                      serial?.orderLine?.remoteId_object?.instanceId
-                    )}
-                  >
-                    <FormattedMessage id="ui-serials-management.poLine.viewInInventory" />
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.title" />
+              }
+              value={serial?.orderLine?.remoteId_object?.titleOrPackage}
+            />
+            {!!serial?.orderLine?.remoteId_object?.instanceId && (
+              <AppIcon app="inventory" iconKey="instance" size="small">
+                <Link
+                  to={urls.inventoryView(
+                    serial?.orderLine?.remoteId_object?.instanceId
+                  )}
+                >
+                  <FormattedMessage id="ui-serials-management.poLine.viewInInventory" />
+                </Link>
+              </AppIcon>
+            )}
+          </Col>
+        </Row>
+        {/* This conditional is a bit tacky, possible a better way of implementing this */}
+        {!!serial?.orderLine?.remoteId_object?.instanceId && <br />}
+        <Row>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.orderNumber" />
+              }
+              value={orderLoading ? <Loading /> : order?.poNumber}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.orderStatus" />
+              }
+              value={orderLoading ? <Loading /> : order?.workflowStatus}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.acqUnits" />
+              }
+              value={
+                order?.acqUnitIds?.length || orderLoading
+                  ? renderAcqUnits()
+                  : null
+              }
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.productIds" />
+              }
+              value={
+                // Add Loading
+                serial?.orderLine?.remoteId_object?.details?.productIds?.length
+                  ? renderIdentifierTypes()
+                  : null
+              }
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.vendor" />
+              }
+              value={
+                vendorLoading || orderLoading ? (
+                  <Loading />
+                ) : (
+                  <Link to={urls.organisationView(vendor?.id)}>
+                    {vendor?.name + ' (' + vendor?.code + ')'}
                   </Link>
-                </AppIcon>
-              )}
-            </Col>
-          </Row>
-          {/* This conditional is a bit tacky, possible a better way of implementing this */}
-          {!!serial?.orderLine?.remoteId_object?.instanceId && <br />}
-          <Row>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.orderNumber" />
-                }
-                value={orderLoading ? <Loading /> : order?.poNumber}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.orderStatus" />
-                }
-                value={orderLoading ? <Loading /> : order?.workflowStatus}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.acqUnits" />
-                }
-                value={
-                  order?.acqUnitIds?.length || orderLoading
-                    ? renderAcqUnits()
-                    : null
-                }
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.productIds" />
-                }
-                value={
-                  // Add Loading
-                  serial?.orderLine?.remoteId_object?.details?.productIds
-                    ?.length
-                    ? renderIdentifierTypes()
-                    : null
-                }
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.vendor" />
-                }
-                value={
-                  vendorLoading || orderLoading ? (
-                    <Loading />
-                  ) : (
-                    <Link to={urls.organisationView(vendor?.id)}>
-                      {vendor?.name + ' (' + vendor?.code + ')'}
-                    </Link>
+                )
+              }
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.funds" />
+              }
+              value={
+                serial?.orderLine?.remoteId_object?.fundDistribution?.length
+                  ? serial?.orderLine?.remoteId_object?.fundDistribution.map(
+                    (fund) => {
+                      return (
+                        <li key={fund?.id}>
+                          <Link to={urls.fundView(fund?.fundId)}>
+                            {fund?.code}
+                          </Link>
+                        </li>
+                      );
+                    }
                   )
-                }
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.funds" />
-                }
-                value={
-                  serial?.orderLine?.remoteId_object?.fundDistribution?.length
-                    ? serial?.orderLine?.remoteId_object?.fundDistribution.map(
-                      (fund) => {
-                        return (
-                          <li key={fund?.id}>
-                            <Link to={urls.fundView(fund?.fundId)}>
-                              {fund?.code}
-                            </Link>
-                          </li>
-                        );
-                      }
-                    )
-                    : null
-                }
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.poLine.materialType" />
-                }
-                value={materialTypeLoading ? <Loading /> : materialType?.name}
-              />
-            </Col>
-          </Row>
-        </Card>
-      </Accordion>
-    </>
+                  : null
+              }
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.poLine.materialType" />
+              }
+              value={materialTypeLoading ? <Loading /> : materialType?.name}
+            />
+          </Col>
+        </Row>
+      </Card>
+    </Accordion>
   );
 };
 

@@ -136,13 +136,13 @@ const GenerateReceivingModal = ({
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
           ? {
-            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-            label: piece?.recurrencePieces[0]?.label,
-          }
+              date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+              label: piece?.recurrencePieces[0]?.label,
+            }
           : {
-            date: addDays(piece?.date, values?.interval),
-            label: piece?.label,
-          };
+              date: addDays(piece?.date, values?.interval),
+              label: piece?.label,
+            };
 
         const submitValues = {
           receiving: {
@@ -364,22 +364,20 @@ const GenerateReceivingModal = ({
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting } = formState;
     return (
-      <>
-        <ModalFooter>
-          <Button
-            buttonStyle="primary"
-            disabled={submitting || invalid || pristine}
-            marginBottom0
-            onClick={handleSubmit}
-            type="submit"
-          >
-            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
-          </Button>
-          <Button marginBottom0 onClick={handleClose}>
-            <FormattedMessage id="ui-serials-management.close" />
-          </Button>
-        </ModalFooter>
-      </>
+      <ModalFooter>
+        <Button
+          buttonStyle="primary"
+          disabled={submitting || invalid || pristine}
+          marginBottom0
+          onClick={handleSubmit}
+          type="submit"
+        >
+          <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+        </Button>
+        <Button marginBottom0 onClick={handleClose}>
+          <FormattedMessage id="ui-serials-management.close" />
+        </Button>
+      </ModalFooter>
     );
   };
 

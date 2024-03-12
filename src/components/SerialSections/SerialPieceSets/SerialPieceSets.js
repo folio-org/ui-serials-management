@@ -22,19 +22,17 @@ const SerialPieceSets = ({ pieceSets }) => {
     return <Badge>{pieceSets?.length}</Badge>;
   };
 
+  const renderPieceSetLink = (pieceSet) => {
+    return (
+      <Link to={urls.pieceSetView(pieceSet?.id)}>
+        <FormattedDateTime date={pieceSet?.dateCreated} />
+      </Link>
+    );
+  };
+
   const formatter = {
-    dateGenerated: (p) => {
-      return (
-        <>
-          <Link to={urls.pieceSetView(p?.id)}>
-            <FormattedDateTime date={p?.dateCreated} />
-          </Link>
-        </>
-      );
-    },
-    startDate: (p) => {
-      return <FormattedDate value={p?.startDate} />;
-    },
+    dateGenerated: (p) => renderPieceSetLink(p),
+    startDate: (p) => <FormattedDate value={p?.startDate} />,
     patternId: (p) => p?.ruleset?.rulesetNumber,
     total: (p) => p?.pieces?.length,
     note: (p) => p?.note,

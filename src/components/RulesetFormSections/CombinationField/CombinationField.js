@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
 
 import {
@@ -28,27 +28,21 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-import { useCombinationPatternTypes } from '../../../hooks';
+import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
 
-const [MONTHS, WEEKDAYS, COMBINATION_PATTERN_TYPES] = [
-  'Global.Month',
-  'Global.Weekday',
-  'CombinationRule.PatternType',
-];
+const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
 const CombinationField = ({ name, index, combination }) => {
+  const intl = useIntl();
   const { change } = useForm();
-  const refdataValues = useSerialsManagementRefdata([
-    MONTHS,
-    WEEKDAYS,
-    COMBINATION_PATTERN_TYPES,
-  ]);
-  const patternTypes = useCombinationPatternTypes();
+  const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
 
   const validateNumberOfIssues = (value) => {
     if (value) {
       if (value < 2) {
-        return <FormattedMessage id="ui-serials-management.validate.greaterThanOne" />;
+        return (
+          <FormattedMessage id="ui-serials-management.validate.greaterThanOne" />
+        );
       }
     }
     return undefined;
@@ -215,12 +209,19 @@ const CombinationField = ({ name, index, combination }) => {
         <Col xs={3}>
           <Field
             component={Select}
-            dataOptions={
-              patternTypes[combination?.timeUnit?.value] || [
-                { label: '', value: '' },
-              ]
-            }
-            la
+            dataOptions={[
+              { label: '', value: '' },
+              ...OMISSION_COMBINATION_PATTERN_TYPES[combination?.timeUnit?.value].map(
+                (e) => {
+                  return {
+                    value: e?.value,
+                    label: e?.labels
+                      ?.map((l) => intl.formatMessage({ id: l?.id }))
+                      ?.join(', '),
+                  };
+                }
+              ),
+            ]}
             label={
               <FormattedMessage id="ui-serials-management.ruleset.combinationRuleType" />
             }
@@ -234,8 +235,8 @@ const CombinationField = ({ name, index, combination }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[combination?.patternType]?.fields?.map((e) => {
-          return <Col xs={3}>{e}</Col>;
+        {patternTypeFormats[combination?.patternType]?.fields?.map((combinationField) => {
+          return <Col key={`combination-field-${name}`} xs={3}>{combinationField}</Col>;
         })}
       </Row>
       {combination?.patternType && (

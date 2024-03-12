@@ -9,33 +9,38 @@ const propTypes = {
   id: PropTypes.string,
 };
 
-// FIXME COMBINED PIECES TRANSLATION
 const PiecesList = ({ pieceSet, id }) => {
-  const formatter = {
-    issueCount: (e) => {
-      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
-    },
-    publicationDate: (e) => {
-      if (e?.recurrencePieces) {
-        return (
-          <>
-            <FormattedDate value={e?.recurrencePieces[0].date} />
-            <br />
-            {`Combined pieces: ${e?.recurrencePieces.length}`}
-          </>
-        );
-      }
+  const renderPublicationDate = (piece) => {
+    if (piece?.recurrencePieces) {
       return (
         <>
-          <FormattedDate value={e?.date} />
-          {e?.omissionOrigins && (
+          <FormattedDate value={piece?.recurrencePieces[0].date} />
+          <br />
+          <FormattedMessage
+            id="ui-serials-management.pieceSets.combinedPieces"
+            values={{ length: piece?.recurrencePieces.length }}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <FormattedDate value={piece?.date} />
+          {piece?.omissionOrigins && (
             <InfoBox type="success">
               <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
             </InfoBox>
           )}
         </>
       );
+    }
+  };
+
+  const formatter = {
+    issueCount: (e) => {
+      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
+    publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
       return e?.label;
     },
