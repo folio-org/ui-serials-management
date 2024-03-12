@@ -260,7 +260,7 @@ const PiecesPreviewModal = ({
           </div>
         )}
         <Button
-          buttonStyle="default"
+          buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
           marginBottom0
           onClick={() => handleGeneration(values)}
