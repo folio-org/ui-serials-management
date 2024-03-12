@@ -28,7 +28,7 @@ import {
   selectifyRefdata,
 } from '../../utils';
 
-import { COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
@@ -211,7 +211,7 @@ const CombinationField = ({ name, index, combination }) => {
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...COMBINATION_PATTERN_TYPES[combination?.timeUnit?.value].map(
+              ...OMISSION_COMBINATION_PATTERN_TYPES[combination?.timeUnit?.value].map(
                 (e) => {
                   return {
                     value: e?.value,
