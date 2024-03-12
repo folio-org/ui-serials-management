@@ -2,12 +2,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import {
-  Col,
-  Row,
-  KeyValue,
-  Loading,
-} from '@folio/stripes/components';
+import { Col, Row, KeyValue, Loading } from '@folio/stripes/components';
 
 import {
   useOrder,
@@ -34,9 +29,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
 
   const { isLoading: identifierTypeLoading, data: identifierTypes } =
     useIdentifierTypes(
-      orderLine?.details?.productIds?.map(
-        (e) => e?.productIdType
-      )
+      orderLine?.details?.productIds?.map((e) => e?.productIdType)
     );
 
   const { isLoading: acqUnitsLoading, data: acqUnits } = useAcqUnits(
@@ -45,17 +38,15 @@ const SerialPOLineInfo = ({ orderLine }) => {
 
   const renderIdentifierTypes = () => {
     if (identifierTypes?.length && !identifierTypeLoading) {
-      return orderLine?.details?.productIds?.map(
-        (type) => {
-          return (
-            <li key={type?.id}>
-              {identifierTypes?.find((e) => e?.id === type?.productIdType)
-                ?.name + ': '}
-              {type?.productId}
-            </li>
-          );
-        }
-      );
+      return orderLine?.details?.productIds?.map((type) => {
+        return (
+          <li key={type?.id}>
+            {identifierTypes?.find((e) => e?.id === type?.productIdType)?.name +
+              ': '}
+            {type?.productId}
+          </li>
+        );
+      });
     } else {
       return <Loading />;
     }
@@ -110,10 +101,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
               <FormattedMessage id="ui-serials-management.poLine.productIds" />
             }
             value={
-              // Add Loading
-              orderLine.details?.productIds?.length
-                ? renderIdentifierTypes()
-                : null
+              orderLine.details?.productIds?.length && renderIdentifierTypes()
             }
           />
         </Col>
