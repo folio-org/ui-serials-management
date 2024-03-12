@@ -43,7 +43,7 @@ const EnumerationNumericField = ({
     <Row>
       <Col xs={1}>{index + 1}</Col>
       <Col xs={2}>
-        <FormattedMessage id="ui-serials-management.ruleset.format">
+        <FormattedMessage id="ui-serials-management.ruleset.numberOfUnits">
           {(ariaLabel) => (
             <Field
               aria-label={ariaLabel}
@@ -63,7 +63,7 @@ const EnumerationNumericField = ({
         <FormattedMessage id="ui-serials-management.ruleset.format">
           {(ariaLabel) => (
             <Field
-              aria-label={`level-${index + 1}-${ariaLabel}`}
+              aria-label={ariaLabel}
               component={Select}
               dataOptions={[
                 { value: '', label: '' },
@@ -91,7 +91,7 @@ const EnumerationNumericField = ({
         <FormattedMessage id="ui-serials-management.ruleset.sequence">
           {(ariaLabel) => (
             <Field
-              aria-label={`level-${index + 1}-${ariaLabel}`}
+              aria-label={ariaLabel}
               component={Select}
               dataOptions={[
                 { value: '', label: '' },
