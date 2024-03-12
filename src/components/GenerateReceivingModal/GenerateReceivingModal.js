@@ -53,6 +53,11 @@ const GenerateReceivingModal = ({
 
   const [successfulReceiving, setSuccessfulReceiving] = useState([]);
 
+  const closeModal = () => {
+    setSuccessfulReceiving([]);
+    setShowModal(false);
+  };
+
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
       'ui-serials-management',
@@ -71,7 +76,12 @@ const GenerateReceivingModal = ({
 
   const { mutateAsync: submitReceivingIds } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
-    (data) => ky.put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data }).json()
+    (data) => ky
+      .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
+      .json()
+      .then(() => {
+        closeModal();
+      })
   );
 
   const getInitialValues = () => {
@@ -117,11 +127,6 @@ const GenerateReceivingModal = ({
       }
     }
     return [];
-  };
-
-  const closeModal = () => {
-    setSuccessfulReceiving([]);
-    setShowModal(false);
   };
 
   const addDays = (date, days) => {
