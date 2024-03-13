@@ -20,6 +20,7 @@ const SerialInfoForm = () => {
             { value: '', label: '' },
             ...selectifyRefdata(refdataValues, SERIAL_STATUS, 'value'),
           ]}
+          id="serials-status"
           label={<FormattedMessage id="ui-serials-management.serials.status" />}
           name="serialStatus.value"
           required
@@ -30,6 +31,7 @@ const SerialInfoForm = () => {
         <Field
           component={TextArea}
           fullWidth
+          id="serials-description"
           label={
             <FormattedMessage id="ui-serials-management.serials.description" />
           }

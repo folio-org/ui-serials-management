@@ -80,6 +80,7 @@ const EnumerationNumericField = ({
                   };
                 }),
               ]}
+              id="format-value-select"
               name={`${name}.format.value`}
               required
               validate={requiredValidator}
@@ -101,6 +102,7 @@ const EnumerationNumericField = ({
                   'value'
                 ),
               ]}
+              id="sequence-value-select"
               name={`${name}.sequence.value`}
               required
               validate={requiredValidator}
@@ -114,6 +116,7 @@ const EnumerationNumericField = ({
             <Field
               aria-label={ariaLabel}
               component={TextField}
+              id="internal-note"
               name={`${name}.internalNote`}
             />
           )}
@@ -134,7 +137,7 @@ const EnumerationNumericField = ({
 EnumerationNumericField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
 };
