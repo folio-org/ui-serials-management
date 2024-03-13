@@ -12,7 +12,6 @@ import {
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
-
 const proptypes = {
   serial: PropTypes.object,
 };
@@ -23,15 +22,9 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
   );
 
   const formatter = {
-    patternId: (e) => {
-      return e.rulesetNumber;
-    },
-    lastUpdated: (e) => {
-      return <FormattedDateTime date={e?.lastUpdated} />;
-    },
-    description: (e) => {
-      return e?.description;
-    },
+    patternId: (e) => e.rulesetNumber,
+    lastUpdated: (e) => <FormattedDateTime date={e?.lastUpdated} />,
+    description: (e) => e?.description,
   };
 
   const renderBadge = () => {
@@ -48,29 +41,27 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
       }
     >
       {!!deprecatedRulesets?.length && (
-        <>
-          <Row>
-            <Col xs={12}>
-              <MultiColumnList
-                columnMapping={{
-                  patternId: (
-                    <FormattedMessage id="ui-serials-management.ruleset.patternId" />
-                  ),
-                  lastUpdated: (
-                    <FormattedMessage id="ui-serials-management.lastUpdated" />
-                  ),
-                  description: (
-                    <FormattedMessage id="ui-serials-management.ruleset.patternDescription" />
-                  ),
-                }}
-                contentData={deprecatedRulesets}
-                formatter={formatter}
-                interactive={false}
-                visibleColumns={['patternId', 'lastUpdated', 'description']}
-              />
-            </Col>
-          </Row>
-        </>
+        <Row>
+          <Col xs={12}>
+            <MultiColumnList
+              columnMapping={{
+                patternId: (
+                  <FormattedMessage id="ui-serials-management.ruleset.patternId" />
+                ),
+                lastUpdated: (
+                  <FormattedMessage id="ui-serials-management.lastUpdated" />
+                ),
+                description: (
+                  <FormattedMessage id="ui-serials-management.ruleset.patternDescription" />
+                ),
+              }}
+              contentData={deprecatedRulesets}
+              formatter={formatter}
+              interactive={false}
+              visibleColumns={['patternId', 'lastUpdated', 'description']}
+            />
+          </Col>
+        </Row>
       )}
     </Accordion>
   );

@@ -36,7 +36,7 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, WEEKDAY_FORMATS, 'value')?.map(
+          ...selectifyRefdata(refdataValues, WEEKDAY_FORMATS, 'value').map(
             (o) => {
               return {
                 value: o?.value,
@@ -63,7 +63,7 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, MONTH_DAY_FORMATS, 'value')?.map(
+          ...selectifyRefdata(refdataValues, MONTH_DAY_FORMATS, 'value').map(
             (o) => {
               return {
                 value: o?.value,
@@ -90,7 +90,7 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, MONTH_FORMATS, 'value')?.map(
+          ...selectifyRefdata(refdataValues, MONTH_FORMATS, 'value').map(
             (o) => {
               return {
                 value: o?.value,
@@ -117,7 +117,7 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...selectifyRefdata(refdataValues, YEAR_FORMATS, 'value')?.map((o) => {
+          ...selectifyRefdata(refdataValues, YEAR_FORMATS, 'value').map((o) => {
             return {
               value: o?.value,
               label: CHRONOLOGY_YEAR_FORMAT?.find((e) => e?.value === o?.value)
@@ -153,13 +153,17 @@ const ChronologyField = ({ name, templateConfig }) => {
   };
 
   return (
-    <>
-      <Row>
-        {chronologyFormats[templateConfig?.ruleType?.templateMetadataRuleFormat]?.fields?.map((e) => {
-          return <Col xs={3}>{e}</Col>;
-        })}
-      </Row>
-    </>
+    <Row>
+      {chronologyFormats[
+        templateConfig?.ruleType?.templateMetadataRuleFormat
+      ]?.fields?.map((chronologyField) => {
+        return (
+          <Col key={`chronology-field-${name}`} xs={3}>
+            {chronologyField}
+          </Col>
+        );
+      })}
+    </Row>
   );
 };
 

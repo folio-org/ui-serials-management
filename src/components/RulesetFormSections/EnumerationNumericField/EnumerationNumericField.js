@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
@@ -10,11 +10,17 @@ import {
   IconButton,
 } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
-
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import {
+  requiredValidator,
+  composeValidators,
+} from '@folio/stripes-erm-components';
 
 import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
+import {
+  validateWholeNumber,
+  useSerialsManagementRefdata,
+  selectifyRefdata,
+} from '../../utils';
 
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationNumericLevelTMRF.Format',
@@ -32,6 +38,7 @@ const EnumerationNumericField = ({
     ENUMERATION_FORMAT,
     ENUMERATION_SEQUENCE,
   ]);
+
   return (
     <>
       <Row>

@@ -39,7 +39,7 @@ const EnumerationTextualFieldArray = ({ name }) => {
                 dataOptions={[{ label: '', value: '' }, ...refdataOptions]}
                 input={input}
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.refdataCategory" />
+                  <FormattedMessage id="ui-serials-management.ruleset.pickList" />
                 }
                 meta={meta}
                 onChange={(e) => {
@@ -107,7 +107,7 @@ const EnumerationTextualFieldArray = ({ name }) => {
         }
       </FieldArray>
       <Button onClick={() => onAddField({})}>
-        <FormattedMessage id="ui-serials-management.ruleset.addLevel" />
+        <FormattedMessage id="ui-serials-management.ruleset.addValue" />
       </Button>
     </>
   );
