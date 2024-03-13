@@ -177,7 +177,6 @@
     "pieceSets.displaySummary": "Zobrazit souhrn",
     "ruleset.levelIndex": "Úroveň {index}",
     "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
-    "ruleset.refdataCategory": "Refdata category",
     "refdataCategory.refdataCategory": "Category",
     "refdataCategory.noOfValues": "# of values",
     "refdataCategory.refdataCategories": "Categories",
@@ -185,5 +184,15 @@
     "refdataCategory.deleteRefdataCategory": "Delete pick list category",
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> will be deleted.",
     "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Error</strong>: Pick list <strong>{label}</strong> was not deleted.",
-    "settings.refdata.pickLists": "Pick lists"
+    "settings.refdata.pickLists": "Pick lists",
+    "pieceSets.combinedPieces": "Combined pieces: {length}",
+    "ruleset.addValue": "Add value",
+    "ruleset.pickList": "Pick list",
+    "ruleset.day.monthRange": "Day (1-31)",
+    "ruleset.day.weekdayRange": "Day (Mon-Sun)",
+    "ruleset.week.monthRange": "Week (1-4)",
+    "ruleset.week.yearRange": "Week (1-52)",
+    "ruleset.month.yearRange": "Month (Jan-Dec)",
+    "ruleset.issue.nRange": "Issue (1-n)",
+    "serials.serial": "Serial"
 }
