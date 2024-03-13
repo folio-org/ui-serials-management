@@ -243,6 +243,7 @@ const CombinationField = ({ name, index, combination }) => {
           <Col xs={3}>
             <Field
               component={TextField}
+              id="total-number-of-issues-to-combine"
               label={
                 <FormattedMessage id="ui-serials-management.ruleset.totalNumberOfIssuesToCombine" />
               }
