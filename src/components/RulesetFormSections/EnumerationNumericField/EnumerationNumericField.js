@@ -102,7 +102,7 @@ const EnumerationNumericField = ({
                   'value'
                 ),
               ]}
-              id="format-value-select"
+              id="sequence-value-select"
               name={`${name}.sequence.value`}
               required
               validate={requiredValidator}
@@ -137,7 +137,7 @@ const EnumerationNumericField = ({
 EnumerationNumericField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
 };
