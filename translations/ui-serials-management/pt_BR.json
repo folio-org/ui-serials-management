@@ -177,7 +177,6 @@
     "pieceSets.displaySummary": "Exibir resumo",
     "ruleset.levelIndex": "Nível {index}",
     "ruleset.valuesToUseForFirstIssue": "Valores a serem usados para a primeira edição",
-    "ruleset.refdataCategory": "Categoria de dados de referência",
     "refdataCategory.refdataCategory": "Categoria",
     "refdataCategory.noOfValues": "# de valores",
     "refdataCategory.refdataCategories": "Categorias",
@@ -185,5 +184,15 @@
     "refdataCategory.deleteRefdataCategory": "Excluir categoria da lista de seleção",
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong> {name} </strong> será excluído.",
     "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Erro</strong>: a lista de seleção <strong>{label}</strong> não foi excluída.",
-    "settings.refdata.pickLists": "Listas de seleção"
+    "settings.refdata.pickLists": "Listas de seleção",
+    "pieceSets.combinedPieces": "Peças combinadas: {length}",
+    "ruleset.addValue": "Adicionar valor",
+    "ruleset.pickList": "Lista de seleção",
+    "ruleset.day.monthRange": "Dia (1-31)",
+    "ruleset.day.weekdayRange": "Dia (Seg-Dom)",
+    "ruleset.week.monthRange": "Semana (1-4)",
+    "ruleset.week.yearRange": "Semana (1-52)",
+    "ruleset.month.yearRange": "Mês (Jan-Dez)",
+    "ruleset.issue.nRange": "Edição (1-n)",
+    "serials.serial": "Seriado"
 }
