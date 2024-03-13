@@ -265,7 +265,7 @@ const CombinationField = ({ name, index, combination }) => {
 
 CombinationField.propTypes = {
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   combination: PropTypes.object,
 };
 
