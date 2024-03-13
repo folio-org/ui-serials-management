@@ -21,7 +21,6 @@ const OmissionFieldArray = () => {
   const { items, onAddField, onDeleteField } =
     useKiwtFieldArray('omission.rules');
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
-
   const renderAddOmissionButton = () => {
     if (values?.combination) {
       return (

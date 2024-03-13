@@ -10,8 +10,8 @@ import {
   Select,
 } from '@folio/stripes/components';
 import {
-  composeValidators,
   requiredValidator,
+  composeValidators,
 } from '@folio/stripes-erm-components';
 
 import { validateWholeNumber } from '../../utils';
@@ -52,6 +52,7 @@ const EnumerationTextualField = ({
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...dataOptions]}
               disabled={!dataOptions}
+              id="label-text-select"
               name={`${name}.value`}
               required
               validate={requiredValidator}
@@ -85,7 +86,7 @@ const EnumerationTextualField = ({
 EnumerationTextualField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
   dataOptions: PropTypes.arrayOf(PropTypes.object),

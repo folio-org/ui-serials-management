@@ -292,7 +292,7 @@ const OmissionField = ({ name, index, omission }) => {
 
 OmissionField.propTypes = {
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   omission: PropTypes.object,
 };
 
