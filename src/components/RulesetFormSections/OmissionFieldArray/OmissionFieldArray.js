@@ -2,7 +2,14 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col, Tooltip } from '@folio/stripes/components';
+import {
+  Button,
+  Select,
+  Row,
+  Col,
+  Tooltip,
+  InfoPopover,
+} from '@folio/stripes/components';
 import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -64,10 +71,22 @@ const OmissionFieldArray = () => {
           />
         }
         header={
-          <FormattedMessage
-            id="ui-serials-management.ruleset.omissionRuleIndex"
-            values={{ index: index + 1 }}
-          />
+          <>
+            <FormattedMessage
+              id="ui-serials-management.ruleset.omissionRuleIndex"
+              values={{ index: index + 1 }}
+            />
+            <InfoPopover
+              content={
+                <FormattedMessage
+                  id="ui-serials-management.ruleset.omissionRulesPopover"
+                  values={{
+                    br: <br />,
+                  }}
+                />
+              }
+            />
+          </>
         }
         onDelete={() => onDeleteField(index, omission)}
       >
