@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useQuery } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { AppIcon, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   Pane,
   LoadingPane,
@@ -99,7 +99,11 @@ const SerialView = ({
         buttons.push(
           <Button
             buttonStyle="dropdownItem"
-            disabled={!serial?.serialRulesets}
+            disabled={
+              !serial?.serialRulesets?.some(
+                (sr) => sr?.rulesetStatus?.value === 'active'
+              )
+            }
             id="clickable-dropdown-generate-pieces"
             onClick={() => setShowModal(true)}
           >
@@ -126,9 +130,36 @@ const SerialView = ({
       >
         <Pane
           actionMenu={renderActionMenu}
+          appIcon={
+            <AppIcon app="serials-management" iconKey="app" size="small" />
+          }
           defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
           dismissible
           onClose={onClose}
+          paneSub={
+            serial?.orderLine?.remoteId_object?.poLineNumber && (
+              <>
+                <FormattedMessage id="ui-serials-management.poLine" />
+                {' - '}
+                {serial.orderLine.remoteId_object.poLineNumber}
+              </>
+            )
+          }
+          paneTitle={
+            serial?.orderLine?.title ? (
+              <>
+                <FormattedMessage id="ui-serials-management.serials.title" />
+                {' - '}
+                {serial?.orderLine?.title}
+              </>
+            ) : (
+              <>
+                <FormattedMessage id="ui-serials-management.serials.serial" />
+                {' - '}
+                {serial?.id}
+              </>
+            )
+          }
         >
           <MetaSection
             contentId="serialMetaContent"

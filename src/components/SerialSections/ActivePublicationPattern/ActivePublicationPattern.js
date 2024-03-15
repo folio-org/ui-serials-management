@@ -23,6 +23,8 @@ const proptypes = {
   serial: PropTypes.object,
 };
 
+// TODO Change to publication pattern
+
 const ActivePublicationPattern = ({ serial }) => {
   const location = useLocation();
 
@@ -52,20 +54,17 @@ const ActivePublicationPattern = ({ serial }) => {
 
   const renderAddPublicationPatternButton = () => {
     return (
-      <>
-        <Button
-          id="add-ruleset-button"
-          to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
-        >
-          <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
-        </Button>
-      </>
+      <Button
+        id="add-ruleset-button"
+        to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
+      >
+        <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
+      </Button>
     );
   };
 
   return (
     <Accordion
-      closedByDefault
       displayWhenClosed={renderBadge()}
       displayWhenOpen={renderAddPublicationPatternButton()}
       label={

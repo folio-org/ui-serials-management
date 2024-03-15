@@ -64,30 +64,28 @@ const SerialEditRoute = () => {
     return <LoadingView dismissible onClose={handleClose} />;
   }
   return (
-    <>
-      <Form
-        initialValues={{
-          ...serial,
-          ...(!!serial?.orderLine && {
-            orderLine: serial?.orderLine?.remoteId_object,
-          }),
-        }}
-        keepDirtyOnReinitialize
-        mutators={arrayMutators}
-        onSubmit={submitSerial}
-      >
-        {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <SerialForm
-              handlers={{
-                onClose: handleClose,
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
-        )}
-      </Form>
-    </>
+    <Form
+      initialValues={{
+        ...serial,
+        ...(!!serial?.orderLine && {
+          orderLine: serial?.orderLine?.remoteId_object,
+        }),
+      }}
+      keepDirtyOnReinitialize
+      mutators={arrayMutators}
+      onSubmit={submitSerial}
+    >
+      {({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <SerialForm
+            handlers={{
+              onClose: handleClose,
+              onSubmit: handleSubmit,
+            }}
+          />
+        </form>
+      )}
+    </Form>
   );
 };
 

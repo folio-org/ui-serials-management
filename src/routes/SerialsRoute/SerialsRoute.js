@@ -8,6 +8,7 @@ import {
   PaneMenu,
   checkScope,
   HasCommand,
+  TextLink
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
@@ -71,12 +72,12 @@ const SerialsRoute = ({ children, path }) => {
 
   const resultColumns = [
     {
-      propertyPath: 'serialStatus',
-      label: <FormattedMessage id="ui-serials-management.serials.status" />,
-    },
-    {
       propertyPath: 'title',
       label: <FormattedMessage id="ui-serials-management.serials.title" />,
+    },
+    {
+      propertyPath: 'serialStatus',
+      label: <FormattedMessage id="ui-serials-management.serials.status" />,
     },
     {
       propertyPath: 'description',
@@ -87,9 +88,11 @@ const SerialsRoute = ({ children, path }) => {
   ];
 
   const formatter = {
-    id: (d) => d?.id,
+    title: (d) => (
+      <TextLink to={urls.serialView(d?.id)}>{d?.orderLine?.title ?? d?.id}</TextLink>
+    ),
     serialStatus: (d) => d?.serialStatus?.label,
-    title: (d) => d?.orderLine?.title ?? d?.id,
+    description: (d) => d?.description,
   };
 
   return (
@@ -102,7 +105,6 @@ const SerialsRoute = ({ children, path }) => {
         fetchParameters={fetchParameters}
         FilterComponent={SerialsFilters}
         FilterPaneHeaderComponent={renderHeaderComponent}
-        id="serials"
         mainPaneProps={{
           appIcon: (
             <AppIcon app="serials-management" iconKey="app" size="small" />
@@ -113,6 +115,9 @@ const SerialsRoute = ({ children, path }) => {
         mclProps={{
           formatter,
           columnWidths: { description: 500 },
+          interactive: false,
+          onRowClick: null,
+          id: 'list-serials',
         }}
         path={path}
         resultColumns={resultColumns}

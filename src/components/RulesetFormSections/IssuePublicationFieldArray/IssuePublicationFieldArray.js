@@ -1,6 +1,6 @@
 import { FieldArray } from 'react-final-form-arrays';
 import { Field, useFormState, useForm } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   Row,
@@ -13,14 +13,14 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import useRecurrencePatternTypes from '../../../hooks/useRecurrencePatternTypes';
+import { RECURRENCE_PATTERN_TYPES } from '../../../constants/patternTypes';
 import IssuePublicationField from '../IssuePublicationField';
 
 const IssuePublicationFieldArray = () => {
+  const intl = useIntl();
   const { values } = useFormState();
   const { items } = useKiwtFieldArray('recurrence.rules');
   const { change } = useForm();
-  const patternTypes = useRecurrencePatternTypes();
 
   // Check if the cycle length is a daily issue, defined by timeUnit="Day" and period=1
   // This will cause the "Days of publication, per cycle" section not to render if so
@@ -53,7 +53,7 @@ const IssuePublicationFieldArray = () => {
           <br />
         </>
       )}
-      {!!patternTypes[values?.recurrence?.timeUnit?.value] && (
+      {!!RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value] && (
         <Row>
           <Col xs={3}>
             {/* IMPORTANT This needs to be patternType instead of patternType.value for the time being */}
@@ -61,11 +61,19 @@ const IssuePublicationFieldArray = () => {
               name="patternType"
               render={({ input, meta }) => (
                 <Select
-                  dataOptions={
-                    patternTypes[values?.recurrence?.timeUnit?.value] || [
-                      { label: '', value: '' },
-                    ]
-                  }
+                  dataOptions={[
+                    { label: '', value: '' },
+                    ...RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value].map(
+                      (e) => {
+                        return {
+                          value: e?.value,
+                          label: e?.labels
+                            ?.map((l) => intl.formatMessage({ id: l?.id }))
+                            ?.join(', '),
+                        };
+                      }
+                    ),
+                  ]}
                   input={input}
                   label={
                     <FormattedMessage id="ui-serials-management.ruleset.dayFormat" />

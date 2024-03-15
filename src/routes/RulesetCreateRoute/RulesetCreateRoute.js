@@ -71,27 +71,25 @@ const RulesetCreateRoute = () => {
   };
 
   return (
-    <>
-      <Form
-        initialValues={{
-          rulesetStatus: { value: 'active' },
-        }}
-        keepDirtyOnReinitialize
-        mutators={arrayMutators}
-        onSubmit={submitRuleset}
-      >
-        {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <RulesetForm
-              handlers={{
-                onClose: handleClose,
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
-        )}
-      </Form>
-    </>
+    <Form
+      initialValues={{
+        rulesetStatus: { value: 'active' },
+      }}
+      keepDirtyOnReinitialize
+      mutators={arrayMutators}
+      onSubmit={submitRuleset}
+    >
+      {({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <RulesetForm
+            handlers={{
+              onClose: handleClose,
+              onSubmit: handleSubmit,
+            }}
+          />
+        </form>
+      )}
+    </Form>
   );
 };
 

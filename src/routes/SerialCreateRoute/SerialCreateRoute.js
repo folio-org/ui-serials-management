@@ -43,27 +43,25 @@ const SerialCreateRoute = () => {
   };
 
   return (
-    <>
-      <Form
-        initialValues={{
-          serialStatus: { value: 'active' },
-        }}
-        keepDirtyOnReinitialize
-        mutators={arrayMutators}
-        onSubmit={submitSerial}
-      >
-        {({ handleSubmit }) => (
-          <form id="serial-form" onSubmit={handleSubmit}>
-            <SerialForm
-              handlers={{
-                onClose: handleClose,
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
-        )}
-      </Form>
-    </>
+    <Form
+      initialValues={{
+        serialStatus: { value: 'active' },
+      }}
+      keepDirtyOnReinitialize
+      mutators={arrayMutators}
+      onSubmit={submitSerial}
+    >
+      {({ handleSubmit }) => (
+        <form id="serial-form" onSubmit={handleSubmit}>
+          <SerialForm
+            handlers={{
+              onClose: handleClose,
+              onSubmit: handleSubmit,
+            }}
+          />
+        </form>
+      )}
+    </Form>
   );
 };
 

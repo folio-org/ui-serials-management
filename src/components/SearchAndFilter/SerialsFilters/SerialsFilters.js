@@ -79,12 +79,10 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
   };
 
   return (
-    <>
-      <AccordionSet>
-        {renderRequestStatusFilter()}
-        {renderPOLineFilter()}
-      </AccordionSet>
-    </>
+    <AccordionSet>
+      {renderRequestStatusFilter()}
+      {renderPOLineFilter()}
+    </AccordionSet>
   );
 };
 

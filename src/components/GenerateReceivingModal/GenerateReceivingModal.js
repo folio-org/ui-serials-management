@@ -297,21 +297,25 @@ const GenerateReceivingModal = ({
                 id="supplement-tooltip"
               />
             </Label>
-
-            <Field
-              name="supplement"
-              render={({ input, meta }) => (
-                <Checkbox
-                  component={Checkbox}
-                  input={input}
-                  meta={meta}
-                  onChange={(e) => {
-                    input.onChange(e.target.checked);
-                  }}
-                  type="checkbox"
+            <FormattedMessage id="ui-serials-management.pieceSets.supplement">
+              {(ariaLabel) => (
+                <Field
+                  name="supplement"
+                  render={({ input, meta }) => (
+                    <Checkbox
+                      aria-label={ariaLabel}
+                      component={Checkbox}
+                      input={input}
+                      meta={meta}
+                      onChange={(e) => {
+                        input.onChange(e.target.checked);
+                      }}
+                      type="checkbox"
+                    />
+                  )}
                 />
               )}
-            />
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
@@ -347,20 +351,25 @@ const GenerateReceivingModal = ({
                   id="display-on-holding-tooltip"
                 />
               </Label>
-              <Field
-                name="displayOnHolding"
-                render={({ input, meta }) => (
-                  <Checkbox
-                    component={Checkbox}
-                    input={input}
-                    meta={meta}
-                    onChange={(e) => {
-                      input.onChange(e.target.checked);
-                    }}
-                    type="checkbox"
+              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
+                {(ariaLabel) => (
+                  <Field
+                    name="displayOnHolding"
+                    render={({ input, meta }) => (
+                      <Checkbox
+                        aria-label={ariaLabel}
+                        component={Checkbox}
+                        input={input}
+                        meta={meta}
+                        onChange={(e) => {
+                          input.onChange(e.target.checked);
+                        }}
+                        type="checkbox"
+                      />
+                    )}
                   />
                 )}
-              />
+              </FormattedMessage>
             </Col>
           )}
         </Row>
@@ -371,22 +380,20 @@ const GenerateReceivingModal = ({
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting } = formState;
     return (
-      <>
-        <ModalFooter>
-          <Button
-            buttonStyle="primary"
-            disabled={submitting || invalid || pristine}
-            marginBottom0
-            onClick={handleSubmit}
-            type="submit"
-          >
-            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
-          </Button>
-          <Button marginBottom0 onClick={handleClose}>
-            <FormattedMessage id="ui-serials-management.close" />
-          </Button>
-        </ModalFooter>
-      </>
+      <ModalFooter>
+        <Button
+          buttonStyle="primary"
+          disabled={submitting || invalid || pristine}
+          marginBottom0
+          onClick={handleSubmit}
+          type="submit"
+        >
+          <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+        </Button>
+        <Button marginBottom0 onClick={handleClose}>
+          <FormattedMessage id="ui-serials-management.close" />
+        </Button>
+      </ModalFooter>
     );
   };
 
