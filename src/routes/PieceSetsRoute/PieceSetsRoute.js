@@ -86,7 +86,7 @@ const PieceSetsRoute = ({ children, path }) => {
 
 PieceSetsRoute.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  path: PropTypes.string.isRequired,
+  path: PropTypes.string,
 };
 
 export default PieceSetsRoute;
