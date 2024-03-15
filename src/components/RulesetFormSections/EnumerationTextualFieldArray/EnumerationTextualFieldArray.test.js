@@ -2,21 +2,21 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 
-import EnumerationNumericFieldArray from './EnumerationNumericFieldArray';
+import EnumerationTextualFieldArray from './EnumerationTextualFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
-jest.mock('../EnumerationNumericField', () => () => <div>EnumerationNumericField</div>);
+jest.mock('../EnumerationTextualField', () => () => <div>EnumerationTextualField</div>);
 const onSubmit = jest.fn();
 
 let renderComponent;
-describe('EnumerationNumericFieldArray', () => {
+describe('EnumerationTextualFieldArray', () => {
   describe('with no values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           <FieldArray
-            component={EnumerationNumericFieldArray}
-            name="templateConfig.rules[0].ruleType.ruleFormat"
+            component={EnumerationTextualFieldArray}
+            name="templateConfig.rules[0].ruleType.ruleFormat.levels[0]"
           />
         </TestForm>,
         translationsProperties
@@ -25,22 +25,22 @@ describe('EnumerationNumericFieldArray', () => {
 
     test('renders the expected label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Level')).toBeInTheDocument();
+      expect(getByText('Pick list')).toBeInTheDocument();
     });
 
     test('renders the expected label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('No. of units')).toBeInTheDocument();
+      expect(getByText('No. of issues')).toBeInTheDocument();
     });
 
     test('renders the expected label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Format')).toBeInTheDocument();
+      expect(getByText('Order')).toBeInTheDocument();
     });
 
     test('renders the expected label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Sequence')).toBeInTheDocument();
+      expect(getByText('Label text')).toBeInTheDocument();
     });
 
     test('renders the expected label', async () => {
@@ -49,7 +49,7 @@ describe('EnumerationNumericFieldArray', () => {
     });
 
     test('renders the Add level button', async () => {
-      await Button('Add level').exists();
+      await Button('Add value').exists();
     });
   });
 });
