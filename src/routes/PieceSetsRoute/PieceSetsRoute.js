@@ -2,12 +2,15 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
+import { TextLink } from '@folio/stripes/components';
+
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import { PieceSetView } from '../../components/views';
 import { RouteSwitcher } from '../../components/SearchAndFilter';
+import { urls } from '../../components/utils';
 
 import { PIECE_SETS_ENDPOINT } from '../../constants/endpoints';
 
@@ -24,14 +27,14 @@ const PieceSetsRoute = ({ children, path }) => {
 
   const resultColumns = [
     {
+      propertyPath: 'title',
+      label: <FormattedMessage id="ui-serials-management.pieceSets.title" />,
+    },
+    {
       propertyPath: 'dateCreated',
       label: (
         <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
       ),
-    },
-    {
-      propertyPath: 'title',
-      label: <FormattedMessage id="ui-serials-management.pieceSets.title" />,
     },
     {
       propertyPath: 'total',
@@ -57,7 +60,15 @@ const PieceSetsRoute = ({ children, path }) => {
 
   const formatter = {
     dateCreated: (d) => <FormattedDateTime date={d?.dateCreated} />,
-    // title: (d) => d?.id?.remoteId_object?.titleOrPackage,
+    title: (d) => (
+      <TextLink to={urls.pieceSetView(d?.id)}>
+        {d?.title ? (
+          <>{`${d?.title} (${d?.dateCreated})`}</>
+        ) : (
+          <>{`${d?.id} (${d?.dateCreated})`}</>
+        )}
+      </TextLink>
+    ),
     total: (d) => d?.pieces?.length,
     startDate: (d) => <FormattedDate value={d?.startDate} />,
     patternId: (d) => d?.ruleset?.rulesetNumber,
@@ -73,7 +84,12 @@ const PieceSetsRoute = ({ children, path }) => {
           <FormattedMessage id="ui-serials-management.pieceSets.predictedPieceSets" />
         ),
       }}
-      mclProps={{ formatter }}
+      mclProps={{
+        formatter,
+        interactive: false,
+        onRowClick: null,
+        id: 'list-predicted-piece-sets',
+      }}
       path={path}
       resultColumns={resultColumns}
       searchFieldAriaLabel="piece-sets-search-field"
