@@ -420,7 +420,19 @@ const refdata = [
         label: 'Faculty 1'
       },
     ]
-  }
+  },
+  {
+    id: '2c9180a58e4f3a55018e4f42b24a0036',
+    desc: 'CombinationRule.TimeUnits',
+    internal: true,
+    values: [
+      {
+        id: '2c9180a58e4f3a55018e4f42b24c0037',
+        value: 'issue',
+        label: 'Issue'
+      }
+    ]
+  },
 ];
 
 export default refdata;

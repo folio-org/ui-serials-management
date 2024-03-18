@@ -64,6 +64,9 @@ const CombinationFieldArray = () => {
     return (
       <EditCard
         key={`combination-rule-card-${combination}`}
+        deleteBtnProps={{
+          'id': `remove-combination-rule-${index}`,
+        }}
         deleteButtonTooltipText={
           <FormattedMessage
             id="ui-serials-management.ruleset.removeCombinationRule"
