@@ -420,7 +420,85 @@ const refdata = [
         label: 'Faculty 1'
       },
     ]
-  }
+  },
+    {
+    'id': '2c9180a58e4ca4c6018e4cad64e0005e',
+    'desc': 'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a58e4ca4c6018e4cad64e1005f',
+        'value': 'chronology_date',
+        'label': 'Chronology Date',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad64e60060',
+        'value': 'chronology_month',
+        'label': 'Chronology Month',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad64e90061',
+        'value': 'chronology_year',
+        'label': 'Chronology Year',
+      },
+    ],
+  },
+  {
+    'id': '2c9180a58e4ca4c6018e4cad63d20042',
+    'desc': 'CombinationRule.PatternType',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63d30043',
+        'value': 'issue',
+        'label': 'Issue',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63e30046',
+        'value': 'issue_month',
+        'label': 'Issue Month',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63d70044',
+        'value': 'issue_week',
+        'label': 'Issue Week',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63dd0045',
+        'value': 'issue_week_month',
+        'label': 'Issue Week Month',
+      },
+    ],
+  },
+  {
+    'id': '2c9180a58e4ca4c6018e4cad63cd0040',
+    'desc': 'CombinationRule.TimeUnits',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63ce0041',
+        'value': 'issue',
+        'label': 'Issue',
+      },
+    ],
+  },
+  {
+    'id': '2c9180a58e4ca4c6018e4cad63c2003d',
+    'desc': 'TemplateMetadataRule.TemplateMetadataRuleType',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63c4003e',
+        'value': 'chronology',
+        'label': 'Chronology',
+      },
+      {
+        'id': '2c9180a58e4ca4c6018e4cad63c8003f',
+        'value': 'enumeration',
+        'label': 'Enumeration',
+      },
+    ],
+  },
 ];
 
 export default refdata;
