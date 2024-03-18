@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import get from 'lodash/get';
 
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
@@ -55,9 +55,9 @@ const EnumerationTextualFieldArray = ({ name }) => {
                   }
                 }}
                 required
-                validate={requiredValidator}
               />
             )}
+            validate={requiredValidator}
           />
         </Col>
       </Row>
@@ -87,6 +87,7 @@ const EnumerationTextualFieldArray = ({ name }) => {
         {() => items?.map((level, index) => {
           return (
             <EnumerationTextualField
+              key={`${name}.levels[${index}]`}
               dataOptions={
                   refdata
                     ?.find(
