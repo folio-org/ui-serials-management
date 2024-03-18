@@ -1,13 +1,10 @@
-import { FieldArray } from 'react-final-form-arrays';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, TestForm, Button, Select } from '@folio/stripes-erm-testing';
 
 import EnumerationTextualFieldArray from './EnumerationTextualFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
 import mockRefdata from '../../../../test/resources/refdata';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Field } from 'react-final-form';
 
 jest.mock('../EnumerationTextualField', () => ({ level }) => <div>{`EnumerationTextualField: ${level.value}`}</div>);
 const onSubmit = jest.fn();
