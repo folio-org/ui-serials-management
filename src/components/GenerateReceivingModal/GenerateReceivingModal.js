@@ -54,13 +54,8 @@ const GenerateReceivingModal = ({
   const [successfulReceiving, setSuccessfulReceiving] = useState([]);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
-    [
-      'ui-serials-management',
-      'GeneratingReceivingModal',
-      'submitReceivingPiece',
-    ],
-    (data) => ky
-      .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
+    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPiece'],
+    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
       .json()
       .then((res) => {
         if (successfulReceiving?.length) {
@@ -93,8 +88,7 @@ const GenerateReceivingModal = ({
         };
       } else {
         return {
-          locationId:
-            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId: serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
           ...fixedInitialValues,
         };
       }
@@ -111,9 +105,7 @@ const GenerateReceivingModal = ({
         });
       } else if (locations?.length && holdings?.length) {
         return holdings?.map((h) => {
-          const holdingLocation = locations.find(
-            (l) => h?.permanentLocationId === l?.id
-          );
+          const holdingLocation = locations.find((l) => h?.permanentLocationId === l?.id);
           return {
             label: `${holdingLocation?.name} > ${h?.callNumber}`,
             value: h?.id,
@@ -324,9 +316,7 @@ const GenerateReceivingModal = ({
               <Field
                 component={Select}
                 dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-                disabled={
-                  serial?.orderLine?.remoteId_object?.locations?.length === 1
-                }
+                disabled={serial?.orderLine?.remoteId_object?.locations?.length === 1}
                 label={
                   holdingIds ? (
                     <FormattedMessage id="ui-serials-management.pieceSets.holding" />

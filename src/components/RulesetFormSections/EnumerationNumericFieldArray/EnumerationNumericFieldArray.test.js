@@ -5,7 +5,7 @@ import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 import EnumerationNumericFieldArray from './EnumerationNumericFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
-jest.mock('../CombinationField', () => () => <div>CombinationField</div>);
+jest.mock('../EnumerationNumericField', () => () => <div>EnumerationNumericField</div>);
 const onSubmit = jest.fn();
 
 let renderComponent;

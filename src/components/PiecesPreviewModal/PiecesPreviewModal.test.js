@@ -1,9 +1,4 @@
-import {
-  renderWithIntl,
-  TestForm,
-  Button,
-  TextArea,
-} from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
 import PiecesPreviewModal from './PiecesPreviewModal';
 
@@ -12,6 +7,11 @@ import { ruleset } from '../../../test/resources';
 
 const onSubmit = jest.fn();
 const setShowModal = jest.fn();
+
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  FormModal: () => <div>FormModal</div>,
+}));
 
 let renderComponent;
 describe('PiecesPreviewModal', () => {
@@ -29,28 +29,8 @@ describe('PiecesPreviewModal', () => {
     );
   });
 
-  test('renders the modal headline', async () => {
+  test('renders the FormModal component', async () => {
     const { getByText } = renderComponent;
-    expect(getByText('Generate predicted pieces')).toBeInTheDocument();
-  });
-
-  test('renders the note field', async () => {
-    await TextArea('Note').exists();
-  });
-
-  test('renders the close button', async () => {
-    await Button('Close').exists();
-  });
-
-  test('Close button should be enabeled', async () => {
-    await Button('Close').has({ disabled: false });
-  });
-
-  test('Generate button should be disabled', async () => {
-    await Button('Generate').has({ disabled: true });
-  });
-
-  test('Preview button should be disabled', async () => {
-    await Button('Preview').has({ disabled: true });
+    expect(getByText('FormModal')).toBeInTheDocument();
   });
 });

@@ -7,7 +7,7 @@ import { Pluggable } from '@folio/stripes/core';
 const propTypes = {
   disabled: PropTypes.bool,
   name: PropTypes.string,
-  onPOLineSelected: PropTypes.func.isRequired,
+  onPOLineSelected: PropTypes.func,
 };
 
 const POLineFilter = ({ disabled, name, onPOLineSelected }) => {
