@@ -374,6 +374,7 @@ const GenerateReceivingModal = ({
         <Button
           buttonStyle="primary"
           disabled={submitting || invalid || pristine}
+          id="generate-recieving-pieces-button"
           marginBottom0
           onClick={handleSubmit}
           type="submit"
