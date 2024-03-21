@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 import { useMutation } from 'react-query';
@@ -51,27 +50,17 @@ const GenerateReceivingModal = ({
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
-  const [successfulReceiving, setSuccessfulReceiving] = useState([]);
-
   const closeModal = () => {
-    setSuccessfulReceiving([]);
     setShowModal(false);
   };
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
-    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPiece'],
-    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
-      .json()
-      .then((res) => {
-        if (successfulReceiving?.length) {
-          setSuccessfulReceiving([
-            ...successfulReceiving,
-            { ...data?.piece, receivingId: res?.id },
-          ]);
-        } else {
-          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
-        }
-      })
+    [
+      'ui-serials-management',
+      'GeneratingReceivingModal',
+      'submitReceivingPiece',
+    ],
+    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving }).json()
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -98,7 +87,8 @@ const GenerateReceivingModal = ({
         };
       } else {
         return {
-          locationId: serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId:
+            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
           ...fixedInitialValues,
         };
       }
@@ -115,7 +105,9 @@ const GenerateReceivingModal = ({
         });
       } else if (locations?.length && holdings?.length) {
         return holdings?.map((h) => {
-          const holdingLocation = locations.find((l) => h?.permanentLocationId === l?.id);
+          const holdingLocation = locations.find(
+            (l) => h?.permanentLocationId === l?.id
+          );
           return {
             label: `${holdingLocation?.name} > ${h?.callNumber}`,
             value: h?.id,
@@ -134,6 +126,7 @@ const GenerateReceivingModal = ({
 
   const handleGeneration = async (values) => {
     const piecesArray = [];
+    const successfulReceiving = [];
     for (const piece of pieceSet?.pieces) {
       if (!piece?.omissionOrigins) {
         const pieceInfo = piece?.combinationOrigins
@@ -164,7 +157,10 @@ const GenerateReceivingModal = ({
       }
     }
     for (const receivingPiece of piecesArray) {
-      await submitReceivingPiece(receivingPiece);
+      await submitReceivingPiece(receivingPiece).then((res) => successfulReceiving.push({
+        ...receivingPiece?.piece,
+        receivingId: res?.id,
+      }));
     }
     const submitPieceSet = { id: pieceSet?.id, pieces: successfulReceiving };
     await submitReceivingIds(submitPieceSet);
@@ -319,7 +315,9 @@ const GenerateReceivingModal = ({
               <Field
                 component={Select}
                 dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-                disabled={serial?.orderLine?.remoteId_object?.locations?.length === 1}
+                disabled={
+                  serial?.orderLine?.remoteId_object?.locations?.length === 1
+                }
                 label={
                   holdingIds ? (
                     <FormattedMessage id="ui-serials-management.pieceSets.holding" />
