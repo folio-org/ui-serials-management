@@ -21,7 +21,7 @@ import {
 
 const propTypes = {
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   patternType: PropTypes.string,
 };
 

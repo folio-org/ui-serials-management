@@ -14,14 +14,13 @@ import {
   Col,
   Button,
   MultiColumnList,
-  FormattedDate,
   Label,
   TextField,
   Layout,
   TextArea,
 } from '@folio/stripes/components';
 
-import { requiredValidator, InfoBox } from '@folio/stripes-erm-components';
+import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { urls, validateWithinRange } from '../utils';
 
@@ -31,6 +30,7 @@ import {
   CREATE_PREDICTED_PIECES,
   GENERATE_PIECES_PREVIEW,
 } from '../../constants/endpoints';
+import PiecePublicationDate from '../PiecePublicationDate';
 
 const propTypes = {
   showModal: PropTypes.bool,
@@ -133,38 +133,12 @@ const PiecesPreviewModal = ({
     await generatePieces(submitValues);
   };
 
-  const renderPublicationDate = (piece) => {
-    if (piece?.recurrencePieces) {
-      return (
-        <>
-          <FormattedDate value={piece?.recurrencePieces[0].date} />
-          <br />
-          <FormattedMessage
-            id="ui-serials-management.pieceSets.combinedPieces"
-            values={{ length: piece?.recurrencePieces.length }}
-          />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <FormattedDate value={piece?.date} />
-          {piece?.omissionOrigins && (
-            <InfoBox type="success">
-              <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
-            </InfoBox>
-          )}
-        </>
-      );
-    }
-  };
-
   const formatter = {
     // If omissionOrigins exist then piece is omitted
     issueCount: (e) => {
       return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
-    publicationDate: (e) => renderPublicationDate(e),
+    publicationDate: (e) => <PiecePublicationDate piece={e} />,
     displaySummary: (e) => {
       return e?.label;
     },
@@ -286,7 +260,7 @@ const PiecesPreviewModal = ({
           </div>
         )}
         <Button
-          buttonStyle="default"
+          buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
           marginBottom0
           onClick={() => handleGeneration(values)}

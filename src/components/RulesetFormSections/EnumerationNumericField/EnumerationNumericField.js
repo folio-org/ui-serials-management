@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
@@ -10,11 +10,17 @@ import {
   IconButton,
 } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
-
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import {
+  requiredValidator,
+  composeValidators,
+} from '@folio/stripes-erm-components';
 
 import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
+import {
+  validateWholeNumber,
+  useSerialsManagementRefdata,
+  selectifyRefdata,
+} from '../../utils';
 
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationNumericLevelTMRF.Format',
@@ -32,47 +38,89 @@ const EnumerationNumericField = ({
     ENUMERATION_FORMAT,
     ENUMERATION_SEQUENCE,
   ]);
+
   return (
     <Row>
       <Col xs={1}>{index + 1}</Col>
       <Col xs={2}>
-        <Field component={TextField} name={`${name}.units`} />
+        <FormattedMessage id="ui-serials-management.ruleset.numberOfUnits">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={TextField}
+              name={`${name}.units`}
+              required
+              type="number"
+              validate={composeValidators(
+                requiredValidator,
+                validateWholeNumber
+              )}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       <Col xs={2}>
-        <Field
-          component={Select}
-          dataOptions={[
-            { value: '', label: '' },
-            ...selectifyRefdata(refdataValues, ENUMERATION_FORMAT, 'value').map(
-              (o) => {
-                return {
-                  value: o?.value,
-                  label: ENUMERATION_NUMBER_FORMAT?.find(
-                    (e) => e?.value === o?.value
-                  )?.label,
-                };
-              }
-            ),
-          ]}
-          name={`${name}.format.value`}
-          required
-          validate={requiredValidator}
-        />
+        <FormattedMessage id="ui-serials-management.ruleset.format">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={Select}
+              dataOptions={[
+                { value: '', label: '' },
+                ...selectifyRefdata(
+                  refdataValues,
+                  ENUMERATION_FORMAT,
+                  'value'
+                ).map((o) => {
+                  return {
+                    value: o?.value,
+                    label: ENUMERATION_NUMBER_FORMAT?.find(
+                      (e) => e?.value === o?.value
+                    )?.label,
+                  };
+                }),
+              ]}
+              id="format-value-select"
+              name={`${name}.format.value`}
+              required
+              validate={requiredValidator}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       <Col xs={2}>
-        <Field
-          component={Select}
-          dataOptions={[
-            { value: '', label: '' },
-            ...selectifyRefdata(refdataValues, ENUMERATION_SEQUENCE, 'value'),
-          ]}
-          name={`${name}.sequence.value`}
-          required
-          validate={requiredValidator}
-        />
+        <FormattedMessage id="ui-serials-management.ruleset.sequence">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={Select}
+              dataOptions={[
+                { value: '', label: '' },
+                ...selectifyRefdata(
+                  refdataValues,
+                  ENUMERATION_SEQUENCE,
+                  'value'
+                ),
+              ]}
+              id="sequence-value-select"
+              name={`${name}.sequence.value`}
+              required
+              validate={requiredValidator}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       <Col xs={3}>
-        <Field component={TextField} name={`${name}.internalNote`} />
+        <FormattedMessage id="ui-serials-management.ruleset.internalNote">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={TextField}
+              id="internal-note"
+              name={`${name}.internalNote`}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       {items?.length > 1 && (
         <Col xs={2}>
@@ -89,7 +137,7 @@ const EnumerationNumericField = ({
 EnumerationNumericField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
 };

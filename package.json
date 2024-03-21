@@ -141,7 +141,7 @@
     "@babel/eslint-parser": "^7.15.0",
     "@folio/eslint-config-stripes": "^7.0.0",
     "@folio/jest-config-stripes": "^2.0.0",
-    "@folio/service-interaction": "^1.0.0",
+    "@folio/service-interaction": "^2.0.0",
     "@folio/stripes": "^9.0.0",
     "@folio/stripes-cli": "^3.0.0",
     "@folio/stripes-erm-components": "^9.0.0",

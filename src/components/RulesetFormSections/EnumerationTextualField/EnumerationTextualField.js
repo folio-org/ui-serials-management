@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
@@ -9,8 +9,12 @@ import {
   IconButton,
   Select,
 } from '@folio/stripes/components';
+import {
+  requiredValidator,
+  composeValidators,
+} from '@folio/stripes-erm-components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { validateWholeNumber } from '../../utils';
 
 const EnumerationTextualField = ({
   items,
@@ -24,20 +28,48 @@ const EnumerationTextualField = ({
     <Row>
       <Col xs={1}>{index + 1}</Col>
       <Col xs={2}>
-        <Field component={TextField} name={`${name}.units`} />
+        <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={TextField}
+              name={`${name}.units`}
+              required
+              type="number"
+              validate={composeValidators(
+                requiredValidator,
+                validateWholeNumber
+              )}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       <Col xs={2}>
-        <Field
-          component={Select}
-          dataOptions={[{ label: '', value: '' }, ...dataOptions]}
-          disabled={!dataOptions}
-          name={`${name}.value`}
-          required
-          validate={requiredValidator}
-        />
+        <FormattedMessage id="ui-serials-management.ruleset.labelText">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={Select}
+              dataOptions={[{ label: '', value: '' }, ...dataOptions]}
+              disabled={!dataOptions}
+              id="label-text-select"
+              name={`${name}.value`}
+              required
+              validate={requiredValidator}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       <Col xs={3}>
-        <Field component={TextField} name={`${name}.internalNote`} />
+        <FormattedMessage id="ui-serials-management.ruleset.internalNote">
+          {(ariaLabel) => (
+            <Field
+              aria-label={ariaLabel}
+              component={TextField}
+              name={`${name}.internalNote`}
+            />
+          )}
+        </FormattedMessage>
       </Col>
       {items?.length > 1 && (
         <Col xs={2}>
@@ -54,7 +86,7 @@ const EnumerationTextualField = ({
 EnumerationTextualField.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
   level: PropTypes.object,
   onDeleteField: PropTypes.func,
   dataOptions: PropTypes.arrayOf(PropTypes.object),

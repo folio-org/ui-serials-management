@@ -59,18 +59,18 @@ const GenerateReceivingModal = ({
   };
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
-    [
-      'ui-serials-management',
-      'GeneratingReceivingModal',
-      'submitReceivingPiece',
-    ],
-    (data) => ky
-      .post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
+    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPiece'],
+    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
       .json()
       .then((res) => {
-        const newReceiving = [...successfulReceiving];
-        newReceiving.push({ id: data?.piece?.id, receivingId: res?.id });
-        setSuccessfulReceiving(newReceiving);
+        if (successfulReceiving?.length) {
+          setSuccessfulReceiving([
+            ...successfulReceiving,
+            { ...data?.piece, receivingId: res?.id },
+          ]);
+        } else {
+          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
+        }
       })
   );
 
@@ -98,8 +98,7 @@ const GenerateReceivingModal = ({
         };
       } else {
         return {
-          locationId:
-            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId: serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
           ...fixedInitialValues,
         };
       }
@@ -116,9 +115,7 @@ const GenerateReceivingModal = ({
         });
       } else if (locations?.length && holdings?.length) {
         return holdings?.map((h) => {
-          const holdingLocation = locations.find(
-            (l) => h?.permanentLocationId === l?.id
-          );
+          const holdingLocation = locations.find((l) => h?.permanentLocationId === l?.id);
           return {
             label: `${holdingLocation?.name} > ${h?.callNumber}`,
             value: h?.id,
@@ -295,21 +292,25 @@ const GenerateReceivingModal = ({
                 id="supplement-tooltip"
               />
             </Label>
-
-            <Field
-              name="supplement"
-              render={({ input, meta }) => (
-                <Checkbox
-                  component={Checkbox}
-                  input={input}
-                  meta={meta}
-                  onChange={(e) => {
-                    input.onChange(e.target.checked);
-                  }}
-                  type="checkbox"
+            <FormattedMessage id="ui-serials-management.pieceSets.supplement">
+              {(ariaLabel) => (
+                <Field
+                  name="supplement"
+                  render={({ input, meta }) => (
+                    <Checkbox
+                      aria-label={ariaLabel}
+                      component={Checkbox}
+                      input={input}
+                      meta={meta}
+                      onChange={(e) => {
+                        input.onChange(e.target.checked);
+                      }}
+                      type="checkbox"
+                    />
+                  )}
                 />
               )}
-            />
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
@@ -318,9 +319,7 @@ const GenerateReceivingModal = ({
               <Field
                 component={Select}
                 dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-                disabled={
-                  serial?.orderLine?.remoteId_object?.locations?.length === 1
-                }
+                disabled={serial?.orderLine?.remoteId_object?.locations?.length === 1}
                 label={
                   holdingIds ? (
                     <FormattedMessage id="ui-serials-management.pieceSets.holding" />
@@ -345,20 +344,25 @@ const GenerateReceivingModal = ({
                   id="display-on-holding-tooltip"
                 />
               </Label>
-              <Field
-                name="displayOnHolding"
-                render={({ input, meta }) => (
-                  <Checkbox
-                    component={Checkbox}
-                    input={input}
-                    meta={meta}
-                    onChange={(e) => {
-                      input.onChange(e.target.checked);
-                    }}
-                    type="checkbox"
+              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
+                {(ariaLabel) => (
+                  <Field
+                    name="displayOnHolding"
+                    render={({ input, meta }) => (
+                      <Checkbox
+                        aria-label={ariaLabel}
+                        component={Checkbox}
+                        input={input}
+                        meta={meta}
+                        onChange={(e) => {
+                          input.onChange(e.target.checked);
+                        }}
+                        type="checkbox"
+                      />
+                    )}
                   />
                 )}
-              />
+              </FormattedMessage>
             </Col>
           )}
         </Row>
