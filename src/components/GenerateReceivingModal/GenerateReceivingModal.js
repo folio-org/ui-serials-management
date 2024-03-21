@@ -125,45 +125,53 @@ const GenerateReceivingModal = ({
   };
 
   const handleGeneration = async (values) => {
-    const piecesArray = [];
-    const successfulReceiving = [];
-    for (const piece of pieceSet?.pieces) {
-      if (!piece?.omissionOrigins) {
-        const pieceInfo = piece?.combinationOrigins
-          ? {
-            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-            label: piece?.recurrencePieces[0]?.label,
-          }
-          : {
-            date: addDays(piece?.date, values?.interval),
-            label: piece?.label,
-          };
+    const piecesArray = await Promise.all((pieceSet?.pieces || [])
+      .map((piece) => {
+        if (!piece?.omissionOrigins) {
+          const pieceInfo = piece?.combinationOrigins
+            ? {
+              date: addDays(
+                piece?.recurrencePieces[0]?.date,
+                values?.interval
+              ),
+              label: piece?.recurrencePieces[0]?.label,
+            }
+            : {
+              date: addDays(piece?.date, values?.interval),
+              label: piece?.label,
+            };
 
-        const submitValues = {
-          receiving: {
-            poLineId: serial?.orderLine?.remoteId,
-            titleId: serial?.orderLine?.titleId,
-            format: values?.format,
-            displayOnHolding: values?.displayOnHolding,
-            supplement: values?.supplement,
-            displaySummary: pieceInfo?.label,
-            receiptDate: pieceInfo?.date,
-            ...(values?.holdingId && { holdingId: values?.holdingId }),
-            ...(values?.locationId && { locationId: values?.locationId }),
-          },
-          piece,
-        };
-        piecesArray.push(submitValues);
-      }
-    }
-    for (const receivingPiece of piecesArray) {
-      await submitReceivingPiece(receivingPiece).then((res) => successfulReceiving.push({
-        ...receivingPiece?.piece,
-        receivingId: res?.id,
+          return {
+            receiving: {
+              poLineId: serial?.orderLine?.remoteId,
+              titleId: serial?.orderLine?.titleId,
+              format: values?.format,
+              displayOnHolding: values?.displayOnHolding,
+              supplement: values?.supplement,
+              displaySummary: pieceInfo?.label,
+              receiptDate: pieceInfo?.date,
+              ...(values?.holdingId && { holdingId: values?.holdingId }),
+              ...(values?.locationId && { locationId: values?.locationId }),
+            },
+            piece,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean)
+      // Set up an array of Promises that will call receieving sequentially and respond
+      // Then take that response and transform. We Promise.all to then have an array to send to our backend
+      .map(async (pieceInReceivingShape) => {
+        let returnObj;
+        await submitReceivingPiece(pieceInReceivingShape).then((res) => {
+          returnObj = {
+            ...pieceInReceivingShape?.piece,
+            receivingId: res?.id,
+          };
+        });
+        return returnObj;
       }));
-    }
-    const submitPieceSet = { id: pieceSet?.id, pieces: successfulReceiving };
-    await submitReceivingIds(submitPieceSet);
+    await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
   };
 
   const renderPredictedPiecesInformation = () => {
@@ -382,9 +390,11 @@ const GenerateReceivingModal = ({
         >
           <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
         </Button>
-        <Button marginBottom0 onClick={handleClose}>
-          <FormattedMessage id="ui-serials-management.close" />
-        </Button>
+        {!submitting && (
+          <Button marginBottom0 onClick={handleClose}>
+            <FormattedMessage id="ui-serials-management.close" />
+          </Button>
+        )}
       </ModalFooter>
     );
   };
