@@ -36,7 +36,6 @@ const TIME_UNIT_LIMITERS = {
   year: { issues: 365, period: 10 },
 };
 
-/* istanbul ignore next */
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
