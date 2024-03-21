@@ -1,3 +1,5 @@
+import locations from './locations';
+
 const serial = {
   id: '9be5cebf-c676-4430-9439-4f47973d8a47',
   serialRulesets: [
@@ -225,19 +227,19 @@ const serial = {
       isPackage: true,
       locations: [
         {
-          locationId: 'f34d27c6-a8eb-461b-acd6-5dea81771e70',
+          locationId: locations[0].id,
           quantity: 2,
           quantityElectronic: 1,
           quantityPhysical: 1,
         },
         {
-          locationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+          locationId: locations[2].id,
           quantity: 1,
           quantityElectronic: 0,
           quantityPhysical: 1,
         },
         {
-          locationId: 'b241764c-1466-4e1d-a028-1a3684a5da87',
+          locationId: locations[3].id,
           quantity: 4,
           quantityElectronic: 0,
           quantityPhysical: 4,
