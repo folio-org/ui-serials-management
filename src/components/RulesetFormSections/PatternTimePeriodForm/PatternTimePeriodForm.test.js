@@ -1,4 +1,3 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import {
   renderWithIntl,
@@ -81,7 +80,7 @@ describe('PatternTimePeriodForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm onSubmit={onSubmit} initialValues={weeksProp}>
+          <TestForm initialValues={weeksProp} onSubmit={onSubmit}>
             <PatternTimePeriodForm />
           </TestForm>
         </MemoryRouter>,
@@ -146,7 +145,7 @@ describe('PatternTimePeriodForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm onSubmit={onSubmit} initialValues={monthsProp}>
+          <TestForm initialValues={monthsProp} onSubmit={onSubmit}>
             <PatternTimePeriodForm />
           </TestForm>
         </MemoryRouter>,
@@ -169,7 +168,7 @@ describe('PatternTimePeriodForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm onSubmit={onSubmit} initialValues={dayProps}>
+          <TestForm initialValues={dayProps} onSubmit={onSubmit}>
             <PatternTimePeriodForm />
           </TestForm>
         </MemoryRouter>,
@@ -192,7 +191,7 @@ describe('PatternTimePeriodForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <TestForm onSubmit={onSubmit} initialValues={yearsProp}>
+          <TestForm initialValues={yearsProp} onSubmit={onSubmit}>
             <PatternTimePeriodForm />
           </TestForm>
         </MemoryRouter>,

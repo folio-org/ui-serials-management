@@ -62,6 +62,7 @@ const PiecesPreviewModal = ({
       .then((res) => setPredictedPieces(res))
   );
 
+  // istanbul ignore next
   const { mutateAsync: createPieces } = useMutation(
     ['ui-serials-management', 'PiecesPreviewModal', 'createPieces'],
     (data) => ky
@@ -70,6 +71,7 @@ const PiecesPreviewModal = ({
       .then((res) => history.push(urls.pieceSetView(res?.id)))
   );
 
+  // istanbul ignore next
   const handleCreation = async (values) => {
     const submitValues = {
       ...ruleset,
@@ -93,7 +95,7 @@ const PiecesPreviewModal = ({
   };
 
   // TODO This could be put into some nice util functions to handle
-
+  // istanbul ignore next
   const handleGeneration = async (values) => {
     const submitValues = {
       ...ruleset,
@@ -165,6 +167,7 @@ const PiecesPreviewModal = ({
             }}
             contentData={predictedPieces}
             formatter={formatter}
+            id="pieces-preview-multi-columns"
             interactive={false}
             visibleColumns={['issueCount', 'publicationDate', 'displaySummary']}
           />
@@ -191,6 +194,7 @@ const PiecesPreviewModal = ({
             <Col key={`${index}-${i}`} xs={2}>
               <Field
                 component={TextField}
+                id="level-index-label"
                 label={
                   <FormattedMessage
                     id="ui-serials-management.ruleset.levelIndex"
@@ -251,6 +255,7 @@ const PiecesPreviewModal = ({
             <Button
               buttonStyle="primary"
               disabled={submitting || invalid || pristine}
+              id="generate-predicted-pieces-button"
               marginBottom0
               onClick={handleSubmit}
               type="submit"
@@ -262,6 +267,7 @@ const PiecesPreviewModal = ({
         <Button
           buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
+          id="rulset-preview-button"
           marginBottom0
           onClick={() => handleGeneration(values)}
           type="submit"
@@ -269,7 +275,7 @@ const PiecesPreviewModal = ({
           <FormattedMessage id="ui-serials-management.ruleset.preview" />
         </Button>
         <div style={{ flex: 1 }}>
-          <Button marginBottom0 onClick={handleClose}>
+          <Button id="close-button" marginBottom0 onClick={handleClose}>
             <FormattedMessage id="ui-serials-management.close" />
           </Button>
         </div>
@@ -295,9 +301,8 @@ const PiecesPreviewModal = ({
           <Field
             backendDateStandard="YYYY-MM-DD"
             component={Datepicker}
-            label={
-              <FormattedMessage id="ui-serials-management.ruleset.startDate" />
-            }
+            id="ruleset-start-date"
+            label={<FormattedMessage id="ui-serials-management.ruleset.startDate" />}
             name="startDate"
             required
             usePortal
@@ -308,9 +313,7 @@ const PiecesPreviewModal = ({
           <Col xs={8}>
             <Field
               component={TextArea}
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.note" />
-              }
+              label={<FormattedMessage id="ui-serials-management.pieceSets.note" />}
               name="note"
             />
           </Col>

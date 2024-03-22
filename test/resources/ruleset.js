@@ -1,87 +1,122 @@
 const ruleset = {
-  id: 'c9f0d8bf-0165-4373-a3e1-8c0d76b91cf0',
-  dateCreated: '2024-03-15T08:20:56Z',
+  id: 'a3a45cc5-5c16-46aa-93a3-e64bb4defef0',
+  dateCreated: '2024-03-21T09:02:39Z',
   recurrence: {
-    id: 'd7f4f059-70c3-4186-b463-173e48e881bd',
+    id: '22c08b1e-d71e-4808-bc40-239e7a3a88a1',
     rules: [
       {
-        id: 'b89cda74-d186-4c50-aa8c-80cd566595b2',
+        id: '7dacfd4f-fade-4fc8-b3cd-3e5b1a2369da',
         ordinal: 1,
-        patternType: {
-          id: '2c9180a58e3fc817018e3fd0b9240058',
-          value: 'day',
-          label: 'Day',
-        },
         pattern: {
-          id: 'e0296d0d-697c-4269-8fc6-89de71d59cbd',
+          id: '3cab39a1-95fe-4e7c-96d8-2597d6d66632',
+          day: 12,
         },
       },
     ],
     timeUnit: {
-      id: '2c9180a58e3fc817018e3fd0b8ab004d',
-      value: 'day',
-      label: 'Day',
+      id: '2c9180a48e5e2369018e5e2bf5170039',
+      value: 'month',
+      label: 'Month',
     },
     period: 1,
     issues: 1,
   },
-  lastUpdated: '2024-03-15T08:20:56Z',
+  lastUpdated: '2024-03-21T09:02:39Z',
   rulesetStatus: {
-    id: '2c9180a58e3fc817018e3fd0b70c001d',
+    id: '2c9180a48e5e2369018e5e2bf5030033',
     value: 'active',
     label: 'Active',
   },
   owner: {
-    id: '42085e29-aa74-418b-9f47-88d50928f26a',
+    id: '7b30b5e6-cf25-4f9b-a73b-ad3edd406511',
   },
   templateConfig: {
-    id: '516192d8-96e3-4fa6-99af-621f9844b478',
+    id: 'e6f9dad2-88f0-429e-8686-beddf4c8088a',
     rules: [
       {
-        id: 'ec2eb639-450e-4516-ab97-f25166731036',
+        id: '5063b6ad-50a9-4735-90a1-a3bdb00fe3c4',
         index: 0,
         templateMetadataRuleType: {
-          id: '2c9180a58e3fc817018e3fd0b8db0052',
+          id: '2c9180a48e5e2369018e5e2bf3f00025',
           value: 'chronology',
           label: 'Chronology',
         },
         ruleType: {
-          id: 'cdc20f40-f740-4923-8372-1d2b838cf43a',
+          id: '8e62f90a-933b-46c5-a272-c57250a59d72',
           templateMetadataRuleFormat: {
-            id: '2c9180a58e3fc817018e3fd0b8440049',
-            value: 'chronology_date',
-            label: 'Chronology Date',
+            id: '2c9180a48e5e2369018e5e2bf6540053',
+            value: 'chronology_year',
+            label: 'Chronology Year',
           },
           ruleFormat: {
-            id: 'a8598f1a-4ea3-4c0e-9edb-2c8fcec4a0fa',
+            id: 'd711ec1a-00fa-439a-ba18-5decf19806ec',
             yearFormat: {
-              id: '2c9180a58e3fc817018e3fd0b5620001',
+              id: '2c9180a48e5e2369018e5e2bf3520016',
               value: 'full',
               label: 'Full',
             },
-            monthFormat: {
-              id: '2c9180a58e3fc817018e3fd0b57d0004',
-              value: 'full',
-              label: 'Full',
-            },
-            weekdayFormat: {
-              id: '2c9180a58e3fc817018e3fd0b7760023',
-              value: 'full_lower',
-              label: 'Full Lower',
-            },
-            monthDayFormat: {
-              id: '2c9180a58e3fc817018e3fd0b7800026',
-              value: 'ordinal',
-              label: 'Ordinal',
-            },
+          },
+        },
+      },
+      {
+        id: '4ad0a3e6-5bef-424f-b1c3-e4042af3a282',
+        index: 1,
+        templateMetadataRuleType: {
+          id: '2c9180a48e5e2369018e5e2bf3f60026',
+          value: 'enumeration',
+          label: 'Enumeration',
+        },
+        ruleType: {
+          id: '55ca8597-a19d-40a2-a0ee-01e46d506efd',
+          templateMetadataRuleFormat: {
+            id: '2c9180a48e5e2369018e5e2bf520003c',
+            value: 'enumeration_numeric',
+            label: 'Enumeration Numeric',
+          },
+          ruleFormat: {
+            id: '25b06c97-ec47-4d23-a704-fe8030e96781',
+            levels: [
+              {
+                id: 'a7954729-7f84-4f63-89a8-4454056a1b70',
+                index: 0,
+                units: 1,
+                sequence: {
+                  id: '2c9180a48e5e2369018e5e2bf69e005d',
+                  value: 'continuous',
+                  label: 'Continuous',
+                },
+                format: {
+                  id: '2c9180a48e5e2369018e5e2bf6a50060',
+                  value: 'number',
+                  label: 'Number',
+                },
+                startingValue: '1',
+              },
+              {
+                id: '344aa1ef-3e70-4988-95c1-afe869ae7370',
+                index: 1,
+                units: 12,
+                sequence: {
+                  id: '2c9180a48e5e2369018e5e2bf69a005c',
+                  value: 'reset',
+                  label: 'Reset',
+                },
+                format: {
+                  id: '2c9180a48e5e2369018e5e2bf6a50060',
+                  value: 'number',
+                  label: 'Number',
+                },
+                startingValue: '1',
+              },
+            ],
           },
         },
       },
     ],
     templateString:
-      '{{chronology1.weekday}}, {{chronology1.monthDay}} {{chronology1.month}} {{chronology1.year}}',
+      'Vol:{{enumeration1.level1}} Issue:{{enumeration1.level2}}, {{chronology1.year}}',
   },
-  description: 'ZSS',
+  startDate: '2024-03-21',
 };
 
 export default ruleset;
