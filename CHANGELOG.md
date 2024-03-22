@@ -1,5 +1,7 @@
 # change history for ui-serials-management
 
+## 1.1.0 In progress
+
 ## 1.0.0 2024-03-22
   * Initial release for UI module ui-serials-management
   * Manage objects relating to the concept of a "serial"
