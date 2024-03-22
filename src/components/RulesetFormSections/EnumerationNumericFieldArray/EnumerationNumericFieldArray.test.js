@@ -1,11 +1,13 @@
-import { FieldArray } from 'react-final-form-arrays';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 
 import EnumerationNumericFieldArray from './EnumerationNumericFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
-jest.mock('../EnumerationNumericField', () => () => <div>EnumerationNumericField</div>);
+jest.mock('../EnumerationNumericField', () => () => (
+  <div>EnumerationNumericField</div>
+));
 const onSubmit = jest.fn();
 
 let renderComponent;
@@ -14,10 +16,7 @@ describe('EnumerationNumericFieldArray', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FieldArray
-            component={EnumerationNumericFieldArray}
-            name="templateConfig.rules[0].ruleType.ruleFormat"
-          />
+          <EnumerationNumericFieldArray name="templateConfig.rules[0].ruleType.ruleFormat" />
         </TestForm>,
         translationsProperties
       );
@@ -50,6 +49,19 @@ describe('EnumerationNumericFieldArray', () => {
 
     test('renders the Add level button', async () => {
       await Button('Add level').exists();
+    });
+
+    describe('Adding level', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Add level').click();
+        });
+      });
+
+      test('renders one level', () => {
+        const { queryByText } = renderComponent;
+        expect(queryByText('EnumerationTextualField')).not.toBeInTheDocument();
+      });
     });
   });
 });
