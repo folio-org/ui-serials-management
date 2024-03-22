@@ -1,5 +1,5 @@
 import { MemoryRouter } from 'react-router-dom/cjs/react-router-dom.min';
-import { NavListItem, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationProperties from '../test/helpers';
 import App from '.';

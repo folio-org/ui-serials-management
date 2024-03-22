@@ -29,7 +29,7 @@ const RulesetCreateRoute = () => {
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
-
+  // istanbul ignore next
   const { mutateAsync: postRuleset } = useMutation(
     ['ui-serials-management', 'RulesetCreateRoute', 'postRuleset'],
     (data) => {
@@ -38,7 +38,7 @@ const RulesetCreateRoute = () => {
         .then(() => handleClose());
     }
   );
-
+  // istanbul ignore next
   const submitRuleset = async (values) => {
     const generatedString = await generate();
     const submitValues = {

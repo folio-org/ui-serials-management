@@ -8,10 +8,13 @@ import { useSerialsManagementRefdata } from '../../components/utils';
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const PickListValues = () => {
-  const rdcOptions = useSerialsManagementRefdata()?.map((rdv) => ({
-    value: rdv.desc,
-    label: rdv.desc,
+  // We should probably be following the example of agreements/licenses for v2,
+  // using a combined screen lookup
+  const rdcOptions = useSerialsManagementRefdata()?.map((rdc) => ({
+    value: rdc.desc,
+    label: rdc.desc,
   }));
+
   const [selectedPickList, setSelectedPickList] = useState('');
   const history = useHistory();
 
