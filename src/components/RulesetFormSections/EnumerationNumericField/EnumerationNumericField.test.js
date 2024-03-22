@@ -1,4 +1,4 @@
-import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
   TestForm,
