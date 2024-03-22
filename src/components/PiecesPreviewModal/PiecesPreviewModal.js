@@ -234,10 +234,10 @@ const PiecesPreviewModal = ({
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             return (
-              <>
+              <div key={`enumeration-numeric-field-container-${i}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
-              </>
+              </div>
             );
           }
           return null;
