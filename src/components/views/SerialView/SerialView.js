@@ -86,6 +86,7 @@ const SerialView = ({
     if (stripes.hasPerm('serials-management.serials.edit')) {
       buttons.push(
         <Button
+          key="edit-serial"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-serial"
           onClick={handleEdit}
@@ -98,6 +99,7 @@ const SerialView = ({
       if (stripes.hasPerm('serials-management.predictedPieces.edit')) {
         buttons.push(
           <Button
+            key="generate-pieces"
             buttonStyle="dropdownItem"
             disabled={
               !serial?.serialRulesets?.some(

@@ -29,7 +29,7 @@ const EnumerationTextualField = ({
       <Col xs={1}>{index + 1}</Col>
       <Col xs={2}>
         <FormattedMessage id="ui-serials-management.ruleset.numberOfIssues">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={TextField}
@@ -46,7 +46,7 @@ const EnumerationTextualField = ({
       </Col>
       <Col xs={2}>
         <FormattedMessage id="ui-serials-management.ruleset.labelText">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={Select}
@@ -62,7 +62,7 @@ const EnumerationTextualField = ({
       </Col>
       <Col xs={3}>
         <FormattedMessage id="ui-serials-management.ruleset.internalNote">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={TextField}

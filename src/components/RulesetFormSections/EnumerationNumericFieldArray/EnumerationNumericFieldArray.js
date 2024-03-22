@@ -47,6 +47,7 @@ const EnumerationNumericFieldArray = ({ name }) => {
         {() => items?.map((level, index) => {
           return (
             <EnumerationNumericField
+              key={`enumeration-numer-field-${index}`}
               index={index}
               items={items}
               level={level}

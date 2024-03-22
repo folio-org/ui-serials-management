@@ -156,9 +156,9 @@ const ChronologyField = ({ name, templateConfig }) => {
     <Row>
       {chronologyFormats[
         templateConfig?.ruleType?.templateMetadataRuleFormat
-      ]?.fields?.map((chronologyField) => {
+      ]?.fields?.map((chronologyField, index) => {
         return (
-          <Col key={`chronology-field-${name}`} xs={3}>
+          <Col key={`chronology-field-${name}[${index}]`} xs={3}>
             {chronologyField}
           </Col>
         );

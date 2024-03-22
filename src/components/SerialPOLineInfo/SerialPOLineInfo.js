@@ -39,9 +39,9 @@ const SerialPOLineInfo = ({ orderLine }) => {
   const renderFundDistribution = () => {
     return (
       <ul>
-        {orderLine.fundDistribution.map((fund) => {
+        {orderLine.fundDistribution.map((fund, index) => {
           return (
-            <li key={fund?.id}>
+            <li key={`fund-${fund?.id}-${index}`}>
               <Link to={urls.fundView(fund?.fundId)}>{fund?.code}</Link>
             </li>
           );
@@ -54,9 +54,9 @@ const SerialPOLineInfo = ({ orderLine }) => {
     if (identifierTypes?.length && !identifierTypeLoading) {
       return (
         <ul>
-          {orderLine?.details?.productIds?.map((type) => {
+          {orderLine?.details?.productIds?.map((type, index) => {
             return (
-              <li key={type?.id}>
+              <li key={`type-${type?.id}-${index}`}>
                 {identifierTypes?.find((e) => e?.id === type?.productIdType)
                   ?.name + ': '}
                 {type?.productId}
@@ -74,8 +74,12 @@ const SerialPOLineInfo = ({ orderLine }) => {
     if (acqUnits?.length && !acqUnitsLoading) {
       return (
         <ul>
-          {acqUnits?.map((unit) => {
-            return <li key={unit?.id}>{unit?.name}</li>;
+          {acqUnits?.map((unit, index) => {
+            return (
+              <li key={`unit-${unit?.id}-${index}`}>
+                {unit?.name}
+              </li>
+            );
           })}
         </ul>
       );

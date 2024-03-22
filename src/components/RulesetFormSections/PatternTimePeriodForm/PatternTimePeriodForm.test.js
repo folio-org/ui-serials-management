@@ -1,3 +1,5 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { MemoryRouter } from 'react-router-dom';
 import {
   renderWithIntl,
@@ -113,10 +115,12 @@ describe('PatternTimePeriodForm', () => {
     });
 
     it('renders expected time unit with selected option', async () => {
-      Select('Time unit').choose('Day');
-      Select('Time unit').choose('Week');
-      Select('Time unit').choose('Month');
-      Select('Time unit').choose('Year');
+      await waitFor(async () => {
+        await Select('Time unit*').choose('Day');
+        await Select('Time unit*').choose('Week');
+        await Select('Time unit*').choose('Month');
+        await Select('Time unit*').choose('Year');
+      });
     });
 
     test('renders the Lable TextField', async () => {
@@ -124,7 +128,9 @@ describe('PatternTimePeriodForm', () => {
     });
 
     test('renders the Lable TextField', async () => {
-      await TextField('Number of weeks*').fillIn('1');
+      await waitFor(async () => {
+        await TextField('Number of weeks*').fillIn('1');
+      });
     });
 
     test('renders the Lable TextField', async () => {
@@ -132,7 +138,9 @@ describe('PatternTimePeriodForm', () => {
     });
 
     test('renders the Lable TextField', async () => {
-      await TextField('No. of issues published per cycle*').fillIn('1');
+      await waitFor(async () => {
+        await TextField('No. of issues published per cycle*').fillIn('1');
+      });
     });
 
     test('renders the submit button', async () => {
@@ -159,7 +167,9 @@ describe('PatternTimePeriodForm', () => {
     });
 
     test('renders the Lable TextField', async () => {
-      await TextField('Number of months*').fillIn('2');
+      await waitFor(async () => {
+        await TextField('Number of months*').fillIn('2');
+      });
     });
   });
 
@@ -182,7 +192,9 @@ describe('PatternTimePeriodForm', () => {
     });
 
     test('renders the Lable TextField', async () => {
-      await TextField('Number of days*').fillIn('2');
+      await waitFor(async () => {
+        await TextField('Number of days*').fillIn('2');
+      });
     });
   });
 
@@ -205,7 +217,9 @@ describe('PatternTimePeriodForm', () => {
     });
 
     test('renders the Lable TextField', async () => {
-      await TextField('Number of years*').fillIn('1');
+      await waitFor(async () => {
+        await TextField('Number of years*').fillIn('1');
+      });
     });
 
     test('renders the correct heading', async () => {
@@ -218,6 +232,7 @@ describe('PatternTimePeriodForm', () => {
       expect(getByRole('combobox', { name: 'Time unit' })).toBeInTheDocument();
     });
 
+    // I don't think this is actually testing anything right now...
     test('renders the save and close button', () => {
       const { findAllByText } = renderComponent;
       expect(findAllByText('button', { name: 'info' }));

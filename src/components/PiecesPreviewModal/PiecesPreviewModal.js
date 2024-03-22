@@ -178,7 +178,7 @@ const PiecesPreviewModal = ({
 
   const renderEnumerationNumericField = (formatValues, index) => {
     return (
-      <Row>
+      <Row key={`enumeration-numeric-field-${index}`}>
         <Col xs={2}>
           <Layout className="textCentered padding-top-gutter">
             <strong>
@@ -234,10 +234,10 @@ const PiecesPreviewModal = ({
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             return (
-              <>
+              <div key={`enumeration-numeric-field-container-${i}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
-              </>
+              </div>
             );
           }
           return null;
@@ -251,8 +251,12 @@ const PiecesPreviewModal = ({
     return (
       <>
         {allowCreation && (
-          <div style={{ marginLeft: '0.5rem' }}>
+          <div
+            key="generate-predicated-pieces"
+            style={{ marginLeft: '0.5rem' }}
+          >
             <Button
+              key="generate-predicated-pieces-button"
               buttonStyle="primary"
               disabled={submitting || invalid || pristine}
               id="generate-predicted-pieces-button"
@@ -265,6 +269,7 @@ const PiecesPreviewModal = ({
           </div>
         )}
         <Button
+          key="preview-predicated-pieces-button"
           buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
           id="rulset-preview-button"
@@ -274,8 +279,16 @@ const PiecesPreviewModal = ({
         >
           <FormattedMessage id="ui-serials-management.ruleset.preview" />
         </Button>
-        <div style={{ flex: 1 }}>
-          <Button id="close-button" marginBottom0 onClick={handleClose}>
+        <div
+          key="close"
+          style={{ flex: 1 }}
+        >
+          <Button
+            key="close-button"
+            id="close-button"
+            marginBottom0
+            onClick={handleClose}
+          >
             <FormattedMessage id="ui-serials-management.close" />
           </Button>
         </div>

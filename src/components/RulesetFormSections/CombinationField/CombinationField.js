@@ -114,7 +114,6 @@ const CombinationField = ({ name, index, combination }) => {
           <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
         }
         name={`${name}[${index}].pattern.week`}
-        renderToOverlay
         required
         validate={requiredValidator}
       />
@@ -136,7 +135,6 @@ const CombinationField = ({ name, index, combination }) => {
         ]}
         label={<FormattedMessage id="ui-serials-management.ruleset.weekday" />}
         name={`${name}[${index}].pattern.weekday.value`}
-        renderToOverlay
         required
         validate={requiredValidator}
       />
@@ -235,8 +233,8 @@ const CombinationField = ({ name, index, combination }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[combination?.patternType]?.fields?.map((combinationField) => {
-          return <Col key={`combination-field-${name}`} xs={3}>{combinationField}</Col>;
+        {patternTypeFormats[combination?.patternType]?.fields?.map((combinationField, i) => {
+          return <Col key={`combination-field-${name}-${i}`} xs={3}>{combinationField}</Col>;
         })}
       </Row>
       {combination?.patternType && (
