@@ -116,7 +116,7 @@ describe('EnumerationTextualFieldArray', () => {
     describe('Changing refdata', () => {
       beforeEach(async () => {
         await waitFor(async () => {
-          await Select('Pick list*').choose('Payer.Payer'); // Make sure this exists?
+          await Select('Pick list*').choose('Global.Month'); // Make sure this exists?
         });
       });
 

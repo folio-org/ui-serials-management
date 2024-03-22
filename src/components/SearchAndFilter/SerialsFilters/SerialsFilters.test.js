@@ -14,7 +14,7 @@ jest.mock('../POLineFilter', () => () => <div>POLineFilter</div>);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  useSerialsManagementRefdata: () => mockRefdata,
+  useSerialsManagementRefdata: () => mockRefdata.filter(rdc => rdc.desc === 'Serial.SerialStatus'),
 }));
 
 const activeFilters = {
