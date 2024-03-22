@@ -167,7 +167,7 @@ const GenerateReceivingModal = ({
             returnObj = {
               ...pieceInReceivingShape?.piece,
               receivingPieces: [
-                ...pieceInReceivingShape?.piece?.receivingPieces,
+                ...(pieceInReceivingShape?.piece?.receivingPieces || []),
                 { receivingId: res?.id },
               ],
             };
