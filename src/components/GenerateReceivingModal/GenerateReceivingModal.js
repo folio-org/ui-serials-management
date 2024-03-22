@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 import { useMutation } from 'react-query';
@@ -51,27 +50,27 @@ const GenerateReceivingModal = ({
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
-  const [successfulReceiving, setSuccessfulReceiving] = useState([]);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
-    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPiece'],
-    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving })
-      .json()
-      .then((res) => {
-        if (successfulReceiving?.length) {
-          setSuccessfulReceiving([
-            ...successfulReceiving,
-            { ...data?.piece, receivingId: res?.id },
-          ]);
-        } else {
-          setSuccessfulReceiving([{ ...data?.piece, receivingId: res?.id }]);
-        }
-      })
+    [
+      'ui-serials-management',
+      'GeneratingReceivingModal',
+      'submitReceivingPiece',
+    ],
+    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving }).json()
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
-    (data) => ky.put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data }).json()
+    (data) => ky
+      .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
+      .json()
+      .then(() => {
+        closeModal();
+      })
   );
 
   const getInitialValues = () => {
@@ -88,7 +87,8 @@ const GenerateReceivingModal = ({
         };
       } else {
         return {
-          locationId: serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId:
+            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
           ...fixedInitialValues,
         };
       }
@@ -105,7 +105,9 @@ const GenerateReceivingModal = ({
         });
       } else if (locations?.length && holdings?.length) {
         return holdings?.map((h) => {
-          const holdingLocation = locations.find((l) => h?.permanentLocationId === l?.id);
+          const holdingLocation = locations.find(
+            (l) => h?.permanentLocationId === l?.id
+          );
           return {
             label: `${holdingLocation?.name} > ${h?.callNumber}`,
             value: h?.id,
@@ -116,55 +118,61 @@ const GenerateReceivingModal = ({
     return [];
   };
 
-  const closeModal = () => {
-    setSuccessfulReceiving([]);
-    setShowModal(false);
-  };
-
   const addDays = (date, days) => {
     const result = new Date(date);
     result.setDate(result.getDate() + Number(days));
     return result;
   };
 
-  const handleGeneration = async (values) => {
-    const piecesArray = [];
-    for (let i = 0; i < pieceSet?.pieces?.length; i++) {
-      const piece = pieceSet?.pieces[i];
-
-      if (!piece?.omissionOrigins) {
-        const pieceInfo = piece?.combinationOrigins
-          ? {
-            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-            label: piece?.recurrencePieces[0]?.label,
-          }
-          : {
-            date: addDays(piece?.date, values?.interval),
-            label: piece?.label,
-          };
-
-        const submitValues = {
-          receiving: {
-            poLineId: serial?.orderLine?.remoteId,
-            titleId: serial?.orderLine?.titleId,
-            format: values?.format,
-            displayOnHolding: values?.displayOnHolding,
-            supplement: values?.supplement,
-            displaySummary: pieceInfo?.label,
-            receiptDate: pieceInfo?.date,
-            ...(values?.holdingId && { holdingId: values?.holdingId }),
-            ...(values?.locationId && { locationId: values?.locationId }),
-          },
-          piece,
+  const formatReceivingPiece = (piece, values) => {
+    if (!piece?.omissionOrigins) {
+      const pieceInfo = piece?.combinationOrigins
+        ? {
+          date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+          label: piece?.recurrencePieces[0]?.label,
+        }
+        : {
+          date: addDays(piece?.date, values?.interval),
+          label: piece?.label,
         };
-        piecesArray.push(submitValues);
-      }
+
+      return {
+        receiving: {
+          poLineId: serial?.orderLine?.remoteId,
+          titleId: serial?.orderLine?.titleId,
+          format: values?.format,
+          displayOnHolding: values?.displayOnHolding,
+          supplement: values?.supplement,
+          displaySummary: pieceInfo?.label,
+          receiptDate: pieceInfo?.date,
+          ...(values?.holdingId && { holdingId: values?.holdingId }),
+          ...(values?.locationId && { locationId: values?.locationId }),
+        },
+        piece,
+      };
     }
-    for (let i = 0; i < piecesArray?.length; i++) {
-      await submitReceivingPiece(piecesArray[i]);
-    }
-    const submitPieceSet = { ...pieceSet, pieces: successfulReceiving };
-    // await submitReceivingIds(submitPieceSet);
+    return null;
+  };
+
+  const handleGeneration = async (values) => {
+    const piecesArray = await Promise.all(
+      (pieceSet?.pieces || [])
+        .map((piece) => formatReceivingPiece(piece, values))
+        .filter(Boolean)
+        // Set up an array of Promises that will call receieving sequentially and respond
+        // Then take that response and transform. We Promise.all to then have an array to send to our backend
+        .map(async (pieceInReceivingShape) => {
+          let returnObj;
+          await submitReceivingPiece(pieceInReceivingShape).then((res) => {
+            returnObj = {
+              ...pieceInReceivingShape?.piece,
+              receivingId: res?.id,
+            };
+          });
+          return returnObj;
+        })
+    );
+    await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
   };
 
   const renderPredictedPiecesInformation = () => {
@@ -316,7 +324,9 @@ const GenerateReceivingModal = ({
               <Field
                 component={Select}
                 dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-                disabled={serial?.orderLine?.remoteId_object?.locations?.length === 1}
+                disabled={
+                  serial?.orderLine?.remoteId_object?.locations?.length === 1
+                }
                 label={
                   holdingIds ? (
                     <FormattedMessage id="ui-serials-management.pieceSets.holding" />
@@ -381,7 +391,7 @@ const GenerateReceivingModal = ({
         >
           <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
         </Button>
-        <Button marginBottom0 onClick={handleClose}>
+        <Button disabled={submitting} marginBottom0 onClick={handleClose}>
           <FormattedMessage id="ui-serials-management.close" />
         </Button>
       </ModalFooter>

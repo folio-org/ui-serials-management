@@ -69,10 +69,7 @@ const LabelFieldArray = () => {
                     change(`templateConfig.rules[${index}]`, {
                       templateMetadataRuleType: e?.target?.value,
                     });
-                    change(
-                      `templateConfig.rules[${index}].ruleType`,
-                      undefined
-                    );
+                    change(`templateConfig.rules[${index}].ruleType`, undefined);
                   }}
                   required
                 />
@@ -181,9 +178,7 @@ const LabelFieldArray = () => {
         <Col xs={12}>
           <Field
             component={TextArea}
-            label={
-              <FormattedMessage id="ui-serials-management.ruleset.template" />
-            }
+            label={<FormattedMessage id="ui-serials-management.ruleset.template" />}
             name="templateConfig.templateString"
             required
             validate={requiredValidator}
