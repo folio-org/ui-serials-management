@@ -1,4 +1,3 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   Accordion,
   renderWithIntl,
@@ -17,8 +16,6 @@ jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
-
-const onSubmit = jest.fn();
 
 const activeFilters = {
   serialStatus: ['active'],

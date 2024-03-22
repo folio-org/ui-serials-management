@@ -21,7 +21,8 @@ describe('SerialForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <SerialForm handlers={{ onClose: handlers.onClose }} />
+          {/* From next version handleSubmit should be passed down in TestForm children func */}
+          <SerialForm handlers={{ onClose: handlers.onClose, onSubmit }} />
         </TestForm>,
         translationsProperties
       );

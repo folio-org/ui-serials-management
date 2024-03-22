@@ -112,7 +112,6 @@ const OmissionField = ({ name, index, omission }) => {
           <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
         }
         name={`${name}[${index}].pattern.${fieldName}`}
-        renderToOverlay
         required
         validate={requiredValidator}
       />
@@ -134,7 +133,6 @@ const OmissionField = ({ name, index, omission }) => {
         ]}
         label={<FormattedMessage id="ui-serials-management.ruleset.weekday" />}
         name={`${name}[${index}].pattern.weekday.value`}
-        renderToOverlay
         required
         validate={requiredValidator}
       />

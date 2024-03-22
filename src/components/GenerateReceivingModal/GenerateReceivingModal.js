@@ -301,7 +301,7 @@ const GenerateReceivingModal = ({
               />
             </Label>
             <FormattedMessage id="ui-serials-management.pieceSets.supplement">
-              {(ariaLabel) => (
+              {([ariaLabel]) => (
                 <Field
                   name="supplement"
                   render={({ input, meta }) => (
@@ -355,7 +355,7 @@ const GenerateReceivingModal = ({
                 />
               </Label>
               <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
-                {(ariaLabel) => (
+                {([ariaLabel]) => (
                   <Field
                     name="displayOnHolding"
                     render={({ input, meta }) => (

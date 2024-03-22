@@ -51,7 +51,7 @@ const SerialsRoute = ({ children, path }) => {
   const renderLastMenu = (
     <PaneMenu>
       <FormattedMessage id="ui-serials-management.serials.newSerial">
-        {(ariaLabel) => (
+        {([ariaLabel]) => (
           <Button
             aria-label={ariaLabel}
             buttonStyle="primary"

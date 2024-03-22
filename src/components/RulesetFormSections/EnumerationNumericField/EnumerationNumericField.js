@@ -44,7 +44,7 @@ const EnumerationNumericField = ({
       <Col xs={1}>{index + 1}</Col>
       <Col xs={2}>
         <FormattedMessage id="ui-serials-management.ruleset.numberOfUnits">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={TextField}
@@ -61,7 +61,7 @@ const EnumerationNumericField = ({
       </Col>
       <Col xs={2}>
         <FormattedMessage id="ui-serials-management.ruleset.format">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={Select}
@@ -90,7 +90,7 @@ const EnumerationNumericField = ({
       </Col>
       <Col xs={2}>
         <FormattedMessage id="ui-serials-management.ruleset.sequence">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={Select}
@@ -112,7 +112,7 @@ const EnumerationNumericField = ({
       </Col>
       <Col xs={3}>
         <FormattedMessage id="ui-serials-management.ruleset.internalNote">
-          {(ariaLabel) => (
+          {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
               component={TextField}

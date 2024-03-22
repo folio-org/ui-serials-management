@@ -56,6 +56,7 @@ const PieceSetView = ({
     const buttons = [];
     buttons.push(
       <Button
+        key="edit-serial-option"
         buttonStyle="dropdownItem"
         disabled={!serial?.orderLine?.remoteId_object || serialLoading}
         id="clickable-dropdown-edit-serial"
@@ -78,8 +79,8 @@ const PieceSetView = ({
         onClose={onClose}
         paneTitle={serial?.orderLine?.title}
       >
-        <PieceSetInfo {...getSectionProps('info')} />
-        <PiecesList {...getSectionProps('pieces-list')} />
+        <PieceSetInfo key="piece-set-info" {...getSectionProps('info')} />
+        <PiecesList key="pieces-list" {...getSectionProps('pieces-list')} />
       </Pane>
       <GenerateReceivingModal
         holdingIds={getHoldingIds()}

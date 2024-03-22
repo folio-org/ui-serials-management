@@ -104,6 +104,7 @@ const IssuePublicationFieldArray = () => {
           {() => items.map((issue, index) => {
             return (
               <IssuePublicationField
+                key={`issue-publication-field-${index}`}
                 index={index}
                 name="recurrence.rules"
                 patternType={values?.patternType}

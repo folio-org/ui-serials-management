@@ -27,7 +27,9 @@ describe('POLineLookup', () => {
             input={emptyInput}
             onResourceSelected={onResourceSelected}
             removePOLine={removePOLine}
-          />
+          >
+            <div>CHILD COMPONENT</div>
+          </POLineLookup>
         </MemoryRouter>,
         translationsProperties
       );
@@ -41,6 +43,11 @@ describe('POLineLookup', () => {
     test('renders the expected text', async () => {
       const { getByText } = renderComponent;
       expect(getByText('No "find-po-line" plugin is installed')).toBeInTheDocument();
+    });
+
+    test('does not render the child component', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('CHILD COMPONENT')).not.toBeInTheDocument();
     });
 
     test('renders the expected empty layout', async () => {
@@ -65,7 +72,9 @@ describe('POLineLookup', () => {
             onResourceSelected={onResourceSelected}
             removePOLine={removePOLine}
             resource={resource}
-          />
+          >
+            <div>CHILD COMPONENT</div>
+          </POLineLookup>
         </MemoryRouter>,
         translationsProperties
       );
@@ -74,6 +83,16 @@ describe('POLineLookup', () => {
     test('renders a link with poline', async () => {
       const { getByRole } = renderComponent;
       expect(getByRole('link', { name: 'PO line: 52590-1' })).toBeInTheDocument();
+    });
+
+    test('renders the expected child component', async () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CHILD COMPONENT')).toBeInTheDocument();
+    });
+
+    test('does not render the expected empty layout', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('No PO line linked')).not.toBeInTheDocument();
     });
 
     test('renders the PO line button', async () => {

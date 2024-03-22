@@ -30,7 +30,8 @@ describe('RulesetForm', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <RulesetForm handlers={{ onClose: handlers.onClose }} />
+          {/* From next version handleSubmit should be passed down in TestForm children func */}
+          <RulesetForm handlers={{ onClose: handlers.onClose, onSubmit }} />
         </TestForm>,
         translationsProperties
       );
