@@ -4,6 +4,7 @@ import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import POLineForm from './POLineForm';
 import { translationsProperties } from '../../../../test/helpers';
 
+jest.mock('../../SerialPOLineInfo', () => () => <div>SerialPOLineInfo</div>);
 jest.mock('../POLineLookup', () => () => <div>POLineLookup</div>);
 
 const onSubmit = jest.fn();
@@ -25,3 +26,4 @@ describe('POLineForm', () => {
     expect(getByText('POLineLookup')).toBeInTheDocument();
   });
 });
+

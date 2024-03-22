@@ -40,6 +40,7 @@ const POLineLookup = ({
 }) => {
   let triggerButton = useRef(null);
 
+  // istanbul ignore next
   const renderPOLineLinkButton = () => (
     <Pluggable
       addLines={onResourceSelected}

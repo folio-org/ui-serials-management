@@ -5,6 +5,7 @@ import POLineLookup from './POLineLookup';
 import { translationsProperties } from '../../../../test/helpers';
 import { resource, input } from '../../../../test/resources/poline';
 
+
 const emptyInput = {
   name: 'orderLine',
   value: '',

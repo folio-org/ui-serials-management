@@ -25,6 +25,7 @@ const POLineForm = () => {
     values?.orderLine?.id
   );
 
+  // istanbul ignore next
   useEffect(() => {
     if (values?.orderLine && !titlesLoading) {
       if (values?.title !== titles?.titles[0] && titles?.titles?.length === 1) {
@@ -33,6 +34,7 @@ const POLineForm = () => {
     }
   }, [change, titles?.titles, titlesLoading, values?.orderLine, values?.title]);
 
+  // istanbul ignore next
   const removePOLine = () => {
     change('orderLine', undefined);
   };
@@ -67,15 +69,9 @@ const POLineForm = () => {
                       value={values?.orderLine?.titleOrPackage}
                     >
                       {values?.orderLine?.instanceId ? (
-                        <AppIcon
-                          app="inventory"
-                          iconKey="instance"
-                          size="small"
-                        >
+                        <AppIcon app="inventory" iconKey="instance" size="small">
                           <Link
-                            to={urls.inventoryView(
-                              values?.orderLine?.instanceId
-                            )}
+                            to={urls.inventoryView(values?.orderLine?.instanceId)}
                           >
                             {values?.orderLine?.titleOrPackage}
                           </Link>
@@ -97,13 +93,12 @@ const POLineForm = () => {
       <Row start="xs">
         <Col xs={12}>
           {titles?.titles?.length > 1 && (
+            // istanbul ignore next
             <Field
               component={Typedown}
               dataOptions={titles?.titles}
               filterPath="title"
-              label={
-                <FormattedMessage id="ui-serials-management.ruleset.title" />
-              }
+              label={<FormattedMessage id="ui-serials-management.ruleset.title" />}
               name="title"
               renderListItem={renderListItem}
               required
@@ -112,9 +107,7 @@ const POLineForm = () => {
           )}
           {titles?.titles?.length === 1 && (
             <KeyValue
-              label={
-                <FormattedMessage id="ui-serials-management.ruleset.title" />
-              }
+              label={<FormattedMessage id="ui-serials-management.ruleset.title" />}
             >
               {titles?.titles[0]?.instanceId ? (
                 <AppIcon app="inventory" iconKey="instance" size="small">

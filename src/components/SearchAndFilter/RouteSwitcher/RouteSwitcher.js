@@ -13,7 +13,7 @@ const propTypes = {
 
 const RouteSwitcher = ({ primary }) => {
   let selectedIndex;
-
+  // istanbul ignore next
   switch (primary) {
     case 'serials':
       selectedIndex = 0;

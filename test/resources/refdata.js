@@ -421,7 +421,6 @@ const refdata = [
       },
     ],
   },
-
   {
     'id': '2c9180a58e4ca4c6018e4cad64e0005e',
     'desc': 'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
@@ -445,14 +444,14 @@ const refdata = [
     ],
   },
   {
-    'id': '2c9180a58e4ca4c6018e4cad63d20042',
-    'desc': 'CombinationRule.PatternType',
-    'internal': true,
-    'values': [
+    id: '2c9180a58e4f3a55018e4f42b24a0036',
+    desc: 'CombinationRule.TimeUnits',
+    internal: true,
+    values: [
       {
-        'id': '2c9180a58e4ca4c6018e4cad63d30043',
-        'value': 'issue',
-        'label': 'Issue',
+        id: '2c9180a58e4f3a55018e4f42b24c0037',
+        value: 'issue',
+        label: 'Issue',
       },
     ],
   },
@@ -645,6 +644,73 @@ const refdata = [
     ],
   },
   {
+    'id': '2c9180a48e613e55018e61471a3b0000',
+    'desc': 'Global.Month',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a48e613e55018e61471a800004',
+        'value': 'april',
+        'label': 'April',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a9e0008',
+        'value': 'august',
+        'label': 'August',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471ab8000c',
+        'value': 'december',
+        'label': 'December',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a6c0002',
+        'value': 'february',
+        'label': 'February',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a570001',
+        'value': 'january',
+        'label': 'January',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a970007',
+        'value': 'july',
+        'label': 'July',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a8f0006',
+        'value': 'june',
+        'label': 'June',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a780003',
+        'value': 'march',
+        'label': 'March',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471a880005',
+        'value': 'may',
+        'label': 'May',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471ab3000b',
+        'value': 'november',
+        'label': 'November',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471aad000a',
+        'value': 'october',
+        'label': 'October',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471aa60009',
+        'value': 'september',
+        'label': 'September',
+      },
+    ],
+  },
+  {
     'id': '2c9180a48e613e55018e61471abd000d',
     'desc': 'Global.Weekday',
     'internal': true,
@@ -794,6 +860,49 @@ const refdata = [
     ],
   },
   {
+    'id': '2c9180a48e613e55018e61471abd000d',
+    'desc': 'Global.Weekday',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a48e613e55018e61471ad80012',
+        'value': 'friday',
+        'label': 'Friday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471abf000e',
+        'value': 'monday',
+        'label': 'Monday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471add0013',
+        'value': 'saturday',
+        'label': 'Saturday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471ae30014',
+        'value': 'sunday',
+        'label': 'Sunday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471ad20011',
+        'value': 'thursday',
+        'label': 'Thursday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471ac4000f',
+        'value': 'tuesday',
+        'label': 'Tuesday',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471aca0010',
+        'value': 'wednesday',
+        'label': 'Wednesday',
+      },
+    ],
+  },
+
+  {
     'id': '2c9180a48e613e55018e61471b480015',
     'desc': 'OmissionRule.TimeUnits',
     'internal': true,
@@ -895,6 +1004,21 @@ const refdata = [
   {
     value: 'TemplateMetadataRule.TemplateMetadataRuleType',
     label: 'TemplateMetadataRule.TemplateMetadataRuleType',
+    'id': '2c9180a48e613e55018e61471d670047',
+    'desc': 'Serial.SerialStatus',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a48e613e55018e61471d680048',
+        'value': 'active',
+        'label': 'Active',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471d700049',
+        'value': 'closed',
+        'label': 'Closed',
+      },
+    ],
   },
 ];
 
