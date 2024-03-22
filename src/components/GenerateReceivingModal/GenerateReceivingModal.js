@@ -166,7 +166,10 @@ const GenerateReceivingModal = ({
           await submitReceivingPiece(pieceInReceivingShape).then((res) => {
             returnObj = {
               ...pieceInReceivingShape?.piece,
-              receivingId: res?.id,
+              receivingPieces: [
+                ...pieceInReceivingShape?.piece?.receivingPieces,
+                { receivingId: res?.id },
+              ],
             };
           });
           return returnObj;
