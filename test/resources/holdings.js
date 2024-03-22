@@ -331,4 +331,4 @@ export default [
       updatedDate: '2024-03-18T01:52:02.050+00:00'
     }
   }
-]
+];

@@ -1,30 +1,41 @@
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  renderWithIntl,
+  TestForm,
+  Select,
+  Button,
+} from '@folio/stripes-erm-testing';
 import ChronologyField from './ChronologyField';
 
 import { translationsProperties } from '../../../../test/helpers';
+import mockRefdata from '../../../../test/resources/refdata';
 
-const name = 'templateConfig.rules[0].ruleType.ruleFormat';
 const templateConfig = {
-  'templateMetadataRuleType': 'chronology',
-  'ruleType': {
-    'templateMetadataRuleFormat': 'chronology_date',
-    'ruleFormat': {
-      'weekdayFormat': {
-        'value': 'full_lower',
+  templateMetadataRuleType: 'chronology',
+  ruleType: {
+    templateMetadataRuleFormat: 'chronology_date',
+    ruleFormat: {
+      weekdayFormat: {
+        value: 'full_lower',
       },
-      'monthDayFormat': {
-        'value': 'number',
+      monthDayFormat: {
+        value: 'ordinal',
       },
-      'monthFormat': {
-        'value': 'full',
+      monthFormat: {
+        value: 'full',
       },
-      'yearFormat': {
-        'value': 'full',
+      yearFormat: {
+        value: 'full',
       },
     },
   },
 };
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  useSerialsManagementRefdata: () => mockRefdata,
+}));
+
 const onSubmit = jest.fn();
 
 let renderComponent;
@@ -32,7 +43,10 @@ describe('ChronologyField', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
-        <ChronologyField name={name} templateConfig={templateConfig} />
+        <ChronologyField
+          name="templateConfig.rules[0].ruleType.ruleFormat"
+          templateConfig={templateConfig}
+        />
       </TestForm>,
       translationsProperties
     );
@@ -56,5 +70,48 @@ describe('ChronologyField', () => {
   test('renders the expected text', async () => {
     const { getByText } = renderComponent;
     expect(getByText('Year format')).toBeInTheDocument();
+  });
+
+  test('renders a Select for Weekday format', async () => {
+    await Select('Weekday format*').exists();
+  });
+
+  test('renders the Weekday format dropdown with correct options', async () => {
+    await Select('Weekday format*').exists();
+    await waitFor(async () => {
+      await Select('Weekday format*').choose('Monday');
+      await Select('Weekday format*').choose('MONDAY');
+      await Select('Weekday format*').choose('Mon');
+      await Select('Weekday format*').choose('MON');
+    });
+  });
+
+  test('renders the Month day format dropdown with correct options', async () => {
+    await Select('Month day format*').exists();
+    await waitFor(async () => {
+      await Select('Month day format*').choose('3');
+      await Select('Month day format*').choose('3rd');
+    });
+  });
+
+  test('renders the Month format dropdown with correct options', async () => {
+    await Select('Month format*').exists();
+    await waitFor(async () => {
+      await Select('Month format*').choose('October');
+      await Select('Month format*').choose('8');
+      await Select('Month format*').choose('Oct');
+    });
+  });
+
+  test('renders the Year format dropdown with correct options', async () => {
+    await Select('Year format*').exists();
+    await waitFor(async () => {
+      await Select('Year format*').choose('2023');
+      await Select('Year format*').choose('23');
+    });
+  });
+
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
   });
 });

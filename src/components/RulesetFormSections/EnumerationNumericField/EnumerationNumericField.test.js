@@ -1,13 +1,21 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
   TestForm,
   Select,
   TextField,
+  Button,
 } from '@folio/stripes-erm-testing';
 
 import EnumerationNumericField from './EnumerationNumericField';
 
 import { translationsProperties } from '../../../../test/helpers';
+import mockRefdata from '../../../../test/resources/refdata';
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  useSerialsManagementRefdata: () => mockRefdata,
+}));
 
 const items = [
   {
@@ -68,5 +76,25 @@ describe('EnumerationNumericField', () => {
 
   test('renders the Lable TextField', async () => {
     await TextField({ id: 'internal-note' }).exists();
+  });
+
+  test('renders the Format dropdown with correct options', async () => {
+    await Select('Format*').exists();
+    await waitFor(async () => {
+      await Select('Format*').choose('Number (1, 2, 3)');
+      await Select('Format*').choose('Ordinal (1st, 2nd, 3rd)');
+      await Select('Format*').choose('Roman numerals (I, II, III)');
+    });
+  });
+
+  test('renders the Sequence dropdown with correct options', async () => {
+    await Select('Sequence*').exists();
+    await waitFor(async () => {
+      await Select('Sequence*').choose('Continuous');
+      await Select('Sequence*').choose('Reset');
+    });
+  });
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
   });
 });
