@@ -422,7 +422,7 @@ const refdata = [
     ],
   },
 
-    {
+  {
     'id': '2c9180a58e4ca4c6018e4cad64e0005e',
     'desc': 'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
     'internal': true,
@@ -819,6 +819,82 @@ const refdata = [
         'label': 'Week',
       },
     ],
+  },
+  {
+    value: 'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
+    label: 'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
+  },
+  {
+    value: 'CombinationRule.PatternType',
+    label: 'CombinationRule.PatternType',
+  },
+  {
+    value: 'CombinationRule.TimeUnits',
+    label: 'CombinationRule.TimeUnits',
+  },
+  {
+    value: 'EnumerationNumericLevelTMRF.Format',
+    label: 'EnumerationNumericLevelTMRF.Format',
+  },
+  {
+    value: 'EnumerationNumericLevelTMRF.Sequence',
+    label: 'EnumerationNumericLevelTMRF.Sequence',
+  },
+  {
+    value: 'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
+    label: 'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
+  },
+  {
+    value: 'Global.Month',
+    label: 'Global.Month',
+  },
+  {
+    value: 'Global.MonthDayFormat',
+    label: 'Global.MonthDayFormat',
+  },
+  {
+    value: 'Global.MonthFormat',
+    label: 'Global.MonthFormat',
+  },
+  {
+    value: 'Global.Weekday',
+    label: 'Global.Weekday',
+  },
+  {
+    value: 'Global.WeekdayFormat',
+    label: 'Global.WeekdayFormat',
+  },
+  {
+    value: 'Global.YearFormat',
+    label: 'Global.YearFormat',
+  },
+  {
+    value: 'OmissionRule.PatternType',
+    label: 'OmissionRule.PatternType',
+  },
+  {
+    value: 'OmissionRule.TimeUnits',
+    label: 'OmissionRule.TimeUnits',
+  },
+  {
+    value: 'Recurrence.TimeUnits',
+    label: 'Recurrence.TimeUnits',
+  },
+  {
+    value: 'RecurrenceRule.PatternType',
+    label: 'RecurrenceRule.PatternType',
+  },
+  {
+    value: 'Serial.SerialStatus',
+    label: 'Serial.SerialStatus',
+  },
+  {
+    value: 'SerialRuleset.RulesetStatus',
+    label: 'SerialRuleset.RulesetStatus',
+  },
+  {
+    value: 'TemplateMetadataRule.TemplateMetadataRuleType',
+    label: 'TemplateMetadataRule.TemplateMetadataRuleType',
   },
 ];
 

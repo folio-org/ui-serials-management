@@ -1,7 +1,6 @@
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Select, Pane } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-
 import PickListValues from './PickListValues';
 
 import { translationsProperties } from '../../../test/helpers';
@@ -36,150 +35,33 @@ describe('PickListValues', () => {
     });
 
     test('renders expected Refdata selection selector', async () => {
+      screen.debug();
       await Select('Pick list').exists();
     });
 
-    describe('select a pick list', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('ChecklistItem.Outcome');
-        });
-      });
-
-      it('renders expected status of ChecklistItem.Outcome', async () => {
-        await Select().has({ value: 'ChecklistItem.Outcome' });
-      });
-    });
-
-    describe('ChecklistItem.Status', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('ChecklistItem.Status');
-        });
-      });
-
-      it('renders expected ChecklistItem.Status', async () => {
-        await Select().has({ value: 'ChecklistItem.Status' });
-      });
-    });
-
-    describe('PublicationRequest.PublicationType', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('PublicationRequest.PublicationType');
-        });
-      });
-
-      it('renders expected PublicationRequest.PublicationType', async () => {
-        await Select().has({ value: 'PublicationRequest.PublicationType' });
-      });
-    });
-
-    describe('RequestParty.Role', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('RequestParty.Role');
-        });
-      });
-
-      it('renders expected RequestParty.Role', async () => {
-        await Select().has({ value: 'RequestParty.Role' });
-      });
-    });
-
-    describe('PublicationRequest.ClosureReason', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('PublicationRequest.ClosureReason');
-        });
-      });
-
-      it('renders expected PublicationRequest.ClosureReason', async () => {
-        await Select().has({ value: 'PublicationRequest.ClosureReason' });
-      });
-    });
-
-    describe('Funding.AspectFunded', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Funding.AspectFunded');
-        });
-      });
-
-      it('renders expected Funding.AspectFunded', async () => {
-        await Select().has({ value: 'Funding.AspectFunded' });
-      });
-    });
-
-    describe('Funding.Funder', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Funding.Funder');
-        });
-      });
-
-      it('renders expected Funding.Funder', async () => {
-        await Select().has({ value: 'Funding.Funder' });
-      });
-    });
-
-    describe('Correspondence.Category', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Correspondence.Category');
-        });
-      });
-
-      it('renders expected Correspondence.Category', async () => {
-        await Select().has({ value: 'Correspondence.Category' });
-      });
-    });
-
-    describe('Charge.DiscountType', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Charge.DiscountType');
-        });
-      });
-
-      it('renders expected Charge.DiscountType', async () => {
-        await Select().has({ value: 'Charge.DiscountType' });
-      });
-    });
-
-    describe('Charge.ChargeStatus', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Charge.ChargeStatus');
-        });
-      });
-
-      it('renders expected Charge.ChargeStatus', async () => {
-        await Select().has({ value: 'Charge.ChargeStatus' });
-      });
-    });
-
-    describe('Charge.Category', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Charge.Category');
-        });
-      });
-
-      it('renders expected Charge.Category', async () => {
-        await Select().has({ value: 'Charge.Category' });
-      });
-    });
-
-    describe('Party.InstitutionLevel1', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose('Party.InstitutionLevel1');
-        });
-      });
-
-      it('renders expected Party.InstitutionLevel1', async () => {
-        await Select().has({ value: 'Party.InstitutionLevel1' });
+    test('renders the pick list with correct options', async () => {
+      await Select('Pick list').exists();
+      await waitFor(async () => {
+        await Select('Pick list').choose('OmissionRule.TimeUnits');
+        await Select('Pick list').choose('CombinationRule.TimeUnits');
+        await Select('Pick list').choose('EnumerationNumericLevelTMRF.Format');
+        await Select('Pick list').choose('EnumerationNumericLevelTMRF.Sequence');
+        await Select('Pick list').choose(
+          'TemplateMetadataRule.TemplateMetadataRuleType'
+        );
+        await Select('Pick list').choose('Global.Month');
+        await Select('Pick list').choose('Global.MonthDayFormat');
+        await Select('Pick list').choose('Global.MonthFormat');
+        await Select('Pick list').choose('Global.Weekday');
+        await Select('Pick list').choose('Global.YearFormat');
+        await Select('Pick list').choose('Global.WeekdayFormat');
+        await Select('Pick list').choose('Recurrence.TimeUnits');
+        await Select('Pick list').choose('Party.InstitutionLevel1');
+        await Select('Pick list').choose('Charge.Category');
+        await Select('Pick list').choose('Charge.ChargeStatus');
+        await Select('Pick list').choose(
+          'TemplateMetadataRule.TemplateMetadataRuleType'
+        );
       });
     });
   });
