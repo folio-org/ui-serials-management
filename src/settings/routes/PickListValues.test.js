@@ -30,6 +30,7 @@ describe('PickListValues', () => {
     test('renders expected Refdata selection selector', async () => {
       await Select('Pick list').exists();
     });
+
     test('displays the Pick list values pane', async () => {
       await Pane('Pick list values').is({ visible: true });
     });
