@@ -7,19 +7,19 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6b850003',
         value: 'yes',
-        label: 'Yes'
+        label: 'Yes',
       },
       {
         id: '2c9180b382668a1a0182668e6b900004',
         value: 'no',
-        label: 'No'
+        label: 'No',
       },
       {
         id: '2c9180b382668a1a0182668e6b960005',
         value: 'other',
-        label: 'Other'
-      }
-    ]
+        label: 'Other',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6bce0006',
@@ -29,14 +29,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6bda0008',
         value: 'hidden',
-        label: 'Hidden'
+        label: 'Hidden',
       },
       {
         id: '2c9180b382668a1a0182668e6bd20007',
         value: 'visible',
-        label: 'Visible'
-      }
-    ]
+        label: 'Visible',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6be10009',
@@ -46,9 +46,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6be4000a',
         value: 'publisher_1',
-        label: 'Publisher 1'
-      }
-    ]
+        label: 'Publisher 1',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6bec000b',
@@ -58,14 +58,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6bf6000d',
         value: 'book',
-        label: 'Book'
+        label: 'Book',
       },
       {
         id: '2c9180b382668a1a0182668e6bef000c',
         value: 'journal_article',
-        label: 'Journal Article'
-      }
-    ]
+        label: 'Journal Article',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6bfd000e',
@@ -75,9 +75,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c01000f',
         value: 'license_1',
-        label: 'License 1'
-      }
-    ]
+        label: 'License 1',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c070010',
@@ -87,9 +87,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c0b0011',
         value: 'subtype_1',
-        label: 'Subtype 1'
-      }
-    ]
+        label: 'Subtype 1',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c100012',
@@ -99,19 +99,19 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c1b0014',
         value: 'closed',
-        label: 'Closed'
+        label: 'Closed',
       },
       {
         id: '2c9180b382668a1a0182668e6c220015',
         value: 'in_progress',
-        label: 'In progress'
+        label: 'In progress',
       },
       {
         id: '2c9180b382668a1a0182668e6c130013',
         value: 'new',
-        label: 'New'
-      }
-    ]
+        label: 'New',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c290016',
@@ -121,9 +121,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c2f0017',
         value: 'rejected',
-        label: 'Rejected'
-      }
-    ]
+        label: 'Rejected',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c350018',
@@ -133,14 +133,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c41001a',
         value: 'hybrid',
-        label: 'Hybrid'
+        label: 'Hybrid',
       },
       {
         id: '2c9180b382668a1a0182668e6c390019',
         value: 'gold',
-        label: 'Gold'
-      }
-    ]
+        label: 'Gold',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c48001b',
@@ -150,14 +150,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c4b001c',
         value: 'yes',
-        label: 'Yes'
+        label: 'Yes',
       },
       {
         id: '2c9180b382668a1a0182668e6c53001d',
         value: 'no',
-        label: 'No'
-      }
-    ]
+        label: 'No',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c5a001e',
@@ -167,19 +167,19 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c690021',
         value: 'author',
-        label: 'Author'
+        label: 'Author',
       },
       {
         id: '2c9180b382668a1a0182668e6c5d001f',
         value: 'library',
-        label: 'Library'
+        label: 'Library',
       },
       {
         id: '2c9180b382668a1a0182668e6c630020',
         value: 'dfg',
-        label: 'DFG'
-      }
-    ]
+        label: 'DFG',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c6e0022',
@@ -189,14 +189,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c770024',
         value: 'publication',
-        label: 'Publication'
+        label: 'Publication',
       },
       {
         id: '2c9180b382668a1a0182668e6c710023',
         value: 'research',
-        label: 'Research'
-      }
-    ]
+        label: 'Research',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c7c0025',
@@ -206,9 +206,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c7f0026',
         value: 'funder_1',
-        label: 'Funder 1'
-      }
-    ]
+        label: 'Funder 1',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c860027',
@@ -218,14 +218,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c880028',
         value: 'email',
-        label: 'Email'
+        label: 'Email',
       },
       {
         id: '2c9180b382668a1a0182668e6c8d0029',
         value: 'telephone',
-        label: 'Telephone'
-      }
-    ]
+        label: 'Telephone',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6c93002a',
@@ -235,14 +235,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6c9b002c',
         value: 'funding',
-        label: 'Funding'
+        label: 'Funding',
       },
       {
         id: '2c9180b382668a1a0182668e6c95002b',
         value: 'invoice',
-        label: 'Invoice'
-      }
-    ]
+        label: 'Invoice',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6ca0002d',
@@ -252,19 +252,19 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6ca8002f',
         value: 'response_needed',
-        label: 'Response Needed'
+        label: 'Response Needed',
       },
       {
         id: '2c9180b382668a1a0182668e6ca3002e',
         value: 'awaiting_reply',
-        label: 'Awaiting Reply'
+        label: 'Awaiting Reply',
       },
       {
         id: '2c9180b382668a1a0182668e6cae0030',
         value: 'closed',
-        label: 'Closed'
-      }
-    ]
+        label: 'Closed',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cb20031',
@@ -274,14 +274,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6cb90033',
         value: 'electronic',
-        label: 'Electronic'
+        label: 'Electronic',
       },
       {
         id: '2c9180b382668a1a0182668e6cb40032',
         value: 'print',
-        label: 'Print'
-      }
-    ]
+        label: 'Print',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cbd0034',
@@ -291,14 +291,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6cc50036',
         value: 'serial',
-        label: 'Serial'
+        label: 'Serial',
       },
       {
         id: '2c9180b382668a1a0182668e6cbf0035',
         value: 'monograph',
-        label: 'Monograph'
-      }
-    ]
+        label: 'Monograph',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cc90037',
@@ -308,14 +308,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6ccb0038',
         value: 'book',
-        label: 'Book'
+        label: 'Book',
       },
       {
         id: '2c9180b382668a1a0182668e6cd00039',
         value: 'journal',
-        label: 'Journal'
-      }
-    ]
+        label: 'Journal',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cd5003a',
@@ -325,9 +325,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6cd7003b',
         value: 'submitted',
-        label: 'Submitted'
-      }
-    ]
+        label: 'Submitted',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cde003c',
@@ -337,9 +337,9 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6ce0003d',
         value: 'pmid',
-        label: 'PMID'
-      }
-    ]
+        label: 'PMID',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cf2003e',
@@ -349,14 +349,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6cf90040',
         value: 'request_contact',
-        label: 'Request contact'
+        label: 'Request contact',
       },
       {
         id: '2c9180b382668a1a0182668e6cf4003f',
         value: 'corresponding_author',
-        label: 'Corresponding author'
-      }
-    ]
+        label: 'Corresponding author',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6cff0041',
@@ -366,14 +366,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6d050043',
         value: 'subtracted',
-        label: 'subtracted'
+        label: 'subtracted',
       },
       {
         id: '2c9180b382668a1a0182668e6d010042',
         value: 'percentage',
-        label: 'percentage'
-      }
-    ]
+        label: 'percentage',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6d090044',
@@ -383,14 +383,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6d0b0045',
         value: 'expected',
-        label: 'Expected'
+        label: 'Expected',
       },
       {
         id: '2c9180b382668a1a0182668e6d100046',
         value: 'invoiced',
-        label: 'Invoiced'
-      }
-    ]
+        label: 'Invoiced',
+      },
+    ],
   },
   {
     id: '2c9180b382668a1a0182668e6d150047',
@@ -400,14 +400,14 @@ const refdata = [
       {
         id: '2c9180b382668a1a0182668e6d170048',
         value: 'apc',
-        label: 'APC'
+        label: 'APC',
       },
       {
         id: '2c9180b382668a1a0182668e6d1d0049',
         value: 'bpc',
-        label: 'BPC'
-      }
-    ]
+        label: 'BPC',
+      },
+    ],
   },
   {
     id: '2c9180b382a457810182a45bddd70036',
@@ -417,9 +417,9 @@ const refdata = [
       {
         id: 'a2cfe840-5394-487c-80bd-fe74968314cc',
         value: 'faculty_1',
-        label: 'Faculty 1'
+        label: 'Faculty 1',
       },
-    ]
+    ],
   },
   {
     id: '2c9180a58e4f3a55018e4f42b24a0036',
@@ -429,10 +429,28 @@ const refdata = [
       {
         id: '2c9180a58e4f3a55018e4f42b24c0037',
         value: 'issue',
-        label: 'Issue'
-      }
-    ]
+        label: 'Issue',
+      },
+    ],
+  },
+  {
+    'id': '2c9180a48e613e55018e61471d670047',
+    'desc': 'Serial.SerialStatus',
+    'internal': true,
+    'values': [
+      {
+        'id': '2c9180a48e613e55018e61471d680048',
+        'value': 'active',
+        'label': 'Active',
+      },
+      {
+        'id': '2c9180a48e613e55018e61471d700049',
+        'value': 'closed',
+        'label': 'Closed',
+      },
+    ],
   },
 ];
 
 export default refdata;
+
