@@ -1,4 +1,3 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   Accordion,
   renderWithIntl,
@@ -15,10 +14,8 @@ jest.mock('../POLineFilter', () => () => <div>POLineFilter</div>);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  useSerialsManagementRefdata: () => mockRefdata,
+  useSerialsManagementRefdata: () => mockRefdata.filter(rdc => rdc.desc === 'Serial.SerialStatus'),
 }));
-
-const onSubmit = jest.fn();
 
 const activeFilters = {
   serialStatus: ['active'],

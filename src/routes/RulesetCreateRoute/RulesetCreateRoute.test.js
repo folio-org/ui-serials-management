@@ -1,6 +1,6 @@
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { translationsProperties } from '../../../test/helpers';
 
 import RulesetCreateRoute from './RulesetCreateRoute';
@@ -26,7 +26,6 @@ describe('RulesetCreateRoute', () => {
   });
 
   test('renders the RulesetForm component', () => {
-    screen.debug();
     const { getByText } = renderComponent;
     expect(getByText('RulesetForm')).toBeInTheDocument();
   });
