@@ -18,6 +18,7 @@ const PiecesList = ({ pieceSet, id }) => {
     displaySummary: (e) => {
       return e?.label;
     },
+    generatedInReceiving: (e) => e?.receivingId
   };
 
   return (
