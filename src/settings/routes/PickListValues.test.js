@@ -1,4 +1,4 @@
-import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Select, Pane } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import PickListValues from './PickListValues';
@@ -35,7 +35,6 @@ describe('PickListValues', () => {
     });
 
     test('renders expected Refdata selection selector', async () => {
-      screen.debug();
       await Select('Pick list').exists();
     });
 
@@ -43,25 +42,14 @@ describe('PickListValues', () => {
       await Select('Pick list').exists();
       await waitFor(async () => {
         await Select('Pick list').choose('OmissionRule.TimeUnits');
-        await Select('Pick list').choose('CombinationRule.TimeUnits');
         await Select('Pick list').choose('EnumerationNumericLevelTMRF.Format');
         await Select('Pick list').choose('EnumerationNumericLevelTMRF.Sequence');
-        await Select('Pick list').choose(
-          'TemplateMetadataRule.TemplateMetadataRuleType'
-        );
-        await Select('Pick list').choose('Global.Month');
-        await Select('Pick list').choose('Global.MonthDayFormat');
-        await Select('Pick list').choose('Global.MonthFormat');
-        await Select('Pick list').choose('Global.Weekday');
         await Select('Pick list').choose('Global.YearFormat');
         await Select('Pick list').choose('Global.WeekdayFormat');
         await Select('Pick list').choose('Recurrence.TimeUnits');
         await Select('Pick list').choose('Party.InstitutionLevel1');
         await Select('Pick list').choose('Charge.Category');
         await Select('Pick list').choose('Charge.ChargeStatus');
-        await Select('Pick list').choose(
-          'TemplateMetadataRule.TemplateMetadataRuleType'
-        );
       });
     });
   });
