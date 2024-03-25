@@ -1,4 +1,11 @@
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import {
+  renderWithIntl,
+  TestForm,
+  Accordion,
+  Button,
+  Pane,
+  PaneHeader,
+} from '@folio/stripes-erm-testing';
 import { translationsProperties } from '../../../../test/helpers';
 import RulesetForm from './RulesetForm';
 import { handlers } from '../../../../test/resources';
@@ -46,17 +53,64 @@ describe('RulesetForm', () => {
       const { getByText } = renderComponent;
       expect(getByText('PatternTimePeriodForm')).toBeInTheDocument();
     });
+
     test('renders OmissionFieldArray Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('OmissionFieldArray')).toBeInTheDocument();
     });
+
     test('renders CombinationFieldArray Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('CombinationFieldArray')).toBeInTheDocument();
     });
+
     test('renders LabelFieldArray Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('LabelFieldArray')).toBeInTheDocument();
+    });
+
+    test('renders the New publication patternPane', async () => {
+      await Pane('New publication pattern').is({ visible: true });
+    });
+
+    it('renders the expected Pane title', async () => {
+      await PaneHeader('New publication pattern').is({ visible: true });
+    });
+
+    test('renders the Publication cycle Accordion', async () => {
+      await Accordion('Publication cycle').exists();
+    });
+
+    test('renders the Omissin rules Accordion', async () => {
+      await Accordion('Omission rules').exists();
+    });
+
+    test('renders the Combination rules Accordion', async () => {
+      await Accordion('Combination rules').exists();
+    });
+
+    test('renders the Labelling Accordion', async () => {
+      await Accordion('Labelling').exists();
+    });
+
+    test('renders the  button', async () => {
+      await Button('Collapse all').exists();
+    });
+
+    test('renders the  button', async () => {
+      await Button('Cancel').exists();
+    });
+
+    test('renders the  button', async () => {
+      await Button('Submit').exists();
+    });
+
+    test('renders the  button', async () => {
+      await Button('Preview').has({ disabled: true });
+    });
+
+    test('renders the  button', async () => {
+      await Button('Save and close').has({ disabled: true });
     });
   });
 });
