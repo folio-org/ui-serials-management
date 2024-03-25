@@ -25,7 +25,7 @@
     "poLine.materialType": "Material type",
     "poLine.funds": "Funds",
     "poLine.productIds": "Product IDs",
-    "edit": "Edit",
+    "edit": "編集",
     "serials.editSerial": "Edit serial",
     "serials.description": "Description",
     "serials.status": "Status",
@@ -90,7 +90,7 @@
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "serials.addPublicationPattern": "Add publication pattern",
     "rulesets.newPublicationPattern": "New publication pattern",
-    "poLine.removePOLine": "Remove PO line",
+    "poLine.removePOLine": "発注明細の削除",
     "ruleset.omissionRuleIndex": "Omission rule {index}",
     "ruleset.omissionRuleType": "Omission rule type",
     "ruleset.removeOmissionRule": "Remove omission rule {index}",
@@ -194,5 +194,5 @@
     "ruleset.week.yearRange": "Week (1-52)",
     "ruleset.month.yearRange": "Month (Jan-Dec)",
     "ruleset.issue.nRange": "Issue (1-n)",
-    "serials.serial": "Serial"
+    "serials.serial": "逐次刊行物"
 }
