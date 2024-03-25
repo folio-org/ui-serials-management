@@ -7,3 +7,4 @@ export { default as locations } from './locations';
 export { default as holdings } from './holdings';
 export { default as pieceSets } from './pieceSets';
 export { default as resource } from './resource';
+export { default as orderLine } from './orderLine';
