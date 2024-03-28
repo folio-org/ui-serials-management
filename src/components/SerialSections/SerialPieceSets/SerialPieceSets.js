@@ -60,12 +60,8 @@ const SerialPieceSets = ({ pieceSets }) => {
               patternId: (
                 <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
               ),
-              total: (
-                <FormattedMessage id="ui-serials-management.pieceSets.total" />
-              ),
-              note: (
-                <FormattedMessage id="ui-serials-management.pieceSets.note" />
-              ),
+              total: <FormattedMessage id="ui-serials-management.pieceSets.total" />,
+              note: <FormattedMessage id="ui-serials-management.pieceSets.note" />,
             }}
             // Column width needs to be updated with correct value when formatted time is implemented
             columnWidths={{
@@ -73,6 +69,7 @@ const SerialPieceSets = ({ pieceSets }) => {
             }}
             contentData={pieceSets}
             formatter={formatter}
+            id="serial-pieces-sets"
             interactive={false}
             visibleColumns={[
               'dateGenerated',

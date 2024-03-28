@@ -45,12 +45,12 @@ const propTypes = {
 };
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting, invalid, initialValues, values } =
-    useFormState();
+  const { pristine, submitting, invalid, initialValues, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
+  // istanbul ignore next
   const shortcuts = [
     {
       name: 'save',
@@ -92,11 +92,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           </>
         }
         renderStart={
-          <Button
-            buttonStyle="default mega"
-            marginBottom0
-            onClick={() => onClose()}
-          >
+          <Button buttonStyle="default mega" marginBottom0 onClick={() => onClose()}>
             <FormattedMessage id="stripes-components.cancel" />
           </Button>
         }

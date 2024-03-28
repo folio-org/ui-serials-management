@@ -1,18 +1,26 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { Accordion, renderWithIntl } from '@folio/stripes-erm-testing';
+import {
+  Accordion,
+  renderWithIntl,
+  Badge,
+  MultiColumnList,
+} from '@folio/stripes-erm-testing';
 
 import SerialPieceSets from './SerialPieceSets';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { pieceSet } from '../../../../test/resources';
+import { pieceSets } from '../../../../test/resources';
 
 let renderComponent;
 describe('SerialPieceSets', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <SerialPieceSets pieceSet={pieceSet} />
+        <SerialPieceSets
+          id="serial-section-serial-piece-sets"
+          pieceSets={pieceSets}
+        />
       </MemoryRouter>,
       translationsProperties
     );
@@ -22,8 +30,37 @@ describe('SerialPieceSets', () => {
     await Accordion('Predicted piece sets').exists();
   });
 
-  test('renders headline', async () => {
+  test('renders the expected badge number', async () => {
+    await Badge('1').exists();
+  });
+
+  test('renders expected MCL by ID', async () => {
+    await MultiColumnList('serial-pieces-sets').exists();
+  });
+
+  test('renders expected column headers', async () => {
+    await MultiColumnList({
+      columns: ['Date generated', 'Start date', 'Pattern ID', 'Total', 'Note'],
+    }).exists();
+  });
+
+  test('renders a gridcell with the expected name', async () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('gridcell', { name: '3/19/2024' })).toBeInTheDocument();
+  });
+
+  test('renders a gridcell with the expected name', async () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('gridcell', { name: '4' })).toBeInTheDocument();
+  });
+
+  test('renders a gridcell with the expected name', async () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('gridcell', { name: 'test' })).toBeInTheDocument();
+  });
+
+  test('renders end of list text', async () => {
     const { getByText } = renderComponent;
-    expect(getByText('The list contains no items')).toBeInTheDocument();
+    expect(getByText('End of list')).toBeInTheDocument();
   });
 });

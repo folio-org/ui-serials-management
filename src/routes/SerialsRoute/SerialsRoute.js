@@ -39,7 +39,7 @@ const SerialsRoute = ({ children, path }) => {
   const handleCreate = () => {
     history.push(`${urls.serialCreate()}${location.search}`);
   };
-
+  /* istanbul ignore next */
   const shortcuts = [
     { name: 'new', handler: () => handleCreate() },
     {
@@ -81,9 +81,7 @@ const SerialsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'description',
-      label: (
-        <FormattedMessage id="ui-serials-management.serials.description" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.serials.description" />,
     },
   ];
 
@@ -106,9 +104,7 @@ const SerialsRoute = ({ children, path }) => {
         FilterComponent={SerialsFilters}
         FilterPaneHeaderComponent={renderHeaderComponent}
         mainPaneProps={{
-          appIcon: (
-            <AppIcon app="serials-management" iconKey="app" size="small" />
-          ),
+          appIcon: <AppIcon app="serials-management" iconKey="app" size="small" />,
           lastMenu: renderLastMenu,
           paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
         }}
