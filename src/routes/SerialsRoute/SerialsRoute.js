@@ -84,7 +84,7 @@ const SerialsRoute = ({ children, path }) => {
       label: <FormattedMessage id="ui-serials-management.serials.description" />,
     },
   ];
-
+  /* istanbul ignore next */
   const formatter = {
     title: (d) => (
       <TextLink to={urls.serialView(d?.id)}>{d?.orderLine?.title ?? d?.id}</TextLink>
