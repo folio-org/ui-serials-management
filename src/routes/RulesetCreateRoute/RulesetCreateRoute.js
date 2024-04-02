@@ -40,11 +40,11 @@ const RulesetCreateRoute = () => {
   );
   // istanbul ignore next
   const submitRuleset = async (values) => {
-    const generatedString = await generate();
+    const numberGeneratorReturn = await generate();
     const submitValues = {
       ...values,
       owner: { id },
-      rulesetNumber: generatedString?.data,
+      rulesetNumber: numberGeneratorReturn?.data?.nextValue,
     };
     submitValues?.recurrence?.rules?.forEach((e) => {
       // If no ordinal specified, assume ordinal is 1 for all rules
