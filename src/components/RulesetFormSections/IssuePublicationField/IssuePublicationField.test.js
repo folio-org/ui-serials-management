@@ -1,3 +1,4 @@
+import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 import mockRefdata from '../../../../test/resources/refdata';
 import IssuePublicationField from './IssuePublicationField';
@@ -13,13 +14,16 @@ jest.mock('../../utils', () => ({
 describe('IssuePublicationField', () => {
   beforeEach(() => {
     renderWithIntl(
-      <TestForm onSubmit={onSubmit}>
-        <IssuePublicationField
-          index={0}
-          name="recurrence.rules"
-          patternType="month_weekday"
-        />
-      </TestForm>,
+      <MemoryRouter>
+        <TestForm onSubmit={onSubmit}>
+          <IssuePublicationField
+            index={0}
+            name="recurrence.rules"
+            patternType="year_date"
+          />
+        </TestForm>
+        ,
+      </MemoryRouter>,
       translationsProperties
     );
   });
