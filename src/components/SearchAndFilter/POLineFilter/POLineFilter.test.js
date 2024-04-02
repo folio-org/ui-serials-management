@@ -9,6 +9,11 @@ import { translationsProperties } from '../../../../test/helpers';
 const onPOLineSelected = jest.fn();
 const onSubmit = jest.fn();
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  Pluggable: jest.fn().mockReturnValue('Pluggable')
+}));
+
 describe('POLineFilter', () => {
   let renderComponent;
   beforeEach(() => {
@@ -26,9 +31,9 @@ describe('POLineFilter', () => {
     );
   });
 
-  test('renders the expected message', async () => {
+  test('renders the expected Pluggable component', async () => {
     const { getByText } = renderComponent;
-    expect(getByText('No "find-po-line" plugin is installed')).toBeInTheDocument();
+    expect(getByText('Pluggable')).toBeInTheDocument();
   });
 
   it('renders the selectPOLinePluggin by id', () => {

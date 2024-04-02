@@ -1,5 +1,5 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import SerialsRoute from './SerialsRoute';
 
@@ -11,6 +11,12 @@ jest.mock('../../components/SearchAndFilter/SerialsFilters', () => () => (
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
   SASQRoute: () => <div>SASQRoute</div>,
+}));
+
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
+  useHistory: jest.fn(),
+  useLocation: jest.fn(),
 }));
 
 const location = {
@@ -31,13 +37,14 @@ let renderComponent;
 
 describe('SerialsRoute', () => {
   beforeEach(() => {
+    useLocation.mockClear().mockReturnValue(location);
     renderComponent = renderWithIntl(
       <MemoryRouter>
         <SerialsRoute
           computedMatch={computedMatch}
           location={location}
           path="/serials-management/serials"
-        />
+        />,
       </MemoryRouter>,
       translationsProperties
     );

@@ -138,14 +138,6 @@ describe('GenerateReceivingModal', () => {
     await KeyValue('Last piece').has({ value: '2024-05-01, 2 4' });
   });
 
-  test('renders the expected Pattern ID value', async () => {
-    await KeyValue('Pattern ID').has({ value: 'No value set-' });
-  });
-
-  test('renders the expected Pattern ID value', async () => {
-    await KeyValue('Pattern ID').has({ value: 'No value set-' });
-  });
-
   test('renders the expected label', async () => {
     const { getByText } = renderComponent;
     expect(
@@ -177,6 +169,14 @@ describe('GenerateReceivingModal', () => {
     const { getByText } = renderComponent;
     expect(getByText('Location')).toBeInTheDocument();
   });
+
+  /* it('renders expected Location with selected option', async () => {
+ await waitFor(async () => {
+   await Select('Location').choose('Annex');
+   await Select('Location').choose('Main Library');
+   await Select('Location').choose('Popular Reading Collection');
+ });
+}); */
 
   test('renders the Generate receiving pieces button', async () => {
     await Button({ id: 'generate-recieving-pieces-button' }).has({

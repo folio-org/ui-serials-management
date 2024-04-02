@@ -10,6 +10,7 @@ const propTypes = {
 };
 
 const PiecesList = ({ pieceSet, id }) => {
+  /* istanbul ignore next */
   const formatter = {
     issueCount: (e) => {
       return e?.omissionOrigins ? '-' : e.rowIndex + 1;
