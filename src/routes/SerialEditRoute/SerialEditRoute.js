@@ -49,13 +49,15 @@ const SerialEditRoute = () => {
       ...(!values?.serialStatus?.value
         ? { serialStatus: null }
         : { serialStatus: { value: values?.serialStatus?.value } }),
-      ...(values?.orderLine && {
-        orderLine: {
-          remoteId: values?.orderLine?.id,
-          title: values?.title?.title,
-          titleId: values?.title?.id,
-        },
-      }),
+      ...(values?.orderLine
+        ? {
+          orderLine: {
+            remoteId: values?.orderLine?.id,
+            title: values?.title?.title,
+            titleId: values?.title?.titleId,
+          },
+        }
+        : { orderLine: null }),
     };
     await putSerial(submitValues);
   };
@@ -68,7 +70,15 @@ const SerialEditRoute = () => {
       initialValues={{
         ...serial,
         ...(!!serial?.orderLine && {
-          orderLine: serial?.orderLine?.remoteId_object,
+          orderLine: {
+            ...serial?.orderLine?.remoteId_object,
+          },
+        }),
+        ...(!!serial?.orderLine?.titleId && {
+          title: {
+            title: serial?.orderLine?.title,
+            titleId: serial?.orderLine?.titleId,
+          },
         }),
       }}
       keepDirtyOnReinitialize
