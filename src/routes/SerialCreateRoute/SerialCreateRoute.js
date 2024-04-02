@@ -35,7 +35,7 @@ const SerialCreateRoute = () => {
         orderLine: {
           remoteId: values?.orderLine?.id,
           title: values?.title?.title,
-          titleId: values?.title?.id,
+          titleId: values?.title?.titleId,
         },
       }),
     };
