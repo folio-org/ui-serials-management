@@ -39,7 +39,6 @@ const RulesetCreateRoute = () => {
     }
   );
   // istanbul ignore next
-
   const submitRuleset = async (values) => {
     const generatedString = await generate();
     const submitValues = {
