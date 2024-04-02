@@ -1,10 +1,15 @@
 import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
-
+import mockRefdata from '../../../../test/resources/refdata';
 import IssuePublicationField from './IssuePublicationField';
 import { translationsProperties } from '../../../../test/helpers';
 
 const onSubmit = jest.fn();
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  useSerialsManagementRefdata: () => mockRefdata,
+}));
 
 describe('IssuePublicationField', () => {
   beforeEach(() => {

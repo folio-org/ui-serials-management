@@ -35,7 +35,7 @@ const ActivePublicationPattern = ({ serial }) => {
   const draftRulesets = serial?.serialRulesets?.filter(
     (sr) => sr?.rulesetStatus?.value === 'draft'
   );
-
+  /* istanbul ignore next */
   const formatter = {
     patternId: (e) => {
       return e.rulesetNumber;

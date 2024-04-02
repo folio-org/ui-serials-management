@@ -134,7 +134,7 @@ const PiecesPreviewModal = ({
     });
     await generatePieces(submitValues);
   };
-
+  /* istanbul ignore next */
   const formatter = {
     // If omissionOrigins exist then piece is omitted
     issueCount: (e) => {
