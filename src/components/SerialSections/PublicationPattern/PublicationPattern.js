@@ -23,9 +23,7 @@ const proptypes = {
   serial: PropTypes.object,
 };
 
-// TODO Change to publication pattern
-
-const ActivePublicationPattern = ({ serial }) => {
+const PublicationPattern = ({ serial }) => {
   const location = useLocation();
 
   const activeRuleset = serial?.serialRulesets?.find(
@@ -188,6 +186,6 @@ const ActivePublicationPattern = ({ serial }) => {
   );
 };
 
-ActivePublicationPattern.propTypes = proptypes;
+PublicationPattern.propTypes = proptypes;
 
-export default ActivePublicationPattern;
+export default PublicationPattern;

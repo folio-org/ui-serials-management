@@ -8,8 +8,8 @@ jest.mock('../../SerialSections/SerialInfo', () => () => <div>SerialInfo</div>);
 jest.mock('../../SerialSections/SerialPOLine', () => () => (
   <div>SerialPOLine</div>
 ));
-jest.mock('../../SerialSections/ActivePublicationPattern', () => () => (
-  <div>ActivePublicationPattern</div>
+jest.mock('../../SerialSections/PublicationPattern', () => () => (
+  <div>PublicationPattern</div>
 ));
 jest.mock('../../SerialSections/DeprecatedPublicationPatterns', () => () => (
   <div>DeprecatedPublicationPatterns</div>
@@ -35,9 +35,9 @@ describe('SerialView', () => {
       expect(getByText('SerialInfo')).toBeInTheDocument();
     });
 
-    test('renders ActivePublicationPattern Component', () => {
+    test('renders PublicationPattern Component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ActivePublicationPattern')).toBeInTheDocument();
+      expect(getByText('PublicationPattern')).toBeInTheDocument();
     });
   });
 
@@ -60,9 +60,9 @@ describe('SerialView', () => {
       expect(getByText('SerialInfo')).toBeInTheDocument();
     });
 
-    test('renders ActivePublicationPattern Component', () => {
+    test('renders PublicationPattern Component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ActivePublicationPattern')).toBeInTheDocument();
+      expect(getByText('PublicationPattern')).toBeInTheDocument();
     });
   });
 });
