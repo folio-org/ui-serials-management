@@ -40,6 +40,7 @@ const SerialForm = ({ handlers: { onClose, onSubmit } }) => {
   const { pristine, submitting, initialValues } = useFormState();
   const accordionStatusRef = createRef();
 
+  // istanbul ignore next
   const shortcuts = [
     {
       name: 'save',

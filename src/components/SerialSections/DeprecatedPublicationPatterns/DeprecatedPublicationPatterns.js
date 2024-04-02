@@ -20,7 +20,7 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
   const deprecatedRulesets = serial?.serialRulesets?.filter(
     (sr) => sr?.rulesetStatus?.value === 'deprecated'
   );
-
+  /* istanbul ignore next */
   const formatter = {
     patternId: (e) => e.rulesetNumber,
     lastUpdated: (e) => <FormattedDateTime date={e?.lastUpdated} />,

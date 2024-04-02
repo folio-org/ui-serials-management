@@ -1,11 +1,15 @@
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import {
+  renderWithIntl,
+  TestForm,
+  Button,
+  Accordion,
+} from '@folio/stripes-erm-testing';
+
 import { translationsProperties } from '../../../../test/helpers';
 import SerialForm from './SerialForm';
 import { handlers } from '../../../../test/resources';
 
-jest.mock('../../SerialFormSections/POLineForm', () => () => (
-  <div>POLineForm</div>
-));
+jest.mock('../../SerialFormSections/POLineForm', () => () => <div>POLineForm</div>);
 jest.mock('../../SerialFormSections/SerialInfoForm', () => () => (
   <div>SerialInfoForm</div>
 ));
@@ -27,6 +31,10 @@ describe('SerialForm', () => {
         translationsProperties
       );
     });
+    test('renders new serial header', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('New serial')).toBeInTheDocument();
+    });
 
     test('renders POLineForm Component', () => {
       const { getByText } = renderComponent;
@@ -37,9 +45,22 @@ describe('SerialForm', () => {
       const { getByText } = renderComponent;
       expect(getByText('SerialInfoForm')).toBeInTheDocument();
     });
+
     test('renders SerialNoteFieldArray Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('SerialNoteFieldArray')).toBeInTheDocument();
+    });
+
+    test('renders the notes Accordion', async () => {
+      await Accordion('Notes').exists();
+    });
+
+    test('renders the save and close button', async () => {
+      await Button('Save and close').has({ disabled: true });
+    });
+
+    it('renders the submit', async () => {
+      await Button('Submit').exists();
     });
   });
 });

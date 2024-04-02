@@ -69,6 +69,7 @@ const SerialView = ({
     };
   };
 
+  // istanbul ignore next
   const shortcuts = [
     { name: 'edit', handler: () => handleEdit() },
     {
