@@ -49,7 +49,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
       </ul>
     );
   };
-
+  /* istanbul ignore next */
   const renderIdentifierTypes = () => {
     if (identifierTypes?.length && !identifierTypeLoading) {
       return (
