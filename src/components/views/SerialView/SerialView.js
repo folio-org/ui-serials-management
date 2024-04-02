@@ -20,7 +20,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  ActivePublicationPattern,
+  PublicationPattern,
   DeprecatedPublicationPatterns,
   SerialInfo,
   SerialPOLine,
@@ -176,8 +176,8 @@ const SerialView = ({
               {!!serial?.orderLine?.remoteId && (
                 <SerialPOLine {...getSectionProps('po-line')} />
               )}
-              <ActivePublicationPattern
-                {...getSectionProps('active-publication-pattern')}
+              <PublicationPattern
+                {...getSectionProps('publication-pattern')}
               />
               {!!serial?.serialRulesets?.find(
                 (sr) => sr?.rulesetStatus?.value === 'deprecated'
