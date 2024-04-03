@@ -63,15 +63,27 @@ const expectedSubmitValues = pieceSet.pieces.map((p) => {
 });
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
+// Setting up jest fn here to test paramters passed in by component
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
-
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
 
   return {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
-    useMutation: jest.fn(),
+    useMutation: jest.fn((_key, func) => ({
+      mutateAsync: (...incomingParams) => {
+        // Actually call function coming from component
+        // This assumes that ky has been mocked, which it should have been by __mocks__ stripes-core.
+
+        // If this function was async, we might need to do something different.
+        // As it is, it's a synchronous call to ky which returns a promise we then chain on.
+        func();
+
+        // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
+        return mockMutateAsync(...incomingParams);
+      }
+    })),
   };
 });
 
@@ -99,8 +111,6 @@ jest.mock('../../hooks', () => ({
 let renderComponent;
 describe('GenerateReceivingModal', () => {
   beforeEach(() => {
-    useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
-
     renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
   });
 
@@ -224,6 +234,13 @@ describe('GenerateReceivingModal', () => {
           ]);
         }
       });
+
+      test('does not render the modal', async () => {
+        // Assumes the .then got called
+        await waitFor(async () => {
+          await Modal('Generate receiving pieces').absent();
+        });
+      });
     });
   });
 
@@ -239,7 +256,9 @@ describe('GenerateReceivingModal', () => {
     });
 
     test('does not render the modal', async () => {
-      await Modal('Generate receiving pieces').absent();
+      await waitFor(async () => {
+        await Modal('Generate receiving pieces').absent();
+      });
     });
   });
 
