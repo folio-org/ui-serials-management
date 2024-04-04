@@ -94,25 +94,39 @@ const PiecesPreviewModal = ({
     await createPieces(submitValues);
   };
 
-  // TODO This could be put into some nice util functions to handle
   // istanbul ignore next
   const handleGeneration = async (values) => {
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
+      recurrence: {
+        ...ruleset?.recurrence,
+        rules: ruleset?.recurrence?.rules?.map((e) => {
+          // If no ordinal specified, assume ordinal is 1 for all rules
+          if (!e?.ordinal) {
+            e.ordinal = 1;
+          }
+          // If no pattern fields are supplied (in the case of the day time unit)
+          // Add anempty pattern object to all rules
+          if (!e?.pattern) {
+            e.pattern = {};
+          }
+          e.patternType = ruleset?.patternType;
+          return e;
+        }),
+      },
+      templateConfig: {
+        ...ruleset?.templateConfig,
+        rules: ruleset?.templateConfig?.rules?.map((rule, ruleIndex) => {
+          rule.index = ruleIndex;
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.index = levelIndex;
+            return level;
+          });
+          return rule;
+        }),
+      },
     };
-    submitValues?.recurrence?.rules?.forEach((e) => {
-      // If no ordinal specified, assume ordinal is 1 for all rules
-      if (!e?.ordinal) {
-        e.ordinal = '1';
-      }
-      // If no pattern fields are supplied (in the case of the day time unit)
-      // Add anempty pattern object to all rules
-      if (!e?.pattern) {
-        e.pattern = {};
-      }
-      e.patternType = submitValues?.patternType;
-    });
     submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
       if (values?.startingValues) {
         if (
@@ -125,12 +139,6 @@ const PiecesPreviewModal = ({
           });
         }
       }
-    });
-    submitValues?.templateConfig?.rules?.forEach((r, ri) => {
-      r.index = ri;
-      r?.ruleType?.ruleFormat?.levels?.forEach((l, li) => {
-        l.index = li;
-      });
     });
     await generatePieces(submitValues);
   };
