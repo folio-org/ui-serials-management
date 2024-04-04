@@ -14,6 +14,7 @@ import {
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import {
@@ -25,7 +26,6 @@ import {
   validateWithinRange,
   validateWholeNumber,
   useSerialsManagementRefdata,
-  selectifyRefdata,
 } from '../../utils';
 
 import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';

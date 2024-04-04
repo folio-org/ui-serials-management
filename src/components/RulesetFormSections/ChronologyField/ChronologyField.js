@@ -4,9 +4,9 @@ import { Field } from 'react-final-form';
 
 import { Select, Col, Row } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { requiredValidator, selectifyRefdata } from '@folio/stripes-erm-components';
 
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import { useSerialsManagementRefdata } from '../../utils';
 
 import {
   CHRONOLOGY_MONTH_DAY_FORMAT,

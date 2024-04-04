@@ -3,11 +3,15 @@ import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Select, Row, Col, TextArea } from '@folio/stripes/components';
-import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
+import {
+  EditCard,
+  requiredValidator,
+  selectifyRefdata,
+} from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import { useSerialsManagementRefdata } from '../../utils';
 
 import ChronologyField from '../ChronologyField';
 import EnumerationNumericFieldArray from '../EnumerationNumericFieldArray';
@@ -69,7 +73,10 @@ const LabelFieldArray = () => {
                     change(`templateConfig.rules[${index}]`, {
                       templateMetadataRuleType: e?.target?.value,
                     });
-                    change(`templateConfig.rules[${index}].ruleType`, undefined);
+                    change(
+                      `templateConfig.rules[${index}].ruleType`,
+                      undefined
+                    );
                   }}
                   required
                 />
@@ -178,7 +185,9 @@ const LabelFieldArray = () => {
         <Col xs={12}>
           <Field
             component={TextArea}
-            label={<FormattedMessage id="ui-serials-management.ruleset.template" />}
+            label={
+              <FormattedMessage id="ui-serials-management.ruleset.template" />
+            }
             name="templateConfig.templateString"
             required
             validate={requiredValidator}
