@@ -22,7 +22,7 @@ const SerialPieceSets = ({ pieceSets }) => {
     return <Badge>{pieceSets?.length}</Badge>;
   };
 
-  const renderPieceSetLink = (pieceSet) => {
+  const renderDateGenerated = (pieceSet) => {
     return (
       <Link to={urls.pieceSetView(pieceSet?.id)}>
         <FormattedDateTime date={pieceSet?.dateCreated} />
@@ -30,9 +30,13 @@ const SerialPieceSets = ({ pieceSets }) => {
     );
   };
 
+  const renderStartDate = (pieceSet) => {
+    return <FormattedDate value={pieceSet?.startDate} />;
+  };
+
   const formatter = {
-    dateGenerated: (p) => renderPieceSetLink(p),
-    startDate: (p) => <FormattedDate value={p?.startDate} />,
+    dateGenerated: (p) => renderDateGenerated(p),
+    startDate: (p) => renderStartDate(p),
     patternId: (p) => p?.ruleset?.rulesetNumber,
     total: (p) => p?.pieces?.length,
     note: (p) => p?.note,
@@ -60,8 +64,12 @@ const SerialPieceSets = ({ pieceSets }) => {
               patternId: (
                 <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
               ),
-              total: <FormattedMessage id="ui-serials-management.pieceSets.total" />,
-              note: <FormattedMessage id="ui-serials-management.pieceSets.note" />,
+              total: (
+                <FormattedMessage id="ui-serials-management.pieceSets.total" />
+              ),
+              note: (
+                <FormattedMessage id="ui-serials-management.pieceSets.note" />
+              ),
             }}
             // Column width needs to be updated with correct value when formatted time is implemented
             columnWidths={{
