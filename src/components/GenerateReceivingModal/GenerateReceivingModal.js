@@ -303,19 +303,10 @@ const GenerateReceivingModal = ({
             <FormattedMessage id="ui-serials-management.pieceSets.supplement">
               {([ariaLabel]) => (
                 <Field
+                  aria-label={ariaLabel}
+                  component={Checkbox}
                   name="supplement"
-                  render={({ input, meta }) => (
-                    <Checkbox
-                      aria-label={ariaLabel}
-                      component={Checkbox}
-                      input={input}
-                      meta={meta}
-                      onChange={(e) => {
-                        input.onChange(e.target.checked);
-                      }}
-                      type="checkbox"
-                    />
-                  )}
+                  type="checkbox"
                 />
               )}
             </FormattedMessage>
@@ -357,19 +348,10 @@ const GenerateReceivingModal = ({
               <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
                 {([ariaLabel]) => (
                   <Field
+                    aria-label={ariaLabel}
+                    component={Checkbox}
                     name="displayOnHolding"
-                    render={({ input, meta }) => (
-                      <Checkbox
-                        aria-label={ariaLabel}
-                        component={Checkbox}
-                        input={input}
-                        meta={meta}
-                        onChange={(e) => {
-                          input.onChange(e.target.checked);
-                        }}
-                        type="checkbox"
-                      />
-                    )}
+                    type="checkbox"
                   />
                 )}
               </FormattedMessage>

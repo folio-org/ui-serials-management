@@ -10,16 +10,19 @@ const propTypes = {
 };
 
 const PiecesList = ({ pieceSet, id }) => {
+  const renderPublicationDate = (piece) => {
+    return <PiecePublicationDate piece={piece} />;
+  };
   /* istanbul ignore next */
   const formatter = {
     issueCount: (e) => {
       return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
-    publicationDate: (e) => <PiecePublicationDate piece={e} />,
+    publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
       return e?.label;
     },
-    generatedInReceiving: (e) => e?.receivingId
+    generatedInReceiving: (e) => e?.receivingId,
   };
 
   return (
