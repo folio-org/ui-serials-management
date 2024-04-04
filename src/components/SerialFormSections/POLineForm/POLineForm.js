@@ -26,7 +26,7 @@ const POLineForm = () => {
   useEffect(() => {
     if (values?.orderLine && !titlesLoading) {
       if (values?.title !== titles?.titles[0] && titles?.titles?.length === 1) {
-        change('title', titles?.titles[0]);
+        change('orderLine.titleObject', titles?.titles[0]);
       }
     }
   }, [change, titles?.titles, titlesLoading, values?.orderLine, values?.title]);
@@ -34,7 +34,6 @@ const POLineForm = () => {
   // istanbul ignore next
   const removePOLine = () => {
     change('orderLine', undefined);
-    change('title', undefined);
   };
 
   const onPOLineSelected = (poLine) => {
@@ -46,7 +45,7 @@ const POLineForm = () => {
   };
 
   const formattedDataOptions = titles?.titles?.map((e) => {
-    return { title: e?.title, titleId: e?.id };
+    return { title: e?.title, id: e?.id };
   });
 
   return (
@@ -109,10 +108,10 @@ const POLineForm = () => {
               label={
                 <FormattedMessage id="ui-serials-management.ruleset.title" />
               }
-              name="title"
+              name="orderLine.titleObject"
               renderListItem={renderListItem}
               required
-              uniqueIdentificationPath="titleId"
+              uniqueIdentificationPath="id"
               validate={requiredValidator}
             />
           )}
