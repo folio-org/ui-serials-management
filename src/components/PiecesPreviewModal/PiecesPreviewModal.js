@@ -134,13 +134,18 @@ const PiecesPreviewModal = ({
     });
     await generatePieces(submitValues);
   };
+
+  const renderPublicationDate = (piece) => {
+    return <PiecePublicationDate piece={piece} />;
+  };
+
   /* istanbul ignore next */
   const formatter = {
     // If omissionOrigins exist then piece is omitted
     issueCount: (e) => {
       return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
-    publicationDate: (e) => <PiecePublicationDate piece={e} />,
+    publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
       return e?.label;
     },
@@ -234,7 +239,7 @@ const PiecesPreviewModal = ({
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             return (
-              <div key={`enumeration-numeric-field-container-${i}`}>
+              <div key={`enumeration-numeric-field-container-${e?.id}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
               </div>
@@ -279,10 +284,7 @@ const PiecesPreviewModal = ({
         >
           <FormattedMessage id="ui-serials-management.ruleset.preview" />
         </Button>
-        <div
-          key="close"
-          style={{ flex: 1 }}
-        >
+        <div key="close" style={{ flex: 1 }}>
           <Button
             key="close-button"
             id="close-button"
@@ -315,7 +317,9 @@ const PiecesPreviewModal = ({
             backendDateStandard="YYYY-MM-DD"
             component={Datepicker}
             id="ruleset-start-date"
-            label={<FormattedMessage id="ui-serials-management.ruleset.startDate" />}
+            label={
+              <FormattedMessage id="ui-serials-management.ruleset.startDate" />
+            }
             name="startDate"
             required
             usePortal
@@ -326,7 +330,9 @@ const PiecesPreviewModal = ({
           <Col xs={8}>
             <Field
               component={TextArea}
-              label={<FormattedMessage id="ui-serials-management.pieceSets.note" />}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.note" />
+              }
               name="note"
             />
           </Col>

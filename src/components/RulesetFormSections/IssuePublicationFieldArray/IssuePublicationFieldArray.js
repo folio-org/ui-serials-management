@@ -63,16 +63,16 @@ const IssuePublicationFieldArray = () => {
                 <Select
                   dataOptions={[
                     { label: '', value: '' },
-                    ...RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value].map(
-                      (e) => {
-                        return {
-                          value: e?.value,
-                          label: e?.labels
-                            ?.map((l) => intl.formatMessage({ id: l?.id }))
-                            ?.join(', '),
-                        };
-                      }
-                    ),
+                    ...RECURRENCE_PATTERN_TYPES[
+                      values?.recurrence?.timeUnit?.value
+                    ].map((e) => {
+                      return {
+                        value: e?.value,
+                        label: e?.labels
+                          ?.map((l) => intl.formatMessage({ id: l?.id }))
+                          ?.join(', '),
+                      };
+                    }),
                   ]}
                   input={input}
                   label={
@@ -104,7 +104,7 @@ const IssuePublicationFieldArray = () => {
           {() => items.map((issue, index) => {
             return (
               <IssuePublicationField
-                key={`issue-publication-field-${index}`}
+                key={`issue-publication-field-${issue?.id}`}
                 index={index}
                 name="recurrence.rules"
                 patternType={values?.patternType}
