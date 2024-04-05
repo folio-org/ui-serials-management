@@ -10,11 +10,15 @@ import {
   Tooltip,
   InfoPopover,
 } from '@folio/stripes/components';
-import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
+import {
+  EditCard,
+  requiredValidator,
+  selectifyRefdata,
+} from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import { useSerialsManagementRefdata } from '../../utils';
 import { SORTED_COMBINATION_TIME_UNITS } from '../../../constants/sortedArrays';
 
 import CombinationField from '../CombinationField';
@@ -65,7 +69,7 @@ const CombinationFieldArray = () => {
       <EditCard
         key={`combination-rule-card-${combination}`}
         deleteBtnProps={{
-          'id': `remove-combination-rule-${index}`,
+          id: `remove-combination-rule-${index}`,
         }}
         deleteButtonTooltipText={
           <FormattedMessage

@@ -33,13 +33,17 @@ const PublicationPattern = ({ serial }) => {
   const draftRulesets = serial?.serialRulesets?.filter(
     (sr) => sr?.rulesetStatus?.value === 'draft'
   );
+
+  const renderLastUpdated = (ruleset) => {
+    return <FormattedDateTime date={ruleset?.lastUpdated} />;
+  };
   /* istanbul ignore next */
   const formatter = {
     patternId: (e) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDateTime date={e?.lastUpdated} />;
+      return renderLastUpdated(e);
     },
     description: (e) => {
       return e?.description;

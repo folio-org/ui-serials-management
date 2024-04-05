@@ -13,6 +13,7 @@ import {
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import {
@@ -24,18 +25,11 @@ import {
   validateWithinRange,
   validateWholeNumber,
   useSerialsManagementRefdata,
-  selectifyRefdata,
 } from '../../utils';
 
 import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
 
-const [MONTHS, WEEKDAYS] = [
-  'Global.Month',
-  'Global.Weekday',
-];
-
-// TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
-// This should be fixed on backend then tweaked here
+const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
 const OmissionField = ({ name, index, omission }) => {
   const intl = useIntl();
@@ -208,7 +202,9 @@ const OmissionField = ({ name, index, omission }) => {
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...OMISSION_COMBINATION_PATTERN_TYPES[omission?.timeUnit?.value].map((e) => {
+              ...OMISSION_COMBINATION_PATTERN_TYPES[
+                omission?.timeUnit?.value
+              ].map((e) => {
                 return {
                   value: e?.value,
                   label: e?.labels
