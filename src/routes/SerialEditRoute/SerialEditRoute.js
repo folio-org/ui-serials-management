@@ -1,4 +1,3 @@
-import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -6,6 +5,8 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
+
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import { SerialForm } from '../../components/views';
 import { SERIAL_ENDPOINT } from '../../constants/endpoints';
@@ -66,7 +67,7 @@ const SerialEditRoute = () => {
     return <LoadingView dismissible onClose={handleClose} />;
   }
   return (
-    <Form
+    <ERMForm
       initialValues={{
         ...serial,
         ...(!!serial?.orderLine && {
@@ -82,6 +83,7 @@ const SerialEditRoute = () => {
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitSerial}
+      subscription={{ values: true }}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
@@ -93,7 +95,7 @@ const SerialEditRoute = () => {
           />
         </form>
       )}
-    </Form>
+    </ERMForm>
   );
 };
 
