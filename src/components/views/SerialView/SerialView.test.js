@@ -14,6 +14,9 @@ jest.mock('../../SerialSections/PublicationPattern', () => () => (
 jest.mock('../../SerialSections/DeprecatedPublicationPatterns', () => () => (
   <div>DeprecatedPublicationPatterns</div>
 ));
+jest.mock('../../SerialSections/SerialNotes', () => () => (
+  <div>SerialNotes</div>
+));
 
 describe('SerialView', () => {
   let renderComponent;
@@ -39,6 +42,11 @@ describe('SerialView', () => {
       const { getByText } = renderComponent;
       expect(getByText('PublicationPattern')).toBeInTheDocument();
     });
+
+    test('renders SerialNotes Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SerialNotes')).toBeInTheDocument();
+    });
   });
 
   describe('renders components with serial', () => {
@@ -63,6 +71,11 @@ describe('SerialView', () => {
     test('renders PublicationPattern Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('PublicationPattern')).toBeInTheDocument();
+    });
+
+    test('renders SerialNotes Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SerialNotes')).toBeInTheDocument();
     });
   });
 });
