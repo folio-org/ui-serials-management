@@ -2,7 +2,7 @@ import { MemoryRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import SerialsManagementSettings from './index';
-import translationsProperties from '../../test/helpers';
+import { translationsProperties } from '../../test/helpers';
 
 jest.mock('./index', () => () => <div>SettingsComponent</div>);
 
