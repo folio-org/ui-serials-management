@@ -1,5 +1,9 @@
-
-import { renderWithIntl, FormattedDateTime, KeyValue } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
+import {
+  renderWithIntl,
+  FormattedDateTime,
+  KeyValue,
+} from '@folio/stripes-erm-testing';
 
 import PieceSetInfo from './PieceSetInfo';
 
@@ -9,10 +13,10 @@ import { pieceSet } from '../../../../test/resources';
 describe('PieceSetInfo', () => {
   beforeEach(() => {
     renderWithIntl(
-      <PieceSetInfo
-        id="piece-set-section-info"
-        pieceSet={pieceSet}
-      />, translationsProperties
+      <MemoryRouter>
+        <PieceSetInfo id="piece-set-section-info" pieceSet={pieceSet} />
+      </MemoryRouter>,
+      translationsProperties
     );
   });
 
