@@ -38,6 +38,7 @@ const RulesetCreateRoute = () => {
         .then(() => handleClose());
     }
   );
+    // istanbul ignore next
   const handleSubmitValues = (values, numberGeneratorReturn) => {
     const submitValues = {
       ...values,

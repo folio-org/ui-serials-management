@@ -2,9 +2,9 @@ import { MemoryRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationProperties from '../test/helpers';
-import App from '.';
+import App from './index';
 
-jest.mock('./settings', () => () => <div>SettingsComponent</div>);
+jest.mock('./settings', () => () => <div>Settings</div>);
 jest.mock('@folio/stripes/components', () => {
   const StripesComponents = jest.requireActual('@folio/stripes/components');
 
@@ -39,7 +39,7 @@ describe('App', () => {
 
     it('renders settings component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('SettingsComponent')).toBeInTheDocument();
+      expect(getByText('Settings')).toBeInTheDocument();
     });
   });
 
