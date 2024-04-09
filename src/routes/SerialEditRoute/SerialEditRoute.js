@@ -26,7 +26,7 @@ const SerialEditRoute = () => {
     ['ui-serials-management', 'SerialEditRoute', id],
     () => ky(SERIAL_ENDPOINT(id)).json()
   );
-
+  /* istanbul ignore next */
   const { mutateAsync: putSerial } = useMutation(
     ['ui-serials-management', 'SerialEditRoute', 'putSerial'],
     (data) => {

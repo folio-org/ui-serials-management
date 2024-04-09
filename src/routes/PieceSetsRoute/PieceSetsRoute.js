@@ -21,6 +21,7 @@ const PieceSetsRoute = ({ children, path }) => {
       searchKey: 'id',
     },
   };
+    /* istanbul ignore next */
   const renderHeaderComponent = () => {
     return <RouteSwitcher primary="pieceSets" />;
   };

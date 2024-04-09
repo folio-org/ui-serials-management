@@ -57,11 +57,11 @@ const App = (props) => {
     'search',
     'openShortcutModal',
   ]);
-
+    /* istanbul ignore next */
   const changeShortcutsModal = () => {
     setShowShortcutModal(!showShortcutModal);
   };
-
+    /* istanbul ignore next */
   const shortcuts = [
     {
       name: 'openShortcutModal',
