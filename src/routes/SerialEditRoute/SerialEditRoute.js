@@ -53,8 +53,8 @@ const SerialEditRoute = () => {
         ? {
           orderLine: {
             remoteId: values?.orderLine?.id,
-            title: values?.title?.title,
-            titleId: values?.title?.titleId,
+            title: values?.orderLine?.titleObject?.title,
+            titleId: values?.orderLine?.titleObject?.id,
           },
         }
         : { orderLine: null }),
@@ -72,12 +72,10 @@ const SerialEditRoute = () => {
         ...(!!serial?.orderLine && {
           orderLine: {
             ...serial?.orderLine?.remoteId_object,
-          },
-        }),
-        ...(!!serial?.orderLine?.titleId && {
-          title: {
-            title: serial?.orderLine?.title,
-            titleId: serial?.orderLine?.titleId,
+            titleObject: {
+              title: serial?.orderLine?.title,
+              id: serial?.orderLine?.titleId,
+            },
           },
         }),
       }}
