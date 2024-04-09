@@ -96,6 +96,7 @@ const PiecesPreviewModal = ({
 
   // istanbul ignore next
   const handleGeneration = async (values) => {
+    console.log(values);
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
@@ -126,20 +127,21 @@ const PiecesPreviewModal = ({
           return rule;
         }),
       },
+      startingValues: values?.startingValues
     };
-    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
-      if (values?.startingValues) {
-        if (
-          values?.startingValues[ruleIndex]?.levels?.length &&
-          rule?.ruleType?.ruleFormat?.levels?.length
-        ) {
-          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-            level.startingValue =
-              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
-          });
-        }
-      }
-    });
+    // submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
+    //   if (values?.startingValues) {
+    //     if (
+    //       values?.startingValues[ruleIndex]?.levels?.length &&
+    //       rule?.ruleType?.ruleFormat?.levels?.length
+    //     ) {
+    //       rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+    //         level.startingValue =
+    //           values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
+    //       });
+    //     }
+    //   }
+    // });
     await generatePieces(submitValues);
   };
 
