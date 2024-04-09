@@ -25,6 +25,7 @@ import {
   SerialInfo,
   SerialPOLine,
   SerialPieceSets,
+  SerialNotes,
 } from '../../SerialSections';
 import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
@@ -176,9 +177,7 @@ const SerialView = ({
               {!!serial?.orderLine?.remoteId && (
                 <SerialPOLine {...getSectionProps('po-line')} />
               )}
-              <PublicationPattern
-                {...getSectionProps('publication-pattern')}
-              />
+              <PublicationPattern {...getSectionProps('publication-pattern')} />
               {!!serial?.serialRulesets?.find(
                 (sr) => sr?.rulesetStatus?.value === 'deprecated'
               ) && (
@@ -192,6 +191,7 @@ const SerialView = ({
                   pieceSets={pieceSets}
                 />
               )}
+              <SerialNotes {...getSectionProps('notes')} />
             </AccordionSet>
           </AccordionStatus>
         </Pane>
