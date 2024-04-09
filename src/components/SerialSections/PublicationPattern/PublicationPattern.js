@@ -13,11 +13,14 @@ import {
   Label,
   InfoPopover,
   MultiColumnList,
+  Layout,
 } from '@folio/stripes/components';
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 import { urls } from '../../utils';
+
+import css from './PublicationPattern.css';
 
 const proptypes = {
   serial: PropTypes.object,
@@ -50,6 +53,14 @@ const PublicationPattern = ({ serial }) => {
     },
   };
 
+  const renderEmpty = () => {
+    return (
+      <Layout className={css.isEmptyMessage}>
+        <FormattedMessage id="ui-serials-management.serials.publicationPattern.noActivePattern" />
+      </Layout>
+    );
+  };
+
   const renderBadge = () => {
     return <Badge>{draftRulesets?.length + (activeRuleset ? 1 : 0)}</Badge>;
   };
@@ -73,7 +84,7 @@ const PublicationPattern = ({ serial }) => {
         <FormattedMessage id="ui-serials-management.serials.publicationPattern" />
       }
     >
-      {!!activeRuleset && (
+      {activeRuleset ? (
         <>
           <Row start="xs">
             <Col xs={3}>
@@ -153,6 +164,8 @@ const PublicationPattern = ({ serial }) => {
             </Col>
           </Row>
         </>
+      ) : (
+        renderEmpty()
       )}
       {!!draftRulesets?.length && (
         <>

@@ -53,6 +53,7 @@
   "serials.removeNoteIndex": "Remove note {index}",
   "serials.addPublicationPattern": "Add publication pattern",
   "serials.publicationPattern": "Publication pattern",
+  "serials.publicationPattern.noActivePattern": "Serial has no active publication patterns",
 
   "rulesets.newPublicationPattern": "New publication pattern",
   "rulesets.editRuleset": "Edit ruleset",
