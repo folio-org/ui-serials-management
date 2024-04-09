@@ -7,6 +7,11 @@ import { translationsProperties } from '../../../../test/helpers';
 import { handlers, resource } from '../../../../test/resources';
 import PieceSetView from './PieceSetView';
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useOkapiKy: () => jest.fn(),
+}));
+
 jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
   <div>PieceSetInfo</div>
 ));

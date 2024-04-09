@@ -8,6 +8,7 @@ import { translationsProperties } from '../../../test/helpers';
 jest.mock('../../components/SearchAndFilter/SerialsFilters', () => () => (
   <div>SerialsFilters</div>
 ));
+
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
   SASQRoute: () => <div>SASQRoute</div>,
