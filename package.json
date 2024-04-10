@@ -54,7 +54,10 @@
     "permissionSets": [
       {
         "permissionName": "module.serials-management.enabled",
-        "displayName": "UI: ui-serials-management module is enabled"
+        "displayName": "UI: ui-serials-management module is enabled",
+        "subPermissions": [
+          "serials-management.refdata.read"
+        ]
       },
       {
         "permissionName": "settings.serials-management.enabled",
