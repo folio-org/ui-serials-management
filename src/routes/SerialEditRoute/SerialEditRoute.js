@@ -83,7 +83,6 @@ const SerialEditRoute = () => {
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitSerial}
-      subscription={{ values: true }}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>

@@ -51,7 +51,6 @@ const SerialCreateRoute = () => {
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitSerial}
-      subscription={{ values: true }}
     >
       {({ handleSubmit }) => (
         <form id="serial-form" onSubmit={handleSubmit}>
