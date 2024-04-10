@@ -181,19 +181,6 @@ const LabelFieldArray = () => {
 
   return (
     <>
-      <Row>
-        <Col xs={12}>
-          <Field
-            component={TextArea}
-            label={
-              <FormattedMessage id="ui-serials-management.ruleset.template" />
-            }
-            name="templateConfig.templateString"
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-      </Row>
       <FieldArray name="templateConfig.rules">
         {() => items.map((templateConfig, index) => {
           return renderLabelRule(templateConfig, index);
@@ -211,6 +198,19 @@ const LabelFieldArray = () => {
       <Button onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addLabel" />
       </Button>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={
+              <FormattedMessage id="ui-serials-management.ruleset.template" />
+            }
+            name="templateConfig.templateString"
+            required
+            validate={requiredValidator}
+          />
+        </Col>
+      </Row>
     </>
   );
 };
