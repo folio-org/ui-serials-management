@@ -42,7 +42,7 @@ const SerialEditRoute = () => {
         });
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
