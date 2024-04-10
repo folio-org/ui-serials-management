@@ -20,7 +20,10 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
+import {
+  composeValidators,
+  requiredValidator,
+} from '@folio/stripes-erm-components';
 
 import { urls, validateWithinRange } from '../utils';
 
@@ -77,26 +80,13 @@ const PiecesPreviewModal = ({
       ...ruleset,
       startDate: values?.startDate,
       note: values?.note,
+      startingValues: values?.startingValues,
     };
-    submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
-      if (values?.startingValues) {
-        if (
-          values?.startingValues[ruleIndex]?.levels?.length &&
-          rule?.ruleType?.ruleFormat?.levels?.length
-        ) {
-          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-            level.startingValue =
-              values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
-          });
-        }
-      }
-    });
     await createPieces(submitValues);
   };
 
   // istanbul ignore next
   const handleGeneration = async (values) => {
-    console.log(values);
     const submitValues = {
       ...ruleset,
       startDate: values?.startDate,
@@ -127,21 +117,8 @@ const PiecesPreviewModal = ({
           return rule;
         }),
       },
-      startingValues: values?.startingValues
+      startingValues: values?.startingValues,
     };
-    // submitValues?.templateConfig?.rules?.forEach((rule, ruleIndex) => {
-    //   if (values?.startingValues) {
-    //     if (
-    //       values?.startingValues[ruleIndex]?.levels?.length &&
-    //       rule?.ruleType?.ruleFormat?.levels?.length
-    //     ) {
-    //       rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-    //         level.startingValue =
-    //           values?.startingValues[ruleIndex]?.levels[levelIndex]?.value;
-    //       });
-    //     }
-    //   }
-    // });
     await generatePieces(submitValues);
   };
 
@@ -217,11 +194,15 @@ const PiecesPreviewModal = ({
                   />
                 }
                 name={`startingValues[${index}].levels[${i}].value`}
+                required
                 type="number"
                 validate={
                   e?.sequence?.value === 'reset'
-                    ? validateWithinRange(1, e?.units)
-                    : null
+                    ? composeValidators(
+                      requiredValidator,
+                      validateWithinRange(1, e?.units)
+                    )
+                    : requiredValidator
                 }
               />
             </Col>
