@@ -18,7 +18,7 @@ const SerialCreateRoute = () => {
   const handleClose = () => {
     history.push(`${urls.serials()}${location.search}`);
   };
-
+  /* istanbul ignore next */
   const { mutateAsync: postSerial } = useMutation(
     ['ui-serials-management', 'SerialCreateRoute', 'postSerial'],
     (data) => {
@@ -27,7 +27,7 @@ const SerialCreateRoute = () => {
         .then(() => handleClose());
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,

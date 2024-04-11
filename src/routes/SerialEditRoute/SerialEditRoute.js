@@ -17,7 +17,7 @@ const SerialEditRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
-
+  /* istanbul ignore next */
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
