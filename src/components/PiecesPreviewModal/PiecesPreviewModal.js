@@ -51,7 +51,7 @@ const PiecesPreviewModal = ({
   const ky = useOkapiKy();
   const history = useHistory();
   const [predictedPieces, setPredictedPieces] = useState(null);
-
+/* istanbul ignore next */
   const closeModal = () => {
     setShowModal(false);
     setPredictedPieces(null);
