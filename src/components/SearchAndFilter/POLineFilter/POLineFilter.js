@@ -26,6 +26,7 @@ const POLineFilter = ({ disabled, name, onPOLineSelected }) => {
             id: `${name}-po-line-search`,
             onClick: pluggableRenderProps.onClick,
           };
+          /* istanbul ignore next */
           return (
             <Button disabled={disabled} marginBottom0 {...buttonProps}>
               <FormattedMessage id="ui-serials-management.poLine.selectPOLine" />

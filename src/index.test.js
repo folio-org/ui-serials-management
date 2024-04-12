@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
-import translationProperties from '../test/helpers';
+import translationsProperties from '../test/helpers';
 import App from './index';
 
 jest.mock('./settings', () => () => <div>Settings</div>);
@@ -33,7 +33,7 @@ describe('App', () => {
         <MemoryRouter initialEntries={['/app']}>
           <App actAs="settings" match={{ path: 'app' }} />
         </MemoryRouter>,
-        translationProperties
+        translationsProperties
       );
     });
 
@@ -50,7 +50,7 @@ describe('App', () => {
         <MemoryRouter initialEntries={['/app']}>
           <App actAs="app" match={{ path: 'app' }} />
         </MemoryRouter>,
-        translationProperties
+        translationsProperties
       );
     });
 

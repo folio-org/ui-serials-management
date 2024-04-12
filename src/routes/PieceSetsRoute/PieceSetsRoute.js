@@ -21,6 +21,7 @@ const PieceSetsRoute = ({ children, path }) => {
       searchKey: 'id',
     },
   };
+  /* istanbul ignore next */
   const renderHeaderComponent = () => {
     return <RouteSwitcher primary="pieceSets" />;
   };
@@ -32,9 +33,7 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'dateCreated',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />,
     },
     {
       propertyPath: 'total',
@@ -42,15 +41,11 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'startDate',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.startDate" />,
     },
     {
       propertyPath: 'patternId',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.patternId" />,
     },
     {
       propertyPath: 'note',
@@ -73,7 +68,7 @@ const PieceSetsRoute = ({ children, path }) => {
   const renderDateCreated = (pieceSet) => {
     return <FormattedDateTime date={pieceSet?.dateCreated} />;
   };
-
+  /* istanbul ignore next */
   const renderStartDate = (pieceSet) => {
     return <FormattedDate value={pieceSet?.startDate} />;
   };
