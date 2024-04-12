@@ -194,5 +194,21 @@
     "ruleset.week.yearRange": "Semana (1-52)",
     "ruleset.month.yearRange": "Mês (Jan-Dez)",
     "ruleset.issue.nRange": "Edição (1-n)",
-    "serials.serial": "Seriado"
+    "serials.serial": "Seriado",
+    "ruleset.chronology.weekday.fullLower": "Segunda-feira",
+    "ruleset.chronology.weekday.fullUpper": "SEGUNDA-FEIRA",
+    "ruleset.chronology.weekday.sliceLower": "Seg",
+    "ruleset.chronology.weekday.sliceUpper": "SEG",
+    "ruleset.chronology.monthDay.number": "3",
+    "ruleset.chronology.monthDay.ordinal": "3º",
+    "ruleset.chronology.month.full": "Outubro",
+    "ruleset.chronology.month.number": "8",
+    "ruleset.chronology.month.slice": "Out",
+    "ruleset.chronology.year.full": "2023",
+    "ruleset.chronology.year.slice": "23",
+    "ruleset.enumeration.numberFormat.number": "Número (1, 2, 3)",
+    "ruleset.enumeration.numberFormat.ordinal": "Ordinal (1º, 2º, 3º)",
+    "ruleset.enumeration.numberFormat.roman": "Números romanos (I, II, III)",
+    "serials.notes.isEmptyMessage": "Não há notas associadas a esta publicação seriada",
+    "serials.publicationPattern.noActivePattern": "Seriado não tem padrões de publicação ativos"
 }
