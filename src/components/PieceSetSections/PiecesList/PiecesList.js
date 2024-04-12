@@ -22,7 +22,7 @@ const PiecesList = ({ pieceSet, id }) => {
     displaySummary: (e) => {
       return e?.label;
     },
-    generatedInReceiving: (e) => e?.receivingId,
+    receivingPieces: (e) => e?.receivingPieces?.length,
   };
 
   return (
@@ -40,8 +40,8 @@ const PiecesList = ({ pieceSet, id }) => {
               displaySummary: (
                 <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
-              generatedInReceiving: (
-                <FormattedMessage id="ui-serials-management.pieceSets.generatedInReceiving" />
+              receivingPieces: (
+                <FormattedMessage id="ui-serials-management.pieceSets.receivingPieces" />
               ),
             }}
             columnWidths={{
@@ -54,7 +54,7 @@ const PiecesList = ({ pieceSet, id }) => {
               'issueCount',
               'publicationDate',
               'displaySummary',
-              'generatedInReceiving',
+              'receivingPieces',
             ]}
           />
         </Col>

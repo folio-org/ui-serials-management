@@ -27,7 +27,7 @@ describe('PiecesList', () => {
         'Issue count',
         'Publication date',
         'Display summary',
-        'Generated in receiving',
+        'Receiving pieces',
       ],
     }).exists();
   });

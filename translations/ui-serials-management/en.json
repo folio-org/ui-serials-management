@@ -203,7 +203,7 @@
   "pieceSets.issueCount": "Issue count",
   "pieceSets.displaySummary": "Display summary",
   "pieceSets.publicationDate": "Publication date",
-  "pieceSets.generatedInReceiving": "Generated in receiving",
+  "pieceSets.receivingPieces": "Receiving pieces",
   "pieceSets.omitted": "Omitted",
   "pieceSets.combinedPieces": "Combined pieces: {length}",
   "pieceSets.generateReceivingPieces": "Generate receiving pieces",
