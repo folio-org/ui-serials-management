@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
@@ -47,6 +47,7 @@ const GenerateReceivingModal = ({
   holdingIds,
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
@@ -69,6 +70,13 @@ const GenerateReceivingModal = ({
       .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
       .json()
       .then(() => {
+        queryClient.invalidateQueries([
+          '@folio/serials-management',
+          'SASQ',
+          'piece-sets',
+          'view',
+          pieceSet?.id,
+        ]);
         closeModal();
       })
   );
