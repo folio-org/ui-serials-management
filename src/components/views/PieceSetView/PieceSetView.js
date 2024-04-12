@@ -34,7 +34,7 @@ const PieceSetView = ({
   );
 
   const getHoldingIds = () => {
-    if (serial?.orderLine?.remoteId_object?.locations[0]?.holdingId) {
+    if (serial?.orderLine?.remoteId_object?.locations?.[0]?.holdingId) {
       return serial?.orderLine?.remoteId_object?.locations?.map(
         (hi) => hi?.holdingId
       );
