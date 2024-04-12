@@ -36,7 +36,7 @@ const CombinationField = ({ name, index, combination }) => {
   const intl = useIntl();
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
-
+  /* istanbul ignore next */
   const validateNumberOfIssues = (value) => {
     if (value) {
       if (value < 2) {

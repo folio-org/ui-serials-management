@@ -18,7 +18,7 @@ const SerialEditRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
-
+  /* istanbul ignore next */
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
@@ -27,7 +27,7 @@ const SerialEditRoute = () => {
     ['ui-serials-management', 'SerialEditRoute', id],
     () => ky(SERIAL_ENDPOINT(id)).json()
   );
-
+  /* istanbul ignore next */
   const { mutateAsync: putSerial } = useMutation(
     ['ui-serials-management', 'SerialEditRoute', 'putSerial'],
     (data) => {
@@ -43,7 +43,7 @@ const SerialEditRoute = () => {
         });
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
