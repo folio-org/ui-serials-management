@@ -528,6 +528,28 @@ const refdata = [
       },
     ],
   },
+  {
+    id: '2c9180a28ec3167a018ec31f7e9c003c',
+    desc: 'SerialRuleset.RulesetStatus',
+    internal: true,
+    values: [
+      {
+        id: '2c9180a28ec3167a018ec31f7e9d003d',
+        value: 'active',
+        label: 'Active',
+      },
+      {
+        id: '2c9180a28ec3167a018ec31f7ea6003f',
+        value: 'deprecated',
+        label: 'Deprecated',
+      },
+      {
+        id: '2c9180a28ec3167a018ec31f7ea1003e',
+        value: 'draft',
+        label: 'Draft',
+      },
+    ],
+  },
 ];
 
 export default refdata;

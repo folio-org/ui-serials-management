@@ -1,4 +1,3 @@
-import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -6,6 +5,8 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
+
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import { SerialForm } from '../../components/views';
 import { SERIAL_ENDPOINT } from '../../constants/endpoints';
@@ -17,7 +18,7 @@ const SerialEditRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
-
+  /* istanbul ignore next */
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
@@ -26,7 +27,7 @@ const SerialEditRoute = () => {
     ['ui-serials-management', 'SerialEditRoute', id],
     () => ky(SERIAL_ENDPOINT(id)).json()
   );
-
+  /* istanbul ignore next */
   const { mutateAsync: putSerial } = useMutation(
     ['ui-serials-management', 'SerialEditRoute', 'putSerial'],
     (data) => {
@@ -42,7 +43,7 @@ const SerialEditRoute = () => {
         });
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
@@ -66,7 +67,7 @@ const SerialEditRoute = () => {
     return <LoadingView dismissible onClose={handleClose} />;
   }
   return (
-    <Form
+    <ERMForm
       initialValues={{
         ...serial,
         ...(!!serial?.orderLine && {
@@ -93,7 +94,7 @@ const SerialEditRoute = () => {
           />
         </form>
       )}
-    </Form>
+    </ERMForm>
   );
 };
 

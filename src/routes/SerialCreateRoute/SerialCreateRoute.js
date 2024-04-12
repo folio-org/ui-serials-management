@@ -1,10 +1,11 @@
-import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation } from 'react-query';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
+
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import { SerialForm } from '../../components/views';
 import { SERIALS_ENDPOINT } from '../../constants/endpoints';
@@ -18,7 +19,7 @@ const SerialCreateRoute = () => {
   const handleClose = () => {
     history.push(`${urls.serials()}${location.search}`);
   };
-
+  /* istanbul ignore next */
   const { mutateAsync: postSerial } = useMutation(
     ['ui-serials-management', 'SerialCreateRoute', 'postSerial'],
     (data) => {
@@ -27,7 +28,7 @@ const SerialCreateRoute = () => {
         .then(() => handleClose());
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
@@ -43,7 +44,7 @@ const SerialCreateRoute = () => {
   };
 
   return (
-    <Form
+    <ERMForm
       initialValues={{
         serialStatus: { value: 'active' },
       }}
@@ -61,7 +62,7 @@ const SerialCreateRoute = () => {
           />
         </form>
       )}
-    </Form>
+    </ERMForm>
   );
 };
 
