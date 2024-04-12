@@ -43,7 +43,7 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/11/2024')).toBeInTheDocument();
+      expect(getByText('4/12/2024')).toBeInTheDocument();
     });
   });
 
@@ -58,7 +58,7 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/11/2024')).toBeInTheDocument();
+      expect(getByText('4/12/2024')).toBeInTheDocument();
     });
 
     test('renders the Omitted', async () => {
