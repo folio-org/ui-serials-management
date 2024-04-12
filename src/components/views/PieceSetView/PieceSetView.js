@@ -30,7 +30,8 @@ const PieceSetView = ({
       'GenerateReceivingModal',
       pieceSet?.ruleset?.owner?.id,
     ],
-    () => ky.get(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json()
+    () => ky.get(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json(),
+    { enabled: !!pieceSet?.ruleset?.owner?.id }
   );
 
   const getHoldingIds = () => {
