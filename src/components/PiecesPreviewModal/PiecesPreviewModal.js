@@ -213,7 +213,6 @@ const PiecesPreviewModal = ({
   };
 
   // Required so that sonarcloud doesnt flag use of index within key prop
-  // BEGIN-NOSCAN
   const renderTemplateStartingValues = () => {
     return (
       <div className={css.container}>
@@ -232,6 +231,7 @@ const PiecesPreviewModal = ({
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             return (
+              // NOSONAR
               <div key={`enumeration-numeric-field-container-${i}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
@@ -243,7 +243,6 @@ const PiecesPreviewModal = ({
       </div>
     );
   };
-  // END-NOSCAN
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
