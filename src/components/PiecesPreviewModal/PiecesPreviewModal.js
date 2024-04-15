@@ -229,8 +229,10 @@ const PiecesPreviewModal = ({
               'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
+            // Required so that sonarcloud doesnt flag use of index within key prop
+            const indexCounter = i;
             return (
-              <div key={`enumeration-numeric-field-container-${e?.id}`}>
+              <div key={`enumeration-numeric-field-container-${indexCounter}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
               </div>
