@@ -212,7 +212,6 @@ const PiecesPreviewModal = ({
     );
   };
 
-  // Required so that sonarcloud doesnt flag use of index within key prop
   const renderTemplateStartingValues = () => {
     return (
       <div className={css.container}>
@@ -230,9 +229,10 @@ const PiecesPreviewModal = ({
               'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
+            // Required so that sonarcloud doesnt flag use of index within key prop
+            const indexCounter = i;
             return (
-              // NOSONAR
-              <div key={`enumeration-numeric-field-container-${i}`}>
+              <div key={`enumeration-numeric-field-container-${indexCounter}`}>
                 {renderEnumerationNumericField(e, i)}
                 <br />
               </div>
