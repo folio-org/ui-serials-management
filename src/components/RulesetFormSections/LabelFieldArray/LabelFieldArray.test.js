@@ -2,6 +2,7 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, TestForm, Button, Select, TextArea } from '@folio/stripes-erm-testing';
 
 import mockRefdata from '../../../../test/resources/refdata';
+import { locales as mockLocales } from '../../../../test/resources';
 import LabelFieldArray from './LabelFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
@@ -17,6 +18,11 @@ jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
   useLocales: () => mockRefdata,
+}));
+
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useLocales: () => ({ isLoading: false, data: mockLocales }),
 }));
 
 jest.mock('../ChronologyField', () => () => <div>ChronologyField</div>);
