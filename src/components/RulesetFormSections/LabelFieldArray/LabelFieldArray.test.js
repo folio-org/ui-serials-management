@@ -16,6 +16,7 @@ jest.mock('react-final-form', () => ({
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
+  useLocales: () => mockRefdata,
 }));
 
 jest.mock('../ChronologyField', () => () => <div>ChronologyField</div>);
