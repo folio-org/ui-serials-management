@@ -1,6 +1,8 @@
 export const REFDATA_ENDPOINT = 'serials-management/refdata';
 export const SETTINGS_ENDPOINT = 'serials-management/settings/appSettings';
 
+export const LOCALES_ENDPOINT = 'serials-management/locales';
+
 export const SERIALS_ENDPOINT = 'serials-management/serials';
 export const SERIAL_ENDPOINT = (id) => `serials-management/serials/${id}`;
 
