@@ -1,7 +1,14 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
-
 import PiecePublicationDate from './PiecePublicationDate';
 import { translationsProperties } from '../../../test/helpers';
+
+function getCurrentFormattedDate() {
+  const date = new Date();
+  const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  return formattedDate;
+}
+
+const expectedDate = getCurrentFormattedDate();
 
 const recurrencePiece = {
   piece: {
@@ -43,7 +50,7 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/15/2024')).toBeInTheDocument();
+      expect(getByText(expectedDate)).toBeInTheDocument();
     });
   });
 
@@ -58,7 +65,7 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/15/2024')).toBeInTheDocument();
+      expect(getByText(expectedDate)).toBeInTheDocument();
     });
 
     test('renders the Omitted', async () => {

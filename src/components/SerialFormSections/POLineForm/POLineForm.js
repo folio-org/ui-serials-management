@@ -3,6 +3,8 @@ import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
+import isEqual from 'lodash/isEqual';
+
 import { Row, Col, KeyValue } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -24,9 +26,16 @@ const POLineForm = () => {
 
   // istanbul ignore next
   useEffect(() => {
-    if (values?.orderLine && !titlesLoading) {
-      if (values?.title !== titles?.titles[0] && titles?.titles?.length === 1) {
-        change('orderLine.titleObject', titles?.titles[0]);
+    if (
+      values?.orderLine &&
+      !titlesLoading &&
+      titles?.titles?.length === 1
+    ) {
+      const titleObj = { id: titles.titles[0].id, title: titles.titles[0].title };
+      if (!isEqual(values.orderLine?.titleObject, titleObj)) {
+        // Ensure same shape as initialValues -- THIS IS FLAKY -- WE SHOULD BE DOING SOMETHING CLEVERER HERE
+        // Don't use form state here mabe, track this kind of extra difference through our own state? -- Investigate
+        change('orderLine.titleObject', titleObj);
       }
     }
   }, [change, titles?.titles, titlesLoading, values?.orderLine, values?.title]);
