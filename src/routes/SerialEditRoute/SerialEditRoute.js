@@ -66,6 +66,7 @@ const SerialEditRoute = () => {
   if (isLoading) {
     return <LoadingView dismissible onClose={handleClose} />;
   }
+
   return (
     <ERMForm
       initialValues={{
@@ -73,6 +74,10 @@ const SerialEditRoute = () => {
         ...(!!serial?.orderLine && {
           orderLine: {
             ...serial?.orderLine?.remoteId_object,
+            /* This object (titleObject) is used later and a useEffect inserts into form state,
+             * so any changes to this state shape need to be reflected in the useEffect
+             * in POLineForm.
+             */
             titleObject: {
               title: serial?.orderLine?.title,
               id: serial?.orderLine?.titleId,
@@ -85,14 +90,12 @@ const SerialEditRoute = () => {
       onSubmit={submitSerial}
     >
       {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <SerialForm
-            handlers={{
-              onClose: handleClose,
-              onSubmit: handleSubmit,
-            }}
-          />
-        </form>
+        <SerialForm
+          handlers={{
+            onClose: handleClose,
+            onSubmit: handleSubmit,
+          }}
+        />
       )}
     </ERMForm>
   );
