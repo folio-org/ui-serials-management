@@ -2,7 +2,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col, TextArea } from '@folio/stripes/components';
+import { Button, Select, Row, Col, TextArea, Selection } from '@folio/stripes/components';
 import {
   EditCard,
   requiredValidator,
@@ -16,6 +16,7 @@ import { useSerialsManagementRefdata } from '../../utils';
 import ChronologyField from '../ChronologyField';
 import EnumerationNumericFieldArray from '../EnumerationNumericFieldArray';
 import EnumerationTextualFieldArray from '../EnumerationTextualFieldArray';
+import { useLocales } from '../../../hooks';
 
 const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'TemplateMetadataRule.TemplateMetadataRuleType',
@@ -26,6 +27,7 @@ const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
 const LabelFieldArray = () => {
   const { values } = useFormState();
   const { change } = useForm();
+  const { data: locales } = useLocales();
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     'templateConfig.rules'
   );
@@ -34,6 +36,12 @@ const LabelFieldArray = () => {
     CHRONOLOGY_LABEL_FORMAT,
     ENUMERATION_LABEL_FORMAT,
   ]);
+
+  const filterSelectValues = (value, dataOptions) => {
+    const regex = new RegExp(value, 'i');
+
+    return dataOptions.filter(({ label }) => label.search(regex) !== -1);
+  };
 
   const renderLabelRule = (templateConfig, index) => {
     return (
@@ -85,68 +93,82 @@ const LabelFieldArray = () => {
             />
           </Col>
           {values?.templateConfig?.rules[index]?.templateMetadataRuleType && (
-            <Col xs={3}>
-              <Field
-                name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
-                render={({ input, meta }) => {
-                  let selectedDataOptions = [];
-                  if (
-                    values?.templateConfig?.rules[index]
-                      ?.templateMetadataRuleType === 'chronology'
-                  ) {
-                    selectedDataOptions = selectifyRefdata(
-                      refdataValues,
-                      CHRONOLOGY_LABEL_FORMAT,
-                      'value'
-                    );
-                  } else if (
-                    values?.templateConfig?.rules[index]
-                      ?.templateMetadataRuleType === 'enumeration'
-                  ) {
-                    selectedDataOptions = selectifyRefdata(
-                      refdataValues,
-                      ENUMERATION_LABEL_FORMAT,
-                      'value'
-                    );
-                  }
-                  return (
-                    <Select
-                      dataOptions={[
-                        { value: '', label: '' },
-                        ...selectedDataOptions,
-                      ]}
-                      input={input}
-                      label={
-                        <FormattedMessage
-                          id={`ui-serials-management.ruleset.${values?.templateConfig?.rules[index]?.templateMetadataRuleType}Format`}
-                        />
-                      }
-                      meta={meta}
-                      onChange={(e) => {
-                        change(`templateConfig.rules[${index}].ruleType`, {
-                          templateMetadataRuleFormat: e?.target?.value,
-                        });
-                        change(
-                          `templateConfig.rules[${index}].ruleType.ruleFormat`,
-                          undefined
-                        );
-                        if (
-                          values?.templateConfig?.rules[index]
-                            ?.templateMetadataRuleType === 'enumeration'
-                        ) {
-                          change(
-                            `templateConfig.rules[${index}].ruleType.ruleFormat.levels`,
-                            [{}]
-                          );
+            <>
+              <Col xs={3}>
+                <Field
+                  name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
+                  render={({ input, meta }) => {
+                    let selectedDataOptions = [];
+                    if (
+                      values?.templateConfig?.rules[index]
+                        ?.templateMetadataRuleType === 'chronology'
+                    ) {
+                      selectedDataOptions = selectifyRefdata(
+                        refdataValues,
+                        CHRONOLOGY_LABEL_FORMAT,
+                        'value'
+                      );
+                    } else if (
+                      values?.templateConfig?.rules[index]
+                        ?.templateMetadataRuleType === 'enumeration'
+                    ) {
+                      selectedDataOptions = selectifyRefdata(
+                        refdataValues,
+                        ENUMERATION_LABEL_FORMAT,
+                        'value'
+                      );
+                    }
+                    return (
+                      <Select
+                        dataOptions={[
+                          { value: '', label: '' },
+                          ...selectedDataOptions,
+                        ]}
+                        input={input}
+                        label={
+                          <FormattedMessage
+                            id={`ui-serials-management.ruleset.${values?.templateConfig?.rules[index]?.templateMetadataRuleType}Format`}
+                          />
                         }
-                      }}
-                      required
-                    />
-                  );
-                }}
-                validate={requiredValidator}
-              />
-            </Col>
+                        meta={meta}
+                        onChange={(e) => {
+                          change(`templateConfig.rules[${index}].ruleType`, {
+                            templateMetadataRuleFormat: e?.target?.value,
+                          });
+                          change(
+                            `templateConfig.rules[${index}].ruleType.ruleFormat`,
+                            undefined
+                          );
+                          if (
+                            values?.templateConfig?.rules[index]
+                              ?.templateMetadataRuleType === 'enumeration'
+                          ) {
+                            change(
+                              `templateConfig.rules[${index}].ruleType.ruleFormat.levels`,
+                              [{}]
+                            );
+                          }
+                        }}
+                        required
+                      />
+                    );
+                  }}
+                  validate={requiredValidator}
+                />
+              </Col>
+              <Col xs={3}>
+                <Field
+                  component={Selection}
+                  dataOptions={locales}
+                  label="Locale"
+                  name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+                  onFilter={filterSelectValues}
+                  parse={(v) => v}
+                  required
+                  validate={requiredValidator}
+                />
+              </Col>
+            </>
           )}
         </Row>
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
