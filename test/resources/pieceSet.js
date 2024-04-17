@@ -1,5 +1,7 @@
 const pieceSet = {
   id: 'daa8a40a-8da5-441d-adb8-7e98470df1f8',
+  title: 'Quiet times',
+  titleId: '157b3857-f94b-45c9-9b0a-00e2d9c68dbb',
   startDate: '2024-02-01',
   ruleset: {
     id: '87edca46-4cff-45c4-9023-3aa20d09330b',
