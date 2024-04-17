@@ -84,6 +84,22 @@ const PieceSetInfo = ({ pieceSet, id }) => {
           </KeyValue>
         </Col>
       </Row>
+      {pieceSet?.titleId &&
+        <Row start="xs">
+          <Col xs={12}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.serials.titleInReceiving" />
+              }
+              value={
+                <Link to={urls.receivingView(pieceSet.titleId)}>
+                  {pieceSet?.title}
+                </Link>
+              }
+            />
+          </Col>
+        </Row>
+      }
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { Row, Col, KeyValue } from '@folio/stripes/components';
+import { urls } from '../../utils';
 
 const propTypes = {
   serial: PropTypes.object,
@@ -29,6 +31,22 @@ const SerialInfo = ({ serial, id }) => {
           />
         </Col>
       </Row>
+      {serial?.orderLine?.titleId &&
+        <Row start="xs">
+          <Col xs={12}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-serials-management.serials.titleInReceiving" />
+              }
+              value={
+                <Link to={urls.receivingView(serial.orderLine.titleId)}>
+                  {serial?.orderLine?.title}
+                </Link>
+              }
+            />
+          </Col>
+        </Row>
+      }
     </div>
   );
 };

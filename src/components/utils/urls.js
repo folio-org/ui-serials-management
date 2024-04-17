@@ -12,7 +12,8 @@ const urls = {
   inventoryView: (id) => `/inventory/view/${id}`,
   poLineView: (id) => `/orders/lines/view/${id}`,
   organisationView: (id) => `/organizations/view/${id}`,
-  fundView: (id) => `/finance/fund/view/${id}`
+  fundView: (id) => `/finance/fund/view/${id}`,
+  receivingView: (id) => `/receiving/${id}/view`,
 };
 
 export default urls;

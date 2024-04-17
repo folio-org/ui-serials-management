@@ -47,7 +47,7 @@ const PieceSetView = ({
   const getSectionProps = (name) => {
     return {
       id: `piece-set-section-${name}`,
-      pieceSet,
+      pieceSet: { ...pieceSet, titleId: serial?.orderLine?.titleId },
     };
   };
 
