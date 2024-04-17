@@ -41,6 +41,7 @@
   "serials.editSerial": "Edit serial",
   "serials.poLineNumber": "PO line number",
   "serials.title": "Title",
+  "serials.titleInReceiving": "Title in Receiving",
   "serials.productIDs": "Product IDs",
   "serials.location": "Location",
   "serials.predictionPattern": "Prediction pattern",
