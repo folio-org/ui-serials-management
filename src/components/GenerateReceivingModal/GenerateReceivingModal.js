@@ -20,6 +20,7 @@ import {
   Checkbox,
   Label,
   MessageBanner,
+  Spinner,
 } from '@folio/stripes/components';
 
 import { useHoldings, useLocations } from '../../hooks';
@@ -189,7 +190,6 @@ const GenerateReceivingModal = ({
               ],
             };
           });
-
           return returnObj;
         })
     );
@@ -400,7 +400,11 @@ const GenerateReceivingModal = ({
           onClick={handleSubmit}
           type="submit"
         >
-          <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+          {!submitting ? (
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+          ) : (
+            <Spinner />
+          )}
         </Button>
         <Button disabled={submitting} marginBottom0 onClick={handleClose}>
           <FormattedMessage id="ui-serials-management.close" />
