@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -48,6 +48,7 @@ const GenerateReceivingModal = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const callout = useCallout();
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
@@ -77,6 +78,14 @@ const GenerateReceivingModal = ({
           'view',
           pieceSet?.id,
         ]);
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id="ui-serials-management.pieceSets.countReceivingGenerated"
+              values={{ count: data?.pieces?.length }}
+            />
+          ),
+        });
         closeModal();
       })
   );
@@ -180,10 +189,19 @@ const GenerateReceivingModal = ({
               ],
             };
           });
+
           return returnObj;
         })
     );
     await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
+  };
+
+  const renderMessageBanner = () => {
+    return (
+      <MessageBanner>
+        <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
+      </MessageBanner>
+    );
   };
 
   const renderPredictedPiecesInformation = () => {
@@ -321,7 +339,7 @@ const GenerateReceivingModal = ({
           </Col>
         </Row>
         <Row>
-          {serial?.orderLine?.remoteId_object?.locations?.length && (
+          {!!serial?.orderLine?.remoteId_object?.locations?.length && (
             <Col xs={6}>
               <Field
                 component={Select}
@@ -342,7 +360,7 @@ const GenerateReceivingModal = ({
               />
             </Col>
           )}
-          {holdingIds?.length && (
+          {!!holdingIds?.length && (
             <Col xs={3}>
               <Label>
                 <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
@@ -405,6 +423,7 @@ const GenerateReceivingModal = ({
       mutators={arrayMutators}
       onSubmit={handleGeneration}
     >
+      {renderMessageBanner()}
       {renderPredictedPiecesInformation()}
       {renderFields()}
     </FormModal>
