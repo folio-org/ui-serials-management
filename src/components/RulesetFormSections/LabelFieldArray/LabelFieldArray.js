@@ -2,7 +2,16 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col, TextArea, Selection } from '@folio/stripes/components';
+import {
+  Button,
+  Select,
+  Row,
+  Col,
+  TextArea,
+  Selection,
+  InfoPopover,
+  Layout,
+} from '@folio/stripes/components';
 import {
   EditCard,
   requiredValidator,
@@ -41,6 +50,32 @@ const LabelFieldArray = () => {
     const regex = new RegExp(value, 'i');
 
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
+  };
+
+  const renderTemplateInfo = () => {
+    return (
+      <InfoPopover
+        content={
+          <Layout className="flex flex-direction-column centerContent">
+            <Layout>
+              <FormattedMessage id="ui-serials-management.ruleset.templatePopover" />
+            </Layout>
+            <Layout className="marginTop1">
+              <Button
+                allowAnchorClick
+                buttonStyle="primary"
+                href="https://folio-org.atlassian.net/wiki/x/dwA7CQ"
+                marginBottom0
+                rel="noreferrer"
+                target="blank"
+              >
+                <FormattedMessage id="ui-serials-management.learnMore" />
+              </Button>
+            </Layout>
+          </Layout>
+        }
+      />
+    );
   };
 
   const renderLabelRule = (templateConfig, index) => {
@@ -225,7 +260,10 @@ const LabelFieldArray = () => {
           <Field
             component={TextArea}
             label={
-              <FormattedMessage id="ui-serials-management.ruleset.template" />
+              <>
+                <FormattedMessage id="ui-serials-management.ruleset.template" />
+                {renderTemplateInfo()}
+              </>
             }
             name="templateConfig.templateString"
             required
