@@ -116,10 +116,16 @@ const LabelFieldArray = () => {
                     change(`templateConfig.rules[${index}]`, {
                       templateMetadataRuleType: e?.target?.value,
                     });
-                    change(
-                      `templateConfig.rules[${index}].ruleType`,
-                      undefined
-                    );
+                    if (e?.target?.value === 'chronology') {
+                      change(`templateConfig.rules[${index}].ruleType`, {
+                        ruleLocale: 'en',
+                      });
+                    } else {
+                      change(
+                        `templateConfig.rules[${index}].ruleType`,
+                        undefined
+                      );
+                    }
                   }}
                   required
                 />
@@ -167,9 +173,10 @@ const LabelFieldArray = () => {
                         }
                         meta={meta}
                         onChange={(e) => {
-                          change(`templateConfig.rules[${index}].ruleType`, {
-                            templateMetadataRuleFormat: e?.target?.value,
-                          });
+                          change(
+                            `templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`,
+                            e?.target?.value
+                          );
                           change(
                             `templateConfig.rules[${index}].ruleType.ruleFormat`,
                             undefined
@@ -191,18 +198,21 @@ const LabelFieldArray = () => {
                   validate={requiredValidator}
                 />
               </Col>
-              <Col xs={3}>
-                <Field
-                  component={Selection}
-                  dataOptions={locales}
-                  label="Locale"
-                  name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
-                  onFilter={filterSelectValues}
-                  parse={(v) => v}
-                  required
-                  validate={requiredValidator}
-                />
-              </Col>
+              {values?.templateConfig?.rules[index]
+                ?.templateMetadataRuleType === 'chronology' && (
+                <Col xs={3}>
+                  <Field
+                    component={Selection}
+                    dataOptions={locales}
+                    label="Locale"
+                    name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+                    onFilter={filterSelectValues}
+                    parse={(v) => v}
+                    required
+                    validate={requiredValidator}
+                  />
+                </Col>
+              )}
             </>
           )}
         </Row>
