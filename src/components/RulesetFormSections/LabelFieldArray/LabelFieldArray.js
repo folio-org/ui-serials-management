@@ -2,7 +2,16 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Select, Row, Col, TextArea, Selection } from '@folio/stripes/components';
+import {
+  Button,
+  Select,
+  Row,
+  Col,
+  TextArea,
+  Selection,
+  InfoPopover,
+  Layout,
+} from '@folio/stripes/components';
 import {
   EditCard,
   requiredValidator,
@@ -43,6 +52,32 @@ const LabelFieldArray = () => {
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
   };
 
+  const renderTemplateInfo = () => {
+    return (
+      <InfoPopover
+        content={
+          <Layout className="flex flex-direction-column centerContent">
+            <Layout>
+              <FormattedMessage id="ui-serials-management.ruleset.templatePopover" />
+            </Layout>
+            <Layout className="marginTop1">
+              <Button
+                allowAnchorClick
+                buttonStyle="primary"
+                href="https://folio-org.atlassian.net/wiki/x/dwA7CQ"
+                marginBottom0
+                rel="noreferrer"
+                target="blank"
+              >
+                <FormattedMessage id="ui-serials-management.learnMore" />
+              </Button>
+            </Layout>
+          </Layout>
+        }
+      />
+    );
+  };
+
   const renderLabelRule = (templateConfig, index) => {
     return (
       <EditCard
@@ -81,10 +116,16 @@ const LabelFieldArray = () => {
                     change(`templateConfig.rules[${index}]`, {
                       templateMetadataRuleType: e?.target?.value,
                     });
-                    change(
-                      `templateConfig.rules[${index}].ruleType`,
-                      undefined
-                    );
+                    if (e?.target?.value === 'chronology') {
+                      change(`templateConfig.rules[${index}].ruleType`, {
+                        ruleLocale: 'en',
+                      });
+                    } else {
+                      change(
+                        `templateConfig.rules[${index}].ruleType`,
+                        undefined
+                      );
+                    }
                   }}
                   required
                 />
@@ -132,9 +173,10 @@ const LabelFieldArray = () => {
                         }
                         meta={meta}
                         onChange={(e) => {
-                          change(`templateConfig.rules[${index}].ruleType`, {
-                            templateMetadataRuleFormat: e?.target?.value,
-                          });
+                          change(
+                            `templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`,
+                            e?.target?.value
+                          );
                           change(
                             `templateConfig.rules[${index}].ruleType.ruleFormat`,
                             undefined
@@ -156,18 +198,21 @@ const LabelFieldArray = () => {
                   validate={requiredValidator}
                 />
               </Col>
-              <Col xs={3}>
-                <Field
-                  component={Selection}
-                  dataOptions={locales}
-                  label="Locale"
-                  name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
-                  onFilter={filterSelectValues}
-                  parse={(v) => v}
-                  required
-                  validate={requiredValidator}
-                />
-              </Col>
+              {values?.templateConfig?.rules[index]
+                ?.templateMetadataRuleType === 'chronology' && (
+                <Col xs={3}>
+                  <Field
+                    component={Selection}
+                    dataOptions={locales}
+                    label="Locale"
+                    name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+                    onFilter={filterSelectValues}
+                    parse={(v) => v}
+                    required
+                    validate={requiredValidator}
+                  />
+                </Col>
+              )}
             </>
           )}
         </Row>
@@ -225,7 +270,10 @@ const LabelFieldArray = () => {
           <Field
             component={TextArea}
             label={
-              <FormattedMessage id="ui-serials-management.ruleset.template" />
+              <>
+                <FormattedMessage id="ui-serials-management.ruleset.template" />
+                {renderTemplateInfo()}
+              </>
             }
             name="templateConfig.templateString"
             required

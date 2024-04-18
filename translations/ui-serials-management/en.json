@@ -15,6 +15,7 @@
   "description": "Description",
   "close" : "Close",
   "lastUpdated": "Last updated",
+  "learnMore": "Learn more",
 
   "refdata.label": "Label",
   "refdata.value": "Value",
@@ -191,6 +192,7 @@
   "ruleset.numberOfUnits": "No. of units",
   "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
   "ruleset.pickList": "Pick list",
+  "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
   
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",
