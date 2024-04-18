@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
 import arrayMutators from 'final-form-arrays';
 import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy, CalloutContext } from '@folio/stripes/core';
+import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -49,7 +48,7 @@ const GenerateReceivingModal = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
