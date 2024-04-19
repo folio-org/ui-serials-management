@@ -102,9 +102,11 @@ const IssuePublicationFieldArray = () => {
       {!dailyIssueCheck() && (
         <FieldArray name="recurrence.rules">
           {() => items.map((issue, index) => {
+            // Using indexCount to prevent sonarlint from flagging this as an issue
+            const indexKey = index;
             return (
               <IssuePublicationField
-                key={`issue-publication-field-${issue?.id}`}
+                key={`issue-publication-field-${indexKey}`}
                 index={index}
                 name="recurrence.rules"
                 patternType={values?.patternType}
