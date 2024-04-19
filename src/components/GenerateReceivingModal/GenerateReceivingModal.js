@@ -173,27 +173,41 @@ const GenerateReceivingModal = ({
   };
 
   const handleGeneration = async (values) => {
-    const piecesArray = await Promise.all(
-      (pieceSet?.pieces || [])
-        .map((piece) => formatReceivingPiece(piece, values))
-        .filter(Boolean)
-        // Set up an array of Promises that will call receieving sequentially and respond
-        // Then take that response and transform. We Promise.all to then have an array to send to our backend
-        .map(async (pieceInReceivingShape) => {
-          let returnObj;
-          await submitReceivingPiece(pieceInReceivingShape).then((res) => {
-            returnObj = {
-              ...pieceInReceivingShape?.piece,
-              receivingPieces: [
-                ...(pieceInReceivingShape?.piece?.receivingPieces || []),
-                { receivingId: res?.id },
-              ],
-            };
-          });
-          return returnObj;
-        })
-    );
-    await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
+    try {
+      const piecesArray = await Promise.all(
+        (pieceSet?.pieces || [])
+          .map((piece) => formatReceivingPiece(piece, values))
+          .filter(Boolean)
+          // Set up an array of Promises that will call receieving sequentially and respond
+          // Then take that response and transform. We Promise.all to then have an array to send to our backend
+          .map(async (pieceInReceivingShape) => {
+            let returnObj;
+            await submitReceivingPiece(pieceInReceivingShape).then((res) => {
+              returnObj = {
+                ...pieceInReceivingShape?.piece,
+                receivingPieces: [
+                  ...(pieceInReceivingShape?.piece?.receivingPieces || []),
+                  { receivingId: res?.id },
+                ],
+              };
+            });
+            return returnObj;
+          })
+      );
+      await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
+    } catch (e) {
+      const { errors } = await e.response.json();
+      errors?.map((error) => callout.sendCallout({
+        message: (
+          <>
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingErrorMessage" />
+            {error?.message}
+          </>
+        ),
+        type: 'error',
+        timeout: 0,
+      }));
+    }
   };
 
   const renderMessageBanner = () => {

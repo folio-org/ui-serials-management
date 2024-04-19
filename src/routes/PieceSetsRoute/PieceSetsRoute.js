@@ -18,7 +18,7 @@ const PieceSetsRoute = ({ children, path }) => {
   const fetchParameters = {
     endpoint: PIECE_SETS_ENDPOINT,
     SASQ_MAP: {
-      searchKey: 'id',
+      searchKey: 'id,ruleset.rulesetNumber,note',
     },
   };
   /* istanbul ignore next */
