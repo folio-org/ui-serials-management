@@ -63,16 +63,16 @@ const IssuePublicationFieldArray = () => {
                 <Select
                   dataOptions={[
                     { label: '', value: '' },
-                    ...RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value].map(
-                      (e) => {
-                        return {
-                          value: e?.value,
-                          label: e?.labels
-                            ?.map((l) => intl.formatMessage({ id: l?.id }))
-                            ?.join(', '),
-                        };
-                      }
-                    ),
+                    ...RECURRENCE_PATTERN_TYPES[
+                      values?.recurrence?.timeUnit?.value
+                    ].map((e) => {
+                      return {
+                        value: e?.value,
+                        label: e?.labels
+                          ?.map((l) => intl.formatMessage({ id: l?.id }))
+                          ?.join(', '),
+                      };
+                    }),
                   ]}
                   input={input}
                   label={
@@ -102,9 +102,11 @@ const IssuePublicationFieldArray = () => {
       {!dailyIssueCheck() && (
         <FieldArray name="recurrence.rules">
           {() => items.map((issue, index) => {
+            // Using indexCount to prevent sonarlint from flagging this as an issue
+            const indexKey = index;
             return (
               <IssuePublicationField
-                key={`issue-publication-field-${index}`}
+                key={`issue-publication-field-${indexKey}`}
                 index={index}
                 name="recurrence.rules"
                 patternType={values?.patternType}

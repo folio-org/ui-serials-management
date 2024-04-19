@@ -3,6 +3,8 @@ import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
+import isEqual from 'lodash/isEqual';
+
 import { Row, Col, KeyValue } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -11,11 +13,8 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import SerialPOLineInfo from '../../SerialPOLineInfo';
 import POLineLookup from '../POLineLookup';
-import {
-  useTitles,
-} from '../../../hooks';
+import { useTitles } from '../../../hooks';
 import { urls } from '../../utils';
-
 
 const POLineForm = () => {
   const { values } = useFormState();
@@ -27,9 +26,16 @@ const POLineForm = () => {
 
   // istanbul ignore next
   useEffect(() => {
-    if (values?.orderLine && !titlesLoading) {
-      if (values?.title !== titles?.titles[0] && titles?.titles?.length === 1) {
-        change('title', titles?.titles[0]);
+    if (
+      values?.orderLine &&
+      !titlesLoading &&
+      titles?.titles?.length === 1
+    ) {
+      const titleObj = { id: titles.titles[0].id, title: titles.titles[0].title };
+      if (!isEqual(values.orderLine?.titleObject, titleObj)) {
+        // Ensure same shape as initialValues -- THIS IS FLAKY -- WE SHOULD BE DOING SOMETHING CLEVERER HERE
+        // Don't use form state here mabe, track this kind of extra difference through our own state? -- Investigate
+        change('orderLine.titleObject', titleObj);
       }
     }
   }, [change, titles?.titles, titlesLoading, values?.orderLine, values?.title]);
@@ -43,9 +49,13 @@ const POLineForm = () => {
     change('orderLine', poLine[0]);
   };
 
-  const renderListItem = (title) => {
-    return <>{title?.title}</>;
+  const renderListItem = (option) => {
+    return <>{option?.title}</>;
   };
+
+  const formattedDataOptions = titles?.titles?.map((e) => {
+    return { title: e?.title, id: e?.id };
+  });
 
   return (
     <>
@@ -69,9 +79,15 @@ const POLineForm = () => {
                       value={values?.orderLine?.titleOrPackage}
                     >
                       {values?.orderLine?.instanceId ? (
-                        <AppIcon app="inventory" iconKey="instance" size="small">
+                        <AppIcon
+                          app="inventory"
+                          iconKey="instance"
+                          size="small"
+                        >
                           <Link
-                            to={urls.inventoryView(values?.orderLine?.instanceId)}
+                            to={urls.inventoryView(
+                              values?.orderLine?.instanceId
+                            )}
                           >
                             {values?.orderLine?.titleOrPackage}
                           </Link>
@@ -96,18 +112,23 @@ const POLineForm = () => {
             // istanbul ignore next
             <Field
               component={Typedown}
-              dataOptions={titles?.titles}
-              filterPath="title"
-              label={<FormattedMessage id="ui-serials-management.ruleset.title" />}
-              name="title"
+              dataOptions={formattedDataOptions}
+              filterPath="label"
+              label={
+                <FormattedMessage id="ui-serials-management.ruleset.title" />
+              }
+              name="orderLine.titleObject"
               renderListItem={renderListItem}
               required
+              uniqueIdentificationPath="id"
               validate={requiredValidator}
             />
           )}
           {titles?.titles?.length === 1 && (
             <KeyValue
-              label={<FormattedMessage id="ui-serials-management.ruleset.title" />}
+              label={
+                <FormattedMessage id="ui-serials-management.ruleset.title" />
+              }
             >
               {titles?.titles[0]?.instanceId ? (
                 <AppIcon app="inventory" iconKey="instance" size="small">

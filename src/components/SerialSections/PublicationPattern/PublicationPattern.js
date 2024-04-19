@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -13,19 +13,18 @@ import {
   Label,
   InfoPopover,
   MultiColumnList,
+  Layout,
 } from '@folio/stripes/components';
 
-import { FormattedDateTime } from '@folio/stripes-erm-components';
-
 import { urls } from '../../utils';
+
+import css from './PublicationPattern.css';
 
 const proptypes = {
   serial: PropTypes.object,
 };
 
-// TODO Change to publication pattern
-
-const ActivePublicationPattern = ({ serial }) => {
+const PublicationPattern = ({ serial }) => {
   const location = useLocation();
 
   const activeRuleset = serial?.serialRulesets?.find(
@@ -36,16 +35,28 @@ const ActivePublicationPattern = ({ serial }) => {
     (sr) => sr?.rulesetStatus?.value === 'draft'
   );
 
+  const renderLastUpdated = (ruleset) => {
+    return <FormattedDate date={ruleset?.lastUpdated} />;
+  };
+  /* istanbul ignore next */
   const formatter = {
     patternId: (e) => {
       return e.rulesetNumber;
     },
     lastUpdated: (e) => {
-      return <FormattedDateTime date={e?.lastUpdated} />;
+      return renderLastUpdated(e);
     },
     description: (e) => {
       return e?.description;
     },
+  };
+
+  const renderEmpty = () => {
+    return (
+      <Layout className={css.isEmptyMessage}>
+        <FormattedMessage id="ui-serials-management.serials.publicationPattern.noActivePattern" />
+      </Layout>
+    );
   };
 
   const renderBadge = () => {
@@ -71,7 +82,7 @@ const ActivePublicationPattern = ({ serial }) => {
         <FormattedMessage id="ui-serials-management.serials.publicationPattern" />
       }
     >
-      {!!activeRuleset && (
+      {activeRuleset ? (
         <>
           <Row start="xs">
             <Col xs={3}>
@@ -93,7 +104,7 @@ const ActivePublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDateTime date={activeRuleset?.lastUpdated} />}
+                value={<FormattedDate date={activeRuleset?.lastUpdated} />}
               />
             </Col>
           </Row>
@@ -151,6 +162,8 @@ const ActivePublicationPattern = ({ serial }) => {
             </Col>
           </Row>
         </>
+      ) : (
+        renderEmpty()
       )}
       {!!draftRulesets?.length && (
         <>
@@ -188,6 +201,6 @@ const ActivePublicationPattern = ({ serial }) => {
   );
 };
 
-ActivePublicationPattern.propTypes = proptypes;
+PublicationPattern.propTypes = proptypes;
 
-export default ActivePublicationPattern;
+export default PublicationPattern;

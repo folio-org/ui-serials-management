@@ -1,3 +1,4 @@
+import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import SerialInfo from './SerialInfo';
 
@@ -20,15 +21,31 @@ describe('SerialInfo', () => {
   });
 
   describe('renders components with serial', () => {
+    let renderComponent;
     beforeEach(() => {
-      renderWithIntl(<SerialInfo serial={serial} />, translationsProperties);
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <SerialInfo serial={serial} />
+        </MemoryRouter>,
+        translationsProperties
+      );
     });
-    test('renders Request number KeyValue with initial value', async () => {
+
+    test('renders a link with the title', async () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('link', { name: 'Interesting Times' })).toBeInTheDocument();
+    });
+
+    test('renders Status KeyValue with initial value', async () => {
       await KeyValue('Status').has({ value: 'Active' });
     });
 
-    test('renders Request date KeyValue with initial value', async () => {
+    test('renders Description KeyValue with initial value', async () => {
       await KeyValue('Description').has({ value: 'Test Description' });
+    });
+
+    test('renders Title in Receiving KeyValue with initial value', async () => {
+      await KeyValue('Title in Receiving').has({ value: 'Interesting Times' });
     });
   });
 });

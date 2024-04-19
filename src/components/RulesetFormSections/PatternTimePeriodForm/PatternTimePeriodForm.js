@@ -12,11 +12,11 @@ import {
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import {
   useSerialsManagementRefdata,
-  selectifyRefdata,
   validateWholeNumber,
   validateWithinRange,
 } from '../../utils';
@@ -42,9 +42,6 @@ const PatternTimePeriodForm = () => {
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
-  // TODO patternType should really be patternType.value but currently backend dynamic class assignment doesnt support it,
-  // This should be fixed on backend then tweaked here
-
   return (
     <>
       <Row>
@@ -67,15 +64,19 @@ const PatternTimePeriodForm = () => {
               <Select
                 dataOptions={[
                   { value: '', label: '' },
-                  ...selectifyRefdata(refdataValues, TIME_UNITS, 'value').sort((a, b) => {
-                    return (
-                      SORTED_RECURRENCE_TIME_UNITS.indexOf(a.value) -
-                      SORTED_RECURRENCE_TIME_UNITS.indexOf(b.value)
-                    );
-                  }),
+                  ...selectifyRefdata(refdataValues, TIME_UNITS, 'value').sort(
+                    (a, b) => {
+                      return (
+                        SORTED_RECURRENCE_TIME_UNITS.indexOf(a.value) -
+                        SORTED_RECURRENCE_TIME_UNITS.indexOf(b.value)
+                      );
+                    }
+                  ),
                 ]}
                 input={input}
-                label={<FormattedMessage id="ui-serials-management.ruleset.timeUnit" />}
+                label={
+                  <FormattedMessage id="ui-serials-management.ruleset.timeUnit" />
+                }
                 meta={meta}
                 onChange={(e) => {
                   input.onChange(e);
@@ -86,7 +87,10 @@ const PatternTimePeriodForm = () => {
                   }
                   // If a value is supplied and does not have corresponding patternType options
                   // Assign the patternType value the timeUnit value
-                  if (e?.target?.value && !RECURRENCE_PATTERN_TYPES[e?.target?.value]) {
+                  if (
+                    e?.target?.value &&
+                    !RECURRENCE_PATTERN_TYPES[e?.target?.value]
+                  ) {
                     change('patternType', e?.target?.value);
                   }
                   change('recurrence.rules', undefined);
@@ -125,7 +129,11 @@ const PatternTimePeriodForm = () => {
                   // Since recurrence.period determines whether or not ordinals are assigned to the rules
                   // Clear all ordinal fields within form when recurrence.period is changed
                   if (values?.recurrence?.rules?.length) {
-                    for (let i = 0; i < values?.recurrence?.rules?.length; i++) {
+                    for (
+                      let i = 0;
+                      i < values?.recurrence?.rules?.length;
+                      i++
+                    ) {
                       change(`recurrence.rules[${i}].ordinal`, undefined);
                     }
                   }
@@ -170,21 +178,26 @@ const PatternTimePeriodForm = () => {
                   if (
                     Number(e.target.value) <=
                       Number(
-                        TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]?.issues *
-                          (values?.recurrence?.period || 1)
+                        TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]
+                          ?.issues * (values?.recurrence?.period || 1)
                       ) &&
                     Number(e.target.value) >= 1
                   ) {
                     change(
                       'recurrence.rules',
-                      e?.target?.value > 0 && Number.isInteger(Number(e?.target?.value))
+                      e?.target?.value > 0 &&
+                        Number.isInteger(Number(e?.target?.value))
                         ? Array(Number(e?.target?.value)).fill({})
                         : undefined
                     );
                   } else {
                     change('recurrence.rules', undefined);
                   }
-                  if (RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value]) {
+                  if (
+                    RECURRENCE_PATTERN_TYPES[
+                      values?.recurrence?.timeUnit?.value
+                    ]
+                  ) {
                     change('patternType', undefined);
                   }
                 }}
@@ -196,8 +209,8 @@ const PatternTimePeriodForm = () => {
               requiredValidator,
               validateWithinRange(
                 1,
-                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]?.issues *
-                  (values?.recurrence?.period || 1)
+                TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]
+                  ?.issues * (values?.recurrence?.period || 1)
               ),
               validateWholeNumber
             )}

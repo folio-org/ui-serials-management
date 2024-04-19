@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
@@ -13,14 +13,11 @@ import {
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
-import {
-  validateWholeNumber,
-  useSerialsManagementRefdata,
-  selectifyRefdata,
-} from '../../utils';
+import { validateWholeNumber, useSerialsManagementRefdata } from '../../utils';
 
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationNumericLevelTMRF.Format',
@@ -34,6 +31,7 @@ const EnumerationNumericField = ({
   level,
   onDeleteField,
 }) => {
+  const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([
     ENUMERATION_FORMAT,
     ENUMERATION_SEQUENCE,
@@ -67,18 +65,14 @@ const EnumerationNumericField = ({
               component={Select}
               dataOptions={[
                 { value: '', label: '' },
-                ...selectifyRefdata(
-                  refdataValues,
-                  ENUMERATION_FORMAT,
-                  'value'
-                ).map((o) => {
-                  return {
-                    value: o?.value,
-                    label: ENUMERATION_NUMBER_FORMAT?.find(
-                      (e) => e?.value === o?.value
-                    )?.label,
-                  };
-                }),
+                ...ENUMERATION_NUMBER_FORMAT.map(
+                  (o) => {
+                    return {
+                      value: o?.value,
+                      label: intl.formatMessage({ id: o?.id }),
+                    };
+                  }
+                ),
               ]}
               id="format-value-select"
               name={`${name}.format.value`}

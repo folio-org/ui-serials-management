@@ -30,12 +30,15 @@ const PieceSetView = ({
       'GenerateReceivingModal',
       pieceSet?.ruleset?.owner?.id,
     ],
-    () => ky.get(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json()
+    () => ky.get(SERIAL_ENDPOINT(pieceSet?.ruleset?.owner?.id)).json(),
+    { enabled: !!pieceSet?.ruleset?.owner?.id }
   );
 
   const getHoldingIds = () => {
-    if (serial?.orderLine?.remoteId_object?.locations[0]?.holdingId) {
-      return serial?.orderLine?.remoteId_object?.locations?.map((hi) => hi?.holdingId);
+    if (serial?.orderLine?.remoteId_object?.locations?.[0]?.holdingId) {
+      return serial?.orderLine?.remoteId_object?.locations?.map(
+        (hi) => hi?.holdingId
+      );
     } else {
       return null;
     }
@@ -44,7 +47,7 @@ const PieceSetView = ({
   const getSectionProps = (name) => {
     return {
       id: `piece-set-section-${name}`,
-      pieceSet,
+      pieceSet: { ...pieceSet, titleId: serial?.orderLine?.titleId },
     };
   };
 
@@ -77,7 +80,13 @@ const PieceSetView = ({
         defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
         dismissible
         onClose={onClose}
-        paneTitle={serial?.orderLine?.title}
+        paneTitle={
+          pieceSet?.title ? (
+            <>{`${pieceSet?.title} (${pieceSet?.dateCreated})`}</>
+          ) : (
+            <>{`${pieceSet?.id} (${pieceSet?.dateCreated})`}</>
+          )
+        }
       >
         <PieceSetInfo key="piece-set-info" {...getSectionProps('info')} />
         <PiecesList key="pieces-list" {...getSectionProps('pieces-list')} />

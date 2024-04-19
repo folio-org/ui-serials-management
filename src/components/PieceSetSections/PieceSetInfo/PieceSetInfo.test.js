@@ -1,19 +1,37 @@
-
-import { renderWithIntl, FormattedDateTime, KeyValue } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
+import {
+  renderWithIntl,
+  FormattedDateTime,
+  KeyValue,
+} from '@folio/stripes-erm-testing';
 
 import PieceSetInfo from './PieceSetInfo';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { pieceSet } from '../../../../test/resources';
 
+let renderComponent;
 describe('PieceSetInfo', () => {
   beforeEach(() => {
-    renderWithIntl(
-      <PieceSetInfo
-        id="piece-set-section-info"
-        pieceSet={pieceSet}
-      />, translationsProperties
+    renderComponent = renderWithIntl(
+      <MemoryRouter>
+        <PieceSetInfo id="piece-set-section-info" pieceSet={pieceSet} />
+      </MemoryRouter>,
+      translationsProperties
     );
+  });
+
+  test('renders all links with the title', async () => {
+    const { getAllByRole } = renderComponent;
+    const links = getAllByRole('link', { name: 'Quiet times' });
+    expect(links.length).toBeGreaterThan(0);
+    links.forEach(link => {
+      expect(link).toBeInTheDocument();
+    });
+  });
+
+  test('renders the expected Serial', async () => {
+    await KeyValue('Serial').has({ value: 'Quiet times' });
   });
 
   test('renders the expcected date generated date and time', async () => {
@@ -39,5 +57,9 @@ describe('PieceSetInfo', () => {
 
   test('renders the expected Note', async () => {
     await KeyValue('Note').has({ value: 'No value set-' });
+  });
+
+  test('renders the expected Title in Receiving', async () => {
+    await KeyValue('Title in Receiving').has({ value: 'Quiet times' });
   });
 });

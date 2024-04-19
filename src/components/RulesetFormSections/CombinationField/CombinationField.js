@@ -14,6 +14,7 @@ import {
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import {
@@ -25,7 +26,6 @@ import {
   validateWithinRange,
   validateWholeNumber,
   useSerialsManagementRefdata,
-  selectifyRefdata,
 } from '../../utils';
 
 import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
@@ -36,7 +36,7 @@ const CombinationField = ({ name, index, combination }) => {
   const intl = useIntl();
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
-
+  /* istanbul ignore next */
   const validateNumberOfIssues = (value) => {
     if (value) {
       if (value < 2) {

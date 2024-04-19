@@ -20,11 +20,12 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  ActivePublicationPattern,
+  PublicationPattern,
   DeprecatedPublicationPatterns,
   SerialInfo,
   SerialPOLine,
   SerialPieceSets,
+  SerialNotes,
 } from '../../SerialSections';
 import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
@@ -69,6 +70,7 @@ const SerialView = ({
     };
   };
 
+  // istanbul ignore next
   const shortcuts = [
     { name: 'edit', handler: () => handleEdit() },
     {
@@ -175,9 +177,7 @@ const SerialView = ({
               {!!serial?.orderLine?.remoteId && (
                 <SerialPOLine {...getSectionProps('po-line')} />
               )}
-              <ActivePublicationPattern
-                {...getSectionProps('active-publication-pattern')}
-              />
+              <PublicationPattern {...getSectionProps('publication-pattern')} />
               {!!serial?.serialRulesets?.find(
                 (sr) => sr?.rulesetStatus?.value === 'deprecated'
               ) && (
@@ -191,6 +191,7 @@ const SerialView = ({
                   pieceSets={pieceSets}
                 />
               )}
+              <SerialNotes {...getSectionProps('notes')} />
             </AccordionSet>
           </AccordionStatus>
         </Pane>

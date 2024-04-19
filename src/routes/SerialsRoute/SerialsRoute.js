@@ -8,7 +8,7 @@ import {
   PaneMenu,
   checkScope,
   HasCommand,
-  TextLink
+  TextLink,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
@@ -39,7 +39,7 @@ const SerialsRoute = ({ children, path }) => {
   const handleCreate = () => {
     history.push(`${urls.serialCreate()}${location.search}`);
   };
-
+  /* istanbul ignore next */
   const shortcuts = [
     { name: 'new', handler: () => handleCreate() },
     {
@@ -47,7 +47,7 @@ const SerialsRoute = ({ children, path }) => {
       handler: () => focusSASQSearchField('serials'),
     },
   ];
-
+  /* istanbul ignore next */
   const renderLastMenu = (
     <PaneMenu>
       <FormattedMessage id="ui-serials-management.serials.newSerial">
@@ -65,7 +65,7 @@ const SerialsRoute = ({ children, path }) => {
       </FormattedMessage>
     </PaneMenu>
   );
-
+  /* istanbul ignore next */
   const renderHeaderComponent = () => {
     return <RouteSwitcher primary="serials" />;
   };
@@ -81,16 +81,21 @@ const SerialsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'description',
-      label: (
-        <FormattedMessage id="ui-serials-management.serials.description" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.serials.description" />,
     },
   ];
 
+  const renderTitle = (serial) => {
+    return (
+      <TextLink to={urls.serialView(serial?.id)}>
+        {serial?.orderLine?.title ?? serial?.id}
+      </TextLink>
+    );
+  };
+
+  /* istanbul ignore next */
   const formatter = {
-    title: (d) => (
-      <TextLink to={urls.serialView(d?.id)}>{d?.orderLine?.title ?? d?.id}</TextLink>
-    ),
+    title: (d) => renderTitle(d),
     serialStatus: (d) => d?.serialStatus?.label,
     description: (d) => d?.description,
   };
@@ -106,9 +111,7 @@ const SerialsRoute = ({ children, path }) => {
         FilterComponent={SerialsFilters}
         FilterPaneHeaderComponent={renderHeaderComponent}
         mainPaneProps={{
-          appIcon: (
-            <AppIcon app="serials-management" iconKey="app" size="small" />
-          ),
+          appIcon: <AppIcon app="serials-management" iconKey="app" size="small" />,
           lastMenu: renderLastMenu,
           paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
         }}

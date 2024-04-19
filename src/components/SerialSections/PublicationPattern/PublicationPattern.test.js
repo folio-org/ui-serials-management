@@ -1,18 +1,18 @@
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
-import ActivePublicationPattern from './ActivePublicationPattern';
+import PublicationPattern from './PublicationPattern';
 
 import { translationsProperties } from '../../../../test/helpers';
 
 import { serial } from '../../../../test/resources';
 
-describe('ActivePublicationPattern', () => {
+describe('PublicationPattern', () => {
   describe('renders components with serial', () => {
     beforeEach(() => {
       renderWithIntl(
         <MemoryRouter>
-          <ActivePublicationPattern serial={serial} />
+          <PublicationPattern serial={serial} />
         </MemoryRouter>,
         translationsProperties
       );

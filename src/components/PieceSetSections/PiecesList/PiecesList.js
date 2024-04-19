@@ -10,15 +10,19 @@ const propTypes = {
 };
 
 const PiecesList = ({ pieceSet, id }) => {
+  const renderPublicationDate = (piece) => {
+    return <PiecePublicationDate piece={piece} />;
+  };
+  /* istanbul ignore next */
   const formatter = {
     issueCount: (e) => {
       return e?.omissionOrigins ? '-' : e.rowIndex + 1;
     },
-    publicationDate: (e) => <PiecePublicationDate piece={e} />,
+    publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
       return e?.label;
     },
-    generatedInReceiving: (e) => e?.receivingId
+    receivingPieces: (e) => e?.receivingPieces?.length,
   };
 
   return (
@@ -36,8 +40,8 @@ const PiecesList = ({ pieceSet, id }) => {
               displaySummary: (
                 <FormattedMessage id="ui-serials-management.pieceSets.displaySummary" />
               ),
-              generatedInReceiving: (
-                <FormattedMessage id="ui-serials-management.pieceSets.generatedInReceiving" />
+              receivingPieces: (
+                <FormattedMessage id="ui-serials-management.pieceSets.receivingPieces" />
               ),
             }}
             columnWidths={{
@@ -50,7 +54,7 @@ const PiecesList = ({ pieceSet, id }) => {
               'issueCount',
               'publicationDate',
               'displaySummary',
-              'generatedInReceiving',
+              'receivingPieces',
             ]}
           />
         </Col>

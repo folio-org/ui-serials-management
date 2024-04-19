@@ -6,3 +6,4 @@ export { default as useAcqUnits } from './useAcqUnits';
 export { default as useTitles } from './useTitles';
 export { default as useLocations } from './useLocations';
 export { default as useHoldings } from './useHoldings';
+export { default as useLocales } from './useLocales';

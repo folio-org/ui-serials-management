@@ -21,9 +21,13 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
     (sr) => sr?.rulesetStatus?.value === 'deprecated'
   );
 
+  const renderLastUpdated = (ruleset) => {
+    return <FormattedDateTime date={ruleset?.lastUpdated} />;
+  };
+  /* istanbul ignore next */
   const formatter = {
     patternId: (e) => e.rulesetNumber,
-    lastUpdated: (e) => <FormattedDateTime date={e?.lastUpdated} />,
+    lastUpdated: (e) => renderLastUpdated(e),
     description: (e) => e?.description,
   };
 

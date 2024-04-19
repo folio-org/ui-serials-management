@@ -194,5 +194,21 @@
     "ruleset.week.yearRange": "Week (1-52)",
     "ruleset.month.yearRange": "Month (Jan-Dec)",
     "ruleset.issue.nRange": "Issue (1-n)",
-    "serials.serial": "Serial"
+    "serials.serial": "Serial",
+    "ruleset.chronology.weekday.fullLower": "Monday",
+    "ruleset.chronology.weekday.fullUpper": "MONDAY",
+    "ruleset.chronology.weekday.sliceLower": "Mon",
+    "ruleset.chronology.weekday.sliceUpper": "MON",
+    "ruleset.chronology.monthDay.number": "3",
+    "ruleset.chronology.monthDay.ordinal": "3rd",
+    "ruleset.chronology.month.full": "October",
+    "ruleset.chronology.month.number": "10",
+    "ruleset.chronology.month.slice": "Oct",
+    "ruleset.chronology.year.full": "2023",
+    "ruleset.chronology.year.slice": "23",
+    "ruleset.enumeration.numberFormat.number": "Number (1, 2, 3)",
+    "ruleset.enumeration.numberFormat.ordinal": "Ordinal (1st, 2nd, 3rd)",
+    "ruleset.enumeration.numberFormat.roman": "Roman numerals (I, II, III)",
+    "serials.notes.isEmptyMessage": "There are no notes associated with this serial",
+    "serials.publicationPattern.noActivePattern": "Serial has no active publication patterns"
 }

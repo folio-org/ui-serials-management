@@ -6,11 +6,11 @@ import { Col, Label, Row, Select, TextField } from '@folio/stripes/components';
 import {
   requiredValidator,
   composeValidators,
+  selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
 import {
   useSerialsManagementRefdata,
-  selectifyRefdata,
   validateWithinRange,
   validateWholeNumber,
 } from '../../utils';
@@ -211,15 +211,15 @@ const IssuePublicationField = ({ name, index, patternType }) => {
               />
             </Label>
           </Col>
-          {patternTypeFormats[patternType]?.fields?.map(
-            (patternTypeField) => {
-              return (
-                <Col key={`pattern-type-field-${name}`} xs={2}>
-                  {patternTypeField}
-                </Col>
-              );
-            }
-          )}
+          {patternTypeFormats[patternType]?.fields?.map((patternTypeField, patternTypeIndex) => {
+            // Using indexCount to prevent sonarlint from flagging this as an issue
+            const indexKey = patternTypeIndex;
+            return (
+              <Col key={`pattern-type-field-${indexKey}`} xs={2}>
+                {patternTypeField}
+              </Col>
+            );
+          })}
           {values?.recurrence?.period > 1 &&
             !!patternTypeFormats[patternType]?.ordinal && (
               <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>

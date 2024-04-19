@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -20,6 +20,7 @@ import {
   Checkbox,
   Label,
   MessageBanner,
+  Spinner,
 } from '@folio/stripes/components';
 
 import { useHoldings, useLocations } from '../../hooks';
@@ -47,6 +48,8 @@ const GenerateReceivingModal = ({
   holdingIds,
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+  const callout = useCallout();
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
 
@@ -69,6 +72,21 @@ const GenerateReceivingModal = ({
       .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
       .json()
       .then(() => {
+        queryClient.invalidateQueries([
+          '@folio/serials-management',
+          'SASQ',
+          'piece-sets',
+          'view',
+          pieceSet?.id,
+        ]);
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id="ui-serials-management.pieceSets.countReceivingGenerated"
+              values={{ count: data?.pieces?.length }}
+            />
+          ),
+        });
         closeModal();
       })
   );
@@ -155,27 +173,49 @@ const GenerateReceivingModal = ({
   };
 
   const handleGeneration = async (values) => {
-    const piecesArray = await Promise.all(
-      (pieceSet?.pieces || [])
-        .map((piece) => formatReceivingPiece(piece, values))
-        .filter(Boolean)
-        // Set up an array of Promises that will call receieving sequentially and respond
-        // Then take that response and transform. We Promise.all to then have an array to send to our backend
-        .map(async (pieceInReceivingShape) => {
-          let returnObj;
-          await submitReceivingPiece(pieceInReceivingShape).then((res) => {
-            returnObj = {
-              ...pieceInReceivingShape?.piece,
-              receivingPieces: [
-                ...(pieceInReceivingShape?.piece?.receivingPieces || []),
-                { receivingId: res?.id },
-              ],
-            };
-          });
-          return returnObj;
-        })
+    try {
+      const piecesArray = await Promise.all(
+        (pieceSet?.pieces || [])
+          .map((piece) => formatReceivingPiece(piece, values))
+          .filter(Boolean)
+          // Set up an array of Promises that will call receieving sequentially and respond
+          // Then take that response and transform. We Promise.all to then have an array to send to our backend
+          .map(async (pieceInReceivingShape) => {
+            let returnObj;
+            await submitReceivingPiece(pieceInReceivingShape).then((res) => {
+              returnObj = {
+                ...pieceInReceivingShape?.piece,
+                receivingPieces: [
+                  ...(pieceInReceivingShape?.piece?.receivingPieces || []),
+                  { receivingId: res?.id },
+                ],
+              };
+            });
+            return returnObj;
+          })
+      );
+      await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
+    } catch (e) {
+      const { errors } = await e.response.json();
+      errors?.map((error) => callout.sendCallout({
+        message: (
+          <>
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingErrorMessage" />
+            {error?.message}
+          </>
+        ),
+        type: 'error',
+        timeout: 0,
+      }));
+    }
+  };
+
+  const renderMessageBanner = () => {
+    return (
+      <MessageBanner>
+        <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
+      </MessageBanner>
     );
-    await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
   };
 
   const renderPredictedPiecesInformation = () => {
@@ -303,26 +343,17 @@ const GenerateReceivingModal = ({
             <FormattedMessage id="ui-serials-management.pieceSets.supplement">
               {([ariaLabel]) => (
                 <Field
+                  aria-label={ariaLabel}
+                  component={Checkbox}
                   name="supplement"
-                  render={({ input, meta }) => (
-                    <Checkbox
-                      aria-label={ariaLabel}
-                      component={Checkbox}
-                      input={input}
-                      meta={meta}
-                      onChange={(e) => {
-                        input.onChange(e.target.checked);
-                      }}
-                      type="checkbox"
-                    />
-                  )}
+                  type="checkbox"
                 />
               )}
             </FormattedMessage>
           </Col>
         </Row>
         <Row>
-          {serial?.orderLine?.remoteId_object?.locations?.length && (
+          {!!serial?.orderLine?.remoteId_object?.locations?.length && (
             <Col xs={6}>
               <Field
                 component={Select}
@@ -343,7 +374,7 @@ const GenerateReceivingModal = ({
               />
             </Col>
           )}
-          {holdingIds?.length && (
+          {!!holdingIds?.length && (
             <Col xs={3}>
               <Label>
                 <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
@@ -357,19 +388,10 @@ const GenerateReceivingModal = ({
               <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
                 {([ariaLabel]) => (
                   <Field
+                    aria-label={ariaLabel}
+                    component={Checkbox}
                     name="displayOnHolding"
-                    render={({ input, meta }) => (
-                      <Checkbox
-                        aria-label={ariaLabel}
-                        component={Checkbox}
-                        input={input}
-                        meta={meta}
-                        onChange={(e) => {
-                          input.onChange(e.target.checked);
-                        }}
-                        type="checkbox"
-                      />
-                    )}
+                    type="checkbox"
                   />
                 )}
               </FormattedMessage>
@@ -392,7 +414,11 @@ const GenerateReceivingModal = ({
           onClick={handleSubmit}
           type="submit"
         >
-          <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+          {!submitting ? (
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+          ) : (
+            <Spinner />
+          )}
         </Button>
         <Button disabled={submitting} marginBottom0 onClick={handleClose}>
           <FormattedMessage id="ui-serials-management.close" />
@@ -415,6 +441,7 @@ const GenerateReceivingModal = ({
       mutators={arrayMutators}
       onSubmit={handleGeneration}
     >
+      {renderMessageBanner()}
       {renderPredictedPiecesInformation()}
       {renderFields()}
     </FormModal>

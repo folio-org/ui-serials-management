@@ -3,8 +3,11 @@ import { FormattedMessage } from 'react-intl';
 
 import { Row, Col, TextArea, Select } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
-import { useSerialsManagementRefdata, selectifyRefdata } from '../../utils';
+import {
+  requiredValidator,
+  selectifyRefdata,
+} from '@folio/stripes-erm-components';
+import { useSerialsManagementRefdata } from '../../utils';
 
 const [RULESET_STATUS] = ['SerialRuleset.RulesetStatus'];
 

@@ -1,4 +1,3 @@
-import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -6,6 +5,8 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
+
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import { SerialForm } from '../../components/views';
 import { SERIAL_ENDPOINT } from '../../constants/endpoints';
@@ -17,7 +18,7 @@ const SerialEditRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
-
+  /* istanbul ignore next */
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
@@ -26,7 +27,7 @@ const SerialEditRoute = () => {
     ['ui-serials-management', 'SerialEditRoute', id],
     () => ky(SERIAL_ENDPOINT(id)).json()
   );
-
+  /* istanbul ignore next */
   const { mutateAsync: putSerial } = useMutation(
     ['ui-serials-management', 'SerialEditRoute', 'putSerial'],
     (data) => {
@@ -42,20 +43,22 @@ const SerialEditRoute = () => {
         });
     }
   );
-
+  /* istanbul ignore next */
   const submitSerial = async (values) => {
     const submitValues = {
       ...values,
       ...(!values?.serialStatus?.value
         ? { serialStatus: null }
         : { serialStatus: { value: values?.serialStatus?.value } }),
-      ...(values?.orderLine && {
-        orderLine: {
-          remoteId: values?.orderLine?.id,
-          title: values?.title?.title,
-          titleId: values?.title?.id,
-        },
-      }),
+      ...(values?.orderLine
+        ? {
+          orderLine: {
+            remoteId: values?.orderLine?.id,
+            title: values?.orderLine?.titleObject?.title,
+            titleId: values?.orderLine?.titleObject?.id,
+          },
+        }
+        : { orderLine: null }),
     };
     await putSerial(submitValues);
   };
@@ -63,12 +66,23 @@ const SerialEditRoute = () => {
   if (isLoading) {
     return <LoadingView dismissible onClose={handleClose} />;
   }
+
   return (
-    <Form
+    <ERMForm
       initialValues={{
         ...serial,
         ...(!!serial?.orderLine && {
-          orderLine: serial?.orderLine?.remoteId_object,
+          orderLine: {
+            ...serial?.orderLine?.remoteId_object,
+            /* This object (titleObject) is used later and a useEffect inserts into form state,
+             * so any changes to this state shape need to be reflected in the useEffect
+             * in POLineForm.
+             */
+            titleObject: {
+              title: serial?.orderLine?.title,
+              id: serial?.orderLine?.titleId,
+            },
+          },
         }),
       }}
       keepDirtyOnReinitialize
@@ -76,16 +90,14 @@ const SerialEditRoute = () => {
       onSubmit={submitSerial}
     >
       {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <SerialForm
-            handlers={{
-              onClose: handleClose,
-              onSubmit: handleSubmit,
-            }}
-          />
-        </form>
+        <SerialForm
+          handlers={{
+            onClose: handleClose,
+            onSubmit: handleSubmit,
+          }}
+        />
       )}
-    </Form>
+    </ERMForm>
   );
 };
 

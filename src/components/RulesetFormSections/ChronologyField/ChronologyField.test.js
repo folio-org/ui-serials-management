@@ -98,7 +98,7 @@ describe('ChronologyField', () => {
     await Select('Month format*').exists();
     await waitFor(async () => {
       await Select('Month format*').choose('October');
-      await Select('Month format*').choose('8');
+      await Select('Month format*').choose('10');
       await Select('Month format*').choose('Oct');
     });
   });

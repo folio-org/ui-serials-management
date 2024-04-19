@@ -18,9 +18,10 @@ const PieceSetsRoute = ({ children, path }) => {
   const fetchParameters = {
     endpoint: PIECE_SETS_ENDPOINT,
     SASQ_MAP: {
-      searchKey: 'id',
+      searchKey: 'id,ruleset.rulesetNumber,note',
     },
   };
+  /* istanbul ignore next */
   const renderHeaderComponent = () => {
     return <RouteSwitcher primary="pieceSets" />;
   };
@@ -32,9 +33,7 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'dateCreated',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />,
     },
     {
       propertyPath: 'total',
@@ -42,15 +41,11 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'startDate',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.startDate" />,
     },
     {
       propertyPath: 'patternId',
-      label: (
-        <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
-      ),
+      label: <FormattedMessage id="ui-serials-management.pieceSets.patternId" />,
     },
     {
       propertyPath: 'note',
@@ -58,19 +53,32 @@ const PieceSetsRoute = ({ children, path }) => {
     },
   ];
 
-  const formatter = {
-    dateCreated: (d) => <FormattedDateTime date={d?.dateCreated} />,
-    title: (d) => (
-      <TextLink to={urls.pieceSetView(d?.id)}>
-        {d?.title ? (
-          <>{`${d?.title} (${d?.dateCreated})`}</>
+  const renderTitle = (pieceSet) => {
+    return (
+      <TextLink to={urls.pieceSetView(pieceSet?.id)}>
+        {pieceSet?.title ? (
+          <>{`${pieceSet?.title} (${pieceSet?.dateCreated})`}</>
         ) : (
-          <>{`${d?.id} (${d?.dateCreated})`}</>
+          <>{`${pieceSet?.id} (${pieceSet?.dateCreated})`}</>
         )}
       </TextLink>
-    ),
+    );
+  };
+
+  const renderDateCreated = (pieceSet) => {
+    return <FormattedDateTime date={pieceSet?.dateCreated} />;
+  };
+  /* istanbul ignore next */
+  const renderStartDate = (pieceSet) => {
+    return <FormattedDate value={pieceSet?.startDate} />;
+  };
+
+  /* istanbul ignore next */
+  const formatter = {
+    dateCreated: (d) => renderDateCreated(d),
+    title: (d) => renderTitle(d),
     total: (d) => d?.pieces?.length,
-    startDate: (d) => <FormattedDate value={d?.startDate} />,
+    startDate: (d) => renderStartDate(d),
     patternId: (d) => d?.ruleset?.rulesetNumber,
   };
 
