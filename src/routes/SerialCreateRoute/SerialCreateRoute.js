@@ -53,14 +53,12 @@ const SerialCreateRoute = () => {
       onSubmit={submitSerial}
     >
       {({ handleSubmit }) => (
-        <form id="serial-form" onSubmit={handleSubmit}>
-          <SerialForm
-            handlers={{
-              onClose: handleClose,
-              onSubmit: handleSubmit,
-            }}
-          />
-        </form>
+        <SerialForm
+          handlers={{
+            onClose: handleClose,
+            onSubmit: handleSubmit,
+          }}
+        />
       )}
     </ERMForm>
   );
