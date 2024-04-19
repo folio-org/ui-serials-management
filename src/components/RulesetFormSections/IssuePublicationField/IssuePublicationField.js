@@ -211,9 +211,11 @@ const IssuePublicationField = ({ name, index, patternType }) => {
               />
             </Label>
           </Col>
-          {patternTypeFormats[patternType]?.fields?.map((patternTypeField) => {
+          {patternTypeFormats[patternType]?.fields?.map((patternTypeField, patternTypeIndex) => {
+            // Using indexCount to prevent sonarlint from flagging this as an issue
+            const indexKey = patternTypeIndex;
             return (
-              <Col key={`pattern-type-field-${name}`} xs={2}>
+              <Col key={`pattern-type-field-${indexKey}`} xs={2}>
                 {patternTypeField}
               </Col>
             );

@@ -27,7 +27,7 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 const props = {
-  onClose: 'ƒ onClose() {}',
+  onClose: jest.fn(),
   queryProps: {
     isLoading: false,
   },

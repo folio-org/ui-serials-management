@@ -87,7 +87,6 @@ describe('IssuePublicationField', () => {
   });
 
   test('renders the submit button', async () => {
-    screen.debug();
     await Button('Submit').exists();
   });
 });
