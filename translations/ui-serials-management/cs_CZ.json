@@ -152,7 +152,6 @@
     "pieceSets.totalPieces": "Celkem kusů",
     "pieceSets.issueCount": "Počet vydání",
     "pieceSets.publicationDate": "Datum publikace",
-    "pieceSets.generatedInReceiving": "Generováno při příjmu",
     "ruleset.numberOfIssuesPerCycle": "Počet vydání publikovaných za časové období",
     "ruleset.numberOfIssuesPerCyclePopover": "Počet vydání publikováných v rámci jednoho cyklu vzoru. Například publikace s třemi vydáními za měsíc bude mít \"Počet vydání publikováných za cyklus\" = 3",
     "ruleset.order": "Objednávka",
@@ -210,5 +209,14 @@
     "ruleset.enumeration.numberFormat.ordinal": "Pořadové číslo (1., 2., 3.)",
     "ruleset.enumeration.numberFormat.roman": "Římské číslice (I, II, III)",
     "serials.notes.isEmptyMessage": "S tímto seriálem nejsou spojeny žádné poznámky",
-    "serials.publicationPattern.noActivePattern": "Seriál nemá žádné aktivní vzory publikování"
+    "serials.publicationPattern.noActivePattern": "Seriál nemá žádné aktivní vzory publikování",
+    "pieceSets.receivingPieces": "Receiving pieces",
+    "serials.titleInReceiving": "Title in Receiving",
+    "learnMore": "Learn more",
+    "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
+    "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
+    "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
+    "pieceSets.displayInHoldingPopover": "Select information about this piece should be displayed in the Inventory app in the Acquisition section of the holding record. ",
+    "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
+    "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. "
 }
