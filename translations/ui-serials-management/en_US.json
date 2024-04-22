@@ -152,7 +152,6 @@
     "pieceSets.totalPieces": "Total pieces",
     "pieceSets.issueCount": "Issue count",
     "pieceSets.publicationDate": "Publication date",
-    "pieceSets.generatedInReceiving": "Generated in receiving",
     "ruleset.numberOfIssuesPerCycle": "No. of issues published per cycle",
     "ruleset.numberOfIssuesPerCyclePopover": "The number of issues published within one cycle of the pattern. For example, a publication with three issues per month will have \"Number of issues published per cycle\" = 3",
     "ruleset.order": "Order",
@@ -210,5 +209,14 @@
     "ruleset.enumeration.numberFormat.ordinal": "Ordinal (1st, 2nd, 3rd)",
     "ruleset.enumeration.numberFormat.roman": "Roman numerals (I, II, III)",
     "serials.notes.isEmptyMessage": "There are no notes associated with this serial",
-    "serials.publicationPattern.noActivePattern": "Serial has no active publication patterns"
+    "serials.publicationPattern.noActivePattern": "Serial has no active publication patterns",
+    "pieceSets.receivingPieces": "Receiving pieces",
+    "serials.titleInReceiving": "Title in Receiving",
+    "learnMore": "Learn more",
+    "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
+    "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
+    "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
+    "pieceSets.displayInHoldingPopover": "Select information about this piece should be displayed in the Inventory app in the Acquisition section of the holding record. ",
+    "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
+    "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. "
 }
