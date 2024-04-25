@@ -38,26 +38,30 @@ const IssuePublicationField = ({ name, index, patternType }) => {
     disabled = false
   ) => {
     return (
-      <Field
-        component={TextField}
-        disabled={disabled}
-        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
-        name={
-          ordinal
-            ? `${name}[${index}].ordinal`
-            : `${name}[${index}].pattern.day`
-        }
-        required={!disabled}
-        type="number"
-        validate={
-          !disabled &&
-          composeValidators(
-            requiredValidator,
-            validateWithinRange(minValue, maxValue),
-            validateWholeNumber
-          )
-        }
-      />
+      <FormattedMessage id="ui-serials-management.ruleset.day">
+        {([ariaLabel]) => (
+          <Field
+            aria-label={ariaLabel}
+            component={TextField}
+            disabled={disabled}
+            label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
+            name={
+              ordinal
+                ? `${name}[${index}].ordinal`
+                : `${name}[${index}].pattern.day`
+            }
+            required={!disabled}
+            type="number"
+            validate={
+              !disabled &&
+              composeValidators(
+                requiredValidator,
+                validateWithinRange(minValue, maxValue),
+                validateWholeNumber
+              )}
+          />
+        )}
+      </FormattedMessage>
     );
   };
 
@@ -84,22 +88,27 @@ const IssuePublicationField = ({ name, index, patternType }) => {
 
   const renderWeekField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
-      <Field
-        component={TextField}
-        label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
-        name={
-          ordinal
-            ? `${name}[${index}].ordinal`
-            : `${name}[${index}].pattern.week`
-        }
-        required
-        type="number"
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue),
-          validateWholeNumber
+      <FormattedMessage id="ui-serials-management.ruleset.ofWeek">
+        {([ariaLabel]) => (
+          <Field
+            aria-label={ariaLabel}
+            component={TextField}
+            label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
+            name={
+              ordinal
+                ? `${name}[${index}].ordinal`
+                : `${name}[${index}].pattern.week`
+            }
+            required
+            type="number"
+            validate={composeValidators(
+              requiredValidator,
+              validateWithinRange(minValue, maxValue),
+              validateWholeNumber
+            )}
+          />
         )}
-      />
+      </FormattedMessage>
     );
   };
 
@@ -137,22 +146,27 @@ const IssuePublicationField = ({ name, index, patternType }) => {
 
   const renderYearField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
-      <Field
-        component={TextField}
-        label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
-        name={
-          ordinal
-            ? `${name}[${index}].ordinal`
-            : `${name}[${index}].pattern.year`
-        }
-        required
-        type="number"
-        validate={composeValidators(
-          requiredValidator,
-          validateWithinRange(minValue, maxValue),
-          validateWholeNumber
+      <FormattedMessage id="ui-serials-management.ruleset.ofYear">
+        {([ariaLabel]) => (
+          <Field
+            aria-label={ariaLabel}
+            component={TextField}
+            label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
+            name={
+              ordinal
+                ? `${name}[${index}].ordinal`
+                : `${name}[${index}].pattern.year`
+            }
+            required
+            type="number"
+            validate={composeValidators(
+              requiredValidator,
+              validateWithinRange(minValue, maxValue),
+              validateWholeNumber
+            )}
+          />
         )}
-      />
+      </FormattedMessage>
     );
   };
 

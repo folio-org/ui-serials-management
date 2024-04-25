@@ -1,5 +1,5 @@
 import { MemoryRouter } from 'react-router-dom';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   renderWithIntl,
