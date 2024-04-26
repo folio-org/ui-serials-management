@@ -2,6 +2,10 @@
 
 ## 1.1.0 In progress
 
+## 1.0.2 2024-04-26
+  * UISER-27 Ensure meaningful aria labels are in place to uniquely identify repeated fields
+  * Translations
+
 ## 1.0.1 2024-04-19
   * UISER-127 In the CHRONOLOGY_MONTH_FORMAT, October should be the 10th month, not 8th
   * UISER-126 Label starting value fields in preview form are repeated on preview
