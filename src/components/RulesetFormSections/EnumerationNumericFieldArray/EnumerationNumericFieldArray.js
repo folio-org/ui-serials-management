@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-
 import { Button, Label, Row, Col } from '@folio/stripes/components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -10,9 +9,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import EnumerationNumericField from '../EnumerationNumericField';
 
 const EnumerationNumericFieldArray = ({ name }) => {
-  const { items, onAddField, onDeleteField } = useKiwtFieldArray(
-    `${name}.levels`
-  );
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray(`${name}.levels`);
 
   return (
     <>
@@ -44,18 +41,19 @@ const EnumerationNumericFieldArray = ({ name }) => {
         </Col>
       </Row>
       <FieldArray name={`${name}.levels`}>
-        {() => items?.map((level, index) => {
-          return (
-            <EnumerationNumericField
-              key={`enumeration-numeric-field-${level?.id}`}
-              index={index}
-              items={items}
-              level={level}
-              name={`${name}.levels[${index}]`}
-              onDeleteField={onDeleteField}
-            />
-          );
-        })
+        {() =>
+          items?.map((level, index) => {
+            return (
+              <EnumerationNumericField
+                key={`enumeration-numeric-field-${level?.id}`}
+                index={index}
+                items={items}
+                level={level}
+                name={`${name}.levels[${index}]`}
+                onDeleteField={onDeleteField}
+              />
+            );
+          })
         }
       </FieldArray>
       <Button onClick={() => onAddField({})}>

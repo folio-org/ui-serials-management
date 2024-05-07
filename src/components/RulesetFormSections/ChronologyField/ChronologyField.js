@@ -22,18 +22,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_WEEKDAY_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_WEEKDAY_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.weekdayFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.weekdayFormat" />}
         name={`${name}.weekdayFormat.value`}
         required
         validate={requiredValidator}
@@ -47,14 +43,12 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_MONTH_DAY_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_MONTH_DAY_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.monthDayFormat" />
@@ -72,18 +66,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_MONTH_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_MONTH_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.monthFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.monthFormat" />}
         name={`${name}.monthFormat.value`}
         required
         validate={requiredValidator}
@@ -97,18 +87,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_YEAR_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_YEAR_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.yearFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.yearFormat" />}
         name={`${name}.yearFormat.value`}
         required
         validate={requiredValidator}
