@@ -81,7 +81,7 @@
     "ruleset.omitRangeOf": "Omit range of {omissionType}",
     "ruleset.addCombination": "Add combination rule",
     "close": "Zamknij",
-    "ruleset.preview": "Preview",
+    "ruleset.preview": "Podgląd",
     "ruleset.startDate": "Data początkowa",
     "ruleset.generatePredictedPieces": "Generate predicted pieces",
     "ruleset.generate": "Generate",
