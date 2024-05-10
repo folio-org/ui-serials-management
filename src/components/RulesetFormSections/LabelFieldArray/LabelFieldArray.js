@@ -35,14 +35,8 @@ const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
 ];
 
-const chronologyTokensTemplate = [
-  '{{chronology1.weekday}}',
-  '{{ chronology1.monthDay }}',
-  '{{ chronology1.month }}',
-  '{{ chronology1.year }} ',
-];
-
-const enumerationTokensTemplate = ['{{enumeration1.level1}}'];
+const enumerationNumericTokens = ['{{enumeration1.level1}}'];
+const enumerationTextualTokens = ['{{enumeration1}}'];
 
 const LabelFieldArray = () => {
   const { values } = useFormState();
@@ -62,9 +56,23 @@ const LabelFieldArray = () => {
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
   };
 
-  const chronologytokens = chronologyTokensTemplate.map((t) => <ul>{t}</ul>);
+  const dateTokens = () => {
+    return [
+      '{{chronology1.weekday}}',
+      '{{chronology1.monthDay}}',
+      '{{chronology1.month}}',
+      '{{chronology1.year}}',
+    ].join(' ');
+  };
 
-  const enumerationtokens = enumerationTokensTemplate.map((t) => <ul>{t}</ul>);
+  const monthTokens = () => {
+    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
+  };
+
+  const yearTokens = () => {
+    return ['{{chronology1.year}}'];
+  };
+
   const renderTemplateInfo = () => {
     return (
       <InfoPopover
@@ -267,19 +275,15 @@ const LabelFieldArray = () => {
           'chronology' &&
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat && (
-            <>
-              <ChronologyField
-                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-                templateConfig={templateConfig}
-              />
-              <Label id="template-token-header">
-                <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-                {renderTemplateTokensInfo()}
-                <ClipCopy text={chronologytokens} />
-              </Label>
-              <ul>{chronologytokens}</ul>
-            </>
-          )}
+            <ChronologyField
+              dateTokens={dateTokens()}
+              monthTokens={monthTokens()}
+              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+              templateConfig={templateConfig}
+              tokensInfo={renderTemplateTokensInfo()}
+              yearTokens={yearTokens()}
+            />
+        )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -291,11 +295,11 @@ const LabelFieldArray = () => {
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
                 {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationTokensTemplate} />
+                <ClipCopy text={enumerationNumericTokens} />
               </Label>
-              {enumerationTokensTemplate}
+              {enumerationNumericTokens}
             </>
-          )}
+        )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -308,11 +312,11 @@ const LabelFieldArray = () => {
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
                 {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationTokensTemplate} />
+                <ClipCopy text={enumerationTextualTokens} />
               </Label>
-              {enumerationTokensTemplate}
+              {enumerationTextualTokens}
             </>
-          )}
+        )}
       </EditCard>
     );
   };
@@ -320,11 +324,9 @@ const LabelFieldArray = () => {
   return (
     <>
       <FieldArray name="templateConfig.rules">
-        {() =>
-          items.map((templateConfig, index) => {
-            return renderLabelRule(templateConfig, index);
-          })
-        }
+        {() => items.map((templateConfig, index) => {
+          return renderLabelRule(templateConfig, index);
+        })}
       </FieldArray>
       {!values?.templateConfig && (
         <>

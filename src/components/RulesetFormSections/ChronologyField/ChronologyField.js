@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
-
-import { Select, Col, Row } from '@folio/stripes/components';
+import { ClipCopy } from '@folio/stripes/smart-components';
+import { Select, Col, Row, Label } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
@@ -13,7 +13,14 @@ import {
   CHRONOLOGY_YEAR_FORMAT,
 } from '../../../constants/selectOptionTranslations';
 
-const ChronologyField = ({ name, templateConfig }) => {
+const ChronologyField = ({
+  name,
+  templateConfig,
+  dateTokens,
+  monthTokens,
+  yearTokens,
+  tokensInfo,
+}) => {
   const intl = useIntl();
 
   const renderWeekdayFormatField = () => {
@@ -109,34 +116,71 @@ const ChronologyField = ({ name, templateConfig }) => {
         renderMonthDayFormatField(),
         renderMonthFormatField(),
         renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={dateTokens} />
+          </Label>
+
+          {dateTokens}
+        </div>,
       ],
     },
     chronology_month: {
-      fields: [renderMonthFormatField(), renderYearFormatField()],
+      fields: [
+        renderMonthFormatField(),
+        renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={monthTokens} />
+          </Label>
+
+          {monthTokens}
+        </div>,
+      ],
     },
     chronology_year: {
-      fields: [renderYearFormatField()],
+      fields: [
+        renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={yearTokens} />
+          </Label>
+          {yearTokens}
+        </div>,
+      ],
     },
   };
 
   return (
-    <Row>
-      {chronologyFormats[
-        templateConfig?.ruleType?.templateMetadataRuleFormat
-      ]?.fields?.map((chronologyField, index) => {
-        return (
-          <Col key={`chronology-field-${name}[${index}]`} xs={3}>
-            {chronologyField}
-          </Col>
-        );
-      })}
-    </Row>
+    <>
+      <Row>
+        {chronologyFormats[
+          templateConfig?.ruleType?.templateMetadataRuleFormat
+        ]?.fields?.map((chronologyField, index) => {
+          return (
+            <Col key={`chronology-field-${name}[${index}]`} xs={3}>
+              {chronologyField}
+            </Col>
+          );
+        })}
+      </Row>
+    </>
   );
 };
 
 ChronologyField.propTypes = {
   name: PropTypes.string,
   templateConfig: PropTypes.object,
+  dateTokens: PropTypes.func,
+  monthTokens: PropTypes.func,
+  yearTokens: PropTypes.func,
+  tokensInfo: PropTypes.func,
 };
 
 export default ChronologyField;

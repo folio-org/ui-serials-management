@@ -41,20 +41,18 @@ const EnumerationNumericFieldArray = ({ name }) => {
         </Col>
       </Row>
       <FieldArray name={`${name}.levels`}>
-        {() =>
-          items?.map((level, index) => {
-            return (
-              <EnumerationNumericField
-                key={`enumeration-numeric-field-${level?.id}`}
-                index={index}
-                items={items}
-                level={level}
-                name={`${name}.levels[${index}]`}
-                onDeleteField={onDeleteField}
-              />
-            );
-          })
-        }
+        {() => items?.map((level, index) => {
+          return (
+            <EnumerationNumericField
+              key={`enumeration-numeric-field-${level?.id}`}
+              index={index}
+              items={items}
+              level={level}
+              name={`${name}.levels[${index}]`}
+              onDeleteField={onDeleteField}
+            />
+          );
+        })}
       </FieldArray>
       <Button onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addLevel" />
