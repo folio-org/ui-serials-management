@@ -1,7 +1,7 @@
 # change history for ui-serials-management
 
-## 1.0.2 2024-04-26
-  * UISER-27 Ensure meaningful aria labels are in place to uniquely identify repeated fields
+## 1.0.3 2024-05-10
+  * UISER-31 Missing permission serials-management.locales.collection.get from module.serials-management.enabled perm set
   * Translations
 
 ## 1.0.2 2024-04-26
