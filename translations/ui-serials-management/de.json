@@ -218,5 +218,5 @@
     "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
     "pieceSets.displayInHoldingPopover": "Select information about this piece should be displayed in the Inventory app in the Acquisition section of the holding record. ",
     "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
-    "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. "
+    "pieceSets.generateReceivingErrorMessage": "Inventari­sierungs­status"
 }
