@@ -56,7 +56,8 @@
         "permissionName": "module.serials-management.enabled",
         "displayName": "UI: ui-serials-management module is enabled",
         "subPermissions": [
-          "serials-management.refdata.read"
+          "serials-management.refdata.read",
+          "serials-management.locales.collection.get"
         ]
       },
       {
