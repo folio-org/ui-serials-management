@@ -105,7 +105,7 @@
         "visible": true,
         "subPermissions": [
           "ui-serials-management.serials.view",
-          "serials-management.predictedPieces.view"
+          "serials-management.predictedPieceSets.view"
         ]
       },
       {
@@ -115,7 +115,7 @@
         "visible": true,
         "subPermissions": [
           "ui-serials-management.predictedpieces.view",
-          "serials-management.predictedPieces.edit"
+          "serials-management.predictedPieceSets.edit"
         ]
       },
       {
