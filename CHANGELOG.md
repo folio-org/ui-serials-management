@@ -1,5 +1,8 @@
 # change history for ui-serials-management
 
+## 1.0.4 2024-05-15
+  * UISER-133 Permissions not renamed in line with updated backend perms
+
 ## 1.0.3 2024-05-10
   * UISER-31 Missing permission serials-management.locales.collection.get from module.serials-management.enabled perm set
   * Translations
