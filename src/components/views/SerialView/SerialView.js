@@ -98,7 +98,7 @@ const SerialView = ({
           </Icon>
         </Button>
       );
-      if (stripes.hasPerm('ui-serials-management.predictedPieces.edit')) {
+      if (stripes.hasPerm('ui-serials-management.predictedpieces.edit')) {
         buttons.push(
           <Button
             key="generate-pieces"
