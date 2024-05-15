@@ -99,7 +99,7 @@
         ]
       },
       {
-        "permissionName": "ui-serials-management.predictedpieces.view",
+        "permissionName": "ui-serials-management.predictedPieces.view",
         "displayName": "Serials: Search & view predicted pieces",
         "description": "Grants all permissions included in Serials: Search & view serials plus the ability to search and view predicted pieces.",
         "visible": true,
@@ -109,12 +109,12 @@
         ]
       },
       {
-        "permissionName": "ui-serials-management.predictedpieces.edit",
+        "permissionName": "ui-serials-management.predictedPieces.edit",
         "displayName": "Serials: Create predicted pieces",
         "description": "Grants all permissions included in Serials: Search & view predicted pieces plus the ability to creatre predicted pieces based on publication patterns.",
         "visible": true,
         "subPermissions": [
-          "ui-serials-management.predictedpieces.view",
+          "ui-serials-management.predictedPieces.view",
           "serials-management.predictedPieceSets.edit"
         ]
       },
