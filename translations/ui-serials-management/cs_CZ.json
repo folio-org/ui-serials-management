@@ -211,7 +211,7 @@
     "serials.notes.isEmptyMessage": "S tímto seriálem nejsou spojeny žádné poznámky",
     "serials.publicationPattern.noActivePattern": "Seriál nemá žádné aktivní vzory publikování",
     "pieceSets.receivingPieces": "Příjem kusů",
-    "serials.titleInReceiving": "Titul v příjmu",
+    "serials.titleInReceiving": "Název v příjmu",
     "learnMore": "Zjistit více",
     "ruleset.templatePopover": "Šablony se používají ke generování hodnot, které mají být použity v každém předpokládaném kusu Souhrn zobrazení.",
     "pieceSets.generateReceivingInfo": "Vybráním možnosti 'Generovat přijímací kusy' vytvoříte nové kusy v aplikaci Příjem. Počkejte prosím, dokud se kusy nevygenerují. Toto okno se zavře, jakmile bude proces dokončen.",
