@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
@@ -45,11 +46,27 @@ const LabelFieldArray = () => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     'templateConfig.rules'
   );
+  const [chronologyIndex, setChronologyIndex] = useState(0);
+  const [enumerationIndex, setEnumerationIndex] = useState(0);
+
+  useEffect(() => {
+    setChronologyIndex((prevChronologyInex) => prevChronologyInex + 1);
+  }, []);
+
+  //   useEffect(() => {
+  //   setChronologyIndex();
+  // }, []);
+
+  useEffect(() => {
+    setEnumerationIndex((prevEnumerationInex) => prevEnumerationInex + 1);
+  }, []);
+
   const refdataValues = useSerialsManagementRefdata([
     RULE_TYPE,
     CHRONOLOGY_LABEL_FORMAT,
     ENUMERATION_LABEL_FORMAT,
   ]);
+
   const filterSelectValues = (value, dataOptions) => {
     const regex = new RegExp(value, 'i');
 
@@ -144,13 +161,9 @@ const LabelFieldArray = () => {
               values={{ index: index + 1 }}
             />
             {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-            'chronology'
-              ? `${': '}chronology${indexKey + 1}`
-              : ' '}
+              'chronology' && `${': '}chronology${chronologyIndex + 1}`}
             {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-            'enumeration'
-              ? `${': '}enumeration${indexKey + 1}`
-              : ' '}
+              'enumeration' && `${': '}enumeration${enumerationIndex + 1}`}
           </>
         }
         onDelete={() => onDeleteField(index, templateConfig)}
@@ -283,7 +296,7 @@ const LabelFieldArray = () => {
               tokensInfo={renderTemplateTokensInfo()}
               yearTokens={yearTokens()}
             />
-        )}
+          )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -299,7 +312,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationNumericTokens}
             </>
-        )}
+          )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -316,7 +329,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationTextualTokens}
             </>
-        )}
+          )}
       </EditCard>
     );
   };
@@ -324,9 +337,11 @@ const LabelFieldArray = () => {
   return (
     <>
       <FieldArray name="templateConfig.rules">
-        {() => items.map((templateConfig, index) => {
-          return renderLabelRule(templateConfig, index);
-        })}
+        {() =>
+          items.map((templateConfig, index) => {
+            return renderLabelRule(templateConfig, index);
+          })
+        }
       </FieldArray>
       {!values?.templateConfig && (
         <>
