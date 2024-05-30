@@ -85,7 +85,7 @@ const SerialView = ({
 
   const renderActionMenu = () => {
     const buttons = [];
-    if (stripes.hasPerm('serials-management.serials.edit')) {
+    if (stripes.hasPerm('ui-serials-management.serials.edit')) {
       buttons.push(
         <Button
           key="edit-serial"
@@ -98,7 +98,7 @@ const SerialView = ({
           </Icon>
         </Button>
       );
-      if (stripes.hasPerm('serials-management.predictedPieces.edit')) {
+      if (stripes.hasPerm('ui-serials-management.predictedpieces.edit')) {
         buttons.push(
           <Button
             key="generate-pieces"
