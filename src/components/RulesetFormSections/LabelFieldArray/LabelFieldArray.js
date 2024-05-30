@@ -54,12 +54,12 @@ const LabelFieldArray = () => {
     const ruleLabelArray = values?.templateConfig?.rules?.map((r) => {
       if (r?.templateMetadataRuleType === 'chronology') {
         chronologyCount++;
-        return `chronology ${chronologyCount}`;
+        return `: chronology ${chronologyCount}`;
       } else if (r?.templateMetadataRuleType === 'enumeration') {
         enumerationCount++;
-        return `enumeration ${enumerationCount}`;
+        return `: enumeration ${enumerationCount}`;
       } else {
-        return null;
+        return '';
       }
     });
     setRuleLabelValues(ruleLabelArray);
@@ -164,7 +164,7 @@ const LabelFieldArray = () => {
               id="ui-serials-management.ruleset.labelIndex"
               values={{ index: index + 1 }}
             />
-            {`: ${ruleLabelValues[index]}`}
+            {ruleLabelValues[index]}
           </>
         }
         onDelete={() => onDeleteField(index, templateConfig)}
@@ -193,10 +193,7 @@ const LabelFieldArray = () => {
                         ruleLocale: 'en',
                       });
                     } else {
-                      change(
-                        `templateConfig.rules[${index}].ruleType`,
-                        undefined
-                      );
+                      change(`templateConfig.rules[${index}].ruleType`, undefined);
                     }
                   }}
                   required
@@ -270,8 +267,8 @@ const LabelFieldArray = () => {
                   validate={requiredValidator}
                 />
               </Col>
-              {values?.templateConfig?.rules[index]
-                ?.templateMetadataRuleType === 'chronology' && (
+              {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+                'chronology' && (
                 <Col xs={3}>
                   <Field
                     component={Selection}

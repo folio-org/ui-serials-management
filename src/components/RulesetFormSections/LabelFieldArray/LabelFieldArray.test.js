@@ -263,7 +263,7 @@ describe('LabelFieldArray', () => {
 
       test('renders a label card', () => {
         const { getByText } = renderComponent;
-        expect(getByText('Label 1 : enumeration1')).toBeInTheDocument();
+        expect(getByText('Label 1: enumeration 1')).toBeInTheDocument();
       });
 
       test('renders the expected Template label', async () => {
