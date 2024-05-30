@@ -46,20 +46,24 @@ const LabelFieldArray = () => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     'templateConfig.rules'
   );
-  const [chronologyIndex, setChronologyIndex] = useState(0);
-  const [enumerationIndex, setEnumerationIndex] = useState(0);
+  const [ruleLabelValues, setRuleLabelValues] = useState([]);
 
   useEffect(() => {
-    setChronologyIndex((prevChronologyInex) => prevChronologyInex + 1);
-  }, []);
-
-  //   useEffect(() => {
-  //   setChronologyIndex();
-  // }, []);
-
-  useEffect(() => {
-    setEnumerationIndex((prevEnumerationInex) => prevEnumerationInex + 1);
-  }, []);
+    let chronologyCount = 0;
+    let enumerationCount = 0;
+    const ruleLabelArray = values?.templateConfig?.rules?.map((r) => {
+      if (r?.templateMetadataRuleType === 'chronology') {
+        chronologyCount++;
+        return `chronology ${chronologyCount}`;
+      } else if (r?.templateMetadataRuleType === 'enumeration') {
+        enumerationCount++;
+        return `enumeration ${enumerationCount}`;
+      } else {
+        return null;
+      }
+    });
+    setRuleLabelValues(ruleLabelArray);
+  }, [values]);
 
   const refdataValues = useSerialsManagementRefdata([
     RULE_TYPE,
@@ -160,10 +164,7 @@ const LabelFieldArray = () => {
               id="ui-serials-management.ruleset.labelIndex"
               values={{ index: index + 1 }}
             />
-            {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-              'chronology' && `${': '}chronology${chronologyIndex + 1}`}
-            {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-              'enumeration' && `${': '}enumeration${enumerationIndex + 1}`}
+            {`: ${ruleLabelValues[index]}`}
           </>
         }
         onDelete={() => onDeleteField(index, templateConfig)}
@@ -192,7 +193,10 @@ const LabelFieldArray = () => {
                         ruleLocale: 'en',
                       });
                     } else {
-                      change(`templateConfig.rules[${index}].ruleType`, undefined);
+                      change(
+                        `templateConfig.rules[${index}].ruleType`,
+                        undefined
+                      );
                     }
                   }}
                   required
@@ -266,8 +270,8 @@ const LabelFieldArray = () => {
                   validate={requiredValidator}
                 />
               </Col>
-              {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-                'chronology' && (
+              {values?.templateConfig?.rules[index]
+                ?.templateMetadataRuleType === 'chronology' && (
                 <Col xs={3}>
                   <Field
                     component={Selection}
@@ -296,7 +300,7 @@ const LabelFieldArray = () => {
               tokensInfo={renderTemplateTokensInfo()}
               yearTokens={yearTokens()}
             />
-          )}
+        )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -312,7 +316,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationNumericTokens}
             </>
-          )}
+        )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -329,7 +333,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationTextualTokens}
             </>
-          )}
+        )}
       </EditCard>
     );
   };
@@ -337,10 +341,9 @@ const LabelFieldArray = () => {
   return (
     <>
       <FieldArray name="templateConfig.rules">
-        {() =>
-          items.map((templateConfig, index) => {
-            return renderLabelRule(templateConfig, index);
-          })
+        {() => items.map((templateConfig, index) => {
+          return renderLabelRule(templateConfig, index);
+        })
         }
       </FieldArray>
       {!values?.templateConfig && (
