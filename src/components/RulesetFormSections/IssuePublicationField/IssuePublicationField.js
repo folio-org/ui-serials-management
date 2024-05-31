@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
 import { Col, Label, Row, Select, TextField } from '@folio/stripes/components';
@@ -30,7 +30,7 @@ const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 const IssuePublicationField = ({ name, index, patternType }) => {
   const { values } = useFormState();
   const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
-
+  const intl = useIntl();
   const renderDayField = (
     ordinal = false,
     minValue = 1,
@@ -38,30 +38,26 @@ const IssuePublicationField = ({ name, index, patternType }) => {
     disabled = false
   ) => {
     return (
-      <FormattedMessage id="ui-serials-management.ruleset.day">
-        {([ariaLabel]) => (
-          <Field
-            aria-label={ariaLabel}
-            component={TextField}
-            disabled={disabled}
-            label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
-            name={
-              ordinal
-                ? `${name}[${index}].ordinal`
-                : `${name}[${index}].pattern.day`
-            }
-            required={!disabled}
-            type="number"
-            validate={
-              !disabled &&
-              composeValidators(
-                requiredValidator,
-                validateWithinRange(minValue, maxValue),
-                validateWholeNumber
-              )}
-          />
-        )}
-      </FormattedMessage>
+      <Field
+        ariaLabel={intl.formatMessage({ id: 'ui-serials-management.ruleset.day' })}
+        component={TextField}
+        disabled={disabled}
+        label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.day`
+        }
+        required={!disabled}
+        type="number"
+        validate={
+          !disabled &&
+          composeValidators(
+            requiredValidator,
+            validateWithinRange(minValue, maxValue),
+            validateWholeNumber
+          )}
+      />
     );
   };
 
@@ -88,33 +84,30 @@ const IssuePublicationField = ({ name, index, patternType }) => {
 
   const renderWeekField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
-      <FormattedMessage id="ui-serials-management.ruleset.ofWeek">
-        {([ariaLabel]) => (
-          <Field
-            aria-label={ariaLabel}
-            component={TextField}
-            label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
-            name={
-              ordinal
-                ? `${name}[${index}].ordinal`
-                : `${name}[${index}].pattern.week`
-            }
-            required
-            type="number"
-            validate={composeValidators(
-              requiredValidator,
-              validateWithinRange(minValue, maxValue),
-              validateWholeNumber
-            )}
-          />
+      <Field
+        ariaLabel={intl.formatMessage({ id: 'ui-serials-management.ruleset.week' })}
+        component={TextField}
+        label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.week`
+        }
+        required
+        type="number"
+        validate={composeValidators(
+          requiredValidator,
+          validateWithinRange(minValue, maxValue),
+          validateWholeNumber
         )}
-      </FormattedMessage>
+      />
     );
   };
 
   const renderMonthField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
+        ariaLabel={intl.formatMessage({ id: 'ui-serials-management.ruleset.month' })}
         component={ordinal ? TextField : Select}
         dataOptions={[
           { value: '', label: '' },
@@ -146,27 +139,23 @@ const IssuePublicationField = ({ name, index, patternType }) => {
 
   const renderYearField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
-      <FormattedMessage id="ui-serials-management.ruleset.ofYear">
-        {([ariaLabel]) => (
-          <Field
-            aria-label={ariaLabel}
-            component={TextField}
-            label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
-            name={
-              ordinal
-                ? `${name}[${index}].ordinal`
-                : `${name}[${index}].pattern.year`
-            }
-            required
-            type="number"
-            validate={composeValidators(
-              requiredValidator,
-              validateWithinRange(minValue, maxValue),
-              validateWholeNumber
-            )}
-          />
+      <Field
+        ariaLabel={intl.formatMessage({ id: 'ui-serials-management.ruleset.year' })}
+        component={TextField}
+        label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
+        name={
+          ordinal
+            ? `${name}[${index}].ordinal`
+            : `${name}[${index}].pattern.year`
+        }
+        required
+        type="number"
+        validate={composeValidators(
+          requiredValidator,
+          validateWithinRange(minValue, maxValue),
+          validateWholeNumber
         )}
-      </FormattedMessage>
+      />
     );
   };
 
@@ -218,7 +207,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
       {values?.patternType && (
         <Row>
           <Col xs={1}>
-            <Label style={{ paddingTop: '25px' }}>
+            <Label
+              ariaLabel={intl.formatMessage({ id: `Issue ${index + 1}` })}
+              style={{ paddingTop: '25px' }}
+            >
               <FormattedMessage
                 id="ui-serials-management.ruleset.issueIndex"
                 values={{ index: index + 1 }}
