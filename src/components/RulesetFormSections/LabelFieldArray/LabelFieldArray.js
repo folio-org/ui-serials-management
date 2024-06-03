@@ -77,23 +77,6 @@ const LabelFieldArray = () => {
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
   };
 
-  const dateTokens = () => {
-    return [
-      '{{chronology1.weekday}}',
-      '{{chronology1.monthDay}}',
-      '{{chronology1.month}}',
-      '{{chronology1.year}}',
-    ].join(' ');
-  };
-
-  const monthTokens = () => {
-    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
-  };
-
-  const yearTokens = () => {
-    return ['{{chronology1.year}}'];
-  };
-
   const renderTemplateInfo = () => {
     return (
       <InfoPopover
@@ -290,12 +273,9 @@ const LabelFieldArray = () => {
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat && (
             <ChronologyField
-              dateTokens={dateTokens()}
-              monthTokens={monthTokens()}
               name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
               templateConfig={templateConfig}
               tokensInfo={renderTemplateTokensInfo()}
-              yearTokens={yearTokens()}
             />
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===

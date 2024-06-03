@@ -16,12 +16,26 @@ import {
 const ChronologyField = ({
   name,
   templateConfig,
-  dateTokens,
-  monthTokens,
-  yearTokens,
-  tokensInfo,
+  tokensInfo
 }) => {
   const intl = useIntl();
+
+  const dateTokens = () => {
+    return [
+      '{{chronology1.weekday}}',
+      '{{chronology1.monthDay}}',
+      '{{chronology1.month}}',
+      '{{chronology1.year}}',
+    ].join(' ');
+  };
+
+  const monthTokens = () => {
+    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
+  };
+
+  const yearTokens = () => {
+    return ['{{chronology1.year}}'];
+  };
 
   const renderWeekdayFormatField = () => {
     return (
@@ -120,10 +134,10 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={dateTokens} />
+            <ClipCopy text={dateTokens()} />
           </Label>
 
-          {dateTokens}
+          {dateTokens()}
         </div>,
       ],
     },
@@ -135,10 +149,10 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={monthTokens} />
+            <ClipCopy text={monthTokens()} />
           </Label>
 
-          {monthTokens}
+          {monthTokens()}
         </div>,
       ],
     },
@@ -149,9 +163,9 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={yearTokens} />
+            <ClipCopy text={yearTokens()} />
           </Label>
-          {yearTokens}
+          {yearTokens()}
         </div>,
       ],
     },
@@ -177,10 +191,7 @@ const ChronologyField = ({
 ChronologyField.propTypes = {
   name: PropTypes.string,
   templateConfig: PropTypes.object,
-  dateTokens: PropTypes.func,
-  monthTokens: PropTypes.func,
-  yearTokens: PropTypes.func,
-  tokensInfo: PropTypes.func,
+  tokensInfo: PropTypes.func
 };
 
 export default ChronologyField;
