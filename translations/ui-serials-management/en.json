@@ -13,7 +13,7 @@
   "cancel": "Cancel",
   "status": "Status",
   "description": "Description",
-  "close" : "Close",
+  "close": "Close",
   "lastUpdated": "Last updated",
   "learnMore": "Learn more",
 
@@ -145,10 +145,10 @@
 
   "ruleset.issue.nRange": "Issue (1-n)",
   "ruleset.omitRangeOf": "Omit range of {omissionType}",
-  "ruleset.preview" : "Preview",
-  "ruleset.startDate":"Start date",
-  "ruleset.generatePredictedPieces" : "Generate predicted pieces",
-  "ruleset.generate" : "Generate",
+  "ruleset.preview": "Preview",
+  "ruleset.startDate": "Start date",
+  "ruleset.generatePredictedPieces": "Generate predicted pieces",
+  "ruleset.generate": "Generate",
   "ruleset.issueCount": "Issue count",
   "ruleset.issuePublicationDate": "Issue publication date",
 
@@ -186,6 +186,7 @@
   "ruleset.value": "Value",
   "ruleset.picklist": "Picklist",
   "ruleset.template": "Template",
+  "ruleset.template.tokens": "Template tokens",
   "ruleset.order": "Order",
   "ruleset.labelText": "Label text",
   "ruleset.numberOfIssues": "No. of issues",
@@ -193,7 +194,8 @@
   "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
   "ruleset.pickList": "Pick list",
   "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
-  
+  "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
+
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",
   "pieceSets.dateGenerated": "Date generated",
@@ -223,7 +225,7 @@
   "pieceSets.supplement": "Supplement",
   "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
   "pieceSets.noOrderLineLocationsOrHoldings": "There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.",
-  "pieceSets.generateReceivingInfo" : "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
+  "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
   "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
   "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
 
@@ -234,5 +236,4 @@
   "validate.greaterThanOne": "Must be greater than 1",
 
   "piece.label": "Label"
-
 }
