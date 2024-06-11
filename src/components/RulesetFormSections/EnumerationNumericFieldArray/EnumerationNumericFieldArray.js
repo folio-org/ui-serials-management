@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-
 import { Button, Label, Row, Col } from '@folio/stripes/components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
@@ -10,9 +9,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import EnumerationNumericField from '../EnumerationNumericField';
 
 const EnumerationNumericFieldArray = ({ name }) => {
-  const { items, onAddField, onDeleteField } = useKiwtFieldArray(
-    `${name}.levels`
-  );
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray(`${name}.levels`);
 
   return (
     <>
@@ -55,8 +52,7 @@ const EnumerationNumericFieldArray = ({ name }) => {
               onDeleteField={onDeleteField}
             />
           );
-        })
-        }
+        })}
       </FieldArray>
       <Button onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addLevel" />

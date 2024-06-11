@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
+import { ClipCopy } from '@folio/stripes/smart-components';
 
 import {
   Button,
@@ -11,6 +13,7 @@ import {
   Selection,
   InfoPopover,
   Layout,
+  Label,
 } from '@folio/stripes/components';
 import {
   EditCard,
@@ -33,6 +36,9 @@ const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
 ];
 
+const enumerationNumericTokens = ['{{enumeration1.level1}}'];
+const enumerationTextualTokens = ['{{enumeration1}}'];
+
 const LabelFieldArray = () => {
   const { values } = useFormState();
   const { change } = useForm();
@@ -40,6 +46,25 @@ const LabelFieldArray = () => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     'templateConfig.rules'
   );
+  const [ruleLabelValues, setRuleLabelValues] = useState([]);
+
+  useEffect(() => {
+    let chronologyCount = 0;
+    let enumerationCount = 0;
+    const ruleLabelArray = values?.templateConfig?.rules?.map((r) => {
+      if (r?.templateMetadataRuleType === 'chronology') {
+        chronologyCount++;
+        return `: chronology ${chronologyCount}`;
+      } else if (r?.templateMetadataRuleType === 'enumeration') {
+        enumerationCount++;
+        return `: enumeration ${enumerationCount}`;
+      } else {
+        return '';
+      }
+    });
+    setRuleLabelValues(ruleLabelArray);
+  }, [values]);
+
   const refdataValues = useSerialsManagementRefdata([
     RULE_TYPE,
     CHRONOLOGY_LABEL_FORMAT,
@@ -78,6 +103,31 @@ const LabelFieldArray = () => {
     );
   };
 
+  const renderTemplateTokensInfo = () => {
+    return (
+      <InfoPopover
+        content={
+          <Layout className="flex flex-direction-column centerContent">
+            <Layout>
+              <FormattedMessage id="ui-serials-management.ruleset.templateTokensPopover" />
+            </Layout>
+            <Layout className="marginTop1">
+              <Button
+                allowAnchorClick
+                buttonStyle="primary"
+                href="https://folio-org.atlassian.net/wiki/x/dwA7CQ"
+                marginBottom0
+                rel="noreferrer"
+                target="blank"
+              >
+                <FormattedMessage id="ui-serials-management.learnMore" />
+              </Button>
+            </Layout>
+          </Layout>
+        }
+      />
+    );
+  };
   const renderLabelRule = (templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
@@ -92,10 +142,13 @@ const LabelFieldArray = () => {
           />
         }
         header={
-          <FormattedMessage
-            id="ui-serials-management.ruleset.labelIndex"
-            values={{ index: index + 1 }}
-          />
+          <>
+            <FormattedMessage
+              id="ui-serials-management.ruleset.labelIndex"
+              values={{ index: index + 1 }}
+            />
+            {ruleLabelValues[index]}
+          </>
         }
         onDelete={() => onDeleteField(index, templateConfig)}
       >
@@ -123,10 +176,7 @@ const LabelFieldArray = () => {
                         ruleLocale: 'en',
                       });
                     } else {
-                      change(
-                        `templateConfig.rules[${index}].ruleType`,
-                        undefined
-                      );
+                      change(`templateConfig.rules[${index}].ruleType`, undefined);
                     }
                   }}
                   required
@@ -200,8 +250,8 @@ const LabelFieldArray = () => {
                   validate={requiredValidator}
                 />
               </Col>
-              {values?.templateConfig?.rules[index]
-                ?.templateMetadataRuleType === 'chronology' && (
+              {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+                'chronology' && (
                 <Col xs={3}>
                   <Field
                     component={Selection}
@@ -225,24 +275,41 @@ const LabelFieldArray = () => {
             <ChronologyField
               name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
               templateConfig={templateConfig}
+              tokensInfo={renderTemplateTokensInfo()}
             />
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
-            <EnumerationNumericFieldArray
-              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-            />
+            <>
+              <EnumerationNumericFieldArray
+                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+              />
+              <Label id="template-token-header">
+                <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+                {renderTemplateTokensInfo()}
+                <ClipCopy text={enumerationNumericTokens} />
+              </Label>
+              {enumerationNumericTokens}
+            </>
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat === 'enumeration_textual' && (
-            <EnumerationTextualFieldArray
-              index={index}
-              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-            />
+            <>
+              <EnumerationTextualFieldArray
+                index={index}
+                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+              />
+              <Label id="template-token-header">
+                <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+                {renderTemplateTokensInfo()}
+                <ClipCopy text={enumerationTextualTokens} />
+              </Label>
+              {enumerationTextualTokens}
+            </>
         )}
       </EditCard>
     );

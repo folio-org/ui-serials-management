@@ -72,6 +72,11 @@ describe('ChronologyField', () => {
     expect(getByText('Year format')).toBeInTheDocument();
   });
 
+  test('renders the expected label', async () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Template tokens')).toBeInTheDocument();
+  });
+
   test('renders a Select for Weekday format', async () => {
     await Select('Weekday format*').exists();
   });

@@ -263,12 +263,22 @@ describe('LabelFieldArray', () => {
 
       test('renders a label card', () => {
         const { getByText } = renderComponent;
-        expect(getByText('Label 1')).toBeInTheDocument();
+        expect(getByText('Label 1: enumeration 1')).toBeInTheDocument();
       });
 
       test('renders the expected Template label', async () => {
         const { getByText } = renderComponent;
         expect(getByText('Remove label 1')).toBeInTheDocument();
+      });
+
+      test('renders the expected Template tokens label', async () => {
+        const { getByText } = renderComponent;
+        expect(getByText('Template tokens')).toBeInTheDocument();
+      });
+
+      test('renders the expected label', async () => {
+        const { getByText } = renderComponent;
+        expect(getByText('{{enumeration1.level1}}')).toBeInTheDocument();
       });
 
 

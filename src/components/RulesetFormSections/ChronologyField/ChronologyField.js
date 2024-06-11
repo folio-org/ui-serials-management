@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
-
-import { Select, Col, Row } from '@folio/stripes/components';
+import { ClipCopy } from '@folio/stripes/smart-components';
+import { Select, Col, Row, Label } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
@@ -13,8 +13,29 @@ import {
   CHRONOLOGY_YEAR_FORMAT,
 } from '../../../constants/selectOptionTranslations';
 
-const ChronologyField = ({ name, templateConfig }) => {
+const ChronologyField = ({
+  name,
+  templateConfig,
+  tokensInfo
+}) => {
   const intl = useIntl();
+
+  const dateTokens = () => {
+    return [
+      '{{chronology1.weekday}}',
+      '{{chronology1.monthDay}}',
+      '{{chronology1.month}}',
+      '{{chronology1.year}}',
+    ].join(' ');
+  };
+
+  const monthTokens = () => {
+    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
+  };
+
+  const yearTokens = () => {
+    return ['{{chronology1.year}}'];
+  };
 
   const renderWeekdayFormatField = () => {
     return (
@@ -22,18 +43,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_WEEKDAY_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_WEEKDAY_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.weekdayFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.weekdayFormat" />}
         name={`${name}.weekdayFormat.value`}
         required
         validate={requiredValidator}
@@ -47,14 +64,12 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_MONTH_DAY_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_MONTH_DAY_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
         label={
           <FormattedMessage id="ui-serials-management.ruleset.monthDayFormat" />
@@ -72,18 +87,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_MONTH_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_MONTH_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.monthFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.monthFormat" />}
         name={`${name}.monthFormat.value`}
         required
         validate={requiredValidator}
@@ -97,18 +108,14 @@ const ChronologyField = ({ name, templateConfig }) => {
         component={Select}
         dataOptions={[
           { value: '', label: '' },
-          ...CHRONOLOGY_YEAR_FORMAT.map(
-            (o) => {
-              return {
-                value: o?.value,
-                label: intl.formatMessage({ id: o?.id }),
-              };
-            }
-          ),
+          ...CHRONOLOGY_YEAR_FORMAT.map((o) => {
+            return {
+              value: o?.value,
+              label: intl.formatMessage({ id: o?.id }),
+            };
+          }),
         ]}
-        label={
-          <FormattedMessage id="ui-serials-management.ruleset.yearFormat" />
-        }
+        label={<FormattedMessage id="ui-serials-management.ruleset.yearFormat" />}
         name={`${name}.yearFormat.value`}
         required
         validate={requiredValidator}
@@ -123,34 +130,68 @@ const ChronologyField = ({ name, templateConfig }) => {
         renderMonthDayFormatField(),
         renderMonthFormatField(),
         renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={dateTokens()} />
+          </Label>
+
+          {dateTokens()}
+        </div>,
       ],
     },
     chronology_month: {
-      fields: [renderMonthFormatField(), renderYearFormatField()],
+      fields: [
+        renderMonthFormatField(),
+        renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={monthTokens()} />
+          </Label>
+
+          {monthTokens()}
+        </div>,
+      ],
     },
     chronology_year: {
-      fields: [renderYearFormatField()],
+      fields: [
+        renderYearFormatField(),
+        <div>
+          <Label id="template-token-header">
+            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+            {tokensInfo}
+            <ClipCopy text={yearTokens()} />
+          </Label>
+          {yearTokens()}
+        </div>,
+      ],
     },
   };
 
   return (
-    <Row>
-      {chronologyFormats[
-        templateConfig?.ruleType?.templateMetadataRuleFormat
-      ]?.fields?.map((chronologyField, index) => {
-        return (
-          <Col key={`chronology-field-${name}[${index}]`} xs={3}>
-            {chronologyField}
-          </Col>
-        );
-      })}
-    </Row>
+    <>
+      <Row>
+        {chronologyFormats[
+          templateConfig?.ruleType?.templateMetadataRuleFormat
+        ]?.fields?.map((chronologyField, index) => {
+          return (
+            <Col key={`chronology-field-${name}[${index}]`} xs={3}>
+              {chronologyField}
+            </Col>
+          );
+        })}
+      </Row>
+    </>
   );
 };
 
 ChronologyField.propTypes = {
   name: PropTypes.string,
   templateConfig: PropTypes.object,
+  tokensInfo: PropTypes.func
 };
 
 export default ChronologyField;
