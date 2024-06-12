@@ -40,6 +40,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   ) => {
     return (
       <Field
+        ariaLabel={intl.formatMessage({ id: `Day, Issue ${index + 1}` })}
         component={TextField}
         disabled={disabled}
         label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
@@ -227,7 +228,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
           {values?.recurrence?.period > 1 &&
             !!patternTypeFormats[patternType]?.ordinal && (
               <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>
-          )}
+            )}
         </Row>
       )}
     </>
