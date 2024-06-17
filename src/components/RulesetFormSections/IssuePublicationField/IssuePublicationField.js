@@ -40,7 +40,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   ) => {
     return (
       <Field
-        ariaLabel={intl.formatMessage({ id: `Day, Issue ${index + 1}` })}
+        ariaLabel={intl.formatMessage(
+          { id: 'ui-serials-management.day.issue' },
+          { issueNr: index + 1 }
+        )}
         component={TextField}
         disabled={disabled}
         label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
@@ -65,7 +68,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   const renderWeekdayField = () => {
     return (
       <Field
-        ariaLabel={intl.formatMessage({ id: `Day, Issue ${index + 1}` })}
+        ariaLabel={intl.formatMessage(
+          { id: 'ui-serials-management.day.issue' },
+          { issueNr: index + 1 }
+        )}
         component={Select}
         dataOptions={[
           { value: '', label: '' },
@@ -87,7 +93,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   const renderWeekField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
-        ariaLabel={intl.formatMessage({ id: `Week, Issue ${index + 1}` })}
+        ariaLabel={intl.formatMessage(
+          { id: 'ui-serials-management.week.issue' },
+          { issueNr: index + 1 }
+        )}
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
         name={
@@ -109,7 +118,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   const renderMonthField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
-        ariaLabel={intl.formatMessage({ id: `Month, Issue ${index + 1}` })}
+        ariaLabel={intl.formatMessage(
+          { id: 'ui-serials-management.month.issue' },
+          { issueNr: index + 1 }
+        )}
         component={ordinal ? TextField : Select}
         dataOptions={[
           { value: '', label: '' },
@@ -142,7 +154,10 @@ const IssuePublicationField = ({ name, index, patternType }) => {
   const renderYearField = (ordinal = false, minValue = 1, maxValue = 1) => {
     return (
       <Field
-        ariaLabel={intl.formatMessage({ id: `Year, Issue ${index + 1}` })}
+        ariaLabel={intl.formatMessage(
+          { id: 'ui-serials-management.year.issue' },
+          { issueNr: index + 1 }
+        )}
         component={TextField}
         label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
         name={
@@ -228,7 +243,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
           {values?.recurrence?.period > 1 &&
             !!patternTypeFormats[patternType]?.ordinal && (
               <Col xs={2}>{patternTypeFormats[patternType]?.ordinal}</Col>
-            )}
+          )}
         </Row>
       )}
     </>
