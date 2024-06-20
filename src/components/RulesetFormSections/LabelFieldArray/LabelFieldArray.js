@@ -36,9 +36,6 @@ const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
 ];
 
-const enumerationNumericTokens = ['{{enumeration1.level1}}'];
-const enumerationTextualTokens = ['{{enumeration1}}'];
-
 const LabelFieldArray = () => {
   const { values } = useFormState();
   const { change } = useForm();
@@ -46,7 +43,13 @@ const LabelFieldArray = () => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(
     'templateConfig.rules'
   );
+
   const [ruleLabelValues, setRuleLabelValues] = useState([]);
+  const [enumerationValues, setEnumerationValues] = useState([]);
+
+  function handleEnumerationTokensCount(enumerationValue) {
+    setEnumerationValues(enumerationValue)
+  };
 
   useEffect(() => {
     let chronologyCount = 0;
@@ -63,6 +66,24 @@ const LabelFieldArray = () => {
       }
     });
     setRuleLabelValues(ruleLabelArray);
+  }, [values]);
+
+    useEffect(() => {
+      let enumerationTokenCount = 0;
+      let levelCount = 0;
+    const enumerationTokenArray = values?.templateConfig?.rules?.map((e) => {
+      if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_textual') {
+        enumerationTokenCount++;
+        return `{{enumeration${enumerationTokenCount}}}`;
+      }
+      else if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric') {
+        enumerationTokenCount++;
+        return `{{enumeration${enumerationTokenCount}.level${levelCount + 1}}}`;
+      } else {
+        return '';
+      }
+    });
+    setEnumerationValues(enumerationTokenArray);
   }, [values]);
 
   const refdataValues = useSerialsManagementRefdata([
@@ -131,6 +152,7 @@ const LabelFieldArray = () => {
   const renderLabelRule = (templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
+
     return (
       <EditCard
         key={`label-rule-card-${indexKey}`}
@@ -272,10 +294,12 @@ const LabelFieldArray = () => {
           'chronology' &&
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat && (
-            <ChronologyField
+          <ChronologyField
+              index={index}
               name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
               templateConfig={templateConfig}
               tokensInfo={renderTemplateTokensInfo()}
+              values={values}
             />
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
@@ -284,14 +308,16 @@ const LabelFieldArray = () => {
             ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
             <>
               <EnumerationNumericFieldArray
-                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+              token={handleEnumerationTokensCount}
+              values={values}
               />
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
                 {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationNumericTokens} />
+                <ClipCopy text={enumerationValues[index]} />
               </Label>
-              {enumerationNumericTokens}
+              {enumerationValues[index]}
             </>
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
@@ -306,9 +332,9 @@ const LabelFieldArray = () => {
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
                 {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationTextualTokens} />
+                <ClipCopy text={enumerationValues[index]} />
               </Label>
-              {enumerationTextualTokens}
+              {enumerationValues[index]}
             </>
         )}
       </EditCard>
