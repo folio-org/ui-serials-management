@@ -192,7 +192,7 @@
     "ruleset.week.monthRange": "Semana (1-4)",
     "ruleset.week.yearRange": "Semana (1-52)",
     "ruleset.month.yearRange": "Mês (Jan-Dez)",
-    "ruleset.issue.nRange": "Edição (1-n)",
+    "ruleset.issue.nRange": "Fascículo (1-n)",
     "serials.serial": "Seriado",
     "ruleset.chronology.weekday.fullLower": "Segunda-feira",
     "ruleset.chronology.weekday.fullUpper": "SEGUNDA-FEIRA",
@@ -218,5 +218,11 @@
     "pieceSets.countReceivingGenerated": "<strong>{count} foram geradas peças de recebimento.</strong> Verifique se esse total está de acordo com o esperado. As peças agora podem ser visualizadas no aplicativo de Recebimento.",
     "pieceSets.displayInHoldingPopover": "Informações selecionadas sobre esta peça devem ser exibidas no aplicativo Inventário na seção Aquisição do registro de coleção. ",
     "pieceSets.supplementPopover": "Selecione se a peça é um material complementar, como um CD ou um mapa.",
-    "pieceSets.generateReceivingErrorMessage": "<strong>Erro:</strong> Nenhuma peça de recebimento foi gerada."
+    "pieceSets.generateReceivingErrorMessage": "<strong>Erro:</strong> Nenhuma peça de recebimento foi gerada.",
+    "ruleset.template.tokens": "Tokens de modelo",
+    "ruleset.templateTokensPopover": "Os tokens de modelos são usados no modelo para inserir valores de enumeração e cronologia no resumo de exibição da parte prevista.",
+    "day.issue": "Dia, Fascículo {issueNr}",
+    "week.issue": "Semana, Fascículo {issueNr}",
+    "month.issue": "Mês, Fascículo {issueNr}",
+    "year.issue": "Ano, Fascículo {issueNr}"
 }

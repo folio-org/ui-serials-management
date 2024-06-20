@@ -218,5 +218,11 @@
     "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
     "pieceSets.displayInHoldingPopover": "Select information about this piece should be displayed in the Inventory app in the Acquisition section of the holding record. ",
     "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
-    "pieceSets.generateReceivingErrorMessage": "Inventari­sierungs­status"
+    "pieceSets.generateReceivingErrorMessage": "Inventari­sierungs­status",
+    "ruleset.template.tokens": "Template tokens",
+    "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
+    "day.issue": "Day, Issue {issueNr}",
+    "week.issue": "Week, Issue {issueNr}",
+    "month.issue": "Month, Issue {issueNr}",
+    "year.issue": "Year, Issue {issueNr}"
 }
