@@ -47,10 +47,6 @@ const LabelFieldArray = () => {
   const [ruleLabelValues, setRuleLabelValues] = useState([]);
   const [enumerationValues, setEnumerationValues] = useState([]);
 
-  function handleEnumerationTokensCount(enumerationValue) {
-    setEnumerationValues(enumerationValue)
-  };
-
   useEffect(() => {
     let chronologyCount = 0;
     let enumerationCount = 0;
@@ -68,17 +64,17 @@ const LabelFieldArray = () => {
     setRuleLabelValues(ruleLabelArray);
   }, [values]);
 
-    useEffect(() => {
-      let enumerationTokenCount = 0;
-      let levelCount = 0;
+  useEffect(() => {
+    let enumerationTokenCount = 0;
+    let levelCount = 0;
     const enumerationTokenArray = values?.templateConfig?.rules?.map((e) => {
       if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_textual') {
         enumerationTokenCount++;
         return `{{enumeration${enumerationTokenCount}}}`;
-      }
-      else if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric') {
+      } else if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric') {
         enumerationTokenCount++;
-        return `{{enumeration${enumerationTokenCount}.level${levelCount + 1}}}`;
+        levelCount++;
+        return `{{enumeration${enumerationTokenCount}.level${levelCount}}}`;
       } else {
         return '';
       }
@@ -294,7 +290,7 @@ const LabelFieldArray = () => {
           'chronology' &&
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat && (
-          <ChronologyField
+            <ChronologyField
               index={index}
               name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
               templateConfig={templateConfig}
@@ -308,9 +304,8 @@ const LabelFieldArray = () => {
             ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
             <>
               <EnumerationNumericFieldArray
-              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-              token={handleEnumerationTokensCount}
-              values={values}
+                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+                values={values}
               />
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
