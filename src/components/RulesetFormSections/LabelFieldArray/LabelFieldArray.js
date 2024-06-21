@@ -66,15 +66,14 @@ const LabelFieldArray = () => {
 
   useEffect(() => {
     let enumerationTokenCount = 0;
-    let levelCount = 0;
+    const levelCount = 0;
     const enumerationTokenArray = values?.templateConfig?.rules?.map((e) => {
       if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_textual') {
         enumerationTokenCount++;
         return `{{enumeration${enumerationTokenCount}}}`;
       } else if (e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric') {
         enumerationTokenCount++;
-        levelCount++;
-        return `{{enumeration${enumerationTokenCount}.level${levelCount}}}`;
+        return `{{enumeration${enumerationTokenCount}.level${levelCount + 1}}}`;
       } else {
         return '';
       }
