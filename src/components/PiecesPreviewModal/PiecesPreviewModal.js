@@ -59,19 +59,21 @@ const PiecesPreviewModal = ({
 
   const { mutateAsync: generatePieces } = useMutation(
     ['ui-serials-management', 'PiecesPreviewModal', 'generatePieces'],
-    (data) => ky
-      .post(GENERATE_PIECES_PREVIEW, { json: data })
-      .json()
-      .then((res) => setPredictedPieces(res))
+    (data) =>
+      ky
+        .post(GENERATE_PIECES_PREVIEW, { json: data })
+        .json()
+        .then((res) => setPredictedPieces(res))
   );
 
   // istanbul ignore next
   const { mutateAsync: createPieces } = useMutation(
     ['ui-serials-management', 'PiecesPreviewModal', 'createPieces'],
-    (data) => ky
-      .post(CREATE_PREDICTED_PIECES, { json: data })
-      .json()
-      .then((res) => history.push(urls.pieceSetView(res?.id)))
+    (data) =>
+      ky
+        .post(CREATE_PREDICTED_PIECES, { json: data })
+        .json()
+        .then((res) => history.push(urls.pieceSetView(res?.id)))
   );
 
   // istanbul ignore next
@@ -119,8 +121,53 @@ const PiecesPreviewModal = ({
       },
       startingValues: values?.startingValues,
     };
-    await generatePieces(submitValues);
+    // await generatePieces(submitValues);
   };
+
+  // "userConfigured": [
+  //           {
+  //               "id": "160263bc-fa18-42ab-8966-aedc4987b1b5",
+  //               "index": 1,
+  //               "userConfiguredTemplateMetadataType": {
+  //                   "id": "ff8081819035747e01903575b3470047"
+  //               },
+  //               "metadataType": {
+  //                   "id": "9fea6fba-00f0-4fea-9447-5f95b6245013",
+  //                   "levels": [
+  //                       {
+  //                           "id": "b9ac804e-56fc-42ae-8cd6-54ea8c68fe0f"
+  //                       },
+  //                       {
+  //                           "id": "79ea4759-7c3e-4aca-b27a-34e6259ed6de"
+  //                       }
+  //                   ]
+  //               }
+  //           },
+  //           {
+  //               "id": "8e17848a-643e-48a4-af46-0a55e81a41d2",
+  //               "index": 0,
+  //               "userConfiguredTemplateMetadataType": {
+  //                   "id": "ff8081819035747e01903575b3430046"
+  //               },
+  //               "metadataType": {
+  //                   "id": "f5be7ff2-e375-4a28-be8d-b94bd42e12c0",
+  //                   "monthDay": "1",
+  //                   "month": "November",
+  //                   "weekday": "Friday",
+  //                   "year": "2024"
+  //               }
+  //           }
+  //       ],
+  //       "standard": {
+  //           "id": "eb32236f-07ee-4efc-9ea6-4e482eca632d",
+  //           "index": 12,
+  //           "containedIndices": [
+  //               12
+  //           ],
+  //           "date": "2024-11-01",
+  //           "naiveIndex": 12
+  //       }
+  //   },
 
   const renderPublicationDate = (piece) => {
     return <PiecePublicationDate piece={piece} />;
@@ -193,15 +240,15 @@ const PiecesPreviewModal = ({
                     values={{ index: i + 1 }}
                   />
                 }
-                name={`startingValues[${index}].levels[${i}].value`}
+                name={`startingValues[${index}].metadataType.levels[${i}].value`}
                 required
                 type="number"
                 validate={
                   e?.sequence?.value === 'reset'
                     ? composeValidators(
-                      requiredValidator,
-                      validateWithinRange(1, e?.units)
-                    )
+                        requiredValidator,
+                        validateWithinRange(1, e?.units)
+                      )
                     : requiredValidator
                 }
               />
@@ -291,6 +338,22 @@ const PiecesPreviewModal = ({
     );
   };
 
+  const getInitialValues = () => {
+    return {
+      templateConfig: {
+        ...ruleset?.templateConfig,
+        rules: ruleset?.templateConfig?.rules?.map((rule, ruleIndex) => {
+          rule.index = ruleIndex;
+          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.index = levelIndex;
+            return level;
+          });
+          return rule;
+        }),
+      },
+    };
+  };
+
   return (
     <FormModal
       modalProps={{
@@ -300,6 +363,7 @@ const PiecesPreviewModal = ({
           <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
         ),
         footer: renderFooter,
+        initialValues: { ...getInitialValues() },
       }}
       mutators={arrayMutators}
       onSubmit={handleCreation}
@@ -332,7 +396,8 @@ const PiecesPreviewModal = ({
         )}
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
-        (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
+        (e) =>
+          e?.ruleType?.templateMetadataRuleFormat?.value ===
             'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
