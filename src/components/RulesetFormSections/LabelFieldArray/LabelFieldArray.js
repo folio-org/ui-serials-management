@@ -304,7 +304,6 @@ const LabelFieldArray = () => {
             <>
               <EnumerationNumericFieldArray
                 name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-                values={values}
               />
               <Label id="template-token-header">
                 <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />

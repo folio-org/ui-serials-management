@@ -29,22 +29,21 @@ const ChronologyField = ({
     const chronologyTokenArray = values?.templateConfig?.rules?.map((c) => {
       if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_date') {
         chronologyTokenCount++;
-          return [
+        return [
           `{{chronology${chronologyTokenCount}.weekday}}`,
           `{{chronology${chronologyTokenCount}.monthDay}}`,
           `{{chronology${chronologyTokenCount}.month}}`,
           `{{chronology${chronologyTokenCount}.year}}`,
-    ].join(' ');
+        ].join(' ');
       } else if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_month') {
         chronologyTokenCount++;
         return [
           `{{chronology${chronologyTokenCount}.month}}`,
           `{{chronology${chronologyTokenCount}.year}}`].join(' ');
-      }
-      else if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_year') {
+      } else if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_year') {
         chronologyTokenCount++;
-         return [`{{chronology${chronologyTokenCount}.year}}`].join(' ');
-      }else {
+        return [`{{chronology${chronologyTokenCount}.year}}`].join(' ');
+      } else {
         return '';
       }
     });

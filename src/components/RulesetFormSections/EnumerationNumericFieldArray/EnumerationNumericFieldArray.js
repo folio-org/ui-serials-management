@@ -63,7 +63,7 @@ const EnumerationNumericFieldArray = ({ name }) => {
 };
 
 EnumerationNumericFieldArray.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string
 };
 
 export default EnumerationNumericFieldArray;
