@@ -50,6 +50,23 @@ const ChronologyField = ({
     setChronologyValues(chronologyTokenArray);
   }, [values]);
 
+  const dateTokens = () => {
+    return [
+      '{{chronology1.weekday}}',
+      '{{chronology1.monthDay}}',
+      '{{chronology1.month}}',
+      '{{chronology1.year}}',
+    ].join(' ');
+  };
+
+  const monthTokens = () => {
+    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
+  };
+
+  const yearTokens = () => {
+    return ['{{chronology1.year}}'];
+  };
+
   const renderWeekdayFormatField = () => {
     return (
       <Field
@@ -183,17 +200,19 @@ const ChronologyField = ({
   };
 
   return (
-    <Row>
-      {chronologyFormats[
-        templateConfig?.ruleType?.templateMetadataRuleFormat
-      ]?.fields?.map((chronologyField, index) => {
-        return (
-          <Col key={`chronology-field-${name}[${index}]`} xs={3}>
-            {chronologyField}
-          </Col>
-        );
-      })}
-    </Row>
+    <>
+      <Row>
+        {chronologyFormats[
+          templateConfig?.ruleType?.templateMetadataRuleFormat
+        ]?.fields?.map((chronologyField, index) => {
+          return (
+            <Col key={`chronology-field-${name}[${index}]`} xs={3}>
+              {chronologyField}
+            </Col>
+          );
+        })}
+      </Row>
+    </>
   );
 };
 

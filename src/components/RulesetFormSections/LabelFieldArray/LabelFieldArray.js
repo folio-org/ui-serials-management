@@ -36,6 +36,9 @@ const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
   'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
 ];
 
+const enumerationNumericTokens = ['{{enumeration1.level1}}'];
+const enumerationTextualTokens = ['{{enumeration1}}'];
+
 const LabelFieldArray = () => {
   const { values } = useFormState();
   const { change } = useForm();
@@ -311,7 +314,6 @@ const LabelFieldArray = () => {
                 <ClipCopy text={enumerationValues[index]} />
               </Label>
               {enumerationValues[index]}
-            </>
         )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&

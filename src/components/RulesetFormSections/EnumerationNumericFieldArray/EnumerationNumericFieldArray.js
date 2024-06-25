@@ -52,8 +52,7 @@ const EnumerationNumericFieldArray = ({ name }) => {
               onDeleteField={onDeleteField}
             />
           );
-        })
-        }
+        })}
       </FieldArray>
       <Button onClick={() => onAddField({})}>
         <FormattedMessage id="ui-serials-management.ruleset.addLevel" />
