@@ -290,9 +290,9 @@ const LabelFieldArray = () => {
           values?.templateConfig?.rules[index]?.ruleType
             ?.templateMetadataRuleFormat && (
             <ChronologyField
-              index={index}
               name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
               templateConfig={templateConfig}
+              tokenIndex={index}
               tokensInfo={renderTemplateTokensInfo()}
               values={values}
             />

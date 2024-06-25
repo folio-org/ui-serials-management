@@ -18,7 +18,7 @@ const ChronologyField = ({
   name,
   templateConfig,
   tokensInfo,
-  index,
+  tokenIndex,
   values
 }) => {
   const intl = useIntl();
@@ -147,9 +147,9 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[index]} />
+            <ClipCopy text={chronologyValues[tokenIndex]} />
           </Label>
-          {chronologyValues[index]}
+          {chronologyValues[tokenIndex]}
         </div>,
       ],
     },
@@ -161,9 +161,9 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[index]} />
+            <ClipCopy text={chronologyValues[tokenIndex]} />
           </Label>
-          {chronologyValues[index]}
+          {chronologyValues[tokenIndex]}
         </div>,
       ],
     },
@@ -174,9 +174,9 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[index]} />
+            <ClipCopy text={chronologyValues[tokenIndex]} />
           </Label>
-          {chronologyValues[index]}
+          {chronologyValues[tokenIndex]}
         </div>,
       ],
     },
@@ -201,8 +201,8 @@ ChronologyField.propTypes = {
   name: PropTypes.string,
   templateConfig: PropTypes.object,
   tokensInfo: PropTypes.func,
-  index: PropTypes.number,
-  values: PropTypes.array
+  tokenIndex: PropTypes.number,
+  values: PropTypes.object
 };
 
 export default ChronologyField;
