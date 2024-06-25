@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Field, useForm } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   Datepicker,
@@ -28,21 +28,51 @@ const propTypes = {
   allowCreation: PropTypes.bool,
 };
 
+// TODO Definitely needs to be refactored at some point, additionall will need to be moved elsewhere
 const PiecesPreviewModalForm = ({
   ruleset,
   pieceSets,
   allowCreation = false,
 }) => {
   const { change } = useForm();
+  const intl = useIntl();
 
   const startingValueDataOptions = pieceSets
     ?.filter((ps) => ps?.ruleset?.id === ruleset?.id)
     ?.map((fps) => {
       return {
         value: fps?.id,
-        label: `Publication date: ${fps?.nextPieceTemplateMetadata?.standard?.date}, Generated: ${fps?.dateCreated} `,
+        label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}: 
+                ${intl.formatDate(fps?.nextPieceTemplateMetadata?.standard?.date)}, 
+                ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}: 
+                ${intl.formatDate(fps?.dateCreated)} ${intl.formatTime(fps?.dateCreated)} `,
       };
     });
+
+  const handleStartingValuesChange = (e) => {
+    const selectedNextPiece = pieceSets?.find(
+      (ps) => ps.id === e?.target?.value || ''
+    );
+    change(
+      'startDate',
+      selectedNextPiece?.nextPieceTemplateMetadata?.standard?.date
+    );
+    change(
+      'startingValues',
+      selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
+        (uc) => {
+          if (uc?.metadataType?.levels?.length) {
+            return {
+              levels: uc?.metadataType?.levels?.map((ucl) => {
+                return { value: ucl?.value };
+              }),
+            };
+          }
+          return null;
+        }
+      )
+    );
+  };
 
   const renderEnumerationNumericField = (formatValues, index) => {
     return (
@@ -130,8 +160,10 @@ const PiecesPreviewModalForm = ({
                 { value: '', label: '' },
                 ...startingValueDataOptions,
               ]}
-              label="Follow on from the last piece in a previous set"
-              onChange={(e) => change('startDate', pieceSets?.find(ps => ps.id === e?.target?.value)?.nextPieceTemplateMetadata?.standard?.date)}
+              label={
+                <FormattedMessage id="ui-serials-management.ruleset.followOnFromPrevious" />
+              }
+              onChange={(e) => handleStartingValuesChange(e)}
             />
           </Col>
         </Row>

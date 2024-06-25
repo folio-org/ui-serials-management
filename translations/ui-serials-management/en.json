@@ -192,6 +192,7 @@
   "ruleset.numberOfIssues": "No. of issues",
   "ruleset.numberOfUnits": "No. of units",
   "ruleset.valuesToUseForFirstIssue": "Values to use for the first issue",
+  "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set",
   "ruleset.pickList": "Pick list",
   "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
   "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
