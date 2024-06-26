@@ -198,6 +198,7 @@ const SerialView = ({
       </HasCommand>
       <PiecesPreviewModal
         allowCreation
+        pieceSets={pieceSets}
         ruleset={serial?.serialRulesets?.find(
           (sr) => sr?.rulesetStatus?.value === 'active'
         )}
