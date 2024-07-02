@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import { ClipCopy } from '@folio/stripes/smart-components';
@@ -17,38 +16,26 @@ import {
 const ChronologyField = ({
   name,
   templateConfig,
-  tokensInfo,
-  tokenIndex,
-  values
+  tokensInfo
 }) => {
   const intl = useIntl();
-  const [chronologyValues, setChronologyValues] = useState([]);
 
-  useEffect(() => {
-    let chronologyTokenCount = 0;
-    const chronologyTokenArray = values?.templateConfig?.rules?.map((c) => {
-      if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_date') {
-        chronologyTokenCount++;
-        return [
-          `{{chronology${chronologyTokenCount}.weekday}}`,
-          `{{chronology${chronologyTokenCount}.monthDay}}`,
-          `{{chronology${chronologyTokenCount}.month}}`,
-          `{{chronology${chronologyTokenCount}.year}}`,
-        ].join(' ');
-      } else if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_month') {
-        chronologyTokenCount++;
-        return [
-          `{{chronology${chronologyTokenCount}.month}}`,
-          `{{chronology${chronologyTokenCount}.year}}`].join(' ');
-      } else if (c?.ruleType?.templateMetadataRuleFormat === 'chronology_year') {
-        chronologyTokenCount++;
-        return [`{{chronology${chronologyTokenCount}.year}}`].join(' ');
-      } else {
-        return '';
-      }
-    });
-    setChronologyValues(chronologyTokenArray);
-  }, [values]);
+  const dateTokens = () => {
+    return [
+      '{{chronology1.weekday}}',
+      '{{chronology1.monthDay}}',
+      '{{chronology1.month}}',
+      '{{chronology1.year}}',
+    ].join(' ');
+  };
+
+  const monthTokens = () => {
+    return ['{{chronology1.month}}', '{{chronology1.year}}'].join(' ');
+  };
+
+  const yearTokens = () => {
+    return ['{{chronology1.year}}'];
+  };
 
   const renderWeekdayFormatField = () => {
     return (
@@ -147,9 +134,10 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[tokenIndex]} />
+            <ClipCopy text={dateTokens()} />
           </Label>
-          {chronologyValues[tokenIndex]}
+
+          {dateTokens()}
         </div>,
       ],
     },
@@ -161,9 +149,10 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[tokenIndex]} />
+            <ClipCopy text={monthTokens()} />
           </Label>
-          {chronologyValues[tokenIndex]}
+
+          {monthTokens()}
         </div>,
       ],
     },
@@ -174,9 +163,9 @@ const ChronologyField = ({
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
             {tokensInfo}
-            <ClipCopy text={chronologyValues[tokenIndex]} />
+            <ClipCopy text={yearTokens()} />
           </Label>
-          {chronologyValues[tokenIndex]}
+          {yearTokens()}
         </div>,
       ],
     },
@@ -202,9 +191,7 @@ const ChronologyField = ({
 ChronologyField.propTypes = {
   name: PropTypes.string,
   templateConfig: PropTypes.object,
-  tokensInfo: PropTypes.func,
-  tokenIndex: PropTypes.number,
-  values: PropTypes.object
+  tokensInfo: PropTypes.func
 };
 
 export default ChronologyField;

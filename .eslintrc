@@ -17,10 +17,5 @@
   "plugins": [
     "testing-library",
     "jest-dom"
-  ],
-  "settings": {
-    "import/resolver": {
-      "node": "extensions"
-    }
-  }
+  ]
 }

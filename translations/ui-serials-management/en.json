@@ -236,9 +236,9 @@
   "validate.greaterThanOne": "Must be greater than 1",
 
   "piece.label": "Label",
+
   "day.issue": "Day, Issue {issueNr}",
   "week.issue": "Week, Issue {issueNr}",
   "month.issue": "Month, Issue {issueNr}",
   "year.issue": "Year, Issue {issueNr}"
-
 }
