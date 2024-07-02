@@ -218,5 +218,11 @@
     "pieceSets.countReceivingGenerated": "<strong>已產生{count}個接收件。 </strong>請檢查此總數是否符合預期。現在可以在「接收」應用程式中查看這些作品。",
     "pieceSets.displayInHoldingPopover": "有關該作品的選擇資訊應顯示在「館藏庫」應用程式的館藏記錄中的採購部分。 ",
     "pieceSets.supplementPopover": "選擇該作品是否為補充資料，例如 CD 或地圖。",
-    "pieceSets.generateReceivingErrorMessage": "<strong>錯誤： </strong>未產生接收件。"
+    "pieceSets.generateReceivingErrorMessage": "<strong>錯誤： </strong>未產生接收件。",
+    "ruleset.template.tokens": "Template tokens",
+    "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
+    "day.issue": "Day, Issue {issueNr}",
+    "week.issue": "Week, Issue {issueNr}",
+    "month.issue": "Month, Issue {issueNr}",
+    "year.issue": "Year, Issue {issueNr}"
 }
