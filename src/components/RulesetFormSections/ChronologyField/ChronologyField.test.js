@@ -5,6 +5,7 @@ import {
   Select,
   Button,
 } from '@folio/stripes-erm-testing';
+
 import ChronologyField from './ChronologyField';
 
 import { translationsProperties } from '../../../../test/helpers';
@@ -31,6 +32,57 @@ const templateConfig = {
   },
 };
 
+const tokenIndex = 2;
+
+const values = {
+  'rulesetStatus': {
+    'value': 'active'
+  },
+  'templateConfig': {
+    'rules': [
+      {
+        'templateMetadataRuleType': 'enumeration',
+        'ruleType': {
+          'templateMetadataRuleFormat': 'enumeration_numeric',
+          'ruleFormat': {
+            'levels': [
+              '{}'
+            ]
+          }
+        }
+      },
+      {
+        'templateMetadataRuleType': 'enumeration',
+        'ruleType': {
+          'templateMetadataRuleFormat': 'enumeration_numeric',
+          'ruleFormat': '{levels: Array(1)}'
+        }
+      },
+      {
+        'templateMetadataRuleType': 'chronology',
+        'ruleType': {
+          'ruleLocale': 'en',
+          'templateMetadataRuleFormat': 'chronology_date'
+        }
+      },
+      {
+        'templateMetadataRuleType': 'chronology',
+        'ruleType': {
+          'ruleLocale': 'en',
+          'templateMetadataRuleFormat': 'chronology_year'
+        }
+      },
+      {
+        'templateMetadataRuleType': 'enumeration',
+        'ruleType': {
+          'templateMetadataRuleFormat': 'enumeration_textual',
+          'ruleFormat': '{levels: Array(1)}'
+        }
+      }
+    ]
+  }
+};
+
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
@@ -46,10 +98,26 @@ describe('ChronologyField', () => {
         <ChronologyField
           name="templateConfig.rules[0].ruleType.ruleFormat"
           templateConfig={templateConfig}
+          tokenIndex={tokenIndex}
+          values={values}
         />
       </TestForm>,
       translationsProperties
     );
+  });
+
+  test('renders the expected template tokens label', async () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Template tokens')).toBeInTheDocument();
+  });
+
+  test('renders the expected template tokens', async () => {
+    const { getByText } = renderComponent;
+    expect(
+      getByText(
+        '{{chronology1.weekday}} {{chronology1.monthDay}} {{chronology1.month}} {{chronology1.year}}'
+      )
+    ).toBeInTheDocument();
   });
 
   test('renders the expected text', async () => {
