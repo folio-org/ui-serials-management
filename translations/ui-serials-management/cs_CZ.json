@@ -1,7 +1,7 @@
 {
     "meta.title": "Seriály",
     "serials": "Seriály",
-    "serials.poLineNumber": "Číslo NO řádek",
+    "serials.poLineNumber": "Číslo řádku NO",
     "serials.title": "Název",
     "serials.productIDs": "ID produktů",
     "serials.location": "Lokace",
@@ -173,7 +173,7 @@
     "pieceSets.supplement": "Doplněk",
     "pieceSets.noOrderLineLocationsOrHoldings": "Pro propojený ŘNO neexistují žádné lokace ani holdingy a přijímací kusy budou vytvořeny bez lokace nebo holdingu. Chcete-li přidat lokaci nebo holding, aktualizujte řádek NO.",
     "pieceSets.location": "Lokace",
-    "pieceSets.displaySummary": "Zobrazit souhrn",
+    "pieceSets.displaySummary": "Souhrn zobrazení",
     "ruleset.levelIndex": "Úroveň {index}",
     "ruleset.valuesToUseForFirstIssue": "Hodnoty, které se použijí pro první vydání",
     "refdataCategory.refdataCategory": "Kategorie",
@@ -218,5 +218,11 @@
     "pieceSets.countReceivingGenerated": "<strong>{count} kusů příjmu bylo vygenerováno.</strong> Zkontrolujte prosím, zda je tento součet očekávaný. Kusy nyní můžete zobrazit v aplikaci Příjem.",
     "pieceSets.displayInHoldingPopover": "Vybrané informace o tomto kusu by se měly zobrazit v aplikaci Katalog v části Akvizice záznamu o holdingu.",
     "pieceSets.supplementPopover": "Vyberte, pokud je kus doplňkový materiál, například CD nebo mapa.",
-    "pieceSets.generateReceivingErrorMessage": "<strong>Chyba:</strong> Nebyly vytvořeny žádné kusy příjmu."
+    "pieceSets.generateReceivingErrorMessage": "<strong>Chyba:</strong> Nebyly vytvořeny žádné kusy příjmu.",
+    "ruleset.template.tokens": "Tokeny šablon",
+    "ruleset.templateTokensPopover": "Tokeny šablon se používají v šabloně k vložení hodnot výčtu a chronologie do předpokládané části Souhrn zobrazení.",
+    "day.issue": "Den, vydání {issueNr}",
+    "week.issue": "Týden, vydání {issueNr}",
+    "month.issue": "Měsíc, vydání {issueNr}",
+    "year.issue": "Rok, vydání {issueNr}"
 }

@@ -218,5 +218,11 @@
     "pieceSets.countReceivingGenerated": "<strong>se han generado {count} piezas para recepción. Por favor, compruebe que el total es el esperado. Las piezas pueden verse ahora en la aplicación Recepción.</strong> ",
     "pieceSets.displayInHoldingPopover": "La información de selección sobre esta pieza debe mostrarse en la aplicación Inventario en la sección Adquisición del registro de tenencia. ",
     "pieceSets.supplementPopover": "Seleccione si se trata de material complementario, como un CD o un mapa.",
-    "pieceSets.generateReceivingErrorMessage": "<strong> Error: </strong> No se generaron piezas de recepción. "
+    "pieceSets.generateReceivingErrorMessage": "<strong> Error: </strong> No se generaron piezas de recepción. ",
+    "ruleset.template.tokens": "Template tokens",
+    "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
+    "day.issue": "Day, Issue {issueNr}",
+    "week.issue": "Week, Issue {issueNr}",
+    "month.issue": "Month, Issue {issueNr}",
+    "year.issue": "Year, Issue {issueNr}"
 }
