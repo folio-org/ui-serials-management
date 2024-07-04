@@ -42,9 +42,9 @@ const PiecesPreviewModalForm = ({
     ?.map((fps) => {
       return {
         value: fps?.id,
-        label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}: 
-                ${intl.formatDate(fps?.nextPieceTemplateMetadata?.standard?.date)}, 
-                ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}: 
+        label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}:
+                ${intl.formatDate(fps?.nextPieceTemplateMetadata?.standard?.date)},
+                ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}:
                 ${intl.formatDate(fps?.dateCreated)} ${intl.formatTime(fps?.dateCreated)} `,
       };
     });
@@ -101,7 +101,6 @@ const PiecesPreviewModalForm = ({
                 }
                 name={`startingValues[${index}].levels[${i}].value`}
                 required
-                type="number"
                 validate={
                   e?.sequence?.value === 'reset'
                     ? composeValidators(
