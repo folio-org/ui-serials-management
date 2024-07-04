@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useOkapiKy } from '@folio/stripes/core';
-import { FormModal } from '@k-int/stripes-kint-components';
+import { FormModal, NumberField } from '@k-int/stripes-kint-components';
+
 import {
   Datepicker,
   Row,
@@ -15,7 +16,6 @@ import {
   Button,
   MultiColumnList,
   Label,
-  TextField,
   Layout,
   TextArea,
 } from '@folio/stripes/components';
@@ -185,7 +185,7 @@ const PiecesPreviewModal = ({
           return (
             <Col key={`${index}-${i}`} xs={2}>
               <Field
-                component={TextField}
+                component={NumberField}
                 id="level-index-label"
                 label={
                   <FormattedMessage
@@ -195,7 +195,6 @@ const PiecesPreviewModal = ({
                 }
                 name={`startingValues[${index}].levels[${i}].value`}
                 required
-                type="number"
                 validate={
                   e?.sequence?.value === 'reset'
                     ? composeValidators(

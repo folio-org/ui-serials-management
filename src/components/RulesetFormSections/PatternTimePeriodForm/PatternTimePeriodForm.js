@@ -1,11 +1,11 @@
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { NumberField } from '@k-int/stripes-kint-components';
 import {
   Row,
   Col,
   Select,
-  TextField,
   Label,
   InfoPopover,
 } from '@folio/stripes/components';
@@ -105,7 +105,7 @@ const PatternTimePeriodForm = () => {
           <Field
             name="recurrence.period"
             render={({ input, meta }) => (
-              <TextField
+              <NumberField
                 disabled={!values?.recurrence?.timeUnit}
                 id="number-of-time-unit"
                 input={input}
@@ -139,7 +139,6 @@ const PatternTimePeriodForm = () => {
                   }
                 }}
                 required
-                type="number"
               />
             )}
             validate={composeValidators(
@@ -157,7 +156,7 @@ const PatternTimePeriodForm = () => {
           <Field
             name="recurrence.issues"
             render={({ input, meta }) => (
-              <TextField
+              <NumberField
                 disabled={!values?.recurrence?.timeUnit}
                 id="number-of-issue-per-cycle"
                 input={input}
@@ -202,7 +201,6 @@ const PatternTimePeriodForm = () => {
                   }
                 }}
                 required
-                type="number"
               />
             )}
             validate={composeValidators(

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
+import { NumberField } from '@k-int/stripes-kint-components';
 
 import {
   Row,
@@ -45,10 +46,9 @@ const EnumerationNumericField = ({
           {([ariaLabel]) => (
             <Field
               aria-label={ariaLabel}
-              component={TextField}
+              component={NumberField}
               name={`${name}.units`}
               required
-              type="number"
               validate={composeValidators(
                 requiredValidator,
                 validateWholeNumber

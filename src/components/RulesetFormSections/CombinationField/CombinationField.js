@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
 
+import { NumberField } from '@k-int/stripes-kint-components';
+
 import {
   Select,
   Col,
-  TextField,
   Row,
   Label,
   InfoPopover,
@@ -51,11 +52,10 @@ const CombinationField = ({ name, index, combination }) => {
   const renderIssueField = () => {
     return (
       <Field
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.issue" />}
         name={`${name}[${index}].pattern.issue`}
         required
-        type="number"
         validate={composeValidators(requiredValidator, validateWholeNumber)}
       />
     );
@@ -64,11 +64,10 @@ const CombinationField = ({ name, index, combination }) => {
   const renderDayField = (minValue, maxValue) => {
     return (
       <Field
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={`${name}[${index}].pattern.day`}
         required
-        type="number"
         validate={composeValidators(
           requiredValidator,
           validateWithinRange(minValue, maxValue),
@@ -241,14 +240,13 @@ const CombinationField = ({ name, index, combination }) => {
         <Row>
           <Col xs={3}>
             <Field
-              component={TextField}
+              component={NumberField}
               id="total-number-of-issues-to-combine"
               label={
                 <FormattedMessage id="ui-serials-management.ruleset.totalNumberOfIssuesToCombine" />
               }
               name={`${name}[${index}].issuesToCombine`}
               required
-              type="number"
               validate={composeValidators(
                 requiredValidator,
                 validateWholeNumber,
