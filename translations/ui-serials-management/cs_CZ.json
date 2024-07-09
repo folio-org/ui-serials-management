@@ -224,5 +224,6 @@
     "day.issue": "Den, vydání {issueNr}",
     "week.issue": "Týden, vydání {issueNr}",
     "month.issue": "Měsíc, vydání {issueNr}",
-    "year.issue": "Rok, vydání {issueNr}"
+    "year.issue": "Rok, vydání {issueNr}",
+    "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set"
 }
