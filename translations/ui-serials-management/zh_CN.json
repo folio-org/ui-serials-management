@@ -224,5 +224,6 @@
     "day.issue": "日，第{issueNr}期",
     "week.issue": "周，第{issueNr}期",
     "month.issue": "月，第{issueNr}期",
-    "year.issue": "年，第{issueNr}期"
+    "year.issue": "年，第{issueNr}期",
+    "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set"
 }

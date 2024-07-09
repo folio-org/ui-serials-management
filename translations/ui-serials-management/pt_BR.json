@@ -224,5 +224,6 @@
     "day.issue": "Dia, Fascículo {issueNr}",
     "week.issue": "Semana, Fascículo {issueNr}",
     "month.issue": "Mês, Fascículo {issueNr}",
-    "year.issue": "Ano, Fascículo {issueNr}"
+    "year.issue": "Ano, Fascículo {issueNr}",
+    "ruleset.followOnFromPrevious": "Continue a partir da última peça de um conjunto anterior"
 }
