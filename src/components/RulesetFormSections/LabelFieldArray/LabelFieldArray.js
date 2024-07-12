@@ -252,6 +252,7 @@ const LabelFieldArray = () => {
   }, [change]);
 
   const renderEnumerationSelectors = useCallback((index) => {
+    // FIXME I don't like all this living in here, separate it out a bit more please
     return (
       <Col xs={3}>
         <Field
