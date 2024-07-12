@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
@@ -94,13 +94,29 @@ const LabelFieldArray = () => {
     ENUMERATION_LABEL_FORMAT,
   ]);
 
-  const filterSelectValues = (value, dataOptions) => {
+  const enumerationOptions = useMemo(() => {
+    return selectifyRefdata(
+      refdataValues,
+      ENUMERATION_LABEL_FORMAT,
+      'value'
+    );
+  }, [refdataValues]);
+
+  const chronologyOptions = useMemo(() => {
+    return selectifyRefdata(
+      refdataValues,
+      ENUMERATION_LABEL_FORMAT,
+      'value'
+    );
+  }, [refdataValues]);
+
+  const filterSelectValues = useCallback((value, dataOptions) => {
     const regex = new RegExp(value, 'i');
 
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
-  };
+  }, []);
 
-  const renderTemplateInfo = () => {
+  const renderTemplateInfo = useCallback(() => {
     return (
       <InfoPopover
         content={
@@ -124,9 +140,9 @@ const LabelFieldArray = () => {
         }
       />
     );
-  };
+  }, []);
 
-  const renderTemplateTokensInfo = () => {
+  const renderTemplateTokensInfo = useCallback(() => {
     return (
       <InfoPopover
         content={
@@ -150,8 +166,9 @@ const LabelFieldArray = () => {
         }
       />
     );
-  };
-  const renderLabelRule = (templateConfig, index) => {
+  }, []);
+
+  const renderLabelRule = useCallback((templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
 
@@ -223,20 +240,12 @@ const LabelFieldArray = () => {
                       values?.templateConfig?.rules[index]
                         ?.templateMetadataRuleType === 'chronology'
                     ) {
-                      selectedDataOptions = selectifyRefdata(
-                        refdataValues,
-                        CHRONOLOGY_LABEL_FORMAT,
-                        'value'
-                      );
+                      selectedDataOptions = chronologyOptions;
                     } else if (
                       values?.templateConfig?.rules[index]
                         ?.templateMetadataRuleType === 'enumeration'
                     ) {
-                      selectedDataOptions = selectifyRefdata(
-                        refdataValues,
-                        ENUMERATION_LABEL_FORMAT,
-                        'value'
-                      );
+                      selectedDataOptions = enumerationOptions;
                     }
                     return (
                       <Select
@@ -342,7 +351,7 @@ const LabelFieldArray = () => {
         )}
       </EditCard>
     );
-  };
+  }, [change, chronologyOptions, enumerationOptions, enumerationValues, locales, onDeleteField, refdataValues, ruleLabelValues, values]);
 
   return (
     <>
