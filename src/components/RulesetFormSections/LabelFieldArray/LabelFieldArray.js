@@ -378,7 +378,7 @@ const LabelFieldArray = () => {
         )}
       </EditCard>
     );
-  }, [change, chronologyOptions, enumerationOptions, enumerationValues, filterSelectValues, locales, onDeleteField, refdataValues, renderTemplateTokensInfo, ruleLabelValues, values]);
+  }, [enumerationValues, onDeleteField, refdataValues, renderChronologySelectors, renderEnumerationSelectors, renderTemplateTokensInfo, ruleLabelValues, templateMetadataRuleTypeOnChange, values?.templateConfig?.rules]);
 
   return (
     <>
