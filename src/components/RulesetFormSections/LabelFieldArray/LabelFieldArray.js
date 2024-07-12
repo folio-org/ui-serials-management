@@ -185,6 +185,102 @@ const LabelFieldArray = () => {
     });
   }, [change]);
 
+  const chronologySelectorOnChange = useCallback((e, index) => {
+    change(
+      `templateConfig.rules[${index}].ruleType`,
+      {
+        templateMetadataRuleFormat: e?.target?.value,
+        ruleType: undefined
+      }
+    );
+  }, [change]);
+
+  const renderChronologySelectors = useCallback((index) => {
+    return (
+      <>
+        <Col xs={3}>
+          <Field
+            name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
+            render={({ input, meta }) => {
+              return (
+                <Select
+                  dataOptions={[
+                    { value: '', label: '' },
+                    ...chronologyOptions,
+                  ]}
+                  input={input}
+                  label={
+                    <FormattedMessage
+                      id="ui-serials-management.ruleset.chronologyFormat"
+                    />
+                  }
+                  meta={meta}
+                  onChange={e => chronologySelectorOnChange(e, index)}
+                  required
+                />
+              );
+            }}
+            validate={requiredValidator}
+          />
+        </Col>
+        <Col xs={3}>
+          <Field
+            component={Selection}
+            dataOptions={locales}
+            label="Locale"
+            name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+            onFilter={filterSelectValues}
+            parse={(v) => v}
+            required
+            validate={requiredValidator}
+          />
+        </Col>
+      </>
+    );
+  }, [chronologyOptions, chronologySelectorOnChange, filterSelectValues, locales]);
+
+  const enumerationSelectorOnChange = useCallback((e, index) => {
+    change(
+      `templateConfig.rules[${index}].ruleType`,
+      {
+        templateMetadataRuleFormat: e?.target?.value,
+        ruleType: {
+          levels: [{}]
+        }
+      }
+    );
+  }, [change]);
+
+  const renderEnumerationSelectors = useCallback((index) => {
+    return (
+      <Col xs={3}>
+        <Field
+          name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
+          render={({ input, meta }) => {
+            return (
+              <Select
+                dataOptions={[
+                  { value: '', label: '' },
+                  ...enumerationOptions,
+                ]}
+                input={input}
+                label={
+                  <FormattedMessage
+                    id="ui-serials-management.ruleset.enumerationFormat"
+                  />
+                }
+                meta={meta}
+                onChange={e => enumerationSelectorOnChange(e, index)}
+                required
+              />
+            );
+          }}
+          validate={requiredValidator}
+        />
+      </Col>
+    );
+  }, [enumerationOptions, enumerationSelectorOnChange]);
+
   const renderLabelRule = useCallback((templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
@@ -232,93 +328,21 @@ const LabelFieldArray = () => {
               validate={requiredValidator}
             />
           </Col>
-          {values?.templateConfig?.rules[index]?.templateMetadataRuleType && (
-            <>
-              <Col xs={3}>
-                <Field
-                  name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
-                  render={({ input, meta }) => {
-                    let selectedDataOptions = [];
-                    if (
-                      values?.templateConfig?.rules[index]
-                        ?.templateMetadataRuleType === 'chronology'
-                    ) {
-                      selectedDataOptions = chronologyOptions;
-                    } else if (
-                      values?.templateConfig?.rules[index]
-                        ?.templateMetadataRuleType === 'enumeration'
-                    ) {
-                      selectedDataOptions = enumerationOptions;
-                    }
-                    return (
-                      <Select
-                        dataOptions={[
-                          { value: '', label: '' },
-                          ...selectedDataOptions,
-                        ]}
-                        input={input}
-                        label={
-                          <FormattedMessage
-                            id={`ui-serials-management.ruleset.${values?.templateConfig?.rules[index]?.templateMetadataRuleType}Format`}
-                          />
-                        }
-                        meta={meta}
-                        onChange={(e) => {
-                          change(
-                            `templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`,
-                            e?.target?.value
-                          );
-                          change(
-                            `templateConfig.rules[${index}].ruleType.ruleFormat`,
-                            undefined
-                          );
-                          if (
-                            values?.templateConfig?.rules[index]
-                              ?.templateMetadataRuleType === 'enumeration'
-                          ) {
-                            change(
-                              `templateConfig.rules[${index}].ruleType.ruleFormat.levels`,
-                              [{}]
-                            );
-                          }
-                        }}
-                        required
-                      />
-                    );
-                  }}
-                  validate={requiredValidator}
-                />
-              </Col>
-              {values?.templateConfig?.rules[index]
-                ?.templateMetadataRuleType === 'chronology' && (
-                <Col xs={3}>
-                  <Field
-                    component={Selection}
-                    dataOptions={locales}
-                    label="Locale"
-                    name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
-                    onFilter={filterSelectValues}
-                    parse={(v) => v}
-                    required
-                    validate={requiredValidator}
-                  />
-                </Col>
-              )}
-            </>
-          )}
+          {
+            values?.templateConfig?.rules[index]?.templateMetadataRuleType === 'chronology' &&
+            renderChronologySelectors()
+          }
+          {
+            values?.templateConfig?.rules[index]?.templateMetadataRuleType === 'enumeration' &&
+            renderEnumerationSelectors()
+          }
         </Row>
-        {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-          'chronology' &&
-          values?.templateConfig?.rules[index]?.ruleType
-            ?.templateMetadataRuleFormat && (
-            <ChronologyField
-              name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-              templateConfig={templateConfig}
-              tokenIndex={index}
-              tokensInfo={renderTemplateTokensInfo()}
-              values={values}
-            />
-        )}
+        {/*
+          FIXME These should probs also be a part of this switch...
+          in fact they should probs be two new components with
+          stuff passed down
+          */
+        }
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
