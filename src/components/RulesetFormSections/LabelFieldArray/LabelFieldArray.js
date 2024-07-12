@@ -187,7 +187,7 @@ const LabelFieldArray = () => {
 
   const chronologySelectorOnChange = useCallback((e, index) => {
     change(
-      `templateConfig.rules[${index}].ruleType`,
+      `templateConfig.rules[${index}]`,
       {
         templateMetadataRuleFormat: e?.target?.value,
         ruleType: undefined
@@ -241,7 +241,7 @@ const LabelFieldArray = () => {
 
   const enumerationSelectorOnChange = useCallback((e, index) => {
     change(
-      `templateConfig.rules[${index}].ruleType`,
+      `templateConfig.rules[${index}]`,
       {
         templateMetadataRuleFormat: e?.target?.value,
         ruleType: {
