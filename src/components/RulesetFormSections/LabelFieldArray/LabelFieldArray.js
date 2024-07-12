@@ -175,6 +175,16 @@ const LabelFieldArray = () => {
     );
   }, []);
 
+  const templateMetadataRuleTypeOnChange = useCallback((e, index) => {
+    const ruleType = e?.target?.value === 'chronology' ? { ruleLocale: 'en' } : undefined; // NOTE... I don't like this one little bit
+
+    // DO NOT do multiple change calls in a single onChange...
+    change(`templateConfig.rules[${index}]`, {
+      templateMetadataRuleType: e?.target?.value,
+      ruleType
+    });
+  }, [change]);
+
   const renderLabelRule = useCallback((templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
@@ -215,21 +225,7 @@ const LabelFieldArray = () => {
                     <FormattedMessage id="ui-serials-management.ruleset.labelStyle" />
                   }
                   meta={meta}
-                  onChange={(e) => {
-                    change(`templateConfig.rules[${index}]`, {
-                      templateMetadataRuleType: e?.target?.value,
-                    });
-                    if (e?.target?.value === 'chronology') {
-                      change(`templateConfig.rules[${index}].ruleType`, {
-                        ruleLocale: 'en',
-                      });
-                    } else {
-                      change(
-                        `templateConfig.rules[${index}].ruleType`,
-                        undefined
-                      );
-                    }
-                  }}
+                  onChange={e => templateMetadataRuleTypeOnChange(e, index)}
                   required
                 />
               )}
