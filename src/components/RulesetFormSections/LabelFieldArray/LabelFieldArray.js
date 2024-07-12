@@ -2,6 +2,9 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
+
+import isEqual from 'lodash/isEqual';
+
 import { ClipCopy } from '@folio/stripes/smart-components';
 
 import {
@@ -84,9 +87,13 @@ const LabelFieldArray = () => {
         return '';
       }
     });
-    setRuleLabelValues(ruleLabelArray);
-    setEnumerationValues(enumerationTokenArray);
-  }, [values]);
+    if (!isEqual(ruleLabelValues, ruleLabelArray)) {
+      setRuleLabelValues(ruleLabelArray);
+    }
+    if (!isEqual(enumerationValues, enumerationTokenArray)) {
+      setEnumerationValues(enumerationTokenArray);
+    }
+  }, [enumerationValues, ruleLabelValues, values]);
 
   const refdataValues = useSerialsManagementRefdata([
     RULE_TYPE,
@@ -351,7 +358,7 @@ const LabelFieldArray = () => {
         )}
       </EditCard>
     );
-  }, [change, chronologyOptions, enumerationOptions, enumerationValues, locales, onDeleteField, refdataValues, ruleLabelValues, values]);
+  }, [change, chronologyOptions, enumerationOptions, enumerationValues, filterSelectValues, locales, onDeleteField, refdataValues, renderTemplateTokensInfo, ruleLabelValues, values]);
 
   return (
     <>

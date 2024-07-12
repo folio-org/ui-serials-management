@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
+
+import isEqual from 'lodash/isEqual';
+
 import { ClipCopy } from '@folio/stripes/smart-components';
 import { Select, Col, Row, Label } from '@folio/stripes/components';
 
@@ -47,10 +50,12 @@ const ChronologyField = ({
         return '';
       }
     });
-    setChronologyValues(chronologyTokenArray);
-  }, [values]);
+    if (!isEqual(chronologyValues, chronologyTokenArray)) {
+      setChronologyValues(chronologyTokenArray);
+    }
+  }, [chronologyValues, values]);
 
-  const renderWeekdayFormatField = () => {
+  const renderWeekdayFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -69,9 +74,9 @@ const ChronologyField = ({
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderMonthDayFormatField = () => {
+  const renderMonthDayFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -92,9 +97,9 @@ const ChronologyField = ({
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderMonthFormatField = () => {
+  const renderMonthFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -113,9 +118,9 @@ const ChronologyField = ({
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderYearFormatField = () => {
+  const renderYearFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -134,11 +139,11 @@ const ChronologyField = ({
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const chronologyFormats = {
+  const chronologyFormats = useMemo(() => ({
     chronology_date: {
-      fields: [
+      getFields: () => [
         renderWeekdayFormatField(),
         renderMonthDayFormatField(),
         renderMonthFormatField(),
@@ -151,10 +156,10 @@ const ChronologyField = ({
           </Label>
           {chronologyValues[tokenIndex]}
         </div>,
-      ],
+      ]
     },
     chronology_month: {
-      fields: [
+      getFields: () => [
         renderMonthFormatField(),
         renderYearFormatField(),
         <div>
@@ -168,7 +173,7 @@ const ChronologyField = ({
       ],
     },
     chronology_year: {
-      fields: [
+      getFields: () => [
         renderYearFormatField(),
         <div>
           <Label id="template-token-header">
@@ -180,14 +185,14 @@ const ChronologyField = ({
         </div>,
       ],
     },
-  };
+  }), [chronologyValues, renderMonthDayFormatField, renderMonthFormatField, renderWeekdayFormatField, renderYearFormatField, tokenIndex, tokensInfo]);
 
   return (
     <>
       <Row>
         {chronologyFormats[
           templateConfig?.ruleType?.templateMetadataRuleFormat
-        ]?.fields?.map((chronologyField, index) => {
+        ]?.getFields()?.map((chronologyField, index) => {
           return (
             <Col key={`chronology-field-${name}[${index}]`} xs={3}>
               {chronologyField}
