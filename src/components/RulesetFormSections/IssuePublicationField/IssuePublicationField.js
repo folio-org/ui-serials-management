@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
+import { NumberField } from '@k-int/stripes-kint-components';
 
 import { Col, Label, Row, Select, TextField } from '@folio/stripes/components';
 import {
@@ -44,7 +45,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
           { id: 'ui-serials-management.day.issue' },
           { issueNr: index + 1 }
         )}
-        component={TextField}
+        component={NumberField}
         disabled={disabled}
         label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={
@@ -53,7 +54,6 @@ const IssuePublicationField = ({ name, index, patternType }) => {
             : `${name}[${index}].pattern.day`
         }
         required={!disabled}
-        type="number"
         validate={
           !disabled &&
           composeValidators(
@@ -97,7 +97,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
           { id: 'ui-serials-management.week.issue' },
           { issueNr: index + 1 }
         )}
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.ofWeek" />}
         name={
           ordinal
@@ -105,7 +105,6 @@ const IssuePublicationField = ({ name, index, patternType }) => {
             : `${name}[${index}].pattern.week`
         }
         required
-        type="number"
         validate={composeValidators(
           requiredValidator,
           validateWithinRange(minValue, maxValue),
@@ -158,7 +157,7 @@ const IssuePublicationField = ({ name, index, patternType }) => {
           { id: 'ui-serials-management.year.issue' },
           { issueNr: index + 1 }
         )}
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.ofYear" />}
         name={
           ordinal
@@ -166,7 +165,6 @@ const IssuePublicationField = ({ name, index, patternType }) => {
             : `${name}[${index}].pattern.year`
         }
         required
-        type="number"
         validate={composeValidators(
           requiredValidator,
           validateWithinRange(minValue, maxValue),
