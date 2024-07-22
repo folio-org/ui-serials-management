@@ -50,6 +50,7 @@ const expectedSubmitValues = pieceSet.pieces.map((p) => {
         titleId: serial?.orderLine?.titleId,
         format: 'Physical',
         displayOnHolding: false,
+        displayToPublic: false,
         supplement: false,
         displaySummary: pieceInfo?.label,
         receiptDate: pieceInfo?.date,
