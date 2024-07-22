@@ -172,8 +172,12 @@ describe('GenerateReceivingModal', () => {
     await Checkbox('Supplement').is({ checked: false });
   });
 
-  test('does not renders the Display in holding checkbox', async () => {
+  test('does not render the Display in holding checkbox', async () => {
     await Checkbox('Display in holding').absent();
+  });
+
+  test('does not render the Display to public checkbox', async () => {
+    await Checkbox('Display to public').absent();
   });
 
   test('renders the expected Location label', async () => {
