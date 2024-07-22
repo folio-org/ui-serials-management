@@ -364,12 +364,6 @@ const GenerateReceivingModal = ({
             <Col xs={3}>
               <Label>
                 <FormattedMessage id="ui-serials-management.pieceSets.createItem" />
-                {/* <InfoPopover
-                content={
-                  <FormattedMessage id="ui-serials-management.pieceSets.createItemPopover" />
-                }
-                id="create-item-tooltip"
-              /> */}
               </Label>
               <FormattedMessage id="ui-serials-management.pieceSets.createItem">
                 {([ariaLabel]) => (
@@ -430,10 +424,6 @@ const GenerateReceivingModal = ({
               <Col xs={3}>
                 <Label>
                   <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic" />
-                  {/*                   <InfoPopover
-                    content={<FormattedMessage id="ui-serials-management.pieceSets.displayToPublicPopover" />}
-                    id="display-to-public-tooltip"
-                  /> */}
                 </Label>
                 <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic">
                   {([ariaLabel]) => (
