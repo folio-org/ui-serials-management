@@ -63,7 +63,13 @@ const GenerateReceivingModal = ({
       'GeneratingReceivingModal',
       'submitReceivingPiece',
     ],
-    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving }).json()
+    (data) => {
+      const endpoint = data?.createItem
+        ? `${RECEIVING_PIECES_ENDPOINT}?createItem=true`
+        : RECEIVING_PIECES_ENDPOINT;
+
+      return ky.post(endpoint, { json: data?.receiving }).json();
+    }
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -96,6 +102,7 @@ const GenerateReceivingModal = ({
       format: 'Physical',
       supplement: false,
       displayOnHolding: false,
+      displayToPublic: false,
     };
     if (serial?.orderLine?.remoteId_object?.locations?.length === 1) {
       if (holdingIds) {
@@ -155,11 +162,13 @@ const GenerateReceivingModal = ({
         };
 
       return {
+        ...values?.createItem && { createItem: values.createItem },
         receiving: {
           poLineId: serial?.orderLine?.remoteId,
           titleId: serial?.orderLine?.titleId,
           format: values?.format,
           displayOnHolding: values?.displayOnHolding,
+          displayToPublic: values?.displayToPublic,
           supplement: values?.supplement,
           displaySummary: pieceInfo?.label,
           receiptDate: pieceInfo?.date,
@@ -351,6 +360,29 @@ const GenerateReceivingModal = ({
               )}
             </FormattedMessage>
           </Col>
+          {serial?.orderLine?.remoteId_object?.physical?.createInventory === 'Instance, Holding, Item' && (
+            <Col xs={3}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.pieceSets.createItem" />
+                {/* <InfoPopover
+                content={
+                  <FormattedMessage id="ui-serials-management.pieceSets.createItemPopover" />
+                }
+                id="create-item-tooltip"
+              /> */}
+              </Label>
+              <FormattedMessage id="ui-serials-management.pieceSets.createItem">
+                {([ariaLabel]) => (
+                  <Field
+                    aria-label={ariaLabel}
+                    component={Checkbox}
+                    name="createItem"
+                    type="checkbox"
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+          )}
         </Row>
         <Row>
           {!!serial?.orderLine?.remoteId_object?.locations?.length && (
@@ -375,27 +407,46 @@ const GenerateReceivingModal = ({
             </Col>
           )}
           {!!holdingIds?.length && (
-            <Col xs={3}>
-              <Label>
-                <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
-                <InfoPopover
-                  content={
-                    <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
-                  }
-                  id="display-on-holding-tooltip"
-                />
-              </Label>
-              <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
-                {([ariaLabel]) => (
-                  <Field
-                    aria-label={ariaLabel}
-                    component={Checkbox}
-                    name="displayOnHolding"
-                    type="checkbox"
+            <>
+              <Col xs={3}>
+                <Label>
+                  <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
+                  <InfoPopover
+                    content={<FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />}
+                    id="display-on-holding-tooltip"
                   />
-                )}
-              </FormattedMessage>
-            </Col>
+                </Label>
+                <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
+                  {([ariaLabel]) => (
+                    <Field
+                      aria-label={ariaLabel}
+                      component={Checkbox}
+                      name="displayOnHolding"
+                      type="checkbox"
+                    />
+                  )}
+                </FormattedMessage>
+              </Col>
+              <Col xs={3}>
+                <Label>
+                  <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic" />
+                  {/*                   <InfoPopover
+                    content={<FormattedMessage id="ui-serials-management.pieceSets.displayToPublicPopover" />}
+                    id="display-to-public-tooltip"
+                  /> */}
+                </Label>
+                <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic">
+                  {([ariaLabel]) => (
+                    <Field
+                      aria-label={ariaLabel}
+                      component={Checkbox}
+                      name="displayToPublic"
+                      type="checkbox"
+                    />
+                  )}
+                </FormattedMessage>
+              </Col>
+            </>
           )}
         </Row>
       </>
