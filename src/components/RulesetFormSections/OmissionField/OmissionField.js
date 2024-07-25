@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
+import { NumberField } from '@k-int/stripes-kint-components';
 
 import {
   Checkbox,
   Select,
   Col,
-  TextField,
   Row,
 } from '@folio/stripes/components';
 
@@ -43,11 +43,10 @@ const OmissionField = ({ name, index, omission }) => {
   const renderIssueField = () => {
     return (
       <Field
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.issue" />}
         name={`${name}[${index}].pattern.issue`}
         required
-        type="number"
         validate={composeValidators(requiredValidator, validateWholeNumber)}
       />
     );
@@ -56,11 +55,10 @@ const OmissionField = ({ name, index, omission }) => {
   const renderDayField = (minValue, maxValue) => {
     return (
       <Field
-        component={TextField}
+        component={NumberField}
         label={<FormattedMessage id="ui-serials-management.ruleset.day" />}
         name={`${name}[${index}].pattern.day`}
         required
-        type="number"
         validate={composeValidators(
           requiredValidator,
           validateWithinRange(minValue, maxValue),
