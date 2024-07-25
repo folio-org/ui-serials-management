@@ -112,7 +112,7 @@ const LabelFieldArray = () => {
   const chronologyOptions = useMemo(() => {
     return selectifyRefdata(
       refdataValues,
-      ENUMERATION_LABEL_FORMAT,
+      CHRONOLOGY_LABEL_FORMAT,
       'value'
     );
   }, [refdataValues]);
@@ -177,7 +177,6 @@ const LabelFieldArray = () => {
 
   const templateMetadataRuleTypeOnChange = useCallback((e, index) => {
     const ruleType = e?.target?.value === 'chronology' ? { ruleLocale: 'en' } : undefined; // NOTE... I don't like this one little bit
-
     // DO NOT do multiple change calls in a single onChange...
     change(`templateConfig.rules[${index}]`, {
       templateMetadataRuleType: e?.target?.value,
@@ -186,6 +185,7 @@ const LabelFieldArray = () => {
   }, [change]);
 
   const chronologySelectorOnChange = useCallback((e, index) => {
+    console.log(index);
     change(
       `templateConfig.rules[${index}]`,
       {
