@@ -53,25 +53,21 @@ const PiecesPreviewModalForm = ({
     const selectedNextPiece = pieceSets?.find(
       (ps) => ps.id === e?.target?.value || ''
     );
-    change(
-      'startDate',
-      selectedNextPiece?.nextPieceTemplateMetadata?.standard?.date
-    );
-    change(
-      'startingValues',
-      selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
+    change({
+      startDate: selectedNextPiece?.nextPieceTemplateMetadata?.standard?.date,
+      startingValues: selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
         (uc) => {
           if (uc?.metadataType?.levels?.length) {
             return {
               levels: uc?.metadataType?.levels?.map((ucl) => {
-                return { value: ucl?.value };
+                return { value: ucl?.rawValue };
               }),
             };
           }
           return null;
         }
       )
-    );
+    });
   };
 
   const renderEnumerationNumericField = (formatValues, index) => {
