@@ -217,7 +217,7 @@
     "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
     "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
     "pieceSets.displayInHoldingPopover": "Select information about this piece should be displayed in the Inventory app in the Acquisition section of the holding record. ",
-    "pieceSets.supplementPopover": "Select if the piece is a supplementary material such as a CD or a map.",
+    "pieceSets.supplementPopover": "Sélectionnez si l'objet est un document complémentaire tel qu'un CD ou une carte.",
     "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
     "ruleset.template.tokens": "Template tokens",
     "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
