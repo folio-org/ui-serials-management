@@ -230,6 +230,8 @@
   "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
   "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
   "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
+  "pieceSets.createItem": "Create item",
+  "pieceSets.displayToPublic": "Display to public",
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
   "validate.notNegative": "Cannot be negative",
