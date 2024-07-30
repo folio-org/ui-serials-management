@@ -64,11 +64,7 @@ const GenerateReceivingModal = ({
       'submitReceivingPiece',
     ],
     (data) => {
-      const endpoint = data?.createItem
-        ? `${RECEIVING_PIECES_ENDPOINT}?createItem=true`
-        : RECEIVING_PIECES_ENDPOINT;
-
-      return ky.post(endpoint, { json: data?.receiving }).json();
+      return ky.post(`${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`, { json: data?.receiving }).json();
     }
   );
 
