@@ -53,7 +53,8 @@ const PiecesPreviewModalForm = ({
     const selectedNextPiece = pieceSets?.find(
       (ps) => ps.id === e?.target?.value || ''
     );
-    change({
+    // When changes fields at the top level of the form, change function requires an empty string, funky
+    change('', {
       startDate: selectedNextPiece?.nextPieceTemplateMetadata?.standard?.date,
       startingValues: selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
         (uc) => {
