@@ -260,7 +260,6 @@ const PiecesPreviewModal = ({
           allowCreation={allowCreation}
           pieceSets={pieceSets}
           ruleset={ruleset}
-          setDateExists={setDateExists}
         />
         {dateExists && (
           <MessageBanner type="warning">
