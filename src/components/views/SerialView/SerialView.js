@@ -181,9 +181,9 @@ const SerialView = ({
               {!!serial?.serialRulesets?.find(
                 (sr) => sr?.rulesetStatus?.value === 'deprecated'
               ) && (
-                <DeprecatedPublicationPatterns
-                  {...getSectionProps('deprecated-publication-pattern')}
-                />
+              <DeprecatedPublicationPatterns
+                {...getSectionProps('deprecated-publication-pattern')}
+              />
               )}
               {!!pieceSets?.length && !pieceSetsLoading && (
                 <SerialPieceSets
@@ -202,6 +202,7 @@ const SerialView = ({
         ruleset={serial?.serialRulesets?.find(
           (sr) => sr?.rulesetStatus?.value === 'active'
         )}
+        serialName={serial?.orderLine?.title ?? serial?.description}
         setShowModal={setShowModal}
         showModal={showModal}
       />
