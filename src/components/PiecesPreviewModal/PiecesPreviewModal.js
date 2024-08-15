@@ -7,7 +7,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { FormModal } from '@k-int/stripes-kint-components';
-import { Row, Col, ConfirmationModal, Button, MessageBanner, MultiColumnList } from '@folio/stripes/components';
+import {
+  Row,
+  Col,
+  ConfirmationModal,
+  Button,
+  MultiColumnList,
+} from '@folio/stripes/components';
 
 import { urls } from '../utils';
 
@@ -33,30 +39,22 @@ const PiecesPreviewModal = ({
   ruleset,
   pieceSets,
   allowCreation = false,
-  serialName
+  serialName,
 }) => {
   const intl = useIntl();
   const ky = useOkapiKy();
   const history = useHistory();
   const [predictedPieces, setPredictedPieces] = useState(null);
-  const [dateExists, setDateExists] = useState(false);
-  const [fieldValues, setFieldValues] = useState({});
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState({
+    values: {},
+    show: false,
+  });
 
   /* istanbul ignore next */
   const closeModal = () => {
     setShowModal(false);
     setPredictedPieces(null);
   };
-
-  useEffect(() => {
-    if (fieldValues?.startDate) {
-      const exists = pieceSets?.some(ps => ps.pieces?.some(piece => piece.date === fieldValues.startDate));
-      setDateExists(exists);
-    } else {
-      setDateExists(false);
-    }
-  }, [fieldValues.startDate, pieceSets]);
 
   const { mutateAsync: generatePieces } = useMutation(
     ['ui-serials-management', 'PiecesPreviewModal', 'generatePieces'],
@@ -150,7 +148,7 @@ const PiecesPreviewModal = ({
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
-    setFieldValues(values);
+    const dateExists = pieceSets?.some((ps) => ps.pieces?.some((piece) => piece.date === values.startDate));
     return (
       <>
         {allowCreation && (
@@ -164,7 +162,11 @@ const PiecesPreviewModal = ({
               disabled={submitting || invalid || pristine}
               id="generate-predicted-pieces-button"
               marginBottom0
-              onClick={dateExists ? () => setShowConfirmationModal(true) : handleSubmit}
+              onClick={
+                dateExists
+                  ? () => setConfirmationModal({ values, show: true })
+                  : handleSubmit
+              }
               type="submit"
             >
               <FormattedMessage id="ui-serials-management.ruleset.generate" />
@@ -261,33 +263,37 @@ const PiecesPreviewModal = ({
           pieceSets={pieceSets}
           ruleset={ruleset}
         />
-        {dateExists && (
-          <MessageBanner type="warning">
-            <FormattedMessage
-              id="ui-serials-management.pieceSets.overlappingDates.warning"
-              values={{ startDate: intl.formatDate(fieldValues.startDate), serialName }}
-            />
-          </MessageBanner>
-        )}
         {!!predictedPieces && renderPiecesTable()}
       </FormModal>
       <ConfirmationModal
         buttonStyle="primary"
-        cancelLabel={<FormattedMessage id="ui-serials-management.cancelGeneration" />}
-        confirmLabel={<FormattedMessage id="ui-serials-management.ruleset.generate" />}
+        cancelLabel={
+          <FormattedMessage id="ui-serials-management.cancelGeneration" />
+        }
+        confirmLabel={
+          <FormattedMessage id="ui-serials-management.ruleset.generate" />
+        }
         data-test-generate-confirmation-modal
-        heading={<FormattedMessage id="ui-serials-management.ruleset.confirmGeneration" />}
+        heading={
+          <FormattedMessage id="ui-serials-management.ruleset.confirmGeneration" />
+        }
         id="generate-confirmation-modal"
-        message={<FormattedMessage
-          id="ui-serials-management.pieceSets.overlappingDates.dialog"
-          values={{ br: <br />, startDate: intl.formatDate(fieldValues.startDate), serialName }}
-        />}
-        onCancel={() => setShowConfirmationModal(false)}
+        message={
+          <FormattedMessage
+            id="ui-serials-management.pieceSets.overlappingDates.dialog"
+            values={{
+              br: <br />,
+              startDate: intl.formatDate(confirmationModal?.value?.startDate),
+              serialName,
+            }}
+          />
+        }
+        onCancel={() => setConfirmationModal({ values: {}, show: false })}
         onConfirm={() => {
-          handleCreation(fieldValues);
-          setShowConfirmationModal(false);
+          handleCreation(confirmationModal?.values);
+          setConfirmationModal({ values: {}, show: false });
         }}
-        open={showConfirmationModal}
+        open={confirmationModal.show}
       />
     </>
   );

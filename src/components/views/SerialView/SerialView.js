@@ -202,7 +202,7 @@ const SerialView = ({
         ruleset={serial?.serialRulesets?.find(
           (sr) => sr?.rulesetStatus?.value === 'active'
         )}
-        serialName={serial?.orderLine?.title ?? serial?.description}
+        serialName={serial?.orderLine?.title ?? serial?.id}
         setShowModal={setShowModal}
         showModal={showModal}
       />
