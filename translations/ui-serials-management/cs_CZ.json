@@ -225,5 +225,8 @@
     "week.issue": "Týden, vydání {issueNr}",
     "month.issue": "Měsíc, vydání {issueNr}",
     "year.issue": "Rok, vydání {issueNr}",
-    "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set"
+    "ruleset.followOnFromPrevious": "Navazovat na poslední kus v předchozí sadě",
+    "poLine.publisher": "Vydavatel",
+    "pieceSets.createItem": "Vytvořit jednotku",
+    "pieceSets.displayToPublic": "Zobrazit pro veřejnost"
 }
