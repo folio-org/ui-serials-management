@@ -225,5 +225,8 @@
     "week.issue": "Semana, Fascículo {issueNr}",
     "month.issue": "Mês, Fascículo {issueNr}",
     "year.issue": "Ano, Fascículo {issueNr}",
-    "ruleset.followOnFromPrevious": "Continue a partir da última peça de um conjunto anterior"
+    "ruleset.followOnFromPrevious": "Continue a partir da última peça de um conjunto anterior",
+    "poLine.publisher": "Editora",
+    "pieceSets.createItem": "Criar item",
+    "pieceSets.displayToPublic": "Exibir ao público"
 }
