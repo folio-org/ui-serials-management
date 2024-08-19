@@ -225,5 +225,8 @@
     "week.issue": "周，第{issueNr}期",
     "month.issue": "月，第{issueNr}期",
     "year.issue": "年，第{issueNr}期",
-    "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set"
+    "ruleset.followOnFromPrevious": "延续上一组的最后一件",
+    "poLine.publisher": "出版者",
+    "pieceSets.createItem": "创建单件",
+    "pieceSets.displayToPublic": "向公众展示"
 }
