@@ -251,8 +251,11 @@ const PiecesPreviewModal = ({
           onClose: closeModal,
           open: showModal,
           label: (
-            <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
-          ),
+            allowCreation ? (
+              <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+            ) : (
+              <FormattedMessage id="ui-serials-management.ruleset.previewPredictedPieces" />
+            )),
           footer: renderFooter,
         }}
         mutators={arrayMutators}
