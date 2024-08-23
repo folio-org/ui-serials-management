@@ -63,7 +63,9 @@ const GenerateReceivingModal = ({
       'GeneratingReceivingModal',
       'submitReceivingPiece',
     ],
-    (data) => ky.post(RECEIVING_PIECES_ENDPOINT, { json: data?.receiving }).json()
+    (data) => {
+      return ky.post(`${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`, { json: data?.receiving }).json();
+    }
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -155,6 +157,7 @@ const GenerateReceivingModal = ({
         };
 
       return {
+        ...values?.createItem && { createItem: values.createItem },
         receiving: {
           poLineId: serial?.orderLine?.remoteId,
           titleId: serial?.orderLine?.titleId,
@@ -351,6 +354,23 @@ const GenerateReceivingModal = ({
               )}
             </FormattedMessage>
           </Col>
+          {serial?.orderLine?.remoteId_object?.physical?.createInventory === 'Instance, Holding, Item' && (
+            <Col xs={3}>
+              <Label>
+                <FormattedMessage id="ui-serials-management.pieceSets.createItem" />
+              </Label>
+              <FormattedMessage id="ui-serials-management.pieceSets.createItem">
+                {([ariaLabel]) => (
+                  <Field
+                    aria-label={ariaLabel}
+                    component={Checkbox}
+                    name="createItem"
+                    type="checkbox"
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+          )}
         </Row>
         <Row>
           {!!serial?.orderLine?.remoteId_object?.locations?.length && (
