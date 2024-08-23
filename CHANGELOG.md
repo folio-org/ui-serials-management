@@ -1,5 +1,8 @@
 # change history for ui-serials-management
 
+## 1.0.5 2024-08-23
+  * UISER-129 Add "Create item" checkbox to "Generate in receiving" dialog
+
 ## 1.0.4 2024-05-15
   * UISER-133 Permissions not renamed in line with updated backend perms
 
