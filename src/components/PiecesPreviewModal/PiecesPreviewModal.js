@@ -265,6 +265,7 @@ const PiecesPreviewModal = ({
           allowCreation={allowCreation}
           pieceSets={pieceSets}
           ruleset={ruleset}
+          serialName={serialName}
         />
         {!!predictedPieces && renderPiecesTable()}
       </FormModal>

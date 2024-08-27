@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-
 import {
   renderWithIntl,
   Datepicker,
@@ -8,13 +7,20 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import PiecesPreviewModal from './PiecesPreviewModal';
 
 import { translationsProperties } from '../../../test/helpers';
-import { ruleset } from '../../../test/resources';
+import { pieceSets, ruleset } from '../../../test/resources';
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: () => <div>ConfirmationModal</div>,
+}));
 
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
@@ -45,6 +51,7 @@ const TestComponent = () => {
   return (
     <PiecesPreviewModal
       allowCreation
+      pieceSets={pieceSets}
       ruleset={ruleset}
       setShowModal={setShowModal}
       showModal={showModal}
@@ -117,5 +124,37 @@ describe('PiecesPreviewModal', () => {
 
   test('renders the close button', async () => {
     await Button({ id: 'close-button' }).has({ disabled: false });
+  });
+
+  // test('overlapping start date', async () => {
+  //   const { getAllByText, queryByText } = renderComponent;
+  //   await waitFor(async () => {
+  //     await Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
+  //   });
+  // });
+  // test('renders ConfirmationModal Component', async () => {
+  //   const { getByText } = renderComponent;
+  //   await Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
+  //   await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false }).click();
+  //   expect(getByText('ConfirmationModal')).toBeInTheDocument();
+  // });
+
+  describe('PiecesPreviewModal Interactions', () => {
+    test('types into Datepicker and clicks generate button to trigger ConfirmationModal', async () => {
+      const { getByText } = renderComponent;
+
+      // Find the Datepicker input field and type into it
+      // Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
+      Datepicker({ id: 'ruleset-start-date' }).fillIn('2023-01-01');
+
+      // Find and click the 'Generate predicted pieces' button
+      Button({ id: 'generate-predicted-pieces-button' }).click();
+
+      // You might need to wait for the button click action to complete if it triggers async operations
+      await waitFor(() => {
+        // Check if the ConfirmationModal is in the document
+        expect(getByText('ConfirmationModal')).toBeInTheDocument();
+      });
+    });
   });
 });
