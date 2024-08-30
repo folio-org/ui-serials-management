@@ -61,6 +61,48 @@ describe('SerialPOLineInfo', () => {
     });
   });
 
+  describe('SerialPOLineInfo (missing orderLine)', () => {
+    beforeEach(() => {
+      useOrder.mockClear().mockReturnValue({
+        isLoading: false
+      });
+
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <SerialPOLineInfo orderLine={null} />,
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    test('renders the expected order number value ', async () => {
+      await KeyValue('Order number').has({ value: 'No value set-' });
+    });
+
+    test('renders the expected order status value ', async () => {
+      await KeyValue('Order status').has({ value: 'No value set-' });
+    });
+
+    test('renders the expected Acquisition units value ', async () => {
+      await KeyValue('Acquisition units').has({ value: 'No value set-' });
+    });
+
+    test('renders the expected product IDs value ', async () => {
+      await KeyValue('Product IDs').has({ value: 'No value set-' });
+    });
+
+    test('renders the expected vendor value ', async () => {
+      await KeyValue('Vendor').has({ value: 'undefined (undefined)' });
+    });
+
+    test('renders the expected funds value ', async () => {
+      await KeyValue('Funds').has({ value: 'No value set-' });
+    });
+
+    test('renders the expected material type value ', async () => {
+      await KeyValue('Material type').has({ value: 'No value set-' });
+    });
+  });
+
   describe('SerialPOLineInfo', () => {
     beforeEach(() => {
       useOrder.mockClear().mockReturnValue({
