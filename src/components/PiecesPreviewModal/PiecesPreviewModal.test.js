@@ -101,9 +101,7 @@ describe('PiecesPreviewModal', () => {
   });
 
   describe('PiecesPreviewModal Interactions', () => {
-    test('types into Datepicker and clicks generate button to trigger ConfirmationModal', async () => {
-      const { getByText } = renderComponent;
-
+    test('types a predicted piece date into Datepicker', async () => {
       // Find the Datepicker input field and type into it
       // Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
       // Datepicker({ id: 'ruleset-start-date' }).fillIn('2023-01-01');
@@ -120,12 +118,19 @@ describe('PiecesPreviewModal', () => {
       await Datepicker('Start date*').has({ inputValue: '10/05/2024' });
       // await Datepicker('Start date*').has({ inputValue: '01/01/2025' });
       screen.debug();
+    });
+
+    test('should display warning message and enable generate button', async () => {
+      const { getByText } = renderComponent;
       await waitFor(async () => expect(getByText(/Warning: A predicted piece set with the start date/i)).toBeInTheDocument());
       await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false });
       // await waitFor(() => {
       //   expect(Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false }));
       // });
+    });
 
+    test('clicks the generate button and sees the confirmation modal heading', async () => {
+      const { getByText } = renderComponent;
       await waitFor(async () => {
         await Button({ id: 'generate-predicted-pieces-button' }).click();
       });
@@ -137,17 +142,19 @@ describe('PiecesPreviewModal', () => {
       // Check if the ConfirmationModal is in the document
       // expect(getByText('ConfirmationModal')).toBeInTheDocument();
       expect(getByText('Confirm generation of overlapping piece sets')).toBeInTheDocument();
+    });
 
+    test('should display the cancel generation button enabled', async () => {
       // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).has({ disabled: false });
       await Button('Cancel generation').has({ disabled: false });
-
       screen.debug();
-      // Following not working atm
-      // await waitFor(async () => {
-      //   // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).click();
-      //   await Button('Cancel generation').click();
-      // });
-      // expect(getByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
     });
+
+    // Following not working atm
+    // await waitFor(async () => {
+    //   // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).click();
+    //   await Button('Cancel generation').click();
+    // });
+    // expect(getByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
   });
 });
