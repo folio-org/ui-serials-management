@@ -13,7 +13,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import { RECURRENCE_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { RECURRENCE_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
 import IssuePublicationField from '../IssuePublicationField';
 
 const IssuePublicationFieldArray = () => {
@@ -53,7 +53,7 @@ const IssuePublicationFieldArray = () => {
           <br />
         </>
       )}
-      {!!RECURRENCE_PATTERN_TYPES[values?.recurrence?.timeUnit?.value] && (
+      {!!RECURRENCE_PATTERN_TYPE_OPTIONS[values?.recurrence?.timeUnit?.value] && (
         <Row>
           <Col xs={3}>
             {/* IMPORTANT This needs to be patternType instead of patternType.value for the time being */}
@@ -63,7 +63,7 @@ const IssuePublicationFieldArray = () => {
                 <Select
                   dataOptions={[
                     { label: '', value: '' },
-                    ...RECURRENCE_PATTERN_TYPES[
+                    ...RECURRENCE_PATTERN_TYPE_OPTIONS[
                       values?.recurrence?.timeUnit?.value
                     ].map((e) => {
                       return {
