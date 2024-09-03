@@ -21,7 +21,7 @@
     "poLine.selectPOLine": "Wybierz pozycję zamówienia",
     "poLine.orderNumber": "Order number",
     "poLine.orderStatus": "Status zamówienia",
-    "poLine.vendor": "Vendor",
+    "poLine.vendor": "Dostawca",
     "poLine.materialType": "Rodzaj materiału",
     "poLine.funds": "Funds",
     "poLine.productIds": "Product IDs",
