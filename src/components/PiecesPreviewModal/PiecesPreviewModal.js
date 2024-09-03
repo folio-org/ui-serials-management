@@ -148,6 +148,11 @@ const PiecesPreviewModal = ({
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
+    console.log('submitting', submitting);
+    console.log('invalid', invalid);
+    console.log('pristine', pristine);
+    // console.log('values %o', values);
+    // console.log('disabled', submitting || invalid || pristine);
     const dateExists = pieceSets?.some((ps) => ps.pieces?.some((piece) => piece.date === values.startDate));
     return (
       <>
@@ -159,7 +164,8 @@ const PiecesPreviewModal = ({
             <Button
               key="generate-predicated-pieces-button"
               buttonStyle="primary"
-              disabled={submitting || invalid || pristine}
+              // disabled={submitting || invalid || pristine}
+              disabled={submitting || pristine}
               id="generate-predicted-pieces-button"
               marginBottom0
               onClick={

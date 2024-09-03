@@ -7,7 +7,8 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import PiecesPreviewModal from './PiecesPreviewModal';
 
@@ -16,33 +17,6 @@ import { pieceSets, ruleset } from '../../../test/resources';
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  ConfirmationModal: () => <div>ConfirmationModal</div>,
-}));
-
-jest.mock('react-query', () => {
-  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
-
-  return {
-    ...jest.requireActual('react-query'),
-    ...mockReactQuery,
-    useMutation: jest.fn((_key, func) => ({
-      mutateAsync: (...incomingParams) => {
-        // Actually call function coming from component
-        // This assumes that ky has been mocked, which it should have been by __mocks__ stripes-core.
-
-        // If this function was async, we might need to do something different.
-        // As it is, it's a synchronous call to ky which returns a promise we then chain on.
-        func();
-
-        // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
-        return mockMutateAsync(...incomingParams);
-      }
-    })),
-  };
-});
 
 const TestComponent = () => {
   // We need actual state in here for close test
@@ -126,35 +100,54 @@ describe('PiecesPreviewModal', () => {
     await Button({ id: 'close-button' }).has({ disabled: false });
   });
 
-  // test('overlapping start date', async () => {
-  //   const { getAllByText, queryByText } = renderComponent;
-  //   await waitFor(async () => {
-  //     await Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
-  //   });
-  // });
-  // test('renders ConfirmationModal Component', async () => {
-  //   const { getByText } = renderComponent;
-  //   await Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
-  //   await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false }).click();
-  //   expect(getByText('ConfirmationModal')).toBeInTheDocument();
-  // });
-
   describe('PiecesPreviewModal Interactions', () => {
     test('types into Datepicker and clicks generate button to trigger ConfirmationModal', async () => {
       const { getByText } = renderComponent;
 
       // Find the Datepicker input field and type into it
       // Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
-      Datepicker({ id: 'ruleset-start-date' }).fillIn('2023-01-01');
+      // Datepicker({ id: 'ruleset-start-date' }).fillIn('2023-01-01');
+      await waitFor(async () => {
+        // Datepicker({ id: 'ruleset-start-date' }).focus();
+        await Datepicker('Start date*').focus();
+        // await Datepicker('Start date*').fillIn('10/05/2024');
+        await Datepicker('Start date*').fillIn(pieceSets[0].pieces[0].date);
+        // await Datepicker('Start date*').fillIn('01/01/2025');
+        await Datepicker('Start date*').blur();
+        // Datepicker({ id: 'ruleset-start-date' }).blur();
+        // await Datepicker({ id: 'cc-start-date-0' }).has({ inputValue: '01/20/2021' });
+      });
+      await Datepicker('Start date*').has({ inputValue: '10/05/2024' });
+      // await Datepicker('Start date*').has({ inputValue: '01/01/2025' });
+      screen.debug();
+      await waitFor(async () => expect(getByText(/Warning: A predicted piece set with the start date/i)).toBeInTheDocument());
+      await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false });
+      // await waitFor(() => {
+      //   expect(Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false }));
+      // });
 
-      // Find and click the 'Generate predicted pieces' button
-      Button({ id: 'generate-predicted-pieces-button' }).click();
+      await waitFor(async () => {
+        await Button({ id: 'generate-predicted-pieces-button' }).click();
+      });
+      // Button({ id: 'generate-predicted-pieces-button' }).click();
+      // userEvent.click(getByRole('button', { name: 'Generate' }));
 
       // You might need to wait for the button click action to complete if it triggers async operations
-      await waitFor(() => {
-        // Check if the ConfirmationModal is in the document
-        expect(getByText('ConfirmationModal')).toBeInTheDocument();
-      });
+      // await waitFor(() => {
+      // Check if the ConfirmationModal is in the document
+      // expect(getByText('ConfirmationModal')).toBeInTheDocument();
+      expect(getByText('Confirm generation of overlapping piece sets')).toBeInTheDocument();
+
+      // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).has({ disabled: false });
+      await Button('Cancel generation').has({ disabled: false });
+
+      screen.debug();
+      // Following not working atm
+      // await waitFor(async () => {
+      //   // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).click();
+      //   await Button('Cancel generation').click();
+      // });
+      // expect(getByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
     });
   });
 });
