@@ -40,7 +40,7 @@ const OmissionRules = ({ ruleset }) => {
         ? `${e?.pattern?.weekFrom} - ${e?.pattern?.weekTo}`
         : e?.pattern?.weekFrom ?? e?.pattern?.week;
     },
-    month: (e) => {
+    months: (e) => {
       return e?.pattern?.monthTo
         ? `${e?.pattern?.monthFrom?.label} - ${e?.pattern?.monthTo?.label}`
         : e?.pattern?.monthFrom?.label ?? e?.pattern?.month?.label;
@@ -71,7 +71,7 @@ const OmissionRules = ({ ruleset }) => {
               weeks: (
                 <FormattedMessage id="ui-serials-management.ruleset.weeks" />
               ),
-              month: (
+              months: (
                 <FormattedMessage id="ui-serials-management.ruleset.months" />
               ),
               issue: (
@@ -85,7 +85,7 @@ const OmissionRules = ({ ruleset }) => {
               'omissionRuleType',
               'day',
               'weeks',
-              'month',
+              'months',
               'issue',
             ]}
           />

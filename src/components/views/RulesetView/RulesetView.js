@@ -5,6 +5,7 @@ import { Pane, MetaSection } from '@folio/stripes/components';
 
 import {
   CombinationRules,
+  IssuePublication,
   OmissionRules,
   RulesetInfo,
 } from '../../RulesetSections';
@@ -59,6 +60,9 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
           lastUpdatedDate={ruleset?.lastUpdated}
         />
         <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
+        {/* {ruleset?.recurrence?.timeUnit?.value !== 'day' && ( */}
+        <IssuePublication {...getSectionProps('issue-publication')} />
+        {/* )} */}
         {!!ruleset?.omission?.rules?.length && (
           <OmissionRules {...getSectionProps('omission-rules')} />
         )}
