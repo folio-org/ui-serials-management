@@ -18,38 +18,38 @@ const proptypes = {
   ruleset: PropTypes.object,
 };
 
-const OmissionRules = ({ ruleset }) => {
+const CombinationRules = ({ ruleset }) => {
   const intl = useIntl();
 
-  const sortedRules = getSortedItems(ruleset?.omission?.rules, null, {
+  const sortedRules = getSortedItems(ruleset?.combination?.rules, null, {
     column: 'patternType.value',
     direction: 'asc',
   });
 
   const formatter = {
-    omissionRuleType: (e) => {
+    combinationRuleType: (e) => {
       return OMISSION_COMBINATION_PATTERN_TYPE_TRANSLATIONS[
         e?.patternType?.value
       ]?.labels
         ?.map((l) => intl.formatMessage({ id: l?.id }))
         ?.join(', ');
     },
-    day: (e) => e?.pattern?.day || e?.pattern?.weekday?.label,
-    weeks: (e) => {
+    issue: (e) => e?.pattern?.issue,
+    ofWeek: (e) => {
       return e?.pattern?.weekTo
         ? `${e?.pattern?.weekFrom} - ${e?.pattern?.weekTo}`
         : e?.pattern?.weekFrom ?? e?.pattern?.week;
     },
-    month: (e) => {
+    ofMonth: (e) => {
       return e?.pattern?.monthTo
         ? `${e?.pattern?.monthFrom?.label} - ${e?.pattern?.monthTo?.label}`
         : e?.pattern?.monthFrom?.label ?? e?.pattern?.month?.label;
     },
-    issue: (e) => e?.pattern?.issue,
+    issuesToCombine: (e) => e?.issuesToCombine,
   };
 
   const renderBadge = () => {
-    return <Badge>{ruleset?.omission?.rules?.length}</Badge>;
+    return <Badge>{ruleset?.combination?.rules?.length}</Badge>;
   };
 
   return (
@@ -57,36 +57,38 @@ const OmissionRules = ({ ruleset }) => {
       displayWhenClosed={renderBadge()}
       displayWhenOpen={renderBadge()}
       label={
-        <FormattedMessage id="ui-serials-management.ruleset.omissionRules" />
+        <FormattedMessage id="ui-serials-management.ruleset.combinationRules" />
       }
     >
       <Row>
         <Col xs={12}>
           <MultiColumnList
             columnMapping={{
-              omissionRuleType: (
-                <FormattedMessage id="ui-serials-management.ruleset.omissionRuleType" />
-              ),
-              day: <FormattedMessage id="ui-serials-management.ruleset.day" />,
-              weeks: (
-                <FormattedMessage id="ui-serials-management.ruleset.weeks" />
-              ),
-              month: (
-                <FormattedMessage id="ui-serials-management.ruleset.months" />
+              combinationRuleType: (
+                <FormattedMessage id="ui-serials-management.ruleset.combinationRuleType" />
               ),
               issue: (
                 <FormattedMessage id="ui-serials-management.ruleset.issue" />
+              ),
+              ofWeek: (
+                <FormattedMessage id="ui-serials-management.ruleset.ofWeek" />
+              ),
+              ofMonth: (
+                <FormattedMessage id="ui-serials-management.ruleset.ofMonth" />
+              ),
+              issuesToCombine: (
+                <FormattedMessage id="ui-serials-management.ruleset.numberOfIssuesToCombine" />
               ),
             }}
             contentData={sortedRules}
             formatter={formatter}
             interactive={false}
             visibleColumns={[
-              'omissionRuleType',
-              'day',
-              'weeks',
-              'month',
+              'combinationRuleType',
               'issue',
+              'ofWeek',
+              'ofMonth',
+              'issuesToCombine',
             ]}
           />
         </Col>
@@ -95,6 +97,6 @@ const OmissionRules = ({ ruleset }) => {
   );
 };
 
-OmissionRules.propTypes = proptypes;
+CombinationRules.propTypes = proptypes;
 
-export default OmissionRules;
+export default CombinationRules;

@@ -162,6 +162,7 @@
   "ruleset.addCombination": "Add combination rule",
   "ruleset.addCombinationDisabledTooltip": "Combination rules cannot be added because an omission rule exists",
   "ruleset.combinationRuleType": "Combination rule type",
+  "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
   "ruleset.totalNumberOfIssuesToCombine": "Total number of issues to combine",
   "ruleset.firstIssue": "First issue",
   "ruleset.firstIssuePopover": "The “Combination rule type” and associated fields will pinpoint the <strong>first issue</strong> to be included in the combination",
