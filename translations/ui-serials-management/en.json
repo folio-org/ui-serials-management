@@ -190,6 +190,7 @@
   "ruleset.picklist": "Picklist",
   "ruleset.template": "Template",
   "ruleset.template.tokens": "Template tokens",
+  "ruleset.displaySummaryTemplate": "Display summary template",
   "ruleset.order": "Order",
   "ruleset.labelText": "Label text",
   "ruleset.numberOfIssues": "No. of issues",

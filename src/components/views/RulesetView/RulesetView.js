@@ -5,6 +5,7 @@ import { Pane, MetaSection } from '@folio/stripes/components';
 
 import {
   CombinationRules,
+  DisplaySummaryTemplate,
   IssuePublication,
   OmissionRules,
   RulesetInfo,
@@ -69,6 +70,9 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
         {!!ruleset?.combination?.rules?.length && (
           <CombinationRules {...getSectionProps('combination-rules')} />
         )}
+        <DisplaySummaryTemplate
+          {...getSectionProps('display-template-summary')}
+        />
       </Pane>
       {/* </HasCommand> */}
     </>
