@@ -33,6 +33,19 @@ const TestComponent = () => {
   );
 };
 
+// const TestComponent2 = () => {
+//   // We need actual state in here for close test
+//   const [showModal, setShowModal] = useState(true);
+
+//   return (
+//     <PiecesPreviewModal
+//       ruleset={ruleset}
+//       setShowModal={setShowModal}
+//       showModal={showModal}
+//     />
+//   );
+// };
+
 let renderComponent;
 describe('PiecesPreviewModal', () => {
   beforeEach(() => {
@@ -101,10 +114,8 @@ describe('PiecesPreviewModal', () => {
   });
 
   describe('PiecesPreviewModal Interactions', () => {
-    test('types a predicted piece date into Datepicker', async () => {
-      // Find the Datepicker input field and type into it
-      // Datepicker({ id: 'ruleset-start-date' }).fillIn(pieceSets[0].pieces[0].date);
-      // Datepicker({ id: 'ruleset-start-date' }).fillIn('2023-01-01');
+    test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
+      const { getByText } = renderComponent;
       await waitFor(async () => {
         // Datepicker({ id: 'ruleset-start-date' }).focus();
         await Datepicker('Start date*').focus();
@@ -115,46 +126,41 @@ describe('PiecesPreviewModal', () => {
         // Datepicker({ id: 'ruleset-start-date' }).blur();
         // await Datepicker({ id: 'cc-start-date-0' }).has({ inputValue: '01/20/2021' });
       });
+      screen.debug();
       await Datepicker('Start date*').has({ inputValue: '10/05/2024' });
       // await Datepicker('Start date*').has({ inputValue: '01/01/2025' });
-      screen.debug();
-    });
 
-    test('should display warning message and enable generate button', async () => {
-      const { getByText } = renderComponent;
       await waitFor(async () => expect(getByText(/Warning: A predicted piece set with the start date/i)).toBeInTheDocument());
       await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false });
-      // await waitFor(() => {
-      //   expect(Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false }));
-      // });
-    });
-
-    test('clicks the generate button and sees the confirmation modal heading', async () => {
-      const { getByText } = renderComponent;
       await waitFor(async () => {
         await Button({ id: 'generate-predicted-pieces-button' }).click();
       });
-      // Button({ id: 'generate-predicted-pieces-button' }).click();
-      // userEvent.click(getByRole('button', { name: 'Generate' }));
-
-      // You might need to wait for the button click action to complete if it triggers async operations
-      // await waitFor(() => {
-      // Check if the ConfirmationModal is in the document
-      // expect(getByText('ConfirmationModal')).toBeInTheDocument();
       expect(getByText('Confirm generation of overlapping piece sets')).toBeInTheDocument();
-    });
+      screen.debug();
 
-    test('should display the cancel generation button enabled', async () => {
       // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).has({ disabled: false });
       await Button('Cancel generation').has({ disabled: false });
-      screen.debug();
-    });
+      await Button({ id: 'clickable-generate-confirmation-modal-confirm' }).has({ disabled: false });
 
-    // Following not working atm
-    // await waitFor(async () => {
-    //   // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).click();
-    //   await Button('Cancel generation').click();
-    // });
-    // expect(getByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
+      // Following not working atm
+      await waitFor(async () => {
+        // await Button({ id: 'clickable-generate-confirmation-modal-cancel' }).click();
+        await Button('Cancel generation').click();
+      });
+      // expect(getByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
+    });
   });
 });
+
+// describe('PiecesPreviewModal w/o allowCreation', () => {
+//   beforeEach(() => {
+//     useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
+
+//     renderComponent = renderWithIntl(<TestComponent2 />, translationsProperties);
+//   });
+
+//   test('renders the expected modal header', async () => {
+//     const { getByText } = renderComponent;
+//     expect(getByText('Preview predicted pieces')).toBeInTheDocument();
+//   });
+// });
