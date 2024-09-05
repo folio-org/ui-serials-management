@@ -4,6 +4,7 @@ import { AppIcon } from '@folio/stripes/core';
 import { Pane, MetaSection } from '@folio/stripes/components';
 
 import {
+  ChronologyLabels,
   CombinationRules,
   DisplaySummaryTemplate,
   IssuePublication,
@@ -61,15 +62,17 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
           lastUpdatedDate={ruleset?.lastUpdated}
         />
         <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
-        {/* {ruleset?.recurrence?.timeUnit?.value !== 'day' && ( */}
         <IssuePublication {...getSectionProps('issue-publication')} />
-        {/* )} */}
         {!!ruleset?.omission?.rules?.length && (
           <OmissionRules {...getSectionProps('omission-rules')} />
         )}
         {!!ruleset?.combination?.rules?.length && (
           <CombinationRules {...getSectionProps('combination-rules')} />
         )}
+        {/* When chrnology and enumeration are seperated out, this conditional will need to be changed */}
+        {!ruleset?.templateConfig?.rules?.some(
+          (e) => e?.templateMetadataRuleType === 'chronology'
+        ) && <ChronologyLabels {...getSectionProps('chronology-labels')} />}
         <DisplaySummaryTemplate
           {...getSectionProps('display-template-summary')}
         />
