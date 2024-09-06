@@ -227,6 +227,6 @@
     "year.issue": "Jaar, nummer {issueNr}",
     "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set",
     "poLine.publisher": "Uitgever",
-    "pieceSets.createItem": "Create item",
-    "pieceSets.displayToPublic": "Display to public"
+    "pieceSets.createItem": "Item aanmaken",
+    "pieceSets.displayToPublic": "Tonen in openbaar"
 }
