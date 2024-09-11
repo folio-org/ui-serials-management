@@ -283,7 +283,9 @@ const LabelFieldArray = () => {
                   <Field
                     component={Selection}
                     dataOptions={locales}
-                    label="Locale"
+                    label={
+                      <FormattedMessage id="ui-serials-management.ruleset.chronology.locale" />
+                    }
                     name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
                     onFilter={filterSelectValues}
                     parse={(v) => v}

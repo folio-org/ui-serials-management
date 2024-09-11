@@ -20,7 +20,7 @@ import {
   validateWholeNumber,
   validateWithinRange,
 } from '../../utils';
-import { RECURRENCE_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { RECURRENCE_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
 import { SORTED_RECURRENCE_TIME_UNITS } from '../../../constants/sortedArrays';
 
 import css from './PatternTimePeriodForm.css';
@@ -89,7 +89,7 @@ const PatternTimePeriodForm = () => {
                   // Assign the patternType value the timeUnit value
                   if (
                     e?.target?.value &&
-                    !RECURRENCE_PATTERN_TYPES[e?.target?.value]
+                    !RECURRENCE_PATTERN_TYPE_OPTIONS[e?.target?.value]
                   ) {
                     change('patternType', e?.target?.value);
                   }
@@ -193,7 +193,7 @@ const PatternTimePeriodForm = () => {
                     change('recurrence.rules', undefined);
                   }
                   if (
-                    RECURRENCE_PATTERN_TYPES[
+                    RECURRENCE_PATTERN_TYPE_OPTIONS[
                       values?.recurrence?.timeUnit?.value
                     ]
                   ) {
