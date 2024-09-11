@@ -1,4 +1,4 @@
-const RECURRENCE_PATTERN_TYPES = {
+const RECURRENCE_PATTERN_TYPE_OPTIONS = {
   month: [
     {
       labels: [{ id: 'ui-serials-management.ruleset.day.monthRange' }],
@@ -39,7 +39,7 @@ const RECURRENCE_PATTERN_TYPES = {
   ],
 };
 
-const OMISSION_COMBINATION_PATTERN_TYPES = {
+const OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS = {
   day: [
     {
       labels: [
@@ -125,6 +125,6 @@ const OMISSION_COMBINATION_PATTERN_TYPES = {
 };
 
 export {
-  RECURRENCE_PATTERN_TYPES,
-  OMISSION_COMBINATION_PATTERN_TYPES,
+  RECURRENCE_PATTERN_TYPE_OPTIONS,
+  OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS,
 };
