@@ -47,7 +47,7 @@ const IssuePublication = ({ ruleset }) => {
   };
 
   const renderBadge = () => {
-    return <Badge>{ruleset?.omission?.rules?.length}</Badge>;
+    return <Badge>{sortedRules?.length}</Badge>;
   };
 
   return (

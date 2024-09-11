@@ -45,7 +45,7 @@ const ChronologyLabels = ({ ruleset }) => {
   };
 
   const renderBadge = () => {
-    return <Badge>{ruleset?.templateConfig?.rules?.length}</Badge>;
+    return <Badge>{sortedLabels?.length}</Badge>;
   };
 
   return (

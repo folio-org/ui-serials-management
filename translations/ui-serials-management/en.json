@@ -143,6 +143,8 @@
   "ruleset.chronology.year.full": "2023",
   "ruleset.chronology.year.slice": "23",
   "ruleset.chronology.locale": "Locale",
+  "ruleset.enumerationLabels": "Enumeration labels",
+  "ruleset.enumeration": "Enumeration",
   "ruleset.enumeration.numberFormat.number": "Number (1, 2, 3)",
   "ruleset.enumeration.numberFormat.ordinal": "Ordinal (1st, 2nd, 3rd)",
   "ruleset.enumeration.numberFormat.roman": "Roman numerals (I, II, III)",

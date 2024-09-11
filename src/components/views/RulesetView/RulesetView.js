@@ -7,6 +7,7 @@ import {
   ChronologyLabels,
   CombinationRules,
   DisplaySummaryTemplate,
+  EnumerationLabels,
   IssuePublication,
   OmissionRules,
   RulesetInfo,
@@ -70,9 +71,12 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
           <CombinationRules {...getSectionProps('combination-rules')} />
         )}
         {/* When chrnology and enumeration are seperated out, this conditional will need to be changed */}
-        {!ruleset?.templateConfig?.rules?.some(
-          (e) => e?.templateMetadataRuleType === 'chronology'
+        {ruleset?.templateConfig?.rules?.some(
+          (e) => e?.templateMetadataRuleType?.value === 'chronology'
         ) && <ChronologyLabels {...getSectionProps('chronology-labels')} />}
+        {ruleset?.templateConfig?.rules?.some(
+          (e) => e?.templateMetadataRuleType?.value === 'enumeration'
+        ) && <EnumerationLabels {...getSectionProps('enumeration-labels')} />}
         <DisplaySummaryTemplate
           {...getSectionProps('display-template-summary')}
         />
