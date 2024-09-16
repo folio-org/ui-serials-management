@@ -1,6 +1,7 @@
 /* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import {
   Accordion,
@@ -12,6 +13,8 @@ import {
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
+import { urls } from '../../utils';
+
 const proptypes = {
   serial: PropTypes.object,
 };
@@ -21,12 +24,21 @@ const DeprecatedPublicationPatterns = ({ serial }) => {
     (sr) => sr?.rulesetStatus?.value === 'deprecated'
   );
 
+  const renderRulesetLink = (ruleset) => {
+    return (
+      <Link to={urls.rulesetView(serial?.id, ruleset?.id)}>
+        {ruleset?.rulesetNumber}
+      </Link>
+    );
+  };
+
   const renderLastUpdated = (ruleset) => {
     return <FormattedDateTime date={ruleset?.lastUpdated} />;
   };
+
   /* istanbul ignore next */
   const formatter = {
-    patternId: (e) => e.rulesetNumber,
+    patternId: (e) => renderRulesetLink(e),
     lastUpdated: (e) => renderLastUpdated(e),
     description: (e) => e?.description,
   };

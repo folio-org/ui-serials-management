@@ -10,6 +10,7 @@ export const PIECE_SETS_ENDPOINT = 'serials-management/predictedPieces';
 export const PIECE_SET_ENDPOINT = (id) => `serials-management/predictedPieces/${id}`;
 
 export const RULESETS_ENDPOINT = 'serials-management/rulesets';
+export const RULESET_ENDPOINT = (id) => `serials-management/rulesets/${id}`;
 
 export const GENERATE_PIECES_PREVIEW = 'serials-management/predictedPieces/generate';
 export const CREATE_PREDICTED_PIECES = 'serials-management/predictedPieces/create';

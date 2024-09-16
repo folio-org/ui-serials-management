@@ -127,7 +127,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
               <FormattedMessage id="ui-serials-management.poLine.productIds" />
             }
             value={
-              orderLine.details?.productIds?.length
+              orderLine?.details?.productIds?.length
                 ? renderIdentifierTypes()
                 : null
             }
@@ -153,7 +153,7 @@ const SerialPOLineInfo = ({ orderLine }) => {
           <KeyValue
             label={<FormattedMessage id="ui-serials-management.poLine.funds" />}
             value={
-              orderLine.fundDistribution?.length
+              orderLine?.fundDistribution?.length
                 ? renderFundDistribution()
                 : null
             }
