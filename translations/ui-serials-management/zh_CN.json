@@ -228,5 +228,13 @@
     "ruleset.followOnFromPrevious": "延续上一组的最后一件",
     "poLine.publisher": "出版者",
     "pieceSets.createItem": "创建单件",
-    "pieceSets.displayToPublic": "向公众展示"
+    "pieceSets.displayToPublic": "向公众展示",
+    "ruleset.parentSerial": "Parent serial",
+    "ruleset.chronologyLabels": "Chronology labels",
+    "ruleset.chronology.locale": "Locale",
+    "ruleset.enumerationLabels": "Enumeration labels",
+    "ruleset.enumeration": "Enumeration",
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "ruleset.chronology": "Chronology",
+    "ruleset.displaySummaryTemplate": "Display summary template"
 }

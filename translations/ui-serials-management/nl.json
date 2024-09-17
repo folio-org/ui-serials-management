@@ -225,8 +225,16 @@
     "week.issue": "Week, nummer {issueNr}",
     "month.issue": "Maand, nummer {issueNr}",
     "year.issue": "Jaar, nummer {issueNr}",
-    "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set",
+    "ruleset.followOnFromPrevious": "Vervolg op het laatste stuk in een vorige set",
     "poLine.publisher": "Uitgever",
     "pieceSets.createItem": "Item aanmaken",
-    "pieceSets.displayToPublic": "Tonen in openbaar"
+    "pieceSets.displayToPublic": "Tonen in openbaar",
+    "ruleset.parentSerial": "Parent serial",
+    "ruleset.chronologyLabels": "Chronology labels",
+    "ruleset.chronology.locale": "Locale",
+    "ruleset.enumerationLabels": "Enumeration labels",
+    "ruleset.enumeration": "Enumeration",
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "ruleset.chronology": "Chronology",
+    "ruleset.displaySummaryTemplate": "Display summary template"
 }
