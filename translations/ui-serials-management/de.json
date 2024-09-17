@@ -182,7 +182,7 @@
     "refdataCategory.deleteAriaLabel": "Wert {label} löschen",
     "refdataCategory.deleteRefdataCategory": "Auswahllistenkategorie löschen",
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> wird gelöscht.",
-    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Fehler</strong>: Auswahlliste <strong>{label} wurde nicht gelöscht",
+    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Fehler</strong>: Auswahlliste <strong>{label}</strong> wurde nicht gelöscht",
     "settings.refdata.pickLists": "Auswahllisten",
     "pieceSets.combinedPieces": "kombinierte Teile: {length}",
     "ruleset.addValue": "Wert hinzufügen",
