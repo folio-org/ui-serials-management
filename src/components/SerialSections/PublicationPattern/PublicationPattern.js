@@ -1,7 +1,7 @@
 /* eslint-disable react/style-prop-object */
 import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import {
   Accordion,
@@ -38,10 +38,19 @@ const PublicationPattern = ({ serial }) => {
   const renderLastUpdated = (ruleset) => {
     return <FormattedDate date={ruleset?.lastUpdated} />;
   };
+
+  const renderRulesetLink = (ruleset) => {
+    return (
+      <Link to={urls.rulesetView(serial?.id, ruleset?.id)}>
+        {ruleset?.rulesetNumber}
+      </Link>
+    );
+  };
+
   /* istanbul ignore next */
   const formatter = {
     patternId: (e) => {
-      return e.rulesetNumber;
+      return renderRulesetLink(e);
     },
     lastUpdated: (e) => {
       return renderLastUpdated(e);
@@ -90,7 +99,11 @@ const PublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.ruleset.patternId" />
                 }
-                value={activeRuleset?.rulesetNumber}
+                value={
+                  <Link to={urls?.rulesetView(serial?.id, activeRuleset?.id)}>
+                    <strong>{activeRuleset?.rulesetNumber}</strong>
+                  </Link>
+                }
               />
             </Col>
             <Col xs={3}>

@@ -22,6 +22,7 @@ import {
   SerialsRoute,
   SerialCreateRoute,
   SerialEditRoute,
+  RulesetViewRoute,
   RulesetCreateRoute,
   PieceSetsRoute,
 } from './routes';
@@ -57,11 +58,11 @@ const App = (props) => {
     'search',
     'openShortcutModal',
   ]);
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   const changeShortcutsModal = () => {
     setShowShortcutModal(!showShortcutModal);
   };
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   const shortcuts = [
     {
       name: 'openShortcutModal',
@@ -108,7 +109,13 @@ const App = (props) => {
                 component={RulesetCreateRoute}
                 path={`${path}/serials/:id/rulesets/create`}
               />
-              <SerialsRoute path={`${path}/serials`} />
+
+              <SerialsRoute path={`${path}/serials`}>
+                <Route
+                  component={RulesetViewRoute}
+                  path={`${path}/serials/:sid/rulesets/:rid`}
+                />
+              </SerialsRoute>
               <PieceSetsRoute path={`${path}/pieceSets`} />
             </Switch>
           </Suspense>

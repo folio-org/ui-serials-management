@@ -27,7 +27,7 @@ import {
   useSerialsManagementRefdata,
 } from '../../utils';
 
-import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
@@ -36,8 +36,7 @@ const OmissionField = ({ name, index, omission }) => {
   const { change } = useForm();
   const refdataValues = useSerialsManagementRefdata([
     MONTHS,
-    WEEKDAYS,
-    OMISSION_COMBINATION_PATTERN_TYPES,
+    WEEKDAYS
   ]);
 
   const renderIssueField = () => {
@@ -200,7 +199,7 @@ const OmissionField = ({ name, index, omission }) => {
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...OMISSION_COMBINATION_PATTERN_TYPES[
+              ...OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS[
                 omission?.timeUnit?.value
               ].map((e) => {
                 return {
