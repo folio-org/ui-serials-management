@@ -228,5 +228,13 @@
     "ruleset.followOnFromPrevious": "Continue a partir da última peça de um conjunto anterior",
     "poLine.publisher": "Editora",
     "pieceSets.createItem": "Criar item",
-    "pieceSets.displayToPublic": "Exibir ao público"
+    "pieceSets.displayToPublic": "Exibir ao público",
+    "ruleset.parentSerial": "Série pai",
+    "ruleset.chronologyLabels": "Etiquetas de cronologia",
+    "ruleset.chronology.locale": "Idioma",
+    "ruleset.enumerationLabels": "Etiquetas de enumeração",
+    "ruleset.enumeration": "Enumeração",
+    "ruleset.numberOfIssuesToCombine": "Número de edições a combinar",
+    "ruleset.chronology": "Cronologia",
+    "ruleset.displaySummaryTemplate": "Exibir modelo de resumo"
 }

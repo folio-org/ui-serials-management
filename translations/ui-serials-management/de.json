@@ -182,7 +182,7 @@
     "refdataCategory.deleteAriaLabel": "Wert {label} löschen",
     "refdataCategory.deleteRefdataCategory": "Auswahllistenkategorie löschen",
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> wird gelöscht.",
-    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Fehler</strong>: Auswahlliste <strong>{label} wurde nicht gelöscht",
+    "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Fehler</strong>: Auswahlliste <strong>{label}</strong> wurde nicht gelöscht",
     "settings.refdata.pickLists": "Auswahllisten",
     "pieceSets.combinedPieces": "kombinierte Teile: {length}",
     "ruleset.addValue": "Wert hinzufügen",
@@ -228,5 +228,13 @@
     "ruleset.followOnFromPrevious": "Knüpfen Sie an das letzte Stück eines vorherigen Sets an",
     "poLine.publisher": "Verlag",
     "pieceSets.createItem": "Exemplar erstellen",
-    "pieceSets.displayToPublic": "Öffentlich anzeigen"
+    "pieceSets.displayToPublic": "Öffentlich anzeigen",
+    "ruleset.parentSerial": "Parent serial",
+    "ruleset.chronologyLabels": "Chronology labels",
+    "ruleset.chronology.locale": "Locale",
+    "ruleset.enumerationLabels": "Enumeration labels",
+    "ruleset.enumeration": "Enumeration",
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "ruleset.chronology": "Chronology",
+    "ruleset.displaySummaryTemplate": "Display summary template"
 }

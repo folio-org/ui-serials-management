@@ -228,5 +228,13 @@
     "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set",
     "poLine.publisher": "Publisher",
     "pieceSets.createItem": "Create item",
-    "pieceSets.displayToPublic": "Display to public"
+    "pieceSets.displayToPublic": "Display to public",
+    "ruleset.parentSerial": "Parent serial",
+    "ruleset.chronologyLabels": "Chronology labels",
+    "ruleset.chronology.locale": "Locale",
+    "ruleset.enumerationLabels": "Enumeration labels",
+    "ruleset.enumeration": "Enumeration",
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "ruleset.chronology": "Chronology",
+    "ruleset.displaySummaryTemplate": "Display summary template"
 }
