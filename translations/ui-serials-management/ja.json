@@ -228,5 +228,13 @@
     "ruleset.followOnFromPrevious": "Follow on from the last piece in a previous set",
     "poLine.publisher": "出版者",
     "pieceSets.createItem": "資料の作成",
-    "pieceSets.displayToPublic": "一般公開"
+    "pieceSets.displayToPublic": "一般公開",
+    "ruleset.parentSerial": "Parent serial",
+    "ruleset.chronologyLabels": "Chronology labels",
+    "ruleset.chronology.locale": "Locale",
+    "ruleset.enumerationLabels": "Enumeration labels",
+    "ruleset.enumeration": "Enumeration",
+    "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
+    "ruleset.chronology": "Chronology",
+    "ruleset.displaySummaryTemplate": "Display summary template"
 }
