@@ -35,6 +35,9 @@ const RulesetEditRoute = () => {
         .then(() => handleClose());
     }
   );
+
+  console.log(ruleset);
+
   // istanbul ignore next
   const handleSubmitValues = (values) => {
     const submitValues = {
@@ -44,7 +47,20 @@ const RulesetEditRoute = () => {
   };
 
   const getInitialValues = () => {
-    return ruleset;
+    const iv = {
+      ...ruleset,
+      patternType: ruleset?.recurrence?.rules?.[0]?.patternType?.value,
+      omission: {
+        ...ruleset?.omission,
+        patternType: ruleset?.omission?.rules?.[0]?.patternType?.value,
+      },
+      combination: {
+        ...ruleset?.combination,
+        patternType: ruleset?.combination?.rules?.[0]?.patternType?.value,
+      },
+    };
+    console.log(iv);
+    return iv;
   };
   // istanbul ignore next
   const submitRuleset = async (values) => {
