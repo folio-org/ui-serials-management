@@ -75,6 +75,7 @@ describe('PieceSetView', () => {
       await waitFor(async () => {
         await Button('Actions').click();
         await Button('Generate receiving pieces').has({ disabled: true });
+        Button('Delete predicted piece set').has({ disabled: false });
       });
     });
 
