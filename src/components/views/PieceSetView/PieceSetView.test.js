@@ -7,11 +7,6 @@ import { translationsProperties } from '../../../../test/helpers';
 import { handlers, resource } from '../../../../test/resources';
 import PieceSetView from './PieceSetView';
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: () => jest.fn(),
-}));
-
 jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
   <div>PieceSetInfo</div>
 ));
@@ -71,13 +66,18 @@ describe('PieceSetView', () => {
       await Button('Actions').exists();
     });
 
-    test('Action menu has one items', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
+    describe('renders action menu buttons', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      })
+      
+      test('renders the Action menu with two items', async () => {
         await Button('Generate receiving pieces').has({ disabled: true });
-        Button('Delete predicted piece set').has({ disabled: false });
+        await Button('Delete predicted piece set').has({ disabled: false });
       });
-    });
+    })
 
     test('renders PieceSetInfo Component', () => {
       const { getByText } = renderComponent;
