@@ -17,8 +17,32 @@ jest.mock('../../GenerateReceivingModal/GenerateReceivingModal', () => () => (
   <div>GenerateReceivingModal</div>
 ));
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingPane: () => <div>LoadingPane</div>,
+}));
+
 describe('PieceSetView', () => {
   let renderComponent;
+  describe('renders with a loading piece set', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <PieceSetView
+            onClose={handlers.onClose}
+            queryProps={{ isLoading: true }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders LoadingPane Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('LoadingPane')).toBeInTheDocument();
+    });
+  });
+
   describe('renders components with no piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
