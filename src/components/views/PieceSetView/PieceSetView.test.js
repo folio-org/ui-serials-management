@@ -1,4 +1,4 @@
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
@@ -20,6 +20,7 @@ jest.mock('../../GenerateReceivingModal/GenerateReceivingModal', () => () => (
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingPane: () => <div>LoadingPane</div>,
+  ConfirmationModal: () => <div>ConfirmationModal</div>
 }));
 
 describe('PieceSetView', () => {
@@ -90,6 +91,16 @@ describe('PieceSetView', () => {
       await Button('Actions').exists();
     });
 
+    test('renders PieceSetInfo Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PieceSetInfo')).toBeInTheDocument();
+    });
+
+    test('renders PiecesList Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PiecesList')).toBeInTheDocument();
+    });
+
     describe('renders action menu buttons', () => {
       beforeEach(async () => {
         await waitFor(async () => {
@@ -103,14 +114,19 @@ describe('PieceSetView', () => {
       });
     })
 
-    test('renders PieceSetInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PieceSetInfo')).toBeInTheDocument();
-    });
+    describe('renders the confirmation modal ', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+          await Button('Delete predicted piece set').has({ disabled: false })
+          await Button('Delete predicted piece set').click()
+        });
+      })
 
-    test('renders PiecesList Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PiecesList')).toBeInTheDocument();
-    });
+      test('renders the ConfirmationModal component ', async () => {
+        const { getByText } = renderComponent;
+        expect(getByText('ConfirmationModal')).toBeInTheDocument();
+      });
+    })
   });
 });
