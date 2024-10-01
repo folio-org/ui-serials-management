@@ -20,7 +20,6 @@ jest.mock('../../GenerateReceivingModal/GenerateReceivingModal', () => () => (
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingPane: () => <div>LoadingPane</div>,
-  ConfirmationModal: () => <div>ConfirmationModal</div>
 }));
 
 describe('PieceSetView', () => {
@@ -125,7 +124,13 @@ describe('PieceSetView', () => {
 
       test('renders the ConfirmationModal component ', async () => {
         const { getByText } = renderComponent;
-        expect(getByText('ConfirmationModal')).toBeInTheDocument();
+        expect(getByText('Delete')).toBeInTheDocument();
+      });
+
+      test('closing the ConfirmationModal component ', async () => {
+        const { getByText } = renderComponent;
+        await Button('Cancel').click()
+        await expect(getByText('Actions')).toBeVisible();
       });
     })
   });
