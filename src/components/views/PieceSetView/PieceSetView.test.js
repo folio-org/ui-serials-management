@@ -1,4 +1,6 @@
-import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
@@ -11,7 +13,9 @@ jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
   <div>PieceSetInfo</div>
 ));
 
-jest.mock('../../PieceSetSections/PiecesList', () => () => <div>PiecesList</div>);
+jest.mock('../../PieceSetSections/PiecesList', () => () => (
+  <div>PiecesList</div>
+));
 
 jest.mock('../../GenerateReceivingModal/GenerateReceivingModal', () => () => (
   <div>GenerateReceivingModal</div>
@@ -28,11 +32,11 @@ jest.mock('@folio/stripes/components', () => ({
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
 
-  return ({
+  return {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
-    useMutation: () => ({ mutateAsync: () => mockMutateAsync() })
-  });
+    useMutation: () => ({ mutateAsync: () => mockMutateAsync() }),
+  };
 });
 
 describe('PieceSetView', () => {
@@ -118,22 +122,22 @@ describe('PieceSetView', () => {
         await waitFor(async () => {
           await Button('Actions').click();
         });
-      })
-      
+      });
+
       test('renders the Action menu with two items', async () => {
         await Button('Generate receiving pieces').has({ disabled: true });
         await Button('Delete predicted piece set').has({ disabled: false });
       });
-    })
+    });
 
     describe('renders the confirmation modal ', () => {
       beforeEach(async () => {
         await waitFor(async () => {
           await Button('Actions').click();
-          await Button('Delete predicted piece set').has({ disabled: false })
-          await Button('Delete predicted piece set').click()
+          await Button('Delete predicted piece set').has({ disabled: false });
+          await Button('Delete predicted piece set').click();
         });
-      })
+      });
 
       test('renders the ConfirmationModal component ', async () => {
         const { getByText } = renderComponent;
@@ -142,16 +146,16 @@ describe('PieceSetView', () => {
 
       test('deleteing the piece set and closing the ConfirmationModal component ', async () => {
         const { getByText } = renderComponent;
-        await Button('Delete').click()
-        await expect(mockMutateAsync).toHaveBeenCalled()
+        await Button('Delete').click();
+        await expect(mockMutateAsync).toHaveBeenCalled();
         await expect(getByText('Actions')).toBeVisible();
       });
 
       test('closing the ConfirmationModal component ', async () => {
         const { getByText } = renderComponent;
-        await Button('Cancel').click()
+        await Button('Cancel').click();
         await expect(getByText('Actions')).toBeVisible();
       });
-    })
+    });
   });
 });
