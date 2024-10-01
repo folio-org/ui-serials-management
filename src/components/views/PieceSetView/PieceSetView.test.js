@@ -17,10 +17,23 @@ jest.mock('../../GenerateReceivingModal/GenerateReceivingModal', () => () => (
   <div>GenerateReceivingModal</div>
 ));
 
+const mockMutateAsync = jest.fn(() => Promise.resolve(true));
+
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingPane: () => <div>LoadingPane</div>,
 }));
+
+/* EXAMPLE Mocking useMutation to allow us to test the .then clause */
+jest.mock('react-query', () => {
+  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
+
+  return ({
+    ...jest.requireActual('react-query'),
+    ...mockReactQuery,
+    useMutation: () => ({ mutateAsync: () => mockMutateAsync() })
+  });
+});
 
 describe('PieceSetView', () => {
   let renderComponent;
@@ -125,6 +138,13 @@ describe('PieceSetView', () => {
       test('renders the ConfirmationModal component ', async () => {
         const { getByText } = renderComponent;
         expect(getByText('Delete')).toBeInTheDocument();
+      });
+
+      test('deleteing the piece set and closing the ConfirmationModal component ', async () => {
+        const { getByText } = renderComponent;
+        await Button('Delete').click()
+        await expect(mockMutateAsync).toHaveBeenCalled()
+        await expect(getByText('Actions')).toBeVisible();
       });
 
       test('closing the ConfirmationModal component ', async () => {
