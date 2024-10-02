@@ -9,4 +9,3 @@ export { default as pieceSets } from './pieceSets';
 export { default as resource } from './resource';
 export { default as orderLine } from './orderLine';
 export { default as locales } from './locales';
-export { default as rulesetPreview } from './rulesetPreview';

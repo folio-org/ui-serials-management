@@ -12,7 +12,7 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import PiecesPreviewModal from './PiecesPreviewModal';
 
 import { translationsProperties } from '../../../test/helpers';
-import { pieceSets, ruleset, rulesetPreview } from '../../../test/resources';
+import { pieceSets, ruleset } from '../../../test/resources';
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
@@ -41,7 +41,7 @@ const RulesetFormComponent = () => {
 
   return (
     <PiecesPreviewModal
-      ruleset={rulesetPreview}
+      ruleset={ruleset}
       setShowModal={setShowModal}
       showModal={showModal}
     />
@@ -206,9 +206,15 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
     await Button({ id: 'rulset-preview-button' }).has({ disabled: true });
   });
 
-  test('types a date into Datepicker, preview button enabled, click it', async () => {
+  test('types a date into Datepicker and starting value fields, preview button enabled, click it', async () => {
     await waitFor(async () => {
       await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
+      await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+        '1'
+      );
+      await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+        '1'
+      );
     });
     await Datepicker({ id: 'ruleset-start-date' }).has({
       inputValue: '01/01/2025',
