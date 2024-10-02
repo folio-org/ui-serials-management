@@ -1,6 +1,7 @@
 const ruleset = {
   id: 'a3a45cc5-5c16-46aa-93a3-e64bb4defef0',
   dateCreated: '2024-03-21T09:02:39Z',
+  rulesetNumber: 'Test Pattern ID',
   recurrence: {
     id: '22c08b1e-d71e-4808-bc40-239e7a3a88a1',
     rules: [
