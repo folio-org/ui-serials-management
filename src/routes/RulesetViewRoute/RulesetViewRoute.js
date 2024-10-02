@@ -11,7 +11,6 @@ import { urls } from '../../components/utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../constants/config';
 import { SERIAL_ENDPOINT, RULESET_ENDPOINT } from '../../constants/endpoints';
 
-
 const RulesetViewRoute = () => {
   const history = useHistory();
   const location = useLocation();
