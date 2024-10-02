@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import PiecesPreviewModal from './PiecesPreviewModal';
 
@@ -17,7 +17,9 @@ import { pieceSets, ruleset, rulesetPreview } from '../../../test/resources';
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
 
-const TestComponent = () => {
+// Modal is being rendered from the serial view
+// After to being saved,hence existing piecesets and allowCreation
+const SerialViewRender = () => {
   // We need actual state in here for close test
   const [showModal, setShowModal] = useState(true);
 
@@ -32,7 +34,9 @@ const TestComponent = () => {
   );
 };
 
-const TestComponent2 = () => {
+// Modal is being rendered from the ruleset form
+// Prior to being saved,hence no piecesets or allowCreation
+const RulesetFormComponent = () => {
   const [showModal, setShowModal] = useState(true);
 
   return (
@@ -49,11 +53,10 @@ describe('PiecesPreviewModal', () => {
   beforeEach(() => {
     useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
 
-    renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
-  });
-
-  test('useMutation has been called', () => {
-    expect(useMutation).toHaveBeenCalled();
+    renderComponent = renderWithIntl(
+      <SerialViewRender />,
+      translationsProperties
+    );
   });
 
   test('renders the expected modal header', async () => {
@@ -100,7 +103,9 @@ describe('PiecesPreviewModal', () => {
   });
 
   test('renders the Generate predicted pieces button', async () => {
-    await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: true });
+    await Button({ id: 'generate-predicted-pieces-button' }).has({
+      disabled: true,
+    });
   });
 
   test('renders the preview button', async () => {
@@ -112,61 +117,73 @@ describe('PiecesPreviewModal', () => {
   });
 
   describe('PiecesPreviewModal overlapping piece set', () => {
-    test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
-      const { getByText, queryByText } = renderComponent;
+    test('types a date into Datepicker, generate button enabled', async () => {
       await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).focus();
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('10/05/2024');
-        await Datepicker({ id: 'ruleset-start-date' }).blur();
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
+        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+          '1'
+        );
+        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+          '1'
+        );
       });
-      await Datepicker({ id: 'ruleset-start-date' }).has({ inputValue: '10/05/2024' });
+      await Datepicker({ id: 'ruleset-start-date' }).has({
+        inputValue: '01/01/2025',
+      });
 
-      await waitFor(async () => expect(getByText(/Warning: A predicted piece set with the start date/i)).toBeInTheDocument());
-      await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false });
+      await Button({ id: 'generate-predicted-pieces-button' }).has({
+        disabled: false,
+      });
       await waitFor(async () => {
         await Button({ id: 'generate-predicted-pieces-button' }).click();
       });
-      expect(getByText('Confirm generation of overlapping piece sets')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(mockMutateAsync).toHaveBeenCalled();
+      });
+    });
+
+    test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
+      const { getByText, queryByText } = renderComponent;
+      await waitFor(async () => {
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('10/05/2024');
+        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+          '1'
+        );
+        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+          '1'
+        );
+      });
+      await Datepicker({ id: 'ruleset-start-date' }).has({
+        inputValue: '10/05/2024',
+      });
+
+      await waitFor(async () => expect(
+        getByText(/Warning: A predicted piece set with the start date/i)
+      ).toBeInTheDocument());
+      await Button({ id: 'generate-predicted-pieces-button' }).has({
+        disabled: false,
+      });
+      await waitFor(async () => {
+        await Button({ id: 'generate-predicted-pieces-button' }).click();
+      });
+      expect(
+        getByText('Confirm generation of overlapping piece sets')
+      ).toBeInTheDocument();
 
       await Button('Cancel generation').has({ disabled: false });
-      await Button({ id: 'clickable-generate-confirmation-modal-confirm' }).has({ disabled: false });
+      await Button({ id: 'clickable-generate-confirmation-modal-confirm' }).has(
+        { disabled: false }
+      );
 
       await waitFor(async () => {
         await Button('Cancel generation').click();
       });
       await waitFor(async () => {
-        expect(queryByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
+        expect(
+          queryByText('Confirm generation of overlapping piece sets')
+        ).not.toBeInTheDocument();
       });
     });
-  });
-});
-
-describe('PiecesPreviewModal generate', () => {
-  beforeEach(() => {
-    useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
-
-    renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
-  });
-
-  test('types a date into Datepicker, generate button enabled', async () => {
-    await waitFor(async () => {
-      Datepicker({ id: 'ruleset-start-date' }).focus();
-      await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
-      await Datepicker({ id: 'ruleset-start-date' }).blur();
-    });
-    // screen.debug();
-    await Datepicker({ id: 'ruleset-start-date' }).has({ inputValue: '01/01/2025' });
-
-    await Button({ id: 'generate-predicted-pieces-button' }).has({ disabled: false });
-    await waitFor(async () => {
-      await Button({ id: 'generate-predicted-pieces-button' }).click();
-    });
-    screen.debug();
-
-    // Following not working atm
-    // await waitFor(async () => {
-    // expect(mockMutateAsync).toHaveBeenCalled();
-    // });
   });
 });
 
@@ -174,11 +191,10 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
   beforeEach(() => {
     useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
 
-    renderComponent = renderWithIntl(<TestComponent2 />, translationsProperties);
-  });
-
-  test('useMutation has been called', () => {
-    expect(useMutation).toHaveBeenCalled();
+    renderComponent = renderWithIntl(
+      <RulesetFormComponent />,
+      translationsProperties
+    );
   });
 
   test('renders the expected modal header', async () => {
@@ -192,11 +208,11 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
 
   test('types a date into Datepicker, preview button enabled, click it', async () => {
     await waitFor(async () => {
-      await Datepicker({ id: 'ruleset-start-date' }).focus();
       await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
-      await Datepicker({ id: 'ruleset-start-date' }).blur();
     });
-    await Datepicker({ id: 'ruleset-start-date' }).has({ inputValue: '01/01/2025' });
+    await Datepicker({ id: 'ruleset-start-date' }).has({
+      inputValue: '01/01/2025',
+    });
 
     await Button({ id: 'rulset-preview-button' }).has({ disabled: false });
     await waitFor(async () => {
