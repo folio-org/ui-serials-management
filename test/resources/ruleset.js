@@ -28,7 +28,7 @@ const ruleset = {
     label: 'Active',
   },
   owner: {
-    id: '7b30b5e6-cf25-4f9b-a73b-ad3edd406511',
+    id: '9be5cebf-c676-4430-9439-4f47973d8a47',
   },
   templateConfig: {
     id: 'e6f9dad2-88f0-429e-8686-beddf4c8088a',
