@@ -1,104 +1,12 @@
+import ruleset from './ruleset';
+
 const pieceSet = {
   id: 'daa8a40a-8da5-441d-adb8-7e98470df1f8',
   title: 'Quiet times',
   titleId: '157b3857-f94b-45c9-9b0a-00e2d9c68dbb',
   startDate: '2024-02-01',
-  ruleset: {
-    id: '87edca46-4cff-45c4-9023-3aa20d09330b',
-    dateCreated: '2024-02-26T09:58:59Z',
-    recurrence: {
-      id: '117033e7-a807-4012-b2f6-12036198c398',
-      rules: [
-        {
-          id: '508b1a9b-1fb9-46b9-9781-638ba9ad07fc',
-          ordinal: 1,
-          patternType: {
-            id: '2c9180a58de0851d018de08d8eea0021',
-            value: 'month_date',
-            label: 'Month Date',
-          },
-          pattern: {
-            id: 'b5ff4f58-5778-4755-b496-d3786fd833a3',
-            day: 1,
-          },
-        },
-      ],
-      timeUnit: {
-        id: '2c9180a58de0851d018de08d918d005c',
-        value: 'month',
-        label: 'Month',
-      },
-      period: 1,
-      issues: 1,
-    },
-    lastUpdated: '2024-02-26T09:58:59Z',
-    rulesetStatus: {
-      id: '2c9180a58de0851d018de08d8f460027',
-      value: 'active',
-      label: 'Active',
-    },
-    owner: {
-      id: '9be5cebf-c676-4430-9439-4f47973d8a47',
-    },
-    templateConfig: {
-      id: 'f5217917-0e2c-4e11-9adc-9769841676f2',
-      rules: [
-        {
-          id: 'd30fde65-c7eb-4e01-98b0-fa9ca16167fe',
-          index: 0,
-          templateMetadataRuleType: {
-            id: '2c9180a58de0851d018de08d90b4003f',
-            value: 'enumeration',
-            label: 'Enumeration',
-          },
-          ruleType: {
-            id: '92f59b68-056a-4f9d-86af-7190fef9b762',
-            templateMetadataRuleFormat: {
-              id: '2c9180a58de0851d018de08d8ed5001c',
-              value: 'enumeration_numeric',
-              label: 'Enumeration Numeric',
-            },
-            ruleFormat: {
-              id: '7459d9e9-6049-44be-b773-e6836205bcfc',
-              levels: [
-                {
-                  id: '30ca0123-a758-4054-8c3b-4d85270738aa',
-                  index: 0,
-                  units: 2,
-                  sequence: {
-                    id: '2c9180a58de0851d018de08d909e0038',
-                    value: 'continuous',
-                    label: 'Continuous',
-                  },
-                  format: {
-                    id: '2c9180a58de0851d018de08d90a7003b',
-                    value: 'number',
-                    label: 'Number',
-                  },
-                },
-                {
-                  id: 'fceb4e8b-41bd-4b7f-ae18-3a5c36d17e65',
-                  index: 1,
-                  units: 2,
-                  sequence: {
-                    id: '2c9180a58de0851d018de08d909e0038',
-                    value: 'continuous',
-                    label: 'Continuous',
-                  },
-                  format: {
-                    id: '2c9180a58de0851d018de08d90a7003b',
-                    value: 'number',
-                    label: 'Number',
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-      templateString: '{{enumeration1.level1}} {{enumeration1.level2}}',
-    },
-  },
+  note: 'Test note',
+  ruleset,
   pieces: [
     {
       id: '6882640f-7110-4dc5-9617-29ad06736adf',

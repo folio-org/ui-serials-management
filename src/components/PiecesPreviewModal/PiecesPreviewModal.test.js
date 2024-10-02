@@ -12,7 +12,7 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import PiecesPreviewModal from './PiecesPreviewModal';
 
 import { translationsProperties } from '../../../test/helpers';
-import { pieceSets, ruleset } from '../../../test/resources';
+import { pieceSet, ruleset } from '../../../test/resources';
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
@@ -26,7 +26,7 @@ const SerialViewRender = () => {
   return (
     <PiecesPreviewModal
       allowCreation
-      pieceSets={pieceSets}
+      pieceSets={[pieceSet]}
       ruleset={ruleset}
       setShowModal={setShowModal}
       showModal={showModal}
@@ -119,7 +119,7 @@ describe('PiecesPreviewModal', () => {
   describe('PiecesPreviewModal overlapping piece set', () => {
     test('types a date into Datepicker, generate button enabled', async () => {
       await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2026');
         await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
           '1'
         );
@@ -128,7 +128,7 @@ describe('PiecesPreviewModal', () => {
         );
       });
       await Datepicker({ id: 'ruleset-start-date' }).has({
-        inputValue: '01/01/2025',
+        inputValue: '01/01/2026',
       });
 
       await Button({ id: 'generate-predicted-pieces-button' }).has({
@@ -145,7 +145,7 @@ describe('PiecesPreviewModal', () => {
     test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
       const { getByText, queryByText } = renderComponent;
       await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('10/05/2024');
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('10/01/2024');
         await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
           '1'
         );
@@ -154,7 +154,7 @@ describe('PiecesPreviewModal', () => {
         );
       });
       await Datepicker({ id: 'ruleset-start-date' }).has({
-        inputValue: '10/05/2024',
+        inputValue: '10/01/2024',
       });
 
       await waitFor(async () => expect(
