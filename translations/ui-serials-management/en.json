@@ -241,6 +241,9 @@
   "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
   "pieceSets.createItem": "Create item",
   "pieceSets.displayToPublic": "Display to public",
+  "pieceSets.deletePredictedPieceSet": "Delete predicted piece set",
+  "pieceSets.deletePredictedPieceSet.confirmMessage": "Are you sure you wish to delete this predicted piece set?",
+
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
   "validate.notNegative": "Cannot be negative",
