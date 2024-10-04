@@ -201,7 +201,7 @@ const PiecesPreviewModalForm = ({
             'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
-      {pieceSets?.some((ps) => ps.pieces?.some((piece) => piece.date === values?.startDate)) && (
+      {pieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
         <MessageBanner type="warning">
           <FormattedMessage
             id="ui-serials-management.pieceSets.overlappingDates.warning"
