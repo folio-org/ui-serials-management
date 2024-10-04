@@ -148,7 +148,9 @@ const PiecesPreviewModal = ({
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
-    const dateExists = pieceSets?.some((ps) => ps.pieces?.some((piece) => piece.date === values.startDate));
+    const dateExists = pieceSets?.some(
+      (ps) => ps?.startDate === values?.startDate
+    );
     return (
       <>
         {allowCreation && (
@@ -250,12 +252,11 @@ const PiecesPreviewModal = ({
         modalProps={{
           onClose: closeModal,
           open: showModal,
-          label: (
-            allowCreation ? (
-              <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
-            ) : (
-              <FormattedMessage id="ui-serials-management.ruleset.previewPredictedPieces" />
-            )),
+          label: allowCreation ? (
+            <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+          ) : (
+            <FormattedMessage id="ui-serials-management.ruleset.previewPredictedPieces" />
+          ),
           footer: renderFooter,
         }}
         mutators={arrayMutators}
