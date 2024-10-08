@@ -1,3 +1,4 @@
+import refdata from './refdata';
 import ruleset from './ruleset';
 import orderLine from './orderLine';
 
@@ -23,11 +24,8 @@ const serial = {
     },
   ],
   description: 'Test Description',
-  serialStatus: {
-    id: '2c9180a58de0851d018de08d8e760016',
-    value: 'active',
-    label: 'Active',
-  },
+  // Ref: SerialStatus, Active
+  serialStatus: refdata[16].values[0]
 };
 
 export default serial;
