@@ -16,6 +16,7 @@
   "close": "Close",
   "lastUpdated": "Last updated",
   "learnMore": "Learn more",
+  "cancelGeneration": "Cancel generation",
 
   "refdata.label": "Label",
   "refdata.value": "Value",
@@ -154,9 +155,11 @@
   "ruleset.preview": "Preview",
   "ruleset.startDate": "Start date",
   "ruleset.generatePredictedPieces": "Generate predicted pieces",
+  "ruleset.previewPredictedPieces": "Preview predicted pieces",
   "ruleset.generate": "Generate",
   "ruleset.issueCount": "Issue count",
   "ruleset.issuePublicationDate": "Issue publication date",
+  "ruleset.confirmGeneration": "Confirm generation of overlapping piece sets",
 
   "ruleset.combinationRules": "Combination rules",
   "ruleset.combinationRulesPopover": "Running this publication pattern will generate a minimum of one year's worth of predicted issues. Combination rules can be applied to combine sequences of issues into a single issue. {br} For example, to combine a number of days, weeks or months. {br} The time unit \"Issue\" can be used to select the \"nth\" issue in the set of predicted issues.",
@@ -241,6 +244,8 @@
   "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
   "pieceSets.createItem": "Create item",
   "pieceSets.displayToPublic": "Display to public",
+  "pieceSets.overlappingDates.dialog": "A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>. {br} Generating a new set will result in some overlap between piece sets. If this is acceptable select \"Generate\" to continue.",
+  "pieceSets.overlappingDates.warning": "Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>",
   "pieceSets.deletePredictedPieceSet": "Delete predicted piece set",
   "pieceSets.deletePredictedPieceSet.confirmMessage": "Are you sure you wish to delete this predicted piece set?",
 

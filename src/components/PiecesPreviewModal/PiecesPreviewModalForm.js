@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Field, useForm } from 'react-final-form';
+import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
@@ -11,6 +11,7 @@ import {
   Layout,
   TextArea,
   Select,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import {
@@ -23,6 +24,7 @@ import { validateWithinRange } from '../utils';
 import css from './PiecesPreviewModal.css';
 
 const propTypes = {
+  serialName: PropTypes.string,
   ruleset: PropTypes.object,
   pieceSets: PropTypes.arrayOf(PropTypes.object),
   allowCreation: PropTypes.bool,
@@ -30,10 +32,12 @@ const propTypes = {
 
 // TODO Definitely needs to be refactored at some point, additionall will need to be moved elsewhere
 const PiecesPreviewModalForm = ({
+  serialName,
   ruleset,
   pieceSets,
   allowCreation = false,
 }) => {
+  const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
 
@@ -56,18 +60,19 @@ const PiecesPreviewModalForm = ({
     // When changes fields at the top level of the form, change function requires an empty string, funky
     change('', {
       startDate: selectedNextPiece?.nextPieceTemplateMetadata?.standard?.date,
-      startingValues: selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
-        (uc) => {
-          if (uc?.metadataType?.levels?.length) {
-            return {
-              levels: uc?.metadataType?.levels?.map((ucl) => {
-                return { value: ucl?.rawValue };
-              }),
-            };
+      startingValues:
+        selectedNextPiece?.nextPieceTemplateMetadata?.userConfigured?.map(
+          (uc) => {
+            if (uc?.metadataType?.levels?.length) {
+              return {
+                levels: uc?.metadataType?.levels?.map((ucl) => {
+                  return { value: ucl?.rawValue };
+                }),
+              };
+            }
+            return null;
           }
-          return null;
-        }
-      )
+        ),
     });
   };
 
@@ -196,6 +201,17 @@ const PiecesPreviewModalForm = ({
             'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
+      {pieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
+        <MessageBanner type="warning">
+          <FormattedMessage
+            id="ui-serials-management.pieceSets.overlappingDates.warning"
+            values={{
+              startDate: intl.formatDate(values?.startDate),
+              serialName,
+            }}
+          />
+        </MessageBanner>
+      )}
     </>
   );
 };

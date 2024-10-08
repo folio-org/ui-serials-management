@@ -16,15 +16,18 @@ jest.mock('../../SerialSections/DeprecatedPublicationPatterns', () => () => (
 jest.mock('../../SerialSections/SerialNotes', () => () => (
   <div>SerialNotes</div>
 ));
-
 jest.mock('../../SerialSections/SerialPieceSets', () => () => (
   <div>SerialPieceSets</div>
+));
+jest.mock('../../PiecesPreviewModal/PiecesPreviewModal', () => () => (
+  <div>PiecesPreviewModal</div>
 ));
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingPane: () => <div>LoadingPane</div>,
 }));
+
 
 const props = {
   onClose: jest.fn(),
