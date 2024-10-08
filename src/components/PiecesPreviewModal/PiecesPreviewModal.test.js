@@ -145,7 +145,7 @@ describe('PiecesPreviewModal', () => {
     test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
       const { getByText, queryByText } = renderComponent;
       await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('03/19/2024');
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('02/01/2024');
         await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
           '1'
         );
@@ -154,7 +154,7 @@ describe('PiecesPreviewModal', () => {
         );
       });
       await Datepicker({ id: 'ruleset-start-date' }).has({
-        inputValue: '03/19/2024',
+        inputValue: '02/01/2024',
       });
 
       await waitFor(async () => expect(
