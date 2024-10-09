@@ -119,6 +119,16 @@
         ]
       },
       {
+        "permissionName": "ui-serials-management.predictedpieces.delete",
+        "displayName": "Serials: Delete predicted pieces",
+        "description": "Grants all permissions included in Serials: Search & view predicted pieces plus the ability to delete predicted pieces that are not linked to receiving pieces.",
+        "visible": true,
+        "subPermissions": [
+          "ui-serials-management.predictedpieces.view",
+          "serials-management.predictedPieceSets.delete"
+        ]
+      },
+      {
         "permissionName": "ui-serials-management.picklists.view",
         "displayName": "Settings (Serials): View pick lists and values",
         "description": "A user with this permission can access the settings for the Serials app and view pick lists and pick list values.",
