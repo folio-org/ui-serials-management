@@ -60,7 +60,7 @@ const PieceSetView = ({
         '@folio/serials-management',
         'SASQ',
         'piece-sets',
-        'viewAll'
+        'viewAll',
       ]));
     }
   );
@@ -97,20 +97,23 @@ const PieceSetView = ({
     const hasReceiving = pieceSet?.pieces?.some(
       (p) => p?.receivingPieces?.length >= 1
     );
-    buttons.push(
-      <Button
-        key="generate-receiving-option"
-        buttonStyle="dropdownItem"
-        disabled={!serial?.orderLine?.remoteId_object || serialLoading}
-        id="clickable-dropdown-generate-receiving"
-        onClick={() => setShowReceivingModal(true)}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
-        </Icon>
-      </Button>
-    );
+
     if (stripes?.hasPerm('ui-serials-management.predictedpieces.edit')) {
+      buttons.push(
+        <Button
+          key="generate-receiving-option"
+          buttonStyle="dropdownItem"
+          disabled={!serial?.orderLine?.remoteId_object || serialLoading}
+          id="clickable-dropdown-generate-receiving"
+          onClick={() => setShowReceivingModal(true)}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
+          </Icon>
+        </Button>
+      );
+    }
+    if (stripes?.hasPerm('ui-serials-management.predictedpieces.delete')) {
       buttons.push(
         <Button
           key="delete-piece-set-option"
