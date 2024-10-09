@@ -236,5 +236,12 @@
     "ruleset.enumeration": "Výčet",
     "ruleset.numberOfIssuesToCombine": "Počet vydání ke spojení",
     "ruleset.chronology": "Chronologie",
-    "ruleset.displaySummaryTemplate": "Šablona Zobrazit shrnutí"
+    "ruleset.displaySummaryTemplate": "Šablona Zobrazit shrnutí",
+    "pieceSets.deletePredictedPieceSet": "Delete predicted piece set",
+    "pieceSets.deletePredictedPieceSet.confirmMessage": "Are you sure you wish to delete this predicted piece set?",
+    "cancelGeneration": "Cancel generation",
+    "ruleset.previewPredictedPieces": "Preview predicted pieces",
+    "ruleset.confirmGeneration": "Confirm generation of overlapping piece sets",
+    "pieceSets.overlappingDates.dialog": "A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>. {br} Generating a new set will result in some overlap between piece sets. If this is acceptable select \"Generate\" to continue.",
+    "pieceSets.overlappingDates.warning": "Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>"
 }
