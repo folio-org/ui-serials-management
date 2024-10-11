@@ -92,7 +92,11 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           </>
         }
         renderStart={
-          <Button buttonStyle="default mega" marginBottom0 onClick={() => onClose()}>
+          <Button
+            buttonStyle="default mega"
+            marginBottom0
+            onClick={() => onClose()}
+          >
             <FormattedMessage id="stripes-components.cancel" />
           </Button>
         }
@@ -100,6 +104,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
     );
   };
 
+  // TODO This needs figuring out at some point
   const renderPaneTitle = () => (initialValues?.id ? (
     <FormattedMessage id="ui-serials-management.rulesets.editPublicationPattern" />
   ) : (
