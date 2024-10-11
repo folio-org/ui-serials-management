@@ -28,7 +28,7 @@ import {
   useSerialsManagementRefdata,
 } from '../../utils';
 
-import { OMISSION_COMBINATION_PATTERN_TYPES } from '../../../constants/patternTypes';
+import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
@@ -207,7 +207,7 @@ const CombinationField = ({ name, index, combination }) => {
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...OMISSION_COMBINATION_PATTERN_TYPES[combination?.timeUnit?.value].map(
+              ...OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS[combination?.timeUnit?.value].map(
                 (e) => {
                   return {
                     value: e?.value,

@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { FormModal } from '@k-int/stripes-kint-components';
-import { Row, Col, Button, MultiColumnList } from '@folio/stripes/components';
+import {
+  Row,
+  Col,
+  ConfirmationModal,
+  Button,
+  MultiColumnList,
+} from '@folio/stripes/components';
 
 import { urls } from '../utils';
 
@@ -24,6 +30,7 @@ const propTypes = {
   ruleset: PropTypes.object,
   pieceSets: PropTypes.arrayOf(PropTypes.object),
   allowCreation: PropTypes.bool,
+  serialName: PropTypes.string,
 };
 
 const PiecesPreviewModal = ({
@@ -32,10 +39,17 @@ const PiecesPreviewModal = ({
   ruleset,
   pieceSets,
   allowCreation = false,
+  serialName,
 }) => {
+  const intl = useIntl();
   const ky = useOkapiKy();
   const history = useHistory();
   const [predictedPieces, setPredictedPieces] = useState(null);
+  const [confirmationModal, setConfirmationModal] = useState({
+    values: {},
+    show: false,
+  });
+
   /* istanbul ignore next */
   const closeModal = () => {
     setShowModal(false);
@@ -134,6 +148,9 @@ const PiecesPreviewModal = ({
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
+    const dateExists = pieceSets?.some(
+      (ps) => ps?.startDate === values?.startDate
+    );
     return (
       <>
         {allowCreation && (
@@ -147,7 +164,11 @@ const PiecesPreviewModal = ({
               disabled={submitting || invalid || pristine}
               id="generate-predicted-pieces-button"
               marginBottom0
-              onClick={handleSubmit}
+              onClick={
+                dateExists
+                  ? () => setConfirmationModal({ values, show: true })
+                  : handleSubmit
+              }
               type="submit"
             >
               <FormattedMessage id="ui-serials-management.ruleset.generate" />
@@ -226,25 +247,60 @@ const PiecesPreviewModal = ({
   };
 
   return (
-    <FormModal
-      modalProps={{
-        onClose: closeModal,
-        open: showModal,
-        label: (
-          <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
-        ),
-        footer: renderFooter,
-      }}
-      mutators={arrayMutators}
-      onSubmit={handleCreation}
-    >
-      <PiecesPreviewModalForm
-        allowCreation={allowCreation}
-        pieceSets={pieceSets}
-        ruleset={ruleset}
+    <>
+      <FormModal
+        modalProps={{
+          onClose: closeModal,
+          open: showModal,
+          label: allowCreation ? (
+            <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+          ) : (
+            <FormattedMessage id="ui-serials-management.ruleset.previewPredictedPieces" />
+          ),
+          footer: renderFooter,
+        }}
+        mutators={arrayMutators}
+        onSubmit={handleCreation}
+      >
+        <PiecesPreviewModalForm
+          allowCreation={allowCreation}
+          pieceSets={pieceSets}
+          ruleset={ruleset}
+          serialName={serialName}
+        />
+        {!!predictedPieces && renderPiecesTable()}
+      </FormModal>
+      <ConfirmationModal
+        buttonStyle="primary"
+        cancelLabel={
+          <FormattedMessage id="ui-serials-management.cancelGeneration" />
+        }
+        confirmLabel={
+          <FormattedMessage id="ui-serials-management.ruleset.generate" />
+        }
+        data-test-generate-confirmation-modal
+        heading={
+          <FormattedMessage id="ui-serials-management.ruleset.confirmGeneration" />
+        }
+        id="generate-confirmation-modal"
+        message={
+          <FormattedMessage
+            id="ui-serials-management.pieceSets.overlappingDates.dialog"
+            values={{
+              br: <br />,
+              startDate: intl.formatDate(confirmationModal?.value?.startDate),
+              serialName,
+            }}
+          />
+        }
+        onCancel={() => setConfirmationModal({ values: {}, show: false })}
+        onConfirm={() => {
+          handleCreation(confirmationModal?.values);
+          setConfirmationModal({ values: {}, show: false });
+        }}
+        open={confirmationModal.show}
       />
-      {!!predictedPieces && renderPiecesTable()}
-    </FormModal>
+    </>
   );
 };
 

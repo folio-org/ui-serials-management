@@ -13,7 +13,7 @@ const resource = {
       recurrenceRule: {
         id: 'a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723',
       },
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -26,7 +26,7 @@ const resource = {
       recurrenceRule: {
         id: 'a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723',
       },
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -35,7 +35,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -44,7 +44,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -53,7 +53,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -62,7 +62,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -71,7 +71,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -80,7 +80,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -89,7 +89,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -98,7 +98,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -107,7 +107,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -116,7 +116,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -125,7 +125,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -134,7 +134,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -143,7 +143,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -152,7 +152,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -161,7 +161,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -170,7 +170,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -179,7 +179,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -188,7 +188,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -197,7 +197,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -206,7 +206,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -215,7 +215,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -224,7 +224,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -233,7 +233,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -242,7 +242,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -251,7 +251,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -260,7 +260,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -269,7 +269,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -278,7 +278,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -287,7 +287,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -296,7 +296,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -305,7 +305,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -314,7 +314,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -323,7 +323,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -332,7 +332,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -341,7 +341,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -350,7 +350,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -359,7 +359,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -368,7 +368,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -377,7 +377,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -386,24 +386,24 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
       id: '315964e9-71a8-4031-97d6-a197f4a60dc6',
-      receivingPieces: '[]',
+      receivingPieces: [],
       date: '2025-01-13',
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
     },
     {
       id: '209b7fcb-f8a5-42a9-a21d-3ca51b1547a1',
-      receivingPieces: '[]',
+      receivingPieces: [],
       date: '2025-01-20',
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
     },
     {
       id: 'ae011f98-7c88-4a6a-abd8-f79a0153d0d5',
-      receivingPieces: '[]',
+      receivingPieces: [],
       date: '2025-01-27',
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
     },
@@ -413,7 +413,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -422,7 +422,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -431,7 +431,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -440,7 +440,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -449,7 +449,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -458,7 +458,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
     {
@@ -467,7 +467,7 @@ const resource = {
       owner: '{id: "cba4fe11-4c83-4073-ad96-70065faee04c"}',
       templateString: 'test',
       recurrenceRule: '{id: "a8bf7c20-6fd3-4cae-896c-f4ce6fb9b723"}',
-      receivingPieces: '[]',
+      receivingPieces: [],
       label: 'test',
     },
   ],

@@ -5,3 +5,4 @@ export { validateWithinRange } from './validators';
 export { validateWholeNumber } from './validators';
 export { default as handleSaveKeyCommand } from './keyboardShortcutHandlers';
 export { default as focusSASQSearchField } from './focusSASQSearchField';
+export { default as getSortedItems } from './getSortedItems';

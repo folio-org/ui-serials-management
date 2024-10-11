@@ -102,19 +102,11 @@ const LabelFieldArray = () => {
   ]);
 
   const enumerationOptions = useMemo(() => {
-    return selectifyRefdata(
-      refdataValues,
-      ENUMERATION_LABEL_FORMAT,
-      'value'
-    );
+    return selectifyRefdata(refdataValues, ENUMERATION_LABEL_FORMAT, 'value');
   }, [refdataValues]);
 
   const chronologyOptions = useMemo(() => {
-    return selectifyRefdata(
-      refdataValues,
-      CHRONOLOGY_LABEL_FORMAT,
-      'value'
-    );
+    return selectifyRefdata(refdataValues, CHRONOLOGY_LABEL_FORMAT, 'value');
   }, [refdataValues]);
 
   const filterSelectValues = useCallback((value, dataOptions) => {
@@ -175,29 +167,91 @@ const LabelFieldArray = () => {
     );
   }, []);
 
-  const templateMetadataRuleTypeOnChange = useCallback((e, index) => {
-    const ruleType = e?.target?.value === 'chronology' ? { ruleLocale: 'en' } : undefined; // NOTE... I don't like this one little bit
-    // DO NOT do multiple change calls in a single onChange...
-    change(`templateConfig.rules[${index}]`, {
-      templateMetadataRuleType: e?.target?.value,
-      ruleType
-    });
-  }, [change]);
+  const templateMetadataRuleTypeOnChange = useCallback(
+    (e, index) => {
+      const ruleType =
+        e?.target?.value === 'chronology' ? { ruleLocale: 'en' } : undefined; // NOTE... I don't like this one little bit
+      // DO NOT do multiple change calls in a single onChange...
+      change(`templateConfig.rules[${index}]`, {
+        templateMetadataRuleType: e?.target?.value,
+        ruleType,
+      });
+    },
+    [change]
+  );
 
-  const chronologySelectorOnChange = useCallback((e, index) => {
-    console.log(index);
-    change(
-      `templateConfig.rules[${index}]`,
-      {
+  const chronologySelectorOnChange = useCallback(
+    (e, index) => {
+      console.log(index);
+      change(`templateConfig.rules[${index}]`, {
         templateMetadataRuleFormat: e?.target?.value,
-        ruleType: undefined
-      }
-    );
-  }, [change]);
+        ruleType: undefined,
+      });
+    },
+    [change]
+  );
 
-  const renderChronologySelectors = useCallback((index) => {
-    return (
-      <>
+  const renderChronologySelectors = useCallback(
+    (index) => {
+      return (
+        <>
+          <Col xs={3}>
+            <Field
+              name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
+              render={({ input, meta }) => {
+                return (
+                  <Select
+                    dataOptions={[
+                      { value: '', label: '' },
+                      ...chronologyOptions,
+                    ]}
+                    input={input}
+                    label={
+                      <FormattedMessage id="ui-serials-management.ruleset.chronologyFormat" />
+                    }
+                    meta={meta}
+                    onChange={(e) => chronologySelectorOnChange(e, index)}
+                    required
+                  />
+                );
+              }}
+              validate={requiredValidator}
+            />
+          </Col>
+          <Col xs={3}>
+            <Field
+              component={Selection}
+              dataOptions={locales}
+              label="Locale"
+              name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+              onFilter={filterSelectValues}
+              parse={(v) => v}
+              required
+              validate={requiredValidator}
+            />
+          </Col>
+        </>
+      );
+    },
+    [chronologyOptions, chronologySelectorOnChange, filterSelectValues, locales]
+  );
+
+  const enumerationSelectorOnChange = useCallback(
+    (e, index) => {
+      change(`templateConfig.rules[${index}]`, {
+        templateMetadataRuleFormat: e?.target?.value,
+        ruleType: {
+          levels: [{}],
+        },
+      });
+    },
+    [change]
+  );
+
+  const renderEnumerationSelectors = useCallback(
+    (index) => {
+      // FIXME I don't like all this living in here, separate it out a bit more please
+      return (
         <Col xs={3}>
           <Field
             name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
@@ -206,16 +260,14 @@ const LabelFieldArray = () => {
                 <Select
                   dataOptions={[
                     { value: '', label: '' },
-                    ...chronologyOptions,
+                    ...enumerationOptions,
                   ]}
                   input={input}
                   label={
-                    <FormattedMessage
-                      id="ui-serials-management.ruleset.chronologyFormat"
-                    />
+                    <FormattedMessage id="ui-serials-management.ruleset.enumerationFormat" />
                   }
                   meta={meta}
-                  onChange={e => chronologySelectorOnChange(e, index)}
+                  onChange={(e) => enumerationSelectorOnChange(e, index)}
                   required
                 />
               );
@@ -223,163 +275,117 @@ const LabelFieldArray = () => {
             validate={requiredValidator}
           />
         </Col>
-        <Col xs={3}>
-          <Field
-            component={Selection}
-            dataOptions={locales}
-            label="Locale"
-            name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
-            onFilter={filterSelectValues}
-            parse={(v) => v}
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-      </>
-    );
-  }, [chronologyOptions, chronologySelectorOnChange, filterSelectValues, locales]);
+      );
+    },
+    [enumerationOptions, enumerationSelectorOnChange]
+  );
 
-  const enumerationSelectorOnChange = useCallback((e, index) => {
-    change(
-      `templateConfig.rules[${index}]`,
-      {
-        templateMetadataRuleFormat: e?.target?.value,
-        ruleType: {
-          levels: [{}]
-        }
-      }
-    );
-  }, [change]);
+  const renderLabelRule = useCallback(
+    (templateConfig, index) => {
+      // Using indexCount to prevent sonarlint from flagging this as an issue
+      const indexKey = index;
 
-  const renderEnumerationSelectors = useCallback((index) => {
-    // FIXME I don't like all this living in here, separate it out a bit more please
-    return (
-      <Col xs={3}>
-        <Field
-          name={`templateConfig.rules[${index}].ruleType.templateMetadataRuleFormat`}
-          render={({ input, meta }) => {
-            return (
-              <Select
-                dataOptions={[
-                  { value: '', label: '' },
-                  ...enumerationOptions,
-                ]}
-                input={input}
-                label={
-                  <FormattedMessage
-                    id="ui-serials-management.ruleset.enumerationFormat"
-                  />
-                }
-                meta={meta}
-                onChange={e => enumerationSelectorOnChange(e, index)}
-                required
-              />
-            );
-          }}
-          validate={requiredValidator}
-        />
-      </Col>
-    );
-  }, [enumerationOptions, enumerationSelectorOnChange]);
-
-  const renderLabelRule = useCallback((templateConfig, index) => {
-    // Using indexCount to prevent sonarlint from flagging this as an issue
-    const indexKey = index;
-
-    return (
-      <EditCard
-        key={`label-rule-card-${indexKey}`}
-        data-testid="editCard"
-        deleteButtonTooltipText={
-          <FormattedMessage
-            id="ui-serials-management.ruleset.removeLabel"
-            values={{ index: index + 1 }}
-          />
-        }
-        header={
-          <>
+      return (
+        <EditCard
+          key={`label-rule-card-${indexKey}`}
+          data-testid="editCard"
+          deleteButtonTooltipText={
             <FormattedMessage
-              id="ui-serials-management.ruleset.labelIndex"
+              id="ui-serials-management.ruleset.removeLabel"
               values={{ index: index + 1 }}
             />
-            {ruleLabelValues[index]}
-          </>
-        }
-        onDelete={() => onDeleteField(index, templateConfig)}
-      >
-        <Row>
-          <Col xs={3}>
-            <Field
-              name={`templateConfig.rules[${index}].templateMetadataRuleType`}
-              render={({ input, meta }) => (
-                <Select
-                  dataOptions={[
-                    { value: '', label: '' },
-                    ...selectifyRefdata(refdataValues, RULE_TYPE, 'value'),
-                  ]}
-                  input={input}
-                  label={
-                    <FormattedMessage id="ui-serials-management.ruleset.labelStyle" />
-                  }
-                  meta={meta}
-                  onChange={e => templateMetadataRuleTypeOnChange(e, index)}
-                  required
-                />
-              )}
-              validate={requiredValidator}
-            />
-          </Col>
-          {
-            values?.templateConfig?.rules[index]?.templateMetadataRuleType === 'chronology' &&
-            renderChronologySelectors()
           }
-          {
-            values?.templateConfig?.rules[index]?.templateMetadataRuleType === 'enumeration' &&
-            renderEnumerationSelectors()
+          header={
+            <>
+              <FormattedMessage
+                id="ui-serials-management.ruleset.labelIndex"
+                values={{ index: index + 1 }}
+              />
+              {ruleLabelValues[index]}
+            </>
           }
-        </Row>
-        {/*
+          onDelete={() => onDeleteField(index, templateConfig)}
+        >
+          <Row>
+            <Col xs={3}>
+              <Field
+                name={`templateConfig.rules[${index}].templateMetadataRuleType`}
+                render={({ input, meta }) => (
+                  <Select
+                    dataOptions={[
+                      { value: '', label: '' },
+                      ...selectifyRefdata(refdataValues, RULE_TYPE, 'value'),
+                    ]}
+                    input={input}
+                    label={
+                      <FormattedMessage id="ui-serials-management.ruleset.labelStyle" />
+                    }
+                    meta={meta}
+                    onChange={(e) => templateMetadataRuleTypeOnChange(e, index)}
+                    required
+                  />
+                )}
+                validate={requiredValidator}
+              />
+            </Col>
+            {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+              'chronology' && renderChronologySelectors()}
+            {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+              'enumeration' && renderEnumerationSelectors()}
+          </Row>
+          {/*
           FIXME These should probs also be a part of this switch...
           in fact they should probs be two new components with
           stuff passed down
-          */
-        }
-        {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-          'enumeration' &&
-          values?.templateConfig?.rules[index]?.ruleType
-            ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
-            <>
-              <EnumerationNumericFieldArray
-                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-              />
-              <Label id="template-token-header">
-                <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-                {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationValues[index]} />
-              </Label>
-              {enumerationValues[index]}
-            </>
-        )}
-        {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
-          'enumeration' &&
-          values?.templateConfig?.rules[index]?.ruleType
-            ?.templateMetadataRuleFormat === 'enumeration_textual' && (
-            <>
-              <EnumerationTextualFieldArray
-                index={index}
-                name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
-              />
-              <Label id="template-token-header">
-                <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-                {renderTemplateTokensInfo()}
-                <ClipCopy text={enumerationValues[index]} />
-              </Label>
-              {enumerationValues[index]}
-            </>
-        )}
-      </EditCard>
-    );
-  }, [enumerationValues, onDeleteField, refdataValues, renderChronologySelectors, renderEnumerationSelectors, renderTemplateTokensInfo, ruleLabelValues, templateMetadataRuleTypeOnChange, values?.templateConfig?.rules]);
+          */}
+          {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+            'enumeration' &&
+            values?.templateConfig?.rules[index]?.ruleType
+              ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
+              <>
+                <EnumerationNumericFieldArray
+                  name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+                />
+                <Label id="template-token-header">
+                  <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+                  {renderTemplateTokensInfo()}
+                  <ClipCopy text={enumerationValues[index]} />
+                </Label>
+                {enumerationValues[index]}
+              </>
+          )}
+          {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
+            'enumeration' &&
+            values?.templateConfig?.rules[index]?.ruleType
+              ?.templateMetadataRuleFormat === 'enumeration_textual' && (
+              <>
+                <EnumerationTextualFieldArray
+                  index={index}
+                  name={`templateConfig.rules[${index}].ruleType.ruleFormat`}
+                />
+                <Label id="template-token-header">
+                  <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+                  {renderTemplateTokensInfo()}
+                  <ClipCopy text={enumerationValues[index]} />
+                </Label>
+                {enumerationValues[index]}
+              </>
+          )}
+        </EditCard>
+      );
+    },
+    [
+      enumerationValues,
+      onDeleteField,
+      refdataValues,
+      renderChronologySelectors,
+      renderEnumerationSelectors,
+      renderTemplateTokensInfo,
+      ruleLabelValues,
+      templateMetadataRuleTypeOnChange,
+      values?.templateConfig?.rules,
+    ]
+  );
 
   return (
     <>

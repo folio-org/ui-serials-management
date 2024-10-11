@@ -41,7 +41,7 @@ const SerialPOLine = ({ serial, id }) => {
         roundedBorder
       >
         <Row>
-          <Col xs={12}>
+          <Col xs={serial?.orderLine?.remoteId_object?.publisher ? 6 : 12}>
             <KeyValue
               label={
                 <FormattedMessage id="ui-serials-management.poLine.title" />
@@ -60,6 +60,16 @@ const SerialPOLine = ({ serial, id }) => {
               </AppIcon>
             )}
           </Col>
+          {serial?.orderLine?.remoteId_object?.publisher && (
+            <Col xs={6}>
+              <KeyValue
+                label={
+                  <FormattedMessage id="ui-serials-management.poLine.publisher" />
+                }
+                value={serial.orderLine.remoteId_object.publisher}
+              />
+            </Col>
+          )}
         </Row>
         {/* This conditional is a bit tacky, possible a better way of implementing this */}
         {!!serial?.orderLine?.remoteId_object?.instanceId && <br />}
