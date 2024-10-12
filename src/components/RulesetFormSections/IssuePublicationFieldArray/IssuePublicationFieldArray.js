@@ -53,7 +53,9 @@ const IssuePublicationFieldArray = () => {
           <br />
         </>
       )}
-      {!!RECURRENCE_PATTERN_TYPE_OPTIONS[values?.recurrence?.timeUnit?.value] && (
+      {!!RECURRENCE_PATTERN_TYPE_OPTIONS[
+        values?.recurrence?.timeUnit?.value
+      ] && (
         <Row>
           <Col xs={3}>
             {/* IMPORTANT This needs to be patternType instead of patternType.value for the time being */}
@@ -81,15 +83,10 @@ const IssuePublicationFieldArray = () => {
                   meta={meta}
                   onChange={(e) => {
                     input.onChange(e);
-                    if (
-                      values?.recurrence?.issues &&
-                      Number.isInteger(Number(values?.recurrence?.issues))
-                    ) {
-                      change(
-                        'recurrence.rules',
-                        Array(Number(values?.recurrence?.issues)).fill({})
-                      );
-                    }
+                    change(
+                      'recurrence.rules',
+                      Array(values?.recurrence?.issues).fill({})
+                    );
                   }}
                   required
                 />
