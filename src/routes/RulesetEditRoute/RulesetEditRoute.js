@@ -89,12 +89,20 @@ const RulesetEditRoute = () => {
       recurrence: newRuleset?.recurrence,
       patternType: newRuleset?.recurrence?.rules?.[0]?.patternType?.value,
       ...(newRuleset?.omission && {
-        ...newRuleset?.omission,
-        patternType: newRuleset?.omission?.rules?.[0]?.patternType?.value,
+        omission: {
+          rules: newRuleset?.omission?.rules?.map((rule) => ({
+            ...rule,
+            patternType: rule?.patternType?.value,
+          })),
+        },
       }),
       ...(newRuleset?.combination && {
-        ...newRuleset?.combination,
-        patternType: newRuleset?.combination?.rules?.[0]?.patternType?.value,
+        combination: {
+          rules: newRuleset?.combination?.rules?.map((rule) => ({
+            ...rule,
+            patternType: rule?.patternType?.value,
+          })),
+        },
       }),
       templateConfig: {
         templateString: newRuleset?.templateConfig?.templateString,
