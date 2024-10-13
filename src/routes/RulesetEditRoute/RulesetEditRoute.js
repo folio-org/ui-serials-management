@@ -110,9 +110,7 @@ const RulesetEditRoute = () => {
           return {
             templateMetadataRuleType: r?.templateMetadataRuleType?.value,
             ruleType: {
-              ...(r?.ruleType?.ruleLocaleruleLocale && {
-                ruleLocale: r?.ruleType?.ruleLocale,
-              }),
+              ...r?.ruleType,
               templateMetadataRuleFormat:
                 r?.ruleType?.templateMetadataRuleFormat?.value,
             },
