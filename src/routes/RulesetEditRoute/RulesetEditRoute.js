@@ -78,6 +78,7 @@ const RulesetEditRoute = () => {
   };
 
   const getInitialValues = () => {
+    // Used to format saved ruleset values into workable form values
     const initialValues = {
       ...ruleset,
       recurrence: ruleset?.recurrence,
@@ -112,6 +113,7 @@ const RulesetEditRoute = () => {
         }),
       },
     };
+    // Deep delete defined keys to prevent issues upon saving
     return deepDeleteKeys(initialValues, [
       'id',
       'label',
