@@ -78,35 +78,29 @@ const RulesetEditRoute = () => {
   };
 
   const getInitialValues = () => {
-    const newRuleset = deepDeleteKeys(ruleset, [
-      'id',
-      'label',
-      'dateCreated',
-      'lastUpdated',
-    ]);
-    const iv = {
-      ...newRuleset,
-      recurrence: newRuleset?.recurrence,
-      patternType: newRuleset?.recurrence?.rules?.[0]?.patternType?.value,
-      ...(newRuleset?.omission && {
+    const initialValues = {
+      ...ruleset,
+      recurrence: ruleset?.recurrence,
+      patternType: ruleset?.recurrence?.rules?.[0]?.patternType?.value,
+      ...(ruleset?.omission && {
         omission: {
-          rules: newRuleset?.omission?.rules?.map((rule) => ({
+          rules: ruleset?.omission?.rules?.map((rule) => ({
             ...rule,
             patternType: rule?.patternType?.value,
           })),
         },
       }),
-      ...(newRuleset?.combination && {
+      ...(ruleset?.combination && {
         combination: {
-          rules: newRuleset?.combination?.rules?.map((rule) => ({
+          rules: ruleset?.combination?.rules?.map((rule) => ({
             ...rule,
             patternType: rule?.patternType?.value,
           })),
         },
       }),
       templateConfig: {
-        templateString: newRuleset?.templateConfig?.templateString,
-        rules: newRuleset?.templateConfig?.rules?.map((r) => {
+        templateString: ruleset?.templateConfig?.templateString,
+        rules: ruleset?.templateConfig?.rules?.map((r) => {
           return {
             templateMetadataRuleType: r?.templateMetadataRuleType?.value,
             ruleType: {
@@ -118,7 +112,12 @@ const RulesetEditRoute = () => {
         }),
       },
     };
-    return iv;
+    return deepDeleteKeys(initialValues, [
+      'id',
+      'label',
+      'dateCreated',
+      'lastUpdated',
+    ]);
   };
   // istanbul ignore next
   const submitRuleset = async (values) => {
