@@ -37,7 +37,6 @@ const RulesetEditRoute = () => {
     () => ky(RULESET_ENDPOINT(rid)).json()
   );
 
-  // TODO Currently replace and deprecate is hard coded, should be replaced
   // istanbul ignore next
   const { mutateAsync: putRuleset } = useMutation(
     ['ui-serials-management', 'RulesetEditRoute', 'putRuleset'],

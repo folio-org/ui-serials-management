@@ -1,3 +1,4 @@
+// Used to iterate through an object of n size and delete keys defined within the keyArray
 const deepDeleteKeys = (value, keyArray) => {
   if (Array.isArray(value)) {
     return value.map((i) => deepDeleteKeys(i, keyArray));
