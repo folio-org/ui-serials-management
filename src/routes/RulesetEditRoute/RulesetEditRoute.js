@@ -7,7 +7,12 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { LoadingView } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { RULESET_ENDPOINT } from '../../constants/endpoints';
+import {
+  RULESET_ENDPOINT,
+  PIECE_SETS_ENDPOINT,
+  REPLACE_AND_DELETE_ENDPOINT,
+  REPLACE_AND_DEPRECATE_ENDPOINT,
+} from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
 import { urls, deepDeleteKeys } from '../../components/utils';
@@ -22,6 +27,11 @@ const RulesetEditRoute = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
 
+  const { data: pieceSets, pieceSetsLoading } = useQuery(
+    ['ui-serials-management', 'SerialView', rid],
+    () => ky.get(`${PIECE_SETS_ENDPOINT}?filters=ruleset.id==${rid}`).json()
+  );
+
   const { data: ruleset, isLoading } = useQuery(
     ['ui-serials-management', 'RulesetEditRoute', rid],
     () => ky(RULESET_ENDPOINT(rid)).json()
@@ -32,7 +42,11 @@ const RulesetEditRoute = () => {
   const { mutateAsync: putRuleset } = useMutation(
     ['ui-serials-management', 'RulesetEditRoute', 'putRuleset'],
     (data) => {
-      ky.post(`serials-management/rulesets/${rid}/replaceAndDeprecate`, {
+      const ruleSetEndpoint =
+        pieceSets?.length < 1 && !pieceSetsLoading
+          ? REPLACE_AND_DELETE_ENDPOINT
+          : REPLACE_AND_DEPRECATE_ENDPOINT;
+      ky.post(ruleSetEndpoint(rid), {
         json: data,
       })
         .json()

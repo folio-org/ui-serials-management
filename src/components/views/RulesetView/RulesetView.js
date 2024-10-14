@@ -32,9 +32,10 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
   serial: PropTypes.object,
   ruleset: PropTypes.object,
+  pieceSets: PropTypes.arrayOf(PropTypes.object),
 };
 
-const RulesetView = ({ serial, ruleset, onClose }) => {
+const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
   const history = useHistory();
   const location = useLocation();
   const stripes = useStripes();
@@ -67,7 +68,10 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
 
   const renderActionMenu = () => {
     const buttons = [];
-    if (stripes.hasPerm('ui-serials-management.rulesets.edit')) {
+    if (
+      stripes.hasPerm('ui-serials-management.rulesets.edit') &&
+      pieceSets?.length < 1
+    ) {
       buttons.push(
         <Button
           key="edit-ruleset-option"
@@ -77,6 +81,20 @@ const RulesetView = ({ serial, ruleset, onClose }) => {
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-serials-management.edit" />
+          </Icon>
+        </Button>
+      );
+    }
+    if (stripes.hasPerm('ui-serials-management.rulesets.edit')) {
+      buttons.push(
+        <Button
+          key="copy-and-deprecate-ruleset-option"
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-copy-and-deprecate-ruleset"
+          onClick={() => handleEdit()}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-serials-management.ruleset.copyAndDeprecate" />
           </Icon>
         </Button>
       );

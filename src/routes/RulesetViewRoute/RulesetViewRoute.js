@@ -9,7 +9,11 @@ import { RulesetView } from '../../components/views';
 import { urls } from '../../components/utils';
 
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../constants/config';
-import { SERIAL_ENDPOINT, RULESET_ENDPOINT } from '../../constants/endpoints';
+import {
+  SERIAL_ENDPOINT,
+  RULESET_ENDPOINT,
+  PIECE_SETS_ENDPOINT,
+} from '../../constants/endpoints';
 
 const RulesetViewRoute = () => {
   const history = useHistory();
@@ -27,11 +31,16 @@ const RulesetViewRoute = () => {
     () => ky(RULESET_ENDPOINT(rid)).json()
   );
 
+  const { data: pieceSets, pieceSetsLoading } = useQuery(
+    ['ui-serials-management', 'RulesetViewRoute', 'pieceSetGet', rid],
+    () => ky.get(`${PIECE_SETS_ENDPOINT}?filters=ruleset.id==${rid}`).json()
+  );
+
   const handleClose = () => {
     history.push(`${urls.serialView(sid)}${location.search}`);
   };
 
-  if (serialLoading || rulesetLoading) {
+  if (serialLoading || rulesetLoading || pieceSetsLoading) {
     return (
       <LoadingPane
         defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
@@ -42,7 +51,12 @@ const RulesetViewRoute = () => {
   }
 
   return (
-    <RulesetView onClose={handleClose} ruleset={ruleset} serial={serial} />
+    <RulesetView
+      onClose={handleClose}
+      pieceSets={pieceSets}
+      ruleset={ruleset}
+      serial={serial}
+    />
   );
 };
 
