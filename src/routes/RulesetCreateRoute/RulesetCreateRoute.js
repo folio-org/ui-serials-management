@@ -10,7 +10,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import urls from '../../components/utils/urls';
+import { urls, rulesetSubmiteValuesHandler } from '../../components/utils';
 
 const RulesetCreateRoute = () => {
   const history = useHistory();
@@ -38,41 +38,14 @@ const RulesetCreateRoute = () => {
         .then(() => handleClose());
     }
   );
-    // istanbul ignore next
+  // istanbul ignore next
   const handleSubmitValues = (values, numberGeneratorReturn) => {
-    const submitValues = {
-      ...values,
+    const submitValues = rulesetSubmiteValuesHandler(values);
+    return {
+      ...submitValues,
       owner: { id },
       rulesetNumber: numberGeneratorReturn?.data?.nextValue,
-      recurrence: {
-        ...values?.recurrence,
-        rules: values?.recurrence?.rules?.map((e) => {
-          // If no ordinal specified, assume ordinal is 1 for all rules
-          if (!e?.ordinal) {
-            e.ordinal = 1;
-          }
-          // If no pattern fields are supplied (in the case of the day time unit)
-          // Add anempty pattern object to all rules
-          if (!e?.pattern) {
-            e.pattern = {};
-          }
-          e.patternType = values?.patternType;
-          return e;
-        }),
-      },
-      templateConfig: {
-        ...values?.templateConfig,
-        rules: values?.templateConfig?.rules?.map((rule, ruleIndex) => {
-          rule.index = ruleIndex;
-          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-            level.index = levelIndex;
-            return level;
-          });
-          return rule;
-        }),
-      },
     };
-    return submitValues;
   };
   // istanbul ignore next
   const submitRuleset = async (values) => {

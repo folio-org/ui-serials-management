@@ -15,7 +15,11 @@ import {
 } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import { urls, deepDeleteKeys } from '../../components/utils';
+import {
+  deepDeleteKeys,
+  rulesetSubmiteValuesHandler,
+  urls,
+} from '../../components/utils';
 
 const RulesetEditRoute = () => {
   const history = useHistory();
@@ -55,39 +59,12 @@ const RulesetEditRoute = () => {
 
   // istanbul ignore next
   const handleSubmitValues = (values) => {
-    const submitValues = {
-      ...values,
+    const submitValues = rulesetSubmiteValuesHandler(values);
+    return {
+      ...submitValues,
       owner: { id },
       rulesetNumber: ruleset?.rulesetNumber,
-      recurrence: {
-        ...values?.recurrence,
-        rules: values?.recurrence?.rules?.map((e) => {
-          // If no ordinal specified, assume ordinal is 1 for all rules
-          if (!e?.ordinal) {
-            e.ordinal = 1;
-          }
-          // If no pattern fields are supplied (in the case of the day time unit)
-          // Add anempty pattern object to all rules
-          if (!e?.pattern) {
-            e.pattern = {};
-          }
-          e.patternType = values?.patternType;
-          return e;
-        }),
-      },
-      templateConfig: {
-        ...values?.templateConfig,
-        rules: values?.templateConfig?.rules?.map((rule, ruleIndex) => {
-          rule.index = ruleIndex;
-          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-            level.index = levelIndex;
-            return level;
-          });
-          return rule;
-        }),
-      },
     };
-    return submitValues;
   };
 
   const getInitialValues = () => {
