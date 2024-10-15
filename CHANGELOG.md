@@ -2,6 +2,7 @@
 
 ## 1.1.0 In progress
   * UISER-158 Handle display of sparse order-line objects
+  * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
 ## 1.0.5 2024-08-23
   * UISER-129 Add "Create item" checkbox to "Generate in receiving" dialog
