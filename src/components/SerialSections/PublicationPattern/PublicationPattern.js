@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 import { useLocation, Link } from 'react-router-dom';
 
+import { IfPermission } from '@folio/stripes/core';
 import {
   Accordion,
   Badge,
@@ -74,12 +75,14 @@ const PublicationPattern = ({ serial }) => {
 
   const renderAddPublicationPatternButton = () => {
     return (
-      <Button
-        id="add-ruleset-button"
-        to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
-      >
-        <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
-      </Button>
+      <IfPermission perm="ui-serials-management.serials.edit">
+        <Button
+          id="add-ruleset-button"
+          to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
+        >
+          <FormattedMessage id="ui-serials-management.serials.addPublicationPattern" />
+        </Button>
+      </IfPermission>
     );
   };
 
