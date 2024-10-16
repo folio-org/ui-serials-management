@@ -21,7 +21,7 @@ import {
   urls,
 } from '../../components/utils';
 
-const RulesetEditRoute = () => {
+const RulesetReplaceRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
@@ -37,13 +37,13 @@ const RulesetEditRoute = () => {
   );
 
   const { data: ruleset, isLoading } = useQuery(
-    ['ui-serials-management', 'RulesetEditRoute', rid],
+    ['ui-serials-management', 'RulesetReplaceRoute', rid],
     () => ky(RULESET_ENDPOINT(rid)).json()
   );
 
   // istanbul ignore next
   const { mutateAsync: putRuleset } = useMutation(
-    ['ui-serials-management', 'RulesetEditRoute', 'putRuleset'],
+    ['ui-serials-management', 'RulesetReplaceRoute', 'putRuleset'],
     (data) => {
       const ruleSetEndpoint =
         pieceSets?.length < 1 && !pieceSetsLoading
@@ -141,4 +141,4 @@ const RulesetEditRoute = () => {
   );
 };
 
-export default RulesetEditRoute;
+export default RulesetReplaceRoute;

@@ -3,16 +3,16 @@ import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { translationsProperties } from '../../../test/helpers';
 
-import RulesetEditRoute from './RulesetEditRoute';
+import RulesetReplaceRoute from './RulesetReplaceRoute';
 
 jest.mock('../../components/views/RulesetForm', () => () => <div>RulesetForm</div>);
 
 let renderComponent;
-describe('RulesetEditRoute', () => {
+describe('RulesetReplaceRoute', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <RulesetEditRoute />
+        <RulesetReplaceRoute />
       </MemoryRouter>,
       translationsProperties
     );
