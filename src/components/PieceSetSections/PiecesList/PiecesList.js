@@ -25,6 +25,19 @@ const PiecesList = ({ pieceSet, id }) => {
     receivingPieces: (e) => e?.receivingPieces?.length,
   };
 
+  const sortedPieces = pieceSet?.pieces
+    ?.map((p) => {
+      return p?.recurrencePieces
+        ? {
+          ...p,
+          recurrencePieces: p?.recurrencePieces?.sort((a, b) => (a?.date < b?.date ? -1 : 1)),
+        }
+        : p;
+    })
+    .sort((a, b) => {
+      return a?.date < b?.date ? -1 : 1;
+    });
+
   return (
     <div id={id}>
       <Row start="xs">
@@ -47,7 +60,7 @@ const PiecesList = ({ pieceSet, id }) => {
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            contentData={pieceSet?.pieces.sort((a, b) => (a?.date < b?.date ? -1 : 1))}
+            contentData={sortedPieces}
             formatter={formatter}
             interactive={false}
             visibleColumns={[
