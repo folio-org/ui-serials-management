@@ -10,7 +10,7 @@ import {
   HasCommand,
   TextLink,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import { SerialView } from '../../components/views';
@@ -49,21 +49,23 @@ const SerialsRoute = ({ children, path }) => {
   ];
   /* istanbul ignore next */
   const renderLastMenu = (
-    <PaneMenu>
-      <FormattedMessage id="ui-serials-management.serials.newSerial">
-        {([ariaLabel]) => (
-          <Button
-            aria-label={ariaLabel}
-            buttonStyle="primary"
-            id="clickable-new-serial"
-            marginBottom0
-            onClick={() => handleCreate()}
-          >
-            <FormattedMessage id="ui-serials-management.new" />
-          </Button>
-        )}
-      </FormattedMessage>
-    </PaneMenu>
+    <IfPermission perm="ui-serials-management.serials.edit">
+      <PaneMenu>
+        <FormattedMessage id="ui-serials-management.serials.newSerial">
+          {([ariaLabel]) => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              id="clickable-new-serial"
+              marginBottom0
+              onClick={() => handleCreate()}
+            >
+              <FormattedMessage id="ui-serials-management.new" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </PaneMenu>
+    </IfPermission>
   );
   /* istanbul ignore next */
   const renderHeaderComponent = () => {

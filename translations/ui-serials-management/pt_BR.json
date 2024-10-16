@@ -236,5 +236,12 @@
     "ruleset.enumeration": "Enumeração",
     "ruleset.numberOfIssuesToCombine": "Número de edições a combinar",
     "ruleset.chronology": "Cronologia",
-    "ruleset.displaySummaryTemplate": "Exibir modelo de resumo"
+    "ruleset.displaySummaryTemplate": "Exibir modelo de resumo",
+    "pieceSets.deletePredictedPieceSet": "Excluir conjunto de peças previsto",
+    "pieceSets.deletePredictedPieceSet.confirmMessage": "Tem certeza de que deseja excluir esse conjunto de peças previsto?",
+    "cancelGeneration": "Cancelar geração",
+    "ruleset.previewPredictedPieces": "Pré-visualizar peças previstas",
+    "ruleset.confirmGeneration": "Confirmar a geração de conjuntos de peças sobrepostos",
+    "pieceSets.overlappingDates.dialog": "Um conjunto de peças previstas com a data de início <strong>{startDate}</strong> já existe para o seriado <strong>{serialName}</strong>. {br} A geração de um novo conjunto resultará em alguma sobreposição entre os conjuntos de peças. Se isso for aceitável, selecione \"Generate\" (Gerar) para continuar.",
+    "pieceSets.overlappingDates.warning": "Aviso: Uma peça prevista definida com a data de início <strong>{startDate}</strong> já existe para o seriado <strong>{serialName}</strong>"
 }
