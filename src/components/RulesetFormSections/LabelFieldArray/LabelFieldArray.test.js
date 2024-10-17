@@ -289,8 +289,8 @@ describe('LabelFieldArray', () => {
       test('renders the Enumeration format dropdown with correct options', async () => {
         await Select('Enumeration format*').exists();
         await waitFor(async () => {
-          await Select('Enumeration format*').choose('Enumeration Numeric');
-          await Select('Enumeration format*').choose('Enumeration Textual');
+          await Select('Enumeration format*').choose('Numeric');
+          await Select('Enumeration format*').choose('Textual');
         });
       });
 
@@ -314,8 +314,8 @@ describe('LabelFieldArray', () => {
     test('renders the Label style dropdown with correct options', async () => {
       await Select('Enumeration format*').exists();
       await waitFor(async () => {
-        await Select('Enumeration format*').choose('Enumeration Numeric');
-        await Select('Enumeration format*').choose('Enumeration Textual');
+        await Select('Enumeration format*').choose('Numeric');
+        await Select('Enumeration format*').choose('Textual');
       });
     });
 
@@ -338,9 +338,9 @@ describe('LabelFieldArray', () => {
     test('renders the Chronology format dropdown with correct options', async () => {
       await Select('Chronology format*').exists();
       await waitFor(async () => {
-        await Select('Chronology format*').choose('Chronology Date');
-        await Select('Chronology format*').choose('Chronology Month');
-        await Select('Chronology format*').choose('Chronology Year');
+        await Select('Chronology format*').choose('Date');
+        await Select('Chronology format*').choose('Month');
+        await Select('Chronology format*').choose('Year');
       });
     });
 

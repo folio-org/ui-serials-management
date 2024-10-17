@@ -52,11 +52,11 @@ describe('PieceSetInfo', () => {
   });
 
   test('renders the expected pattern ID', async () => {
-    await KeyValue('Pattern ID').has({ value: 'No value set-' });
+    await KeyValue('Pattern ID').has({ value: 'Test Pattern ID' });
   });
 
   test('renders the expected Note', async () => {
-    await KeyValue('Note').has({ value: 'No value set-' });
+    await KeyValue('Note').has({ value: 'Test note' });
   });
 
   test('renders the expected Title in Receiving', async () => {

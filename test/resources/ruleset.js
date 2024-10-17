@@ -1,6 +1,7 @@
 const ruleset = {
   id: 'a3a45cc5-5c16-46aa-93a3-e64bb4defef0',
   dateCreated: '2024-03-21T09:02:39Z',
+  rulesetNumber: 'Test Pattern ID',
   recurrence: {
     id: '22c08b1e-d71e-4808-bc40-239e7a3a88a1',
     rules: [
@@ -28,7 +29,7 @@ const ruleset = {
     label: 'Active',
   },
   owner: {
-    id: '7b30b5e6-cf25-4f9b-a73b-ad3edd406511',
+    id: '9be5cebf-c676-4430-9439-4f47973d8a47',
   },
   templateConfig: {
     id: 'e6f9dad2-88f0-429e-8686-beddf4c8088a',

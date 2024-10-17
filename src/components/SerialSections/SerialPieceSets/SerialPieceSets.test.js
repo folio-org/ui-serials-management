@@ -10,7 +10,7 @@ import {
 import SerialPieceSets from './SerialPieceSets';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { pieceSets } from '../../../../test/resources';
+import { pieceSet } from '../../../../test/resources';
 
 let renderComponent;
 describe('SerialPieceSets', () => {
@@ -19,7 +19,7 @@ describe('SerialPieceSets', () => {
       <MemoryRouter>
         <SerialPieceSets
           id="serial-section-serial-piece-sets"
-          pieceSets={pieceSets}
+          pieceSets={[pieceSet]}
         />
       </MemoryRouter>,
       translationsProperties
@@ -44,19 +44,24 @@ describe('SerialPieceSets', () => {
     }).exists();
   });
 
-  test('renders a gridcell with the expected name', async () => {
+  test('renders a "Date generated" column gridcell with the expected name', async () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('gridcell', { name: '3/19/2024' })).toBeInTheDocument();
+    expect(getByRole('gridcell', { name: '2/26/2024 10:02 AM' })).toBeInTheDocument();
   });
 
-  test('renders a gridcell with the expected name', async () => {
+  test('renders a "Start date" column gridcell with the expected name', async () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('gridcell', { name: '4' })).toBeInTheDocument();
+    expect(getByRole('gridcell', { name: '2/1/2024' })).toBeInTheDocument();
   });
 
-  test('renders a gridcell with the expected name', async () => {
+  test('renders a "Total" column gridcell with the expected name', async () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('gridcell', { name: 'test' })).toBeInTheDocument();
+    expect(getByRole('gridcell', { name: '12' })).toBeInTheDocument();
+  });
+
+  test('renders a "Note" column gridcell with the expected name', async () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('gridcell', { name: 'Test note' })).toBeInTheDocument();
   });
 
   test('renders end of list text', async () => {
