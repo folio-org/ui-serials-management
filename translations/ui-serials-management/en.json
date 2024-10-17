@@ -210,6 +210,7 @@
   "ruleset.templateTokensPopover": "Templates tokens are used in the Template to insert enumeration and chronology values in the predicted piece Display Summary.",
   "ruleset.editPublicationPattern": "Edit publication pattern",
   "ruleset.copyAndDeprecate": "Copy and deprecate",
+  "ruleset.copyAndDeprecatePublicationPattern": "Copy and deprecate publication pattern",
   
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",

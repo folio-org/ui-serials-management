@@ -25,7 +25,9 @@ import {
   RulesetInfo,
 } from '../../RulesetSections';
 
+import { REPLACE_AND_DELETE, REPLACE_AND_DEPRECATE } from '../../../constants/replaceTypes';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
+
 import { urls } from '../../utils';
 
 const propTypes = {
@@ -50,13 +52,13 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
 
   const handleReplaceAndDeprecate = () => {
     history.push(
-      `${urls.rulesetReplace(serial?.id, ruleset?.id, 'replaceAndDeprecate')}${location.search}`
+      `${urls.rulesetReplace(serial?.id, ruleset?.id, REPLACE_AND_DEPRECATE)}${location.search}`
     );
   };
 
   const handleReplaceAndDelete = () => {
     history.push(
-      `${urls.rulesetReplace(serial?.id, ruleset?.id, 'replaceAndDelete')}${location.search}`
+      `${urls.rulesetReplace(serial?.id, ruleset?.id, REPLACE_AND_DELETE)}${location.search}`
     );
   };
 

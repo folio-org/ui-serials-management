@@ -9,13 +9,15 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { useGenerateNumber } from '@folio/service-interaction';
 
+import { RulesetForm } from '../../components/views';
+
+import { REPLACE_AND_DELETE } from '../../constants/replaceTypes';
 import {
   RULESET_ENDPOINT,
   REPLACE_AND_DELETE_ENDPOINT,
   REPLACE_AND_DEPRECATE_ENDPOINT,
 } from '../../constants/endpoints';
 
-import { RulesetForm } from '../../components/views';
 import {
   deepDeleteKeys,
   rulesetSubmitValuesHandler,
@@ -121,7 +123,7 @@ const RulesetReplaceRoute = () => {
 
   const submitRuleset = async (values) => {
     const submitValues = handleSubmitValues(values);
-    if (replaceType === 'replaceAndDelete') {
+    if (replaceType === REPLACE_AND_DELETE) {
       await replaceAndDelete({
         ...submitValues,
         rulesetNumber: ruleset?.rulesetNumber,
