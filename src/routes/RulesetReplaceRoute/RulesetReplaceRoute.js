@@ -120,6 +120,7 @@ const RulesetReplaceRoute = () => {
         }),
       },
     };
+    // TODO This could do with being refactored into a contruct function as opposed to delete
     // Deep delete defined keys to prevent issues upon saving
     return deepDeleteKeys(initialValues, [
       'id',
