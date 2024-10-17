@@ -118,6 +118,7 @@ const RulesetReplaceRoute = () => {
       'label',
       'dateCreated',
       'lastUpdated',
+      'owner',
     ]);
   };
 
