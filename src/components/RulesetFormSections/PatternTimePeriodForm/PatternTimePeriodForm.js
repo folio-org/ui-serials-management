@@ -38,7 +38,6 @@ const TIME_UNIT_LIMITERS = {
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
-  console.log(values);
   const { change } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
