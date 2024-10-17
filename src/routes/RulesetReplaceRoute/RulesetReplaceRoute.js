@@ -37,8 +37,12 @@ const RulesetReplaceRoute = () => {
     sequence: 'patternNumber',
   });
 
-  const handleClose = () => {
-    history.push(`${urls.serialView(id)}${location.search}`);
+  const handleClose = (newRulesetId) => {
+    if (newRulesetId) {
+      history.push(`${urls.rulesetView(id, newRulesetId)}${location.search}`);
+    } else {
+      history.push(`${urls.rulesetView(id, rid)}${location.search}`);
+    }
   };
 
   const { data: ruleset, isLoading } = useQuery(
@@ -53,7 +57,9 @@ const RulesetReplaceRoute = () => {
         json: data,
       })
         .json()
-        .then(() => handleClose());
+        .then((res) => {
+          handleClose(res?.id);
+        });
     }
   );
 
@@ -64,7 +70,9 @@ const RulesetReplaceRoute = () => {
         json: data,
       })
         .json()
-        .then(() => handleClose());
+        .then((res) => {
+          handleClose(res?.id);
+        });
     }
   );
 
