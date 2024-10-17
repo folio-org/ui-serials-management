@@ -83,7 +83,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
         <Button
           key="edit-ruleset-option"
           buttonStyle="dropdownItem"
-          disabled={pieceSets?.length < 1}
+          disabled={pieceSets?.length >= 1}
           id="clickable-dropdown-edit-ruleset"
           onClick={() => handleReplaceAndDelete()}
         >
