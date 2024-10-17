@@ -48,9 +48,15 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
     };
   };
 
-  const handleEdit = () => {
+  const handleReplaceAndDeprecate = () => {
     history.push(
-      `${urls.rulesetEdit(serial?.id, ruleset?.id)}${location.search}`
+      `${urls.rulesetReplace(serial?.id, ruleset?.id, 'replaceAndDeprecate')}${location.search}`
+    );
+  };
+
+  const handleReplaceAndDelete = () => {
+    history.push(
+      `${urls.rulesetReplace(serial?.id, ruleset?.id, 'replaceAndDelete')}${location.search}`
     );
   };
 
@@ -77,7 +83,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
           key="edit-ruleset-option"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-ruleset"
-          onClick={() => handleEdit()}
+          onClick={() => handleReplaceAndDelete()}
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-serials-management.edit" />
@@ -91,7 +97,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
           key="copy-and-deprecate-ruleset-option"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-copy-and-deprecate-ruleset"
-          onClick={() => handleEdit()}
+          onClick={() => handleReplaceAndDeprecate()}
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-serials-management.ruleset.copyAndDeprecate" />

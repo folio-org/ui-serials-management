@@ -10,7 +10,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import { urls, rulesetSubmiteValuesHandler } from '../../components/utils';
+import { urls, rulesetSubmitValuesHandler } from '../../components/utils';
 
 const RulesetCreateRoute = () => {
   const history = useHistory();
@@ -40,7 +40,7 @@ const RulesetCreateRoute = () => {
   );
   // istanbul ignore next
   const handleSubmitValues = (values, numberGeneratorReturn) => {
-    const submitValues = rulesetSubmiteValuesHandler(values);
+    const submitValues = rulesetSubmitValuesHandler(values);
     return {
       ...submitValues,
       owner: { id },

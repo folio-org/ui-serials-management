@@ -1,4 +1,4 @@
-const rulesetSubmiteValuesHandler = (values) => {
+const rulesetSubmitValuesHandler = (values) => {
   return {
     ...values,
 
@@ -32,4 +32,4 @@ const rulesetSubmiteValuesHandler = (values) => {
   };
 };
 
-export default rulesetSubmiteValuesHandler;
+export default rulesetSubmitValuesHandler;

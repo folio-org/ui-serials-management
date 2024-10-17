@@ -112,7 +112,7 @@ const App = (props) => {
               />
               <Route
                 component={RulesetReplaceRoute}
-                path={`${path}/serials/:id/rulesets/:rid/edit`}
+                path={`${path}/serials/:id/rulesets/:rid/:replaceType`}
               />
               <SerialsRoute path={`${path}/serials`}>
                 <Route

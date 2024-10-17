@@ -7,9 +7,10 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { LoadingView } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 
+import { useGenerateNumber } from '@folio/service-interaction';
+
 import {
   RULESET_ENDPOINT,
-  PIECE_SETS_ENDPOINT,
   REPLACE_AND_DELETE_ENDPOINT,
   REPLACE_AND_DEPRECATE_ENDPOINT,
 } from '../../constants/endpoints';
@@ -17,7 +18,7 @@ import {
 import { RulesetForm } from '../../components/views';
 import {
   deepDeleteKeys,
-  rulesetSubmiteValuesHandler,
+  rulesetSubmitValuesHandler,
   urls,
 } from '../../components/utils';
 
@@ -25,31 +26,28 @@ const RulesetReplaceRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
-  const { id, rid } = useParams();
+  const { id, rid, replaceType } = useParams();
+  const { generate } = useGenerateNumber({
+    callback: (string) => {
+      return string;
+    },
+    generator: 'serialsManagement_patternNumber',
+    sequence: 'patternNumber',
+  });
 
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
   };
-
-  const { data: pieceSets, pieceSetsLoading } = useQuery(
-    ['ui-serials-management', 'SerialView', rid],
-    () => ky.get(`${PIECE_SETS_ENDPOINT}?filters=ruleset.id==${rid}`).json()
-  );
 
   const { data: ruleset, isLoading } = useQuery(
     ['ui-serials-management', 'RulesetReplaceRoute', rid],
     () => ky(RULESET_ENDPOINT(rid)).json()
   );
 
-  // istanbul ignore next
-  const { mutateAsync: putRuleset } = useMutation(
-    ['ui-serials-management', 'RulesetReplaceRoute', 'putRuleset'],
+  const { mutateAsync: replaceAndDeprecate } = useMutation(
+    ['ui-serials-management', 'RulesetReplaceRoute', 'replaceAndDeprecate'],
     (data) => {
-      const ruleSetEndpoint =
-        pieceSets?.length < 1 && !pieceSetsLoading
-          ? REPLACE_AND_DELETE_ENDPOINT
-          : REPLACE_AND_DEPRECATE_ENDPOINT;
-      ky.post(ruleSetEndpoint(rid), {
+      ky.post(REPLACE_AND_DEPRECATE_ENDPOINT(rid), {
         json: data,
       })
         .json()
@@ -57,13 +55,22 @@ const RulesetReplaceRoute = () => {
     }
   );
 
-  // istanbul ignore next
+  const { mutateAsync: replaceAndDelete } = useMutation(
+    ['ui-serials-management', 'RulesetReplaceRoute', 'replaceAndDelete'],
+    (data) => {
+      ky.post(REPLACE_AND_DELETE_ENDPOINT(rid), {
+        json: data,
+      })
+        .json()
+        .then(() => handleClose());
+    }
+  );
+
   const handleSubmitValues = (values) => {
-    const submitValues = rulesetSubmiteValuesHandler(values);
+    const submitValues = rulesetSubmitValuesHandler(values);
     return {
       ...submitValues,
       owner: { id },
-      rulesetNumber: ruleset?.rulesetNumber,
     };
   };
 
@@ -111,10 +118,21 @@ const RulesetReplaceRoute = () => {
       'lastUpdated',
     ]);
   };
-  // istanbul ignore next
+
   const submitRuleset = async (values) => {
     const submitValues = handleSubmitValues(values);
-    await putRuleset(submitValues);
+    if (replaceType === 'replaceAndDelete') {
+      await replaceAndDelete({
+        ...submitValues,
+        rulesetNumber: ruleset?.rulesetNumber,
+      });
+    } else {
+      const numberGeneratorReturn = await generate();
+      await replaceAndDeprecate({
+        ...submitValues,
+        rulesetNumber: numberGeneratorReturn?.data?.nextValue,
+      });
+    }
   };
 
   if (isLoading) {
