@@ -25,7 +25,10 @@ import {
   RulesetInfo,
 } from '../../RulesetSections';
 
-import { REPLACE_AND_DELETE, REPLACE_AND_DEPRECATE } from '../../../constants/replaceTypes';
+import {
+  REPLACE_AND_DELETE,
+  REPLACE_AND_DEPRECATE,
+} from '../../../constants/replaceTypes';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
 import { urls } from '../../utils';
@@ -62,7 +65,6 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
     );
   };
 
-  // istanbul ignore next
   const shortcuts = [
     {
       name: 'expandAllSections',
