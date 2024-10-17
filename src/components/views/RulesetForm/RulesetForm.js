@@ -85,7 +85,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
         );
       default:
         return (
-          <FormattedMessage id="ui-serials-management.ruleset.newPublicationPattern" />
+          <FormattedMessage id="ui-serials-management.rulesets.newPublicationPattern" />
         );
     }
   };
