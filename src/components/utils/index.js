@@ -6,3 +6,6 @@ export { validateWholeNumber } from './validators';
 export { default as handleSaveKeyCommand } from './keyboardShortcutHandlers';
 export { default as focusSASQSearchField } from './focusSASQSearchField';
 export { default as getSortedItems } from './getSortedItems';
+export { default as deepDeleteKeys } from './deepDeleteKeys';
+export { default as rulesetSubmitValuesHandler } from './rulesetSubmitValuesHandler';
+
