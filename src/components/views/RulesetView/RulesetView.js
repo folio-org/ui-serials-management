@@ -78,14 +78,12 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
 
   const renderActionMenu = () => {
     const buttons = [];
-    if (
-      stripes.hasPerm('ui-serials-management.rulesets.edit') &&
-      pieceSets?.length < 1
-    ) {
+    if (stripes.hasPerm('ui-serials-management.rulesets.edit')) {
       buttons.push(
         <Button
           key="edit-ruleset-option"
           buttonStyle="dropdownItem"
+          disabled={pieceSets?.length < 1}
           id="clickable-dropdown-edit-ruleset"
           onClick={() => handleReplaceAndDelete()}
         >
