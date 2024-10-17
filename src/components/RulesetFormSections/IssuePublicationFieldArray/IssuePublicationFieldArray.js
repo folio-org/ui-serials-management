@@ -85,7 +85,7 @@ const IssuePublicationFieldArray = () => {
                     input.onChange(e);
                     change(
                       'recurrence.rules',
-                      Array(values?.recurrence?.issues).fill({})
+                      Array(Number(values?.recurrence?.issues)).fill({})
                     );
                   }}
                   required

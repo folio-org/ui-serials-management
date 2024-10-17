@@ -38,6 +38,7 @@ const TIME_UNIT_LIMITERS = {
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
+  console.log(values);
   const { change } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
@@ -84,7 +85,7 @@ const PatternTimePeriodForm = () => {
         issues: e?.target?.value,
         rules:
           e.target.value <= maxIssues && e.target.value > 0
-            ? Array(e?.target?.value).fill({})
+            ? Array(Number(e?.target?.value)).fill({})
             : undefined,
       },
       patternType,
