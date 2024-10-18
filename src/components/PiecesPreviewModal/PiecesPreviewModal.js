@@ -15,7 +15,7 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { urls } from '../utils';
+import { rulesetSubmitValuesHandler, urls } from '../utils';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -111,39 +111,12 @@ const PiecesPreviewModal = ({
 
   // istanbul ignore next
   const handleGeneration = async (values) => {
-    const submitValues = {
-      ...ruleset,
+    const submitValues = rulesetSubmitValuesHandler(ruleset);
+    await generatePieces({
+      ...submitValues,
       startDate: values?.startDate,
-      recurrence: {
-        ...ruleset?.recurrence,
-        rules: ruleset?.recurrence?.rules?.map((e) => {
-          // If no ordinal specified, assume ordinal is 1 for all rules
-          if (!e?.ordinal) {
-            e.ordinal = 1;
-          }
-          // If no pattern fields are supplied (in the case of the day time unit)
-          // Add anempty pattern object to all rules
-          if (!e?.pattern) {
-            e.pattern = {};
-          }
-          e.patternType = ruleset?.patternType;
-          return e;
-        }),
-      },
-      templateConfig: {
-        ...ruleset?.templateConfig,
-        rules: ruleset?.templateConfig?.rules?.map((rule, ruleIndex) => {
-          rule.index = ruleIndex;
-          rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-            level.index = levelIndex;
-            return level;
-          });
-          return rule;
-        }),
-      },
       startingValues: formatStartingValues(values),
-    };
-    await generatePieces(submitValues);
+    });
   };
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {

@@ -2,6 +2,8 @@ import { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useFormState, useForm } from 'react-final-form';
+import { useParams } from 'react-router-dom';
+
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -24,6 +26,10 @@ import {
   checkScope,
 } from '@folio/stripes/components';
 
+import {
+  REPLACE_AND_DELETE,
+  REPLACE_AND_DEPRECATE,
+} from '../../../constants/replaceTypes';
 import { handleSaveKeyCommand } from '../../utils';
 
 import {
@@ -45,7 +51,8 @@ const propTypes = {
 };
 
 const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
-  const { pristine, submitting, invalid, initialValues, values } = useFormState();
+  const params = useParams();
+  const { pristine, submitting, invalid, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
@@ -65,6 +72,23 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
       handler: (e) => collapseAllSections(e, accordionStatusRef),
     },
   ];
+
+  const renderPaneTitle = () => {
+    switch (params?.replaceType) {
+      case REPLACE_AND_DEPRECATE:
+        return (
+          <FormattedMessage id="ui-serials-management.ruleset.copyAndDeprecatePublicationPattern" />
+        );
+      case REPLACE_AND_DELETE:
+        return (
+          <FormattedMessage id="ui-serials-management.ruleset.editPublicationPattern" />
+        );
+      default:
+        return (
+          <FormattedMessage id="ui-serials-management.rulesets.newPublicationPattern" />
+        );
+    }
+  };
 
   const renderPaneFooter = () => {
     return (
@@ -92,19 +116,17 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           </>
         }
         renderStart={
-          <Button buttonStyle="default mega" marginBottom0 onClick={() => onClose()}>
+          <Button
+            buttonStyle="default mega"
+            marginBottom0
+            onClick={() => onClose()}
+          >
             <FormattedMessage id="stripes-components.cancel" />
           </Button>
         }
       />
     );
   };
-
-  const renderPaneTitle = () => (initialValues?.id ? (
-    <FormattedMessage id="ui-serials-management.rulesets.editPublicationPattern" />
-  ) : (
-    <FormattedMessage id="ui-serials-management.rulesets.newPublicationPattern" />
-  ));
 
   const renderFirstMenu = () => {
     return (

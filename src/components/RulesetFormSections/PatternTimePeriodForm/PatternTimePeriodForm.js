@@ -41,6 +41,55 @@ const PatternTimePeriodForm = () => {
   const { change } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
+  // FIXME Another annoying uses of '' to changes the entire form state in a single change function
+  // Defintely not a fan, the way we set patternType could do with some refactoring/re-thinking
+  const timeUnitOnChange = (e) => {
+    change('', {
+      ...values,
+      recurrence: { timeUnit: { value: e?.target?.value } },
+      patternType: e?.target?.value,
+    });
+  };
+
+  const periodOnChange = (e) => {
+    // Create new array of rules with all ordinal values unset
+    const unsetOrdinalRules = values?.recurrence?.rules?.map((rule) => ({
+      ...rule,
+      ordinal: undefined,
+    }));
+    // Update recurrence in formstate to contain updated rules and period value
+    change('recurrence', {
+      ...values?.recurrence,
+      period: e?.target?.value,
+      rules: unsetOrdinalRules,
+    });
+  };
+
+  const issuesOnChange = (e) => {
+    // If timeunit is anything but 'day' clear patterntype, else keep as is
+    // FIXME Not a fan of this implementation
+    const timeUnit = values?.recurrence?.timeUnit?.value;
+    const patternType = RECURRENCE_PATTERN_TYPE_OPTIONS[timeUnit]
+      ? undefined
+      : timeUnit;
+    // Calculate max number of issues allowed for specified time unit and period
+    const maxIssues =
+      TIME_UNIT_LIMITERS[timeUnit]?.issues * (values?.recurrence?.period || 1);
+    // If new number of issues is less than max, fill rules array with empty objects, otherwise clear
+    // Additionally clear patternType so a new format can be selected
+    change('', {
+      ...values,
+      recurrence: {
+        ...values?.recurrence,
+        issues: e?.target?.value,
+        rules:
+          e.target.value <= maxIssues && e.target.value > 0
+            ? Array(Number(e?.target?.value)).fill({})
+            : undefined,
+      },
+      patternType,
+    });
+  };
 
   return (
     <>
@@ -78,23 +127,7 @@ const PatternTimePeriodForm = () => {
                   <FormattedMessage id="ui-serials-management.ruleset.timeUnit" />
                 }
                 meta={meta}
-                onChange={(e) => {
-                  input.onChange(e);
-                  change('recurrence.period', undefined);
-                  change('recurrence.issues', undefined);
-                  if (values?.patternType) {
-                    change('patternType', undefined);
-                  }
-                  // If a value is supplied and does not have corresponding patternType options
-                  // Assign the patternType value the timeUnit value
-                  if (
-                    e?.target?.value &&
-                    !RECURRENCE_PATTERN_TYPE_OPTIONS[e?.target?.value]
-                  ) {
-                    change('patternType', e?.target?.value);
-                  }
-                  change('recurrence.rules', undefined);
-                }}
+                onChange={(e) => timeUnitOnChange(e)}
                 required
               />
             )}
@@ -124,20 +157,7 @@ const PatternTimePeriodForm = () => {
                   />
                 }
                 meta={meta}
-                onChange={(e) => {
-                  input.onChange(e);
-                  // Since recurrence.period determines whether or not ordinals are assigned to the rules
-                  // Clear all ordinal fields within form when recurrence.period is changed
-                  if (values?.recurrence?.rules?.length) {
-                    for (
-                      let i = 0;
-                      i < values?.recurrence?.rules?.length;
-                      i++
-                    ) {
-                      change(`recurrence.rules[${i}].ordinal`, undefined);
-                    }
-                  }
-                }}
+                onChange={(e) => periodOnChange(e)}
                 required
               />
             )}
@@ -171,35 +191,7 @@ const PatternTimePeriodForm = () => {
                   </>
                 }
                 meta={meta}
-                onChange={(e) => {
-                  input.onChange(e);
-                  // Create an array of empty objects corresponding to amount of issues
-                  if (
-                    Number(e.target.value) <=
-                      Number(
-                        TIME_UNIT_LIMITERS[values?.recurrence?.timeUnit?.value]
-                          ?.issues * (values?.recurrence?.period || 1)
-                      ) &&
-                    Number(e.target.value) >= 1
-                  ) {
-                    change(
-                      'recurrence.rules',
-                      e?.target?.value > 0 &&
-                        Number.isInteger(Number(e?.target?.value))
-                        ? Array(Number(e?.target?.value)).fill({})
-                        : undefined
-                    );
-                  } else {
-                    change('recurrence.rules', undefined);
-                  }
-                  if (
-                    RECURRENCE_PATTERN_TYPE_OPTIONS[
-                      values?.recurrence?.timeUnit?.value
-                    ]
-                  ) {
-                    change('patternType', undefined);
-                  }
-                }}
+                onChange={(e) => issuesOnChange(e)}
                 required
               />
             )}
