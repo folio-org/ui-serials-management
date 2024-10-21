@@ -243,5 +243,8 @@
     "ruleset.previewPredictedPieces": "预览预期件",
     "ruleset.confirmGeneration": "确认重叠件集的生成",
     "pieceSets.overlappingDates.dialog": "连续出版物<strong> {serialName} </strong>已存在开始日期为<strong> {startDate} </strong>的预期件集。 {br}生成新集将导致件集之间出现一些重叠。如果可以接受，请选择“生成”以继续。",
-    "pieceSets.overlappingDates.warning": "警告：连续出版物<strong> {serialName} </strong>已存在开始日期为<strong> {startDate} </strong>的预期件集"
+    "pieceSets.overlappingDates.warning": "警告：连续出版物<strong> {serialName} </strong>已存在开始日期为<strong> {startDate} </strong>的预期件集",
+    "ruleset.editPublicationPattern": "Edit publication pattern",
+    "ruleset.copyAndDeprecate": "Copy and deprecate",
+    "ruleset.copyAndDeprecatePublicationPattern": "Copy and deprecate publication pattern"
 }
