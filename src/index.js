@@ -24,6 +24,7 @@ import {
   SerialEditRoute,
   RulesetViewRoute,
   RulesetCreateRoute,
+  RulesetReplaceRoute,
   PieceSetsRoute,
 } from './routes';
 
@@ -109,7 +110,10 @@ const App = (props) => {
                 component={RulesetCreateRoute}
                 path={`${path}/serials/:id/rulesets/create`}
               />
-
+              <Route
+                component={RulesetReplaceRoute}
+                path={`${path}/serials/:id/rulesets/:rid/:replaceType`}
+              />
               <SerialsRoute path={`${path}/serials`}>
                 <Route
                   component={RulesetViewRoute}
