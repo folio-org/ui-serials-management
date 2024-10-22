@@ -52,7 +52,7 @@ const SerialView = ({
 
   const [showModal, setShowModal] = useState(false);
 
-  const { data: pieceSets, pieceSetsLoading } = useQuery(
+  const { data: existingPieceSets, existingPieceSetsLoading } = useQuery(
     ['ui-serials-management', 'SerialView', serial?.id],
     () => ky
       .get(`${PIECE_SETS_ENDPOINT}?filters=ruleset.owner.id==${serial?.id}`)
@@ -185,10 +185,10 @@ const SerialView = ({
                 {...getSectionProps('deprecated-publication-pattern')}
               />
               )}
-              {!!pieceSets?.length && !pieceSetsLoading && (
+              {!!existingPieceSets?.length && !existingPieceSetsLoading && (
                 <SerialPieceSets
                   id="serial-section-serial-piece-sets"
-                  pieceSets={pieceSets}
+                  pieceSets={existingPieceSets}
                 />
               )}
               <SerialNotes {...getSectionProps('notes')} />
@@ -198,7 +198,7 @@ const SerialView = ({
       </HasCommand>
       <PiecesPreviewModal
         allowCreation
-        pieceSets={pieceSets}
+        existingPieceSets={existingPieceSets}
         ruleset={serial?.serialRulesets?.find(
           (sr) => sr?.rulesetStatus?.value === 'active'
         )}

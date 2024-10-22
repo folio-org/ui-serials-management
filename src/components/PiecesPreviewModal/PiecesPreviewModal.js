@@ -28,7 +28,7 @@ const propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   ruleset: PropTypes.object,
-  pieceSets: PropTypes.arrayOf(PropTypes.object),
+  existingPieceSets: PropTypes.arrayOf(PropTypes.object),
   allowCreation: PropTypes.bool,
   serialName: PropTypes.string,
 };
@@ -37,14 +37,14 @@ const PiecesPreviewModal = ({
   showModal,
   setShowModal,
   ruleset,
-  pieceSets,
+  existingPieceSets,
   allowCreation = false,
   serialName,
 }) => {
   const intl = useIntl();
   const ky = useOkapiKy();
   const history = useHistory();
-  const [predictedPieces, setPredictedPieces] = useState(null);
+  const [generatedPieceSet, setGeneratedPieceSet] = useState(null);
   const [confirmationModal, setConfirmationModal] = useState({
     values: {},
     show: false,
@@ -53,7 +53,7 @@ const PiecesPreviewModal = ({
   /* istanbul ignore next */
   const closeModal = () => {
     setShowModal(false);
-    setPredictedPieces(null);
+    setGeneratedPieceSet(null);
   };
 
   const { mutateAsync: generatePieces } = useMutation(
@@ -61,7 +61,7 @@ const PiecesPreviewModal = ({
     (data) => ky
       .post(GENERATE_PIECES_PREVIEW, { json: data })
       .json()
-      .then((res) => setPredictedPieces(res))
+      .then((res) => setGeneratedPieceSet(res))
   );
 
   // istanbul ignore next
@@ -121,7 +121,7 @@ const PiecesPreviewModal = ({
 
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting, values } = formState;
-    const dateExists = pieceSets?.some(
+    const dateExists = existingPieceSets?.some(
       (ps) => ps?.startDate === values?.startDate
     );
     return (
@@ -208,7 +208,12 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            contentData={predictedPieces}
+            // DEPRECATED - Condtional used to handle older fetch (Array) and newer version (Object)
+            contentData={
+              generatedPieceSet?.length
+                ? generatedPieceSet
+                : generatedPieceSet?.pieces
+            }
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}
@@ -237,11 +242,11 @@ const PiecesPreviewModal = ({
       >
         <PiecesPreviewModalForm
           allowCreation={allowCreation}
-          pieceSets={pieceSets}
+          existingPieceSets={existingPieceSets}
           ruleset={ruleset}
           serialName={serialName}
         />
-        {!!predictedPieces && renderPiecesTable()}
+        {!!generatedPieceSet && renderPiecesTable()}
       </FormModal>
       <ConfirmationModal
         buttonStyle="primary"
