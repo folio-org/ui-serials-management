@@ -208,12 +208,7 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            // DEPRECATED - Condtional used to handle older fetch (Array) and newer version (Object)
-            contentData={
-              generatedPieceSet?.length
-                ? generatedPieceSet
-                : generatedPieceSet?.pieces
-            }
+            contentData={generatedPieceSet}
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}
