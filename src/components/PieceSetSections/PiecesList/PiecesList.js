@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Row, Col, MultiColumnList } from '@folio/stripes/components';
+
+import { INTERNAL_COMBINATION_PIECE } from '../../../constants/internalPieceClasses';
+
 import PiecePublicationDate from '../../PiecePublicationDate';
 
 const propTypes = {
@@ -25,17 +28,29 @@ const PiecesList = ({ pieceSet, id }) => {
     receivingPieces: (e) => e?.receivingPieces?.length,
   };
 
+  // This is a bit annoying with regard to the sorting that needs to be done
+  // Grails doesnt like attempting to sort uniderectional one to many relationships
   const sortedPieces = pieceSet?.pieces
+  // Itereate through the pieces and find combination pieces
     ?.map((p) => {
-      return p?.recurrencePieces
+      return p?.class === INTERNAL_COMBINATION_PIECE
         ? {
           ...p,
+          // Sort combination piece's recurrence pieces by date
           recurrencePieces: p?.recurrencePieces?.sort((a, b) => (a?.date < b?.date ? -1 : 1)),
         }
         : p;
     })
     .sort((a, b) => {
-      return a?.date < b?.date ? -1 : 1;
+      // Sort all pieces by date or by the recurrence pieces of a combination piece
+      return (a?.class === INTERNAL_COMBINATION_PIECE
+        ? a?.recurrencePieces?.[0]?.date
+        : a?.date) <
+        (b?.class === INTERNAL_COMBINATION_PIECE
+          ? b?.recurrencePieces?.[0]?.date
+          : b?.date)
+        ? -1
+        : 1;
     });
 
   return (
