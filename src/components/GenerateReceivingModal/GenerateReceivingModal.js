@@ -32,6 +32,7 @@ import {
 import {
   INTERNAL_COMBINATION_PIECE,
   INTERNAL_OMISSION_PIECE,
+  INTERNAL_RECURRENCE_PIECE,
 } from '../../constants/internalPieceClasses';
 
 import css from './GenerateReceivingModal.css';
@@ -234,12 +235,18 @@ const GenerateReceivingModal = ({
   };
 
   const renderPredictedPiecesInformation = () => {
+    // Format piece information based on class
     const renderPieceDateLabel = (piece) => {
-      const pieceDate =
-        piece?.class === INTERNAL_COMBINATION_PIECE
-          ? piece?.recurrencePieces[0]?.date
-          : piece?.date;
-      return `${pieceDate}, ${piece?.label}`;
+      switch (piece?.class) {
+        case INTERNAL_COMBINATION_PIECE:
+          return `${piece?.recurrencePieces[0]?.date}, ${piece?.label}`;
+        case INTERNAL_RECURRENCE_PIECE:
+          return `${piece?.date}, ${piece?.label}`;
+        case INTERNAL_OMISSION_PIECE:
+          return `${piece?.date}`;
+        default:
+          return null;
+      }
     };
 
     return (
