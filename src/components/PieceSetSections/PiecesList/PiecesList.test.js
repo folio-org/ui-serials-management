@@ -38,19 +38,19 @@ describe('PiecesList', () => {
         content: '1',
       }),
       await MultiColumnListCell({ row: 0, columnIndex: 1 }).has({
-        content: '2/1/2024',
+        content: '10/1/2024',
       }),
       await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({
-        content: '1 1',
+        content: '5 9',
       }),
       await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({
         content: '2',
       }),
       await MultiColumnListCell({ row: 1, columnIndex: 1 }).has({
-        content: '3/1/2024',
+        content: '7/1/2024',
       }),
       await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({
-        content: '1 2',
+        content: '3 6',
       }),
     ]);
   });

@@ -156,7 +156,7 @@ const GenerateReceivingModal = ({
   };
 
   const formatReceivingPiece = (piece, values) => {
-    if (!piece?.class === INTERNAL_OMISSION_PIECE) {
+    if (piece?.class !== INTERNAL_OMISSION_PIECE) {
       const pieceInfo =
         piece?.class === INTERNAL_COMBINATION_PIECE
           ? {
