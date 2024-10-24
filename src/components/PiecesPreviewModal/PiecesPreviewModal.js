@@ -209,7 +209,14 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            contentData={generatedPieceSet}
+            // DEPRECATED - This handles the older case in which generatePieces responded with an array of pieces
+            // Now supports newer response of the predicted piece set object, containing an array of pieces
+            // TODO Remove this once interface version has been increased
+            contentData={
+              Array.isArray(generatedPieceSet)
+                ? generatedPieceSet
+                : generatedPieceSet?.pieces
+            }
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}
