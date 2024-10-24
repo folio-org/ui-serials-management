@@ -238,12 +238,12 @@ const GenerateReceivingModal = ({
     // Format piece information based on class
     const renderPieceDateLabel = (piece) => {
       switch (piece?.class) {
-        case INTERNAL_COMBINATION_PIECE:
-          return `${piece?.recurrencePieces[0]?.date}, ${piece?.label}`;
         case INTERNAL_RECURRENCE_PIECE:
           return `${piece?.date}, ${piece?.label}`;
         case INTERNAL_OMISSION_PIECE:
           return `${piece?.date}`;
+        case INTERNAL_COMBINATION_PIECE:
+          return `${piece?.recurrencePieces[0]?.date}, ${piece?.label}`;
         default:
           return null;
       }
