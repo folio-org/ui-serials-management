@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { Row, Col, MultiColumnList } from '@folio/stripes/components';
 
+import { INTERNAL_OMISSION_PIECE } from '../../../constants/internalPieceClasses';
+
 import PiecePublicationDate from '../../PiecePublicationDate';
 
 const propTypes = {
@@ -17,7 +19,7 @@ const PiecesList = ({ pieceSet, id }) => {
   /* istanbul ignore next */
   const formatter = {
     issueCount: (e) => {
-      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
+      return e?.class === INTERNAL_OMISSION_PIECE ? '-' : e.rowIndex + 1;
     },
     publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {

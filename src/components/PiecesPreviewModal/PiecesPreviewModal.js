@@ -23,6 +23,7 @@ import {
 } from '../../constants/endpoints';
 import PiecePublicationDate from '../PiecePublicationDate';
 import PiecesPreviewModalForm from './PiecesPreviewModalForm';
+import { INTERNAL_OMISSION_PIECE } from '../../constants/internalPieceClasses';
 
 const propTypes = {
   showModal: PropTypes.bool,
@@ -179,9 +180,9 @@ const PiecesPreviewModal = ({
 
   /* istanbul ignore next */
   const formatter = {
-    // If omissionOrigins exist then piece is omitted
+    // If pieces class is internal omission piece then piece is omitted
     issueCount: (e) => {
-      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
+      return e?.class === INTERNAL_OMISSION_PIECE ? '-' : e.rowIndex + 1;
     },
     publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {

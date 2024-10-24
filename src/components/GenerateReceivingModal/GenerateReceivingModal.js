@@ -29,6 +29,10 @@ import {
   PIECE_SET_ENDPOINT,
   RECEIVING_PIECES_ENDPOINT,
 } from '../../constants/endpoints';
+import {
+  INTERNAL_COMBINATION_PIECE,
+  INTERNAL_OMISSION_PIECE,
+} from '../../constants/internalPieceClasses';
 
 import css from './GenerateReceivingModal.css';
 
@@ -64,7 +68,12 @@ const GenerateReceivingModal = ({
       'submitReceivingPiece',
     ],
     (data) => {
-      return ky.post(`${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`, { json: data?.receiving }).json();
+      return ky
+        .post(
+          `${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`,
+          { json: data?.receiving }
+        )
+        .json();
     }
   );
 
@@ -146,19 +155,20 @@ const GenerateReceivingModal = ({
   };
 
   const formatReceivingPiece = (piece, values) => {
-    if (!piece?.omissionOrigins) {
-      const pieceInfo = piece?.combinationOrigins
-        ? {
-          date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-          label: piece?.recurrencePieces[0]?.label,
-        }
-        : {
-          date: addDays(piece?.date, values?.interval),
-          label: piece?.label,
-        };
+    if (!piece?.class === INTERNAL_OMISSION_PIECE) {
+      const pieceInfo =
+        piece?.class === INTERNAL_COMBINATION_PIECE
+          ? {
+            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
+            label: piece?.recurrencePieces[0]?.label,
+          }
+          : {
+            date: addDays(piece?.date, values?.interval),
+            label: piece?.label,
+          };
 
       return {
-        ...values?.createItem && { createItem: values.createItem },
+        ...(values?.createItem && { createItem: values.createItem }),
         receiving: {
           poLineId: serial?.orderLine?.remoteId,
           titleId: serial?.orderLine?.titleId,
@@ -280,7 +290,8 @@ const GenerateReceivingModal = ({
                   <FormattedMessage id="ui-serials-management.pieceSets.firstPiece" />
                 }
               >
-                {pieceSet?.pieces[0]?.date}, {pieceSet?.pieces[0]?.label}
+                {/* TODO Handle combination pieces */}
+                {pieceSet?.pieces?.[0]?.date}, {pieceSet?.pieces[0]?.label}
               </KeyValue>
             </Col>
             <Col xs={3}>
@@ -289,8 +300,9 @@ const GenerateReceivingModal = ({
                   <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
                 }
               >
-                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.date},{' '}
-                {pieceSet?.pieces[pieceSet?.pieces?.length - 1]?.label}
+                {/* TODO Handle combination pieces */}
+                {pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]?.date},{' '}
+                {pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]?.label}
               </KeyValue>
             </Col>
           </Row>
@@ -356,7 +368,8 @@ const GenerateReceivingModal = ({
               )}
             </FormattedMessage>
           </Col>
-          {serial?.orderLine?.remoteId_object?.physical?.createInventory === 'Instance, Holding, Item' && (
+          {serial?.orderLine?.remoteId_object?.physical?.createInventory ===
+            'Instance, Holding, Item' && (
             <Col xs={3}>
               <Label>
                 <FormattedMessage id="ui-serials-management.pieceSets.createItem" />
@@ -402,7 +415,9 @@ const GenerateReceivingModal = ({
                 <Label>
                   <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
                   <InfoPopover
-                    content={<FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />}
+                    content={
+                      <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
+                    }
                     id="display-on-holding-tooltip"
                   />
                 </Label>
