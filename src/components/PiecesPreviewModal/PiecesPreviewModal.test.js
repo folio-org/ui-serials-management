@@ -26,7 +26,7 @@ const SerialViewRender = () => {
   return (
     <PiecesPreviewModal
       allowCreation
-      pieceSets={pieceSets}
+      existingPieceSets={pieceSets}
       ruleset={ruleset}
       setShowModal={setShowModal}
       showModal={showModal}

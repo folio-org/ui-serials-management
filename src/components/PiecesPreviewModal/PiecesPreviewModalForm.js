@@ -26,7 +26,7 @@ import css from './PiecesPreviewModal.css';
 const propTypes = {
   serialName: PropTypes.string,
   ruleset: PropTypes.object,
-  pieceSets: PropTypes.arrayOf(PropTypes.object),
+  existingPieceSets: PropTypes.arrayOf(PropTypes.object),
   allowCreation: PropTypes.bool,
 };
 
@@ -34,14 +34,14 @@ const propTypes = {
 const PiecesPreviewModalForm = ({
   serialName,
   ruleset,
-  pieceSets,
+  existingPieceSets,
   allowCreation = false,
 }) => {
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
 
-  const startingValueDataOptions = pieceSets
+  const startingValueDataOptions = existingPieceSets
     ?.filter((ps) => ps?.ruleset?.id === ruleset?.id)
     ?.map((fps) => {
       return {
@@ -54,7 +54,7 @@ const PiecesPreviewModalForm = ({
     });
 
   const handleStartingValuesChange = (e) => {
-    const selectedNextPiece = pieceSets?.find(
+    const selectedNextPiece = existingPieceSets?.find(
       (ps) => ps.id === e?.target?.value || ''
     );
     // When changes fields at the top level of the form, change function requires an empty string, funky
@@ -201,7 +201,7 @@ const PiecesPreviewModalForm = ({
             'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
-      {pieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
+      {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
         <MessageBanner type="warning">
           <FormattedMessage
             id="ui-serials-management.pieceSets.overlappingDates.warning"
