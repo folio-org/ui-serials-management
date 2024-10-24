@@ -234,6 +234,14 @@ const GenerateReceivingModal = ({
   };
 
   const renderPredictedPiecesInformation = () => {
+    const renderPieceDateLabel = (piece) => {
+      const pieceDate =
+        piece?.class === INTERNAL_COMBINATION_PIECE
+          ? piece?.recurrencePieces[0]?.date
+          : piece?.date;
+      return `${pieceDate}, ${piece?.label}`;
+    };
+
     return (
       <>
         {!serial?.orderLine?.remoteId_object?.locations?.length && (
@@ -290,8 +298,7 @@ const GenerateReceivingModal = ({
                   <FormattedMessage id="ui-serials-management.pieceSets.firstPiece" />
                 }
               >
-                {/* TODO Handle combination pieces */}
-                {pieceSet?.pieces?.[0]?.date}, {pieceSet?.pieces[0]?.label}
+                {renderPieceDateLabel(pieceSet?.pieces[0])}
               </KeyValue>
             </Col>
             <Col xs={3}>
@@ -300,9 +307,9 @@ const GenerateReceivingModal = ({
                   <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
                 }
               >
-                {/* TODO Handle combination pieces */}
-                {pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]?.date},{' '}
-                {pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]?.label}
+                {renderPieceDateLabel(
+                  pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]
+                )}
               </KeyValue>
             </Col>
           </Row>
