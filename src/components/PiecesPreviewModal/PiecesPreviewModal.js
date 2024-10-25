@@ -15,7 +15,7 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { rulesetSubmitValuesHandler, urls } from '../utils';
+import { rulesetSubmitValuesHandler, urls, sortPieces } from '../utils';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -62,7 +62,14 @@ const PiecesPreviewModal = ({
     (data) => ky
       .post(GENERATE_PIECES_PREVIEW, { json: data })
       .json()
-      .then((res) => setGeneratedPieceSet(res))
+      .then((res) => {
+        if (!Array.isArray(res)) {
+          const sortedPieceSet = { ...res, pieces: sortPieces(res?.pieces) };
+          setGeneratedPieceSet(sortedPieceSet);
+        } else {
+          setGeneratedPieceSet(res);
+        }
+      })
   );
 
   // istanbul ignore next

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -19,8 +19,7 @@ import {
   SERIAL_ENDPOINT,
   PIECE_SET_ENDPOINT,
 } from '../../../constants/endpoints';
-import { INTERNAL_COMBINATION_PIECE } from '../../../constants/internalPieceClasses';
-import { urls } from '../../utils';
+import { urls, sortPieces } from '../../utils';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -81,28 +80,7 @@ const PieceSetView = ({
     }
   };
 
-  const sortedPieces = pieceSet?.pieces
-    // Itereate through the pieces and find combination pieces
-    ?.map((p) => {
-      return p?.class === INTERNAL_COMBINATION_PIECE
-        ? {
-          ...p,
-          // Sort combination piece's recurrence pieces by date
-          recurrencePieces: p?.recurrencePieces?.sort((a, b) => (a?.date < b?.date ? -1 : 1)),
-        }
-        : p;
-    })
-    .sort((a, b) => {
-      // Sort all pieces by date or by the recurrence pieces of a combination piece
-      return (a?.class === INTERNAL_COMBINATION_PIECE
-        ? a?.recurrencePieces[0]?.date
-        : a?.date) <
-        (b?.class === INTERNAL_COMBINATION_PIECE
-          ? b?.recurrencePieces[0]?.date
-          : b?.date)
-        ? -1
-        : 1;
-    });
+  const sortedPieces = useMemo(() => sortPieces(pieceSet?.pieces), [pieceSet]);
 
   const getSectionProps = (name) => {
     return {
