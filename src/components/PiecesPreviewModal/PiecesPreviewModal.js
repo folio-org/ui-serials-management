@@ -15,7 +15,7 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { rulesetSubmitValuesHandler, urls } from '../utils';
+import { rulesetSubmitValuesHandler, urls, sortPieces } from '../utils';
 
 import {
   CREATE_PREDICTED_PIECES,
@@ -62,7 +62,14 @@ const PiecesPreviewModal = ({
     (data) => ky
       .post(GENERATE_PIECES_PREVIEW, { json: data })
       .json()
-      .then((res) => setGeneratedPieceSet(res))
+      .then((res) => {
+        if (!Array.isArray(res)) {
+          const sortedPieceSet = { ...res, pieces: sortPieces(res?.pieces) };
+          setGeneratedPieceSet(sortedPieceSet);
+        } else {
+          setGeneratedPieceSet(res);
+        }
+      })
   );
 
   // istanbul ignore next
@@ -209,7 +216,14 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            contentData={generatedPieceSet}
+            // DEPRECATED - This handles the older case in which generatePieces responded with an array of pieces
+            // Now supports newer response of the predicted piece set object, containing an array of pieces
+            // TODO Remove this once interface version has been increased
+            contentData={
+              Array.isArray(generatedPieceSet)
+                ? generatedPieceSet
+                : generatedPieceSet?.pieces
+            }
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}

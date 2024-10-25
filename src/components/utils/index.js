@@ -8,4 +8,4 @@ export { default as focusSASQSearchField } from './focusSASQSearchField';
 export { default as getSortedItems } from './getSortedItems';
 export { default as deepDeleteKeys } from './deepDeleteKeys';
 export { default as rulesetSubmitValuesHandler } from './rulesetSubmitValuesHandler';
-
+export { default as sortPieces } from './sortPieces';
