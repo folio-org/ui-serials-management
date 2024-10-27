@@ -17,7 +17,7 @@
     "poLine.replacePOLine": "Zastąp pozycję zamówienia",
     "poLine.replacePOLineSpecific": "Replace PO line {identifier}",
     "poLine.title": "Title in PO line",
-    "poLine.viewInInventory": "View in inventory",
+    "poLine.viewInInventory": "Zobacz w aplikacji Katalogowanie",
     "poLine.selectPOLine": "Wybierz pozycję zamówienia",
     "poLine.orderNumber": "Order number",
     "poLine.orderStatus": "Status zamówienia",
