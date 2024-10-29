@@ -1,27 +1,19 @@
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 import { useMutation, useQueryClient } from 'react-query';
-import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
-import { requiredValidator } from '@folio/stripes-erm-components';
 import {
-  Row,
-  Col,
   Button,
   ModalFooter,
-  KeyValue,
-  TextField,
-  InfoPopover,
-  Select,
-  Checkbox,
-  Label,
-  MessageBanner,
   Spinner,
 } from '@folio/stripes/components';
+
+import GenerateReceivingModalForm from './GenerateReceivingModalForm';
+import GenerateReceivingModalInfo from './GenerateReceivingModalInfo';
 
 import { useHoldings, useLocations } from '../../hooks';
 
@@ -32,10 +24,7 @@ import {
 import {
   INTERNAL_COMBINATION_PIECE,
   INTERNAL_OMISSION_PIECE,
-  INTERNAL_RECURRENCE_PIECE,
 } from '../../constants/internalPieceClasses';
-
-import css from './GenerateReceivingModal.css';
 
 const propTypes = {
   serial: PropTypes.object,
@@ -127,28 +116,6 @@ const GenerateReceivingModal = ({
     return { ...fixedInitialValues };
   };
 
-  const formatDataOptions = () => {
-    if (serial?.orderLine?.remoteId_object?.locations?.length) {
-      if (!holdingIds && locations?.length) {
-        return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
-          const location = locations?.find((l) => e?.locationId === l?.id);
-          return { label: location?.name, value: location?.id };
-        });
-      } else if (locations?.length && holdings?.length) {
-        return holdings?.map((h) => {
-          const holdingLocation = locations.find(
-            (l) => h?.permanentLocationId === l?.id
-          );
-          return {
-            label: `${holdingLocation?.name} > ${h?.callNumber}`,
-            value: h?.id,
-          };
-        });
-      }
-    }
-    return [];
-  };
-
   const addDays = (date, days) => {
     const result = new Date(date);
     result.setDate(result.getDate() + Number(days));
@@ -226,248 +193,6 @@ const GenerateReceivingModal = ({
     }
   };
 
-  const renderMessageBanner = () => {
-    return (
-      <MessageBanner>
-        <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
-      </MessageBanner>
-    );
-  };
-
-  const renderPredictedPiecesInformation = () => {
-    // Format piece information based on class
-    const renderPieceDateLabel = (piece) => {
-      switch (piece?.class) {
-        case INTERNAL_RECURRENCE_PIECE:
-          return `${piece?.date}, ${piece?.label}`;
-        case INTERNAL_OMISSION_PIECE:
-          return `${piece?.date}`;
-        case INTERNAL_COMBINATION_PIECE:
-          return `${piece?.recurrencePieces[0]?.date}, ${piece?.label}`;
-        default:
-          return null;
-      }
-    };
-
-    return (
-      <>
-        {!serial?.orderLine?.remoteId_object?.locations?.length && (
-          <>
-            <MessageBanner type="warning">
-              <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />
-            </MessageBanner>
-            <br />
-          </>
-        )}
-        <div className={css.container}>
-          <Row className={css.firstRow}>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.totalPieces" />
-                }
-              >
-                {pieceSet?.pieces?.length}
-              </KeyValue>
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.pieceSetGenerated" />
-                }
-              >
-                {pieceSet?.dateCreated}
-              </KeyValue>
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
-                }
-              >
-                {pieceSet?.startDate}
-              </KeyValue>
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
-                }
-              >
-                {pieceSet?.ruleset?.rulesetNumber}
-              </KeyValue>
-            </Col>
-          </Row>
-          <Row className={css.secondRow}>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.firstPiece" />
-                }
-              >
-                {renderPieceDateLabel(pieceSet?.pieces[0])}
-              </KeyValue>
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-serials-management.pieceSets.lastPiece" />
-                }
-              >
-                {renderPieceDateLabel(
-                  pieceSet?.pieces?.[pieceSet?.pieces?.length - 1]
-                )}
-              </KeyValue>
-            </Col>
-          </Row>
-        </div>
-      </>
-    );
-  };
-
-  const renderFields = () => {
-    return (
-      <>
-        <Row>
-          <Col xs={6}>
-            <Field
-              component={TextField}
-              label={
-                <>
-                  <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceipt" />
-                  <InfoPopover
-                    content={
-                      <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceiptPopover" />
-                    }
-                  />
-                </>
-              }
-              name="interval"
-              required
-              type="number"
-              validate={requiredValidator}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={[{ label: 'Physical', value: 'Physical' }]}
-              disabled
-              label={
-                <FormattedMessage id="ui-serials-management.pieceSets.pieceFormat" />
-              }
-              name="format"
-            />
-          </Col>
-          <Col xs={3}>
-            <Label>
-              <FormattedMessage id="ui-serials-management.pieceSets.supplement" />
-              <InfoPopover
-                content={
-                  <FormattedMessage id="ui-serials-management.pieceSets.supplementPopover" />
-                }
-                id="supplement-tooltip"
-              />
-            </Label>
-            <FormattedMessage id="ui-serials-management.pieceSets.supplement">
-              {([ariaLabel]) => (
-                <Field
-                  aria-label={ariaLabel}
-                  component={Checkbox}
-                  name="supplement"
-                  type="checkbox"
-                />
-              )}
-            </FormattedMessage>
-          </Col>
-          {serial?.orderLine?.remoteId_object?.physical?.createInventory ===
-            'Instance, Holding, Item' && (
-            <Col xs={3}>
-              <Label>
-                <FormattedMessage id="ui-serials-management.pieceSets.createItem" />
-              </Label>
-              <FormattedMessage id="ui-serials-management.pieceSets.createItem">
-                {([ariaLabel]) => (
-                  <Field
-                    aria-label={ariaLabel}
-                    component={Checkbox}
-                    name="createItem"
-                    type="checkbox"
-                  />
-                )}
-              </FormattedMessage>
-            </Col>
-          )}
-        </Row>
-        <Row>
-          {!!serial?.orderLine?.remoteId_object?.locations?.length && (
-            <Col xs={6}>
-              <Field
-                component={Select}
-                dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-                disabled={
-                  serial?.orderLine?.remoteId_object?.locations?.length === 1
-                }
-                label={
-                  holdingIds ? (
-                    <FormattedMessage id="ui-serials-management.pieceSets.holding" />
-                  ) : (
-                    <FormattedMessage id="ui-serials-management.pieceSets.location" />
-                  )
-                }
-                name={holdingIds ? 'holdingId' : 'locationId'}
-                required
-                validate={requiredValidator}
-              />
-            </Col>
-          )}
-          {!!holdingIds?.length && (
-            <>
-              <Col xs={3}>
-                <Label>
-                  <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding" />
-                  <InfoPopover
-                    content={
-                      <FormattedMessage id="ui-serials-management.pieceSets.displayInHoldingPopover" />
-                    }
-                    id="display-on-holding-tooltip"
-                  />
-                </Label>
-                <FormattedMessage id="ui-serials-management.pieceSets.displayInHolding">
-                  {([ariaLabel]) => (
-                    <Field
-                      aria-label={ariaLabel}
-                      component={Checkbox}
-                      name="displayOnHolding"
-                      type="checkbox"
-                    />
-                  )}
-                </FormattedMessage>
-              </Col>
-              <Col xs={3}>
-                <Label>
-                  <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic" />
-                </Label>
-                <FormattedMessage id="ui-serials-management.pieceSets.displayToPublic">
-                  {([ariaLabel]) => (
-                    <Field
-                      aria-label={ariaLabel}
-                      component={Checkbox}
-                      name="displayToPublic"
-                      type="checkbox"
-                    />
-                  )}
-                </FormattedMessage>
-              </Col>
-            </>
-          )}
-        </Row>
-      </>
-    );
-  };
-
   const renderFooter = ({ formState, handleSubmit, handleClose }) => {
     const { invalid, pristine, submitting } = formState;
     return (
@@ -507,9 +232,15 @@ const GenerateReceivingModal = ({
       mutators={arrayMutators}
       onSubmit={handleGeneration}
     >
-      {renderMessageBanner()}
-      {renderPredictedPiecesInformation()}
-      {renderFields()}
+      <GenerateReceivingModalInfo
+        pieceSet={pieceSet}
+        serial={serial}
+      />
+      <GenerateReceivingModalForm
+        holdings={holdings}
+        locations={locations}
+        serial={serial}
+      />
     </FormModal>
   );
 };
