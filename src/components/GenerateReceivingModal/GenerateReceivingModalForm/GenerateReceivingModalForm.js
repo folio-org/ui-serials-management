@@ -14,7 +14,10 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-import { useCentralOrderingSettings } from '@folio/stripes-acq-components';
+import {
+  useCentralOrderingSettings,
+  useConsortiumTenants,
+} from '@folio/stripes-acq-components';
 
 const propTypes = {
   serial: PropTypes.object,
@@ -28,6 +31,9 @@ const GenerateReceivingModalForm = ({
   locations = [],
 }) => {
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
+  const { tenants: tenantIds } = useConsortiumTenants({
+    enabled: isCentralOrderingEnabled,
+  });
 
   const formatDataOptions = () => {
     if (serial?.orderLine?.remoteId_object?.locations?.length) {
