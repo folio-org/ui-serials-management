@@ -3,6 +3,7 @@ import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
+
 import {
   Row,
   Col,
@@ -12,6 +13,8 @@ import {
   Checkbox,
   Label,
 } from '@folio/stripes/components';
+
+import { useCentralOrderingSettings } from '@folio/stripes-acq-components';
 
 const propTypes = {
   serial: PropTypes.object,
@@ -24,6 +27,8 @@ const GenerateReceivingModalForm = ({
   holdings = [],
   locations = [],
 }) => {
+  const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
+
   const formatDataOptions = () => {
     if (serial?.orderLine?.remoteId_object?.locations?.length) {
       if (!holdings?.length && locations?.length) {
@@ -184,6 +189,27 @@ const GenerateReceivingModalForm = ({
           </>
         )}
       </Row>
+      {/* <Row>
+        <Col xs={6}>
+          <Field
+            component={Select}
+            dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
+            disabled={
+              serial?.orderLine?.remoteId_object?.locations?.length === 1
+            }
+            label={
+              holdings?.length ? (
+                <FormattedMessage id="ui-serials-management.pieceSets.holding" />
+              ) : (
+                <FormattedMessage id="ui-serials-management.pieceSets.location" />
+              )
+            }
+            name={holdings?.length ? 'holdingId' : 'locationId'}
+            required
+            validate={requiredValidator}
+          />
+        </Col>
+      </Row> */}
     </>
   );
 };
