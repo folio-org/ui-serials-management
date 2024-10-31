@@ -14,34 +14,29 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-import {
-  useCentralOrderingSettings,
-  useConsortiumTenants,
-} from '@folio/stripes-acq-components';
-
 const propTypes = {
-  serial: PropTypes.object,
+  orderLine: PropTypes.object,
   locations: PropTypes.arrayOf(PropTypes.object),
   holdings: PropTypes.arrayOf(PropTypes.object),
 };
 
 const GenerateReceivingModalForm = ({
-  serial,
+  orderLine,
   holdings = [],
   locations = [],
 }) => {
-  const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
-  const { tenants: tenantIds } = useConsortiumTenants({
-    enabled: isCentralOrderingEnabled,
-  });
-
   const formatDataOptions = () => {
-    if (serial?.orderLine?.remoteId_object?.locations?.length) {
+    // If there are locations associated with a POL
+    if (orderLine?.remoteId_object?.locations?.length) {
+      // And none of these are holdings
       if (!holdings?.length && locations?.length) {
-        return serial?.orderLine?.remoteId_object?.locations?.map((e) => {
+        // Data options should be an array of matched locations
+        return orderLine?.remoteId_object?.locations?.map((e) => {
           const location = locations?.find((l) => e?.locationId === l?.id);
           return { label: location?.name, value: location?.id };
         });
+        // If both holdings and locations exist associated with the POL
+        // Data options should be the location, concatenated with the holding call number
       } else if (locations?.length && holdings?.length) {
         return holdings?.map((h) => {
           const holdingLocation = locations.find(
@@ -113,7 +108,7 @@ const GenerateReceivingModalForm = ({
             )}
           </FormattedMessage>
         </Col>
-        {serial?.orderLine?.remoteId_object?.physical?.createInventory ===
+        {orderLine?.remoteId_object?.physical?.createInventory ===
           'Instance, Holding, Item' && (
           <Col xs={3}>
             <Label>
@@ -133,14 +128,12 @@ const GenerateReceivingModalForm = ({
         )}
       </Row>
       <Row>
-        {!!serial?.orderLine?.remoteId_object?.locations?.length && (
+        {!!orderLine?.remoteId_object?.locations?.length && (
           <Col xs={6}>
             <Field
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-              disabled={
-                serial?.orderLine?.remoteId_object?.locations?.length === 1
-              }
+              disabled={orderLine?.remoteId_object?.locations?.length === 1}
               label={
                 holdings?.length ? (
                   <FormattedMessage id="ui-serials-management.pieceSets.holding" />
@@ -195,27 +188,6 @@ const GenerateReceivingModalForm = ({
           </>
         )}
       </Row>
-      {/* <Row>
-        <Col xs={6}>
-          <Field
-            component={Select}
-            dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
-            disabled={
-              serial?.orderLine?.remoteId_object?.locations?.length === 1
-            }
-            label={
-              holdings?.length ? (
-                <FormattedMessage id="ui-serials-management.pieceSets.holding" />
-              ) : (
-                <FormattedMessage id="ui-serials-management.pieceSets.location" />
-              )
-            }
-            name={holdings?.length ? 'holdingId' : 'locationId'}
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-      </Row> */}
     </>
   );
 };

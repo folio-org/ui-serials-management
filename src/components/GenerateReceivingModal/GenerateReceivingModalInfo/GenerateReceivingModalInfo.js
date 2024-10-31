@@ -12,11 +12,11 @@ import {
 import css from './GenerateReceivingModalInfo.css';
 
 const propTypes = {
-  serial: PropTypes.object,
+  orderLineLocations: PropTypes.arrayOf(PropTypes.object),
   pieceSet: PropTypes.object,
 };
 
-const GenerateReceivingModalInfo = ({ serial, pieceSet }) => {
+const GenerateReceivingModalInfo = ({ orderLineLocations = [], pieceSet }) => {
   // Format piece information based on class
   const renderPieceDateLabel = (piece) => {
     switch (piece?.class) {
@@ -36,7 +36,7 @@ const GenerateReceivingModalInfo = ({ serial, pieceSet }) => {
       <MessageBanner>
         <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
       </MessageBanner>
-      {!serial?.orderLine?.remoteId_object?.locations?.length && (
+      {!!orderLineLocations?.length && (
         <>
           <MessageBanner type="warning">
             <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />

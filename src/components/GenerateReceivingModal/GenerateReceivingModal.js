@@ -6,11 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
-import {
-  Button,
-  ModalFooter,
-  Spinner,
-} from '@folio/stripes/components';
+import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
 
 import GenerateReceivingModalForm from './GenerateReceivingModalForm';
 import GenerateReceivingModalInfo from './GenerateReceivingModalInfo';
@@ -27,25 +23,28 @@ import {
 } from '../../constants/internalPieceClasses';
 
 const propTypes = {
-  serial: PropTypes.object,
+  orderLine: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   pieceSet: PropTypes.object,
-  holdingIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 const GenerateReceivingModal = ({
-  serial,
+  orderLine,
   showModal,
   setShowModal,
   pieceSet,
-  holdingIds,
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const callout = useCallout();
   const { data: locations } = useLocations();
-  const { data: holdings } = useHoldings(holdingIds);
+
+  const holdingIds = orderLine?.remoteId_object?.locations?.[0]?.holdingId
+    ? orderLine?.remoteId_object?.locations?.map((hi) => hi?.holdingId)
+    : null;
+
+  const { data: holdings } = useHoldings({ enabled: holdingIds });
 
   const closeModal = () => {
     setShowModal(false);
@@ -99,7 +98,7 @@ const GenerateReceivingModal = ({
       displayOnHolding: false,
       displayToPublic: false,
     };
-    if (serial?.orderLine?.remoteId_object?.locations?.length === 1) {
+    if (orderLine?.remoteId_object?.locations?.length === 1) {
       if (holdingIds) {
         return {
           holdingId: holdingIds[0],
@@ -107,8 +106,7 @@ const GenerateReceivingModal = ({
         };
       } else {
         return {
-          locationId:
-            serial?.orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId: orderLine?.remoteId_object?.locations?.[0]?.locationId,
           ...fixedInitialValues,
         };
       }
@@ -138,8 +136,8 @@ const GenerateReceivingModal = ({
       return {
         ...(values?.createItem && { createItem: values.createItem }),
         receiving: {
-          poLineId: serial?.orderLine?.remoteId,
-          titleId: serial?.orderLine?.titleId,
+          poLineId: orderLine?.remoteId,
+          titleId: orderLine?.titleId,
           format: values?.format,
           displayOnHolding: values?.displayOnHolding,
           displayToPublic: values?.displayToPublic,
@@ -233,13 +231,13 @@ const GenerateReceivingModal = ({
       onSubmit={handleGeneration}
     >
       <GenerateReceivingModalInfo
+        orderLineLocations={orderLine?.remoteId_object?.locations}
         pieceSet={pieceSet}
-        serial={serial}
       />
       <GenerateReceivingModalForm
         holdings={holdings}
         locations={locations}
-        serial={serial}
+        orderLine={orderLine}
       />
     </FormModal>
   );
