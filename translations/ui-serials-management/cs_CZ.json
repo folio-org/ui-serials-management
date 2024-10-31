@@ -239,9 +239,12 @@
     "ruleset.displaySummaryTemplate": "Šablona Zobrazit shrnutí",
     "pieceSets.deletePredictedPieceSet": "Delete predicted piece set",
     "pieceSets.deletePredictedPieceSet.confirmMessage": "Are you sure you wish to delete this predicted piece set?",
-    "cancelGeneration": "Cancel generation",
+    "cancelGeneration": "Zrušit generování",
     "ruleset.previewPredictedPieces": "Preview predicted pieces",
     "ruleset.confirmGeneration": "Confirm generation of overlapping piece sets",
     "pieceSets.overlappingDates.dialog": "A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>. {br} Generating a new set will result in some overlap between piece sets. If this is acceptable select \"Generate\" to continue.",
-    "pieceSets.overlappingDates.warning": "Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>"
+    "pieceSets.overlappingDates.warning": "Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>",
+    "ruleset.editPublicationPattern": "Edit publication pattern",
+    "ruleset.copyAndDeprecate": "Copy and deprecate",
+    "ruleset.copyAndDeprecatePublicationPattern": "Copy and deprecate publication pattern"
 }

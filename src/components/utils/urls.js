@@ -5,6 +5,7 @@ const urls = {
   serialEdit: (id) => `/serials-management/serials/${id}/edit`,
 
   rulesetView: (sid, rid) => `/serials-management/serials/${sid}/rulesets/${rid}`,
+  rulesetReplace: (sid, rid, replaceType) => `/serials-management/serials/${sid}/rulesets/${rid}/${replaceType}`,
   rulesetCreate: (id) => `/serials-management/serials/${id}/rulesets/create`,
 
   pieceSets: () => '/serials-management/pieceSets',

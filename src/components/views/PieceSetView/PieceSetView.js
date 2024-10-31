@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -19,7 +19,7 @@ import {
   SERIAL_ENDPOINT,
   PIECE_SET_ENDPOINT,
 } from '../../../constants/endpoints';
-import { urls } from '../../utils';
+import { urls, sortPieces } from '../../utils';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -80,10 +80,18 @@ const PieceSetView = ({
     }
   };
 
+  const sortedPieces = useMemo(() => sortPieces(pieceSet?.pieces), [pieceSet]);
+
   const getSectionProps = (name) => {
     return {
       id: `piece-set-section-${name}`,
-      pieceSet: { ...pieceSet, titleId: serial?.orderLine?.titleId },
+      pieceSet: {
+        ...pieceSet,
+        // This is a bit annoying with regard to the sorting that needs to be done
+        // Grails doesnt like attempting to sort uniderectional one to many relationships
+        pieces: sortedPieces,
+        titleId: serial?.orderLine?.titleId,
+      },
     };
   };
 
@@ -150,8 +158,8 @@ const PieceSetView = ({
         <PiecesList key="pieces-list" {...getSectionProps('pieces-list')} />
       </Pane>
       <GenerateReceivingModal
+        {...getSectionProps('generate-receiving-modal')}
         holdingIds={getHoldingIds()}
-        pieceSet={pieceSet}
         serial={serial}
         setShowModal={setShowReceivingModal}
         showModal={showReceivingModal}
