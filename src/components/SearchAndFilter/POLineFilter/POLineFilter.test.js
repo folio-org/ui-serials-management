@@ -41,18 +41,31 @@ describe('POLineFilter', () => {
     expect(getByTestId('selectPOLinePluggin')).toBeInTheDocument();
   });
 
+
+  // This is kinda pointless... we're testing testForm here not PoLineFilter
+  // The worry is that careless copy-pasting like this means that the tests aren't being carefully considered and constructed
+  // TODO review this test from the ground up
   test('renders the submit button', async () => {
     await Button('Submit').exists();
   });
 
-  test('clicking the submit button ', async () => {
-    await waitFor(async () => {
-      await Button('Submit').click();
+  describe('clicking submit', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Button('Submit').click();
+      });
     });
 
-    expect(onSubmit.mock.calls.length).toBe(1);
+    test('submit happened', async () => {
+      await waitFor(() => {
+        expect(onSubmit.mock.calls.length).toBe(1);
+      });
+    });
   });
 
+  // TODO this probably isn't necessary here. We can assume basic Pluggable implementations
+  // work as they _should_ be tested at the Pluggable level in stripes-core.
+  // More interesting implementations where we render fallbacks and stuff we shlud mock Pluggable and test those
   test('should not call the onPOLineSelected callback', () => {
     expect(onPOLineSelected).not.toHaveBeenCalled();
   });

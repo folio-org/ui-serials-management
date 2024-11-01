@@ -110,6 +110,7 @@ jest.mock('../../hooks', () => ({
 }));
 
 let renderComponent;
+// TODO this test complains about rendering forwardRef... Maybe it's the formModal stuff. Again though, we ought to fix that.
 describe('GenerateReceivingModal', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
@@ -142,6 +143,7 @@ describe('GenerateReceivingModal', () => {
   });
 
   test('renders the expected First piece value', async () => {
+    // TODO this formatting is making me twitchy... is this the best way to get this, and if so is that because it's not the best way to render it?
     await KeyValue('First piece').has({ value: '2024-10-01, 5 9' });
   });
 
@@ -234,11 +236,14 @@ describe('GenerateReceivingModal', () => {
         });
       });
 
-      test('mutate async called as expected', () => {
+      test('mutate async called as expected', async () => {
         for (let i = 0; i < expectedSubmitValues.length; i++) {
-          expect(mockMutateAsync.mock.calls[i]).toStrictEqual([
-            expectedSubmitValues[i],
-          ]);
+          // TODO in general when a syncronous test follow an async action we can hit race conditions. Seems not to happen in npm-folioci *shrug*
+          await waitFor(() => {
+            expect(mockMutateAsync.mock.calls[i]).toStrictEqual([
+              expectedSubmitValues[i],
+            ]);
+          });
         }
       });
 

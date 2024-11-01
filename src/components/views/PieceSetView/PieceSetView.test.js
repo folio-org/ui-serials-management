@@ -41,6 +41,8 @@ jest.mock('react-query', () => {
 
 describe('PieceSetView', () => {
   let renderComponent;
+
+  // This can probs be ".each-ified"... there's a lot of repeated tests
   describe('renders with a loading piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
@@ -117,44 +119,78 @@ describe('PieceSetView', () => {
       expect(getByText('PiecesList')).toBeInTheDocument();
     });
 
-    describe('renders action menu buttons', () => {
+    describe('clicking action menu', () => {
       beforeEach(async () => {
         await waitFor(async () => {
           await Button('Actions').click();
         });
       });
 
-      test('renders the Action menu with two items', async () => {
+      test('renders disabled generate receiving pieces button', async () => {
         await Button('Generate receiving pieces').has({ disabled: true });
+      });
+
+      test('renders delete predicted piece set button', async () => {
         await Button('Delete predicted piece set').has({ disabled: false });
       });
-    });
 
-    describe('renders the confirmation modal ', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Button('Actions').click();
-          await Button('Delete predicted piece set').has({ disabled: false });
-          await Button('Delete predicted piece set').click();
+      describe('clicking delete predicted piece set button', () => {
+        beforeEach(async () => {
+          // Ensure fresh mock for each test
+          mockMutateAsync.mockClear();
+          await waitFor(async () => {
+            await Button('Delete predicted piece set').click();
+          });
         });
-      });
 
-      test('renders the ConfirmationModal component ', async () => {
-        const { getByText } = renderComponent;
-        expect(getByText('Delete')).toBeInTheDocument();
-      });
+        test('renders the ConfirmationModal component ', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(() => {
+            expect(getByText('Delete')).toBeInTheDocument();
+          });
+        });
 
-      test('deleteing the piece set and closing the ConfirmationModal component ', async () => {
-        const { getByText } = renderComponent;
-        await Button('Delete').click();
-        await expect(mockMutateAsync).toHaveBeenCalled();
-        await expect(getByText('Actions')).toBeVisible();
-      });
+        describe('clicking delete', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Delete').click();
+            });
+          });
 
-      test('closing the ConfirmationModal component ', async () => {
-        const { getByText } = renderComponent;
-        await Button('Cancel').click();
-        await expect(getByText('Actions')).toBeVisible();
+          test('delete callback was called', async () => {
+            await waitFor(() => {
+              expect(mockMutateAsync).toHaveBeenCalled();
+            });
+          });
+
+          test('actions button is visible again', async () => {
+            const { getByText } = renderComponent;
+            await waitFor(() => {
+              expect(getByText('Actions')).toBeVisible();
+            });
+          });
+        });
+
+        describe('clicking cancel', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click();
+            });
+          });
+
+          test('delete callback was not called', async () => {
+            await waitFor(() => {
+              expect(mockMutateAsync).not.toHaveBeenCalled();
+            });
+          });
+
+          test('actions button is visible again', async () => {
+            const { getByText } = renderComponent;
+            await waitFor(() => {
+              expect(getByText('Actions')).toBeVisible();
+            });
+          });
+        });
       });
     });
   });

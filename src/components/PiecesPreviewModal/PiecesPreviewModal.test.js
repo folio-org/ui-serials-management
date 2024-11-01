@@ -4,6 +4,7 @@ import {
   renderWithIntl,
   Button,
   Datepicker,
+  MessageBanner,
   TextField,
 } from '@folio/stripes-erm-testing';
 
@@ -49,6 +50,15 @@ const RulesetFormComponent = () => {
 };
 
 let renderComponent;
+// TODO this test is throwing up a big ugly warning about updating a component while updating another component.
+// Either the test needs fixing or the component does
+// It's also really f***ing slow, not sure what to do about that but this test shouldn't take 11 seconds
+
+// ^^ That is possibly down to the wild form interactions... maybe some of them need refactoring as well.
+
+// Most of these interactions are actually PiecesPreviewModalForm... can we split these tests out and be more economical??
+// ie tests that the modal opens as expected, and that submits etc do whatever,
+// and then tests for form interactions that don't need to live in a modal
 describe('PiecesPreviewModal', () => {
   beforeEach(() => {
     useMutation.mockReturnValue({ mutateAsync: mockMutateAsync });
@@ -78,6 +88,7 @@ describe('PiecesPreviewModal', () => {
     expect(getByText('Note')).toBeInTheDocument();
   });
 
+  // TODO These test titles are somewhat meaningless... we should ahve better test data and give proper descriptions so devs know what has actually been tested
   test('renders the expected label', async () => {
     const { getByText } = renderComponent;
     expect(getByText('Values to use for the first issue')).toBeInTheDocument();
@@ -117,71 +128,117 @@ describe('PiecesPreviewModal', () => {
   });
 
   describe('PiecesPreviewModal overlapping piece set', () => {
-    test('types a date into Datepicker, generate button enabled', async () => {
-      await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2026');
-        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
-          '1'
-        );
-        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
-          '1'
-        );
-      });
-      await Datepicker({ id: 'ruleset-start-date' }).has({
-        inputValue: '01/01/2026',
+    // Typically interactions belong in a beforeEach for a describe
+    describe('typing dates into datepicker', () => {
+      beforeEach(async () => {
+        mockMutateAsync.mockClear();
+        await waitFor(async () => {
+          await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2026');
+          await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+            '1'
+          );
+          await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+            '1'
+          );
+        });
       });
 
-      await Button({ id: 'generate-predicted-pieces-button' }).has({
-        disabled: false,
+      test('datepicker ruleset start date renders expected date', async () => {
+        await Datepicker({ id: 'ruleset-start-date' }).has({
+          inputValue: '01/01/2026',
+        });
       });
-      await waitFor(async () => {
-        await Button({ id: 'generate-predicted-pieces-button' }).click();
+
+      test('generate predicted pieces button is not disabled', async () => {
+        await Button({ id: 'generate-predicted-pieces-button' }).has({
+          disabled: false,
+        });
       });
-      await waitFor(async () => {
-        expect(mockMutateAsync).toHaveBeenCalled();
+
+      describe('clicking generate', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button({ id: 'generate-predicted-pieces-button' }).click();
+          });
+        });
+
+        test('mutateAsync was called', async () => {
+          await waitFor(() => {
+            expect(mockMutateAsync).toHaveBeenCalled();
+          });
+        });
       });
     });
 
-    test('types a predicted piece date into Datepicker, see warning, generate button enabled, click it and see confirmation modal', async () => {
-      const { getByText, queryByText } = renderComponent;
-      await waitFor(async () => {
-        await Datepicker({ id: 'ruleset-start-date' }).fillIn('02/01/2024');
-        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
-          '1'
-        );
-        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
-          '1'
-        );
-      });
-      await Datepicker({ id: 'ruleset-start-date' }).has({
-        inputValue: '02/01/2024',
+    // TODO this title isn't great... needs elaboration
+    describe('typing already covered predicted piece dates into datepicker', () => {
+      beforeEach(async () => {
+        mockMutateAsync.mockClear();
+        await waitFor(async () => {
+          await Datepicker({ id: 'ruleset-start-date' }).fillIn('02/01/2024');
+          await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+            '1'
+          );
+          await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+            '1'
+          );
+        });
       });
 
-      await waitFor(async () => expect(
-        getByText(/Warning: A predicted piece set with the start date/i)
-      ).toBeInTheDocument());
-      await Button({ id: 'generate-predicted-pieces-button' }).has({
-        disabled: false,
+      test('datepicker ruleset start date renders expected date', async () => {
+        await Datepicker({ id: 'ruleset-start-date' }).has({
+          inputValue: '02/01/2024',
+        });
       });
-      await waitFor(async () => {
-        await Button({ id: 'generate-predicted-pieces-button' }).click();
-      });
-      expect(
-        getByText('Confirm generation of overlapping piece sets')
-      ).toBeInTheDocument();
 
-      await Button('Cancel generation').has({ disabled: false });
-      await Button({ id: 'clickable-generate-confirmation-modal-confirm' }).has(
-        { disabled: false }
-      );
-
-      await waitFor(async () => {
-        await Button('Cancel generation').click();
+      test('warning renders as expected', async () => {
+        await waitFor(async () => {
+          // TODO not really a TODO but a note to NOT use regex with a wide queryBy in a waitFor like this, it'll end up parsing everything again and again
+          // Besides we have these interactors for a reason ;)
+          await MessageBanner(/Warning: A predicted piece set with the start date/).exists();
+        });
       });
-      await waitFor(async () => {
-        expect(
-          queryByText('Confirm generation of overlapping piece sets')
-        ).not.toBeInTheDocument();
+
+      test('generate predicted pieces button is not disabled', async () => {
+        await Button({ id: 'generate-predicted-pieces-button' }).has({
+          disabled: false,
+        });
+      });
+
+      describe('clicking generate', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button({ id: 'generate-predicted-pieces-button' }).click();
+          });
+        });
+
+        test('warning about overlapping piece sets renders', async () => {
+          const { queryByText } = renderComponent;
+
+          await waitFor(() => {
+            expect(queryByText('Confirm generation of overlapping piece sets')).toBeInTheDocument();
+          });
+        });
+
+        test('cancel button renders as expected', async () => {
+          await Button('Cancel generation').has({ disabled: false });
+        });
+
+        describe('cancelling generate', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel generation').click();
+            });
+          });
+
+          test('warning about overlapping piece sets no longer renders', async () => {
+            const { queryByText } = renderComponent;
+
+            await waitFor(() => {
+              expect(queryByText('Confirm generation of overlapping piece sets')).not.toBeInTheDocument();
+            });
+          });
+        });
       });
     });
   });
@@ -206,27 +263,44 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
     await Button({ id: 'rulset-preview-button' }).has({ disabled: true });
   });
 
-  test('types a date into Datepicker and starting value fields, preview button enabled, click it', async () => {
-    await waitFor(async () => {
-      await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
-      await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
-        '1'
-      );
-      await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
-        '1'
-      );
-    });
-    await Datepicker({ id: 'ruleset-start-date' }).has({
-      inputValue: '01/01/2025',
-    });
-
-    await Button({ id: 'rulset-preview-button' }).has({ disabled: false });
-    await waitFor(async () => {
-      await Button({ id: 'rulset-preview-button' }).click();
+  // TODO better name for this
+  describe('typing dates into fields', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
+        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+          '1'
+        );
+        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+          '1'
+        );
+      });
     });
 
-    await waitFor(async () => {
-      expect(mockMutateAsync).toHaveBeenCalled();
+    test('datepicker has expected value', async () => {
+      await Datepicker({ id: 'ruleset-start-date' }).has({
+        inputValue: '01/01/2025',
+      });
+    });
+
+    test('preview button is not disabled', async () => {
+      await Button({ id: 'rulset-preview-button' }).has({ disabled: false });
+    });
+
+    describe('clicking preview button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button({ id: 'rulset-preview-button' }).click();
+        });
+      });
+
+      // We should test it's going to the right endpoint, since there's a difference
+      // TODO also names should be about user expectations, not code expectations
+      test('mutateAsync got called', async () => {
+        await waitFor(async () => {
+          expect(mockMutateAsync).toHaveBeenCalled();
+        });
+      });
     });
   });
 });
