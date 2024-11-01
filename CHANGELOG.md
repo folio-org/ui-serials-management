@@ -1,7 +1,35 @@
 # change history for ui-serials-management
 
-## 1.1.0 In progress
+## 1.1.0 2024-11-01
+  * UISER-167 Update module license and guidance for ui-serials-management
+  * UISER-166 Update permissions and menu display for serials
+  * UISER-165 Update permissions and menu display for predicted piece sets
+  * UISER-164 Only users with permission ui-serials-management.serials.edit should see the "New" button for Serials
+  * UISER-163 Review and cleanup Module Descriptor for UI-Serials-Management (Eureka)
   * UISER-158 Handle display of sparse order-line objects
+  * UISER-155 Deleted predicted piece set
+  * UISER-153 Support edit for publication patterns
+  * UISER-151 Validation messages on the "Number of time units" field are not being displayed
+  * UISER-150 Fix inconsistencies in the module descriptors for folio_serials-management-1.1
+  * UISER-149 Serials/Receiving: Combination issues do not include expected receipt date
+  * UISER-148 Warn user if they are going to create a predicted piece set with the same start date as an existing predicted piece set
+  * UISER-147 Change preview window title
+  * UISER-144 Dropdowns in Publication Pattern labels slow to respond
+  * UISER-141 View publication pattern
+  * UISER-140 Aria labels in publication pattern should be translatable
+  * UISER-138 Aria label missing for publication pattern numeric day field
+  * UISER-135 Holdings storage API version update
+  * UISER-114 Display publisher information in the serial view
+  * UISER-107 Display tokens for enumeration/chronology in the label
+  * UISER-91 On generating predicted pieces, if the active ruleset has previously been used, then the form should populate with the next set of starting values
+  * UISER-15 UX review: view serial record
+  * UISER-6 Edit publication pattern
+  * MODSER-58 Attempting to generate piece sets with the first or next piece being omitted results in "Cannot get naive index of internal omission piece"
+  * MODSER-57 Refactor generate/create piece set endpoints to return same objects
+  * MODSER-54 Combination pieces do not get allocated a `date`
+  * ERM-3184 Number validation does not allow entry of minus sign or 'e' (exponential) in supplementary props/license terms
+    * Use shared NumberField component from kint-components
+  * ERM-3165 Replace moment with dayjs across app suite
   * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
 ## 1.0.5 2024-08-23
