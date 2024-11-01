@@ -1,4 +1,4 @@
-import { findRefdataValue } from '../utils/findRefdataValue';
+import { findRefdataValue } from '../utils';
 
 export const day = {
   id: '203a65ed-a063-49f9-a638-ef5fd92a8528',

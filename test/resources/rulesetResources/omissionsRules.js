@@ -1,4 +1,4 @@
-import { findRefdataValue } from '../utils/findRefdataValue';
+import { findRefdataValue } from '../utils';
 
 export const dayWeekMonth = {
   id: '8b7e9470-9524-4a16-b2ae-99709865ad21',
@@ -94,11 +94,7 @@ export const month = {
   patternType: findRefdataValue('OmissionRule.PatternType', 'month'),
   pattern: {
     id: 'b10130aa-4a7f-4ae6-9b95-f4cd86cb3e7d',
-    monthFrom: {
-      id: '2c91809f92e151a60192e15b48d40001',
-      value: 'january',
-      label: 'January',
-    },
+    monthFrom: findRefdataValue('Global.Month', 'january'),
     isRange: false,
   },
 };
@@ -109,16 +105,8 @@ export const monthRange = {
   patternType: findRefdataValue('OmissionRule.PatternType', 'month'),
   pattern: {
     id: '096e4a40-cbd5-425b-8604-96a60bf88ed2',
-    monthTo: {
-      id: '2c91809f92e151a60192e15b48e30002',
-      value: 'february',
-      label: 'February',
-    },
-    monthFrom: {
-      id: '2c91809f92e151a60192e15b48d40001',
-      value: 'january',
-      label: 'January',
-    },
+    monthTo: findRefdataValue('Global.Month', 'february'),
+    monthFrom: findRefdataValue('Global.Month', 'january'),
     isRange: true,
   },
 };

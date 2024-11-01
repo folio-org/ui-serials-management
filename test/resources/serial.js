@@ -1,6 +1,6 @@
 import ruleset from './ruleset';
 import orderLine from './externalResources/orderLine';
-import { findRefdataValue } from './utils/findRefdataValue';
+import { findRefdataValue } from './utils';
 
 const serial = {
   id: '9be5cebf-c676-4430-9439-4f47973d8a47',
