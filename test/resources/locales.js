@@ -1,3 +1,4 @@
+// TODO Needs refetching with key locales
 export default [
   {
     label: '',
