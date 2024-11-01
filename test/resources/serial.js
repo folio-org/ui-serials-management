@@ -1,6 +1,6 @@
-import refdata from './refdata';
 import ruleset from './ruleset';
 import orderLine from './orderLine';
+import { findRefdataValue } from './util/findRefdataValue';
 
 const serial = {
   id: '9be5cebf-c676-4430-9439-4f47973d8a47',
@@ -24,8 +24,7 @@ const serial = {
     },
   ],
   description: 'Test Description',
-  // Ref: SerialStatus, Active
-  serialStatus: refdata[16].values[0]
+  serialStatus: findRefdataValue('Serial.SerialStatus', 'active'),
 };
 
 export default serial;
