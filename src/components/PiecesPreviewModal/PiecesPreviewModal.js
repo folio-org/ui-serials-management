@@ -35,6 +35,7 @@ const propTypes = {
 };
 
 const PiecesPreviewModal = ({
+  // TODO this is one of the places I think boundaries need changing. We should be passing down the entirety of a state. It either lives here, or the outcomes get passed here (ie this gets passed an "open" prop and an "onOpen"/"onClose" handler maybe)
   showModal,
   setShowModal,
   ruleset,
@@ -181,6 +182,7 @@ const PiecesPreviewModal = ({
     );
   };
 
+  // TODO what is the point of this
   const renderPublicationDate = (piece) => {
     return <PiecePublicationDate piece={piece} />;
   };
