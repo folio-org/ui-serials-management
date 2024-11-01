@@ -172,14 +172,26 @@ describe('LabelFieldArray', () => {
 
     describe('Adding label', () => {
       beforeEach(async () => {
+        const { getByText } = renderComponent;
         await waitFor(async () => {
           await Button('Add label').click();
         });
+
+        // Ensure the template has been added in the beforeEach is a way to shortcut the waits in each test
+        await waitFor(() => {
+          expect(getByText('Template')).toBeInTheDocument();
+        });
       });
 
+      // TODO test names should be clearer about what they're testing
       test('renders the expected Template label', async () => {
         const { getByText } = renderComponent;
-        expect(getByText('Template')).toBeInTheDocument();
+        // (follows from above) otherwise you need a waitFor at this level
+        // There is no "right" answer here, but this way makes this test redundant and repeated
+        // and removing it would make the test case implicit, which isn't necessarily the best idea always
+        //await waitFor(() => {
+          expect(getByText('Template')).toBeInTheDocument();
+        //});
       });
 
       test('renders the expected Template label', async () => {
@@ -206,11 +218,25 @@ describe('LabelFieldArray', () => {
         expect(getByTestId('editCard')).toBeInTheDocument();
       });
 
-      test('renders the Label style dropdown with correct options', async () => {
-        await Select('Label style*').exists();
-        await waitFor(async () => {
-          await Select('Label style*').choose('Chronology');
-          await Select('Label style*').choose('Enumeration');
+      describe('testing label style', () => {
+        test('renders the Label style dropdown', async () => {
+          await Select('Label style*').exists();
+        });
+
+        // There's many ways to do this, this way is "choose and check it got chosen"
+        describe.each([
+          'Chronology',
+          'Enumeration'
+        ])('choosing %s', (option) => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Select('Label style*').choose(option);
+            });
+          });
+
+          test('label style has correct value', async () => {
+            await Select('Label style*').has({ checkedOptionText: option });
+          });
         });
       });
     });
@@ -226,6 +252,7 @@ describe('LabelFieldArray', () => {
       );
     });
 
+    // TODO Async only needs to be applied to those tests acting asynchronously
     test('renders the expected Template label', async () => {
       const { getByText } = renderComponent;
       expect(getByText('Template')).toBeInTheDocument();
@@ -286,11 +313,25 @@ describe('LabelFieldArray', () => {
         await Select('Label style*').exists();
       });
 
-      test('renders the Enumeration format dropdown with correct options', async () => {
-        await Select('Enumeration format*').exists();
-        await waitFor(async () => {
-          await Select('Enumeration format*').choose('Enumeration Numeric');
-          await Select('Enumeration format*').choose('Enumeration Textual');
+      describe('testing enumeration format', () => {
+        test('renders the Enumeration format dropdown', async () => {
+          await Select('Enumeration format*').exists();
+        });
+
+        // There's many ways to do this, this way is "choose and check it got chosen"
+        describe.each([
+          'Enumeration Numeric',
+          'Enumeration Textual'
+        ])('choosing %s', (option) => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Select('Enumeration format*').choose(option);
+            });
+          });
+
+          test('enumeration format has correct value', async () => {
+            await Select('Enumeration format*').has({ checkedOptionText: option });
+          });
         });
       });
 
@@ -311,11 +352,28 @@ describe('LabelFieldArray', () => {
       );
     });
 
-    test('renders the Label style dropdown with correct options', async () => {
-      await Select('Enumeration format*').exists();
-      await waitFor(async () => {
-        await Select('Enumeration format*').choose('Enumeration Numeric');
-        await Select('Enumeration format*').choose('Enumeration Textual');
+    // TODO Repeating this logic isn't the best... should be trying to not have to repeat tests wherever possible
+    // I'd like to see the repeated tests EXACT like this one to be covered by describe.each, and the type of testing covered by a utility function.
+    // Perhaps "testSelectOptions" as a utility function allowing you to also plug in any follow up tests...
+    // That sort of utility could live in stripes-erm-testing and be very handy for speeding up test writing.
+    describe('testing enumeration format', () => {
+      test('renders the Enumeration format dropdown', async () => {
+        await Select('Enumeration format*').exists();
+      });
+
+      describe.each([
+        'Enumeration Numeric',
+        'Enumeration Textual'
+      ])('choosing %s', (option) => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Select('Enumeration format*').choose(option);
+          });
+        });
+
+        test('enumeration format has correct value', async () => {
+          await Select('Enumeration format*').has({ checkedOptionText: option });
+        });
       });
     });
 
@@ -335,12 +393,25 @@ describe('LabelFieldArray', () => {
       );
     });
 
-    test('renders the Chronology format dropdown with correct options', async () => {
-      await Select('Chronology format*').exists();
-      await waitFor(async () => {
-        await Select('Chronology format*').choose('Chronology Date');
-        await Select('Chronology format*').choose('Chronology Month');
-        await Select('Chronology format*').choose('Chronology Year');
+    describe('testing chronology format', () => {
+      test('renders the Chronology format dropdown', async () => {
+        await Select('Chronology format*').exists();
+      });
+
+      describe.each([
+        'Chronology Date',
+        'Chronology Month',
+        'Chronology Year'
+      ])('choosing %s', (option) => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Select('Chronology format*').choose(option);
+          });
+        });
+
+        test('Chronology format has correct value', async () => {
+          await Select('Chronology format*').has({ checkedOptionText: option });
+        });
       });
     });
 
