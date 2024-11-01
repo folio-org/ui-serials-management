@@ -1,18 +1,18 @@
+import { findRefdataValue } from '../utils';
+
 export const enumerationNumeric = {
   id: 'f9c26c17-6d69-4b05-9a94-8ac391f660ad',
   index: 3,
-  templateMetadataRuleType: {
-    id: '2c91809f92e7cf460192e7d9127b0055',
-    value: 'enumeration',
-    label: 'Enumeration',
-  },
+  templateMetadataRuleType: findRefdataValue(
+    'TemplateMetadataRule.TemplateMetadataRuleType',
+    'enumeration'
+  ),
   ruleType: {
     id: '6fb7e0db-90ff-4e9e-bf8c-9fa56271061a',
-    templateMetadataRuleFormat: {
-      id: '2c91809f92e7cf460192e7d913b40060',
-      value: 'enumeration_numeric',
-      label: 'Numeric',
-    },
+    templateMetadataRuleFormat: findRefdataValue(
+      'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
+      'enumeration_numeric'
+    ),
     ruleFormat: {
       id: 'ba34e745-c626-4908-b17a-cd79366cb2b9',
       levels: [
@@ -21,32 +21,28 @@ export const enumerationNumeric = {
           index: 0,
           internalNote: 'Level 1',
           units: 1,
-          sequence: {
-            id: '2c91809f92e7cf460192e7d9109e0026',
-            value: 'continuous',
-            label: 'Continuous',
-          },
-          format: {
-            id: '2c91809f92e7cf460192e7d910a80029',
-            value: 'number',
-            label: 'Number',
-          },
+          sequence: findRefdataValue(
+            'EnumerationNumericLevelTMRF.Sequence',
+            'continuous'
+          ),
+          format: findRefdataValue(
+            'EnumerationNumericLevelTMRF.Format',
+            'number'
+          ),
         },
         {
           id: 'bf774633-3bb2-4a0d-813e-6bd16a8ea9f7',
           index: 1,
           internalNote: 'Level 2',
           units: 5,
-          sequence: {
-            id: '2c91809f92e7cf460192e7d910990025',
-            value: 'reset',
-            label: 'Reset',
-          },
-          format: {
-            id: '2c91809f92e7cf460192e7d910a40028',
-            value: 'ordinal',
-            label: 'Ordinal',
-          },
+          sequence: findRefdataValue(
+            'EnumerationNumericLevelTMRF.Sequence',
+            'reset'
+          ),
+          format: findRefdataValue(
+            'EnumerationNumericLevelTMRF.Format',
+            'ordinal'
+          ),
         },
       ],
     },
@@ -56,18 +52,16 @@ export const enumerationNumeric = {
 export const enumerationTextual = {
   id: '94118695-3d28-4696-9732-ccb2e68158bb',
   index: 0,
-  templateMetadataRuleType: {
-    id: '2c91809f92e7cf460192e7d9127b0055',
-    value: 'enumeration',
-    label: 'Enumeration',
-  },
+  templateMetadataRuleType: findRefdataValue(
+    'TemplateMetadataRule.TemplateMetadataRuleType',
+    'enumeration'
+  ),
   ruleType: {
     id: '216ee06c-0117-4713-9c25-398b9f4137e9',
-    templateMetadataRuleFormat: {
-      id: '2c91809f92e7cf460192e7d913b2005f',
-      value: 'enumeration_textual',
-      label: 'Textual',
-    },
+    templateMetadataRuleFormat: findRefdataValue(
+      'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
+      'enumeration_textual'
+    ),
     ruleFormat: {
       id: '18b9bb72-aeef-43d3-9e83-b7e6df3b3eb9',
       levels: [
