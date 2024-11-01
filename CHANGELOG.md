@@ -1,5 +1,7 @@
 # change history for ui-serials-management
 
+## 1.2.0 IN PROGRESS
+
 ## 1.1.0 2024-11-01
   * UISER-167 Update module license and guidance for ui-serials-management
   * UISER-166 Update permissions and menu display for serials
