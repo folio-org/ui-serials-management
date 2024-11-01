@@ -189,9 +189,9 @@ describe('LabelFieldArray', () => {
         // (follows from above) otherwise you need a waitFor at this level
         // There is no "right" answer here, but this way makes this test redundant and repeated
         // and removing it would make the test case implicit, which isn't necessarily the best idea always
-        //await waitFor(() => {
-          expect(getByText('Template')).toBeInTheDocument();
-        //});
+        // await waitFor(() => {
+        expect(getByText('Template')).toBeInTheDocument();
+        // });
       });
 
       test('renders the expected Template label', async () => {
