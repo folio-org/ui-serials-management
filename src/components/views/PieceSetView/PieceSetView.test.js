@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { handlers, resource } from '../../../../test/resources';
+import { handlers, pieceSet } from '../../../../test/resources';
 import PieceSetView from './PieceSetView';
 
 jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
@@ -98,7 +98,7 @@ describe('PieceSetView', () => {
           <PieceSetView
             onClose={handlers.onClose}
             queryProps={{ isLoading: false }}
-            resource={resource}
+            resource={pieceSet}
           />
         </MemoryRouter>,
         translationsProperties

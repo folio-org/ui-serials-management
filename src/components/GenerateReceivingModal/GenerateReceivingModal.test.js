@@ -17,10 +17,10 @@ import GenerateReceivingModal from './GenerateReceivingModal';
 
 import { translationsProperties } from '../../../test/helpers';
 import {
-  holdings as mockHoldings,
-  locations as mockLocations,
   pieceSet,
   serial,
+  holdings as mockHoldings,
+  locations as mockLocations,
 } from '../../../test/resources';
 
 const INTERVAL = 0;
@@ -83,7 +83,7 @@ jest.mock('react-query', () => {
 
         // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
         return mockMutateAsync(...incomingParams);
-      }
+      },
     })),
   };
 });
@@ -139,7 +139,7 @@ describe('GenerateReceivingModal', () => {
   });
 
   test('renders the expected Pattern ID value', async () => {
-    await KeyValue('Pattern ID').has({ value: 'No value set-' });
+    await KeyValue('Pattern ID').has({ value: 'Test Pattern ID' });
   });
 
   test('renders the expected First piece value', async () => {
@@ -204,7 +204,9 @@ describe('GenerateReceivingModal', () => {
   describe('filling out required fields', () => {
     beforeEach(async () => {
       await waitFor(async () => {
-        await TextField('Time between publication and receipt (days)*').fillIn('0');
+        await TextField('Time between publication and receipt (days)*').fillIn(
+          '0'
+        );
         await Select('Location*').choose(mockLocations[0].name);
       });
     });

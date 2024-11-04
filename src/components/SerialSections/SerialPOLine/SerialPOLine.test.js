@@ -56,7 +56,7 @@ describe('SerialPOLine', () => {
   });
 
   test('renders the expectted funds value', async () => {
-    await KeyValue('Funds').has({ value: 'USHISTEUROHIST' });
+    await KeyValue('Funds').has({ value: 'USHIST' });
   });
 
   test('renders the expected material type value', async () => {
