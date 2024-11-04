@@ -13,7 +13,7 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import PiecesPreviewModal from './PiecesPreviewModal';
 
 import { translationsProperties } from '../../../test/helpers';
-import { pieceSets, ruleset } from '../../../test/resources';
+import { pieceSet, ruleset } from '../../../test/resources';
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
@@ -27,7 +27,7 @@ const SerialViewRender = () => {
   return (
     <PiecesPreviewModal
       allowCreation
-      existingPieceSets={pieceSets}
+      existingPieceSets={[pieceSet]}
       ruleset={ruleset}
       setShowModal={setShowModal}
       showModal={showModal}
@@ -142,7 +142,7 @@ describe('PiecesPreviewModal', () => {
 
       test('datepicker ruleset start date renders expected date', async () => {
         await Datepicker({ id: 'ruleset-start-date' }).has({
-          inputValue: '01/01/2025',
+          inputValue: '01/01/2026',
         });
       });
 
@@ -181,7 +181,7 @@ describe('PiecesPreviewModal', () => {
 
       test('datepicker ruleset start date renders expected date', async () => {
         await Datepicker({ id: 'ruleset-start-date' }).has({
-          inputValue: '03/19/2024',
+          inputValue: '02/01/2024',
         });
       });
 

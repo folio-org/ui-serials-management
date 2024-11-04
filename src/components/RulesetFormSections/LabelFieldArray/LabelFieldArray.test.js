@@ -1,5 +1,11 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, Button, Select, TextArea } from '@folio/stripes-erm-testing';
+import {
+  renderWithIntl,
+  TestForm,
+  Button,
+  Select,
+  TextArea,
+} from '@folio/stripes-erm-testing';
 
 import mockRefdata from '../../../../test/resources/refdata';
 import { locales as mockLocales } from '../../../../test/resources';
@@ -34,11 +40,8 @@ jest.mock('../EnumerationTextualFieldArray', () => () => (
   <div>EnumerationTextualFieldArray</div>
 ));
 
-jest.mock('../ChronologyField', () => () => (
-  <div>ChronologyField</div>
-));
+jest.mock('../ChronologyField', () => () => <div>ChronologyField</div>);
 const onSubmit = jest.fn();
-
 
 const numericProps = {
   rulesetStatus: {
@@ -148,7 +151,9 @@ describe('LabelFieldArray', () => {
 
     test('renders the expected empty label text', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('No labels for this publication pattern')).toBeInTheDocument();
+      expect(
+        getByText('No labels for this publication pattern')
+      ).toBeInTheDocument();
     });
 
     test('renders the Add label button', async () => {
@@ -162,12 +167,16 @@ describe('LabelFieldArray', () => {
 
     test('not renders the EnumerationNumericFieldArray', () => {
       const { queryByText } = renderComponent;
-      expect(queryByText('EnumerationNumericFieldArray')).not.toBeInTheDocument();
+      expect(
+        queryByText('EnumerationNumericFieldArray')
+      ).not.toBeInTheDocument();
     });
 
     test(' not renders EnumerationTextualFieldArray', () => {
       const { queryByText } = renderComponent;
-      expect(queryByText('EnumerationTextualFieldArray')).not.toBeInTheDocument();
+      expect(
+        queryByText('EnumerationTextualFieldArray')
+      ).not.toBeInTheDocument();
     });
 
     describe('Adding label', () => {
@@ -224,20 +233,20 @@ describe('LabelFieldArray', () => {
         });
 
         // There's many ways to do this, this way is "choose and check it got chosen"
-        describe.each([
-          'Chronology',
-          'Enumeration'
-        ])('choosing %s', (option) => {
-          beforeEach(async () => {
-            await waitFor(async () => {
-              await Select('Label style*').choose(option);
+        describe.each(['Chronology', 'Enumeration'])(
+          'choosing %s',
+          (option) => {
+            beforeEach(async () => {
+              await waitFor(async () => {
+                await Select('Label style*').choose(option);
+              });
             });
-          });
 
-          test('label style has correct value', async () => {
-            await Select('Label style*').has({ checkedOptionText: option });
-          });
-        });
+            test('label style has correct value', async () => {
+              await Select('Label style*').has({ checkedOptionText: option });
+            });
+          }
+        );
       });
     });
   });
@@ -274,7 +283,9 @@ describe('LabelFieldArray', () => {
 
     test(' not renders EnumerationTextualFieldArray', () => {
       const { queryByText } = renderComponent;
-      expect(queryByText('EnumerationTextualFieldArray')).not.toBeInTheDocument();
+      expect(
+        queryByText('EnumerationTextualFieldArray')
+      ).not.toBeInTheDocument();
     });
 
     describe('Adding label', () => {
@@ -308,7 +319,6 @@ describe('LabelFieldArray', () => {
         expect(getByText('{{enumeration1.level1}}')).toBeInTheDocument();
       });
 
-
       test('renders a Select for label style', async () => {
         await Select('Label style*').exists();
       });
@@ -319,20 +329,22 @@ describe('LabelFieldArray', () => {
         });
 
         // There's many ways to do this, this way is "choose and check it got chosen"
-        describe.each([
-          'Enumeration Numeric',
-          'Enumeration Textual'
-        ])('choosing %s', (option) => {
-          beforeEach(async () => {
-            await waitFor(async () => {
-              await Select('Enumeration format*').choose(option);
+        describe.each(['Numeric', 'Textual'])(
+          'choosing %s',
+          (option) => {
+            beforeEach(async () => {
+              await waitFor(async () => {
+                await Select('Enumeration format*').choose(option);
+              });
             });
-          });
 
-          test('enumeration format has correct value', async () => {
-            await Select('Enumeration format*').has({ checkedOptionText: option });
-          });
-        });
+            test('enumeration format has correct value', async () => {
+              await Select('Enumeration format*').has({
+                checkedOptionText: option,
+              });
+            });
+          }
+        );
       });
 
       test('renders the EnumerationNumericFieldArray', () => {
@@ -361,20 +373,22 @@ describe('LabelFieldArray', () => {
         await Select('Enumeration format*').exists();
       });
 
-      describe.each([
-        'Enumeration Numeric',
-        'Enumeration Textual'
-      ])('choosing %s', (option) => {
-        beforeEach(async () => {
-          await waitFor(async () => {
-            await Select('Enumeration format*').choose(option);
+      describe.each(['Numeric', 'Textual'])(
+        'choosing %s',
+        (option) => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Select('Enumeration format*').choose(option);
+            });
           });
-        });
 
-        test('enumeration format has correct value', async () => {
-          await Select('Enumeration format*').has({ checkedOptionText: option });
-        });
-      });
+          test('enumeration format has correct value', async () => {
+            await Select('Enumeration format*').has({
+              checkedOptionText: option,
+            });
+          });
+        }
+      );
     });
 
     test('renders EnumerationTextualFieldArray', () => {
@@ -398,21 +412,22 @@ describe('LabelFieldArray', () => {
         await Select('Chronology format*').exists();
       });
 
-      describe.each([
-        'Chronology Date',
-        'Chronology Month',
-        'Chronology Year'
-      ])('choosing %s', (option) => {
-        beforeEach(async () => {
-          await waitFor(async () => {
-            await Select('Chronology format*').choose(option);
+      describe.each(['Date', 'Month', 'Year'])(
+        'choosing %s',
+        (option) => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Select('Chronology format*').choose(option);
+            });
           });
-        });
 
-        test('Chronology format has correct value', async () => {
-          await Select('Chronology format*').has({ checkedOptionText: option });
-        });
-      });
+          test('Chronology format has correct value', async () => {
+            await Select('Chronology format*').has({
+              checkedOptionText: option,
+            });
+          });
+        }
+      );
     });
 
     test('renders ChronologyField', () => {

@@ -3,8 +3,7 @@ import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 
 import POLineLookup from './POLineLookup';
 import { translationsProperties } from '../../../../test/helpers';
-import { resource, input } from '../../../../test/resources/poline';
-
+import { orderLine } from '../../../../test/resources';
 
 const emptyInput = {
   name: 'orderLine',
@@ -42,7 +41,9 @@ describe('POLineLookup', () => {
 
     test('renders the expected text', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('No "find-po-line" plugin is installed')).toBeInTheDocument();
+      expect(
+        getByText('No "find-po-line" plugin is installed')
+      ).toBeInTheDocument();
     });
 
     test('does not render the child component', async () => {
@@ -68,10 +69,10 @@ describe('POLineLookup', () => {
         <MemoryRouter>
           <POLineLookup
             id="po-line-field"
-            input={input}
+            input={{ name: 'orderLine', value: orderLine }}
             onResourceSelected={onResourceSelected}
             removePOLine={removePOLine}
-            resource={resource}
+            resource={orderLine}
           >
             <div>CHILD COMPONENT</div>
           </POLineLookup>
@@ -82,7 +83,9 @@ describe('POLineLookup', () => {
 
     test('renders a link with poline', async () => {
       const { getByRole } = renderComponent;
-      expect(getByRole('link', { name: 'PO line: 52590-1' })).toBeInTheDocument();
+      expect(
+        getByRole('link', { name: 'PO line: 52590-1' })
+      ).toBeInTheDocument();
     });
 
     test('renders the expected child component', async () => {
