@@ -10,6 +10,7 @@ const ruleset = {
   recurrence: monthDate,
   lastUpdated: '2024-03-21T09:02:39Z',
   rulesetStatus: findRefdataValue('SerialRuleset.RulesetStatus', 'active'),
+  // Cant reference serial due to cyclical dependency
   owner: {
     id: '9be5cebf-c676-4430-9439-4f47973d8a47',
   },

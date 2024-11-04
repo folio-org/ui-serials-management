@@ -1,7 +1,3 @@
-// TODO Do we need all these?
-// Part of me thinks that we should remain consistent with the lower level resources by fetching all resources
-// However if we intend to reference this in the chronology resources, seems wasteful
-
 export default [
   {
     label: '',

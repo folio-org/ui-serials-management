@@ -9,7 +9,7 @@ const serial = {
   lastUpdated: '2024-02-26T09:58:02Z',
   orderLine: {
     id: '2c9180a58de0851d018de4d99aea0062',
-    remoteId: 'baec48dd-1594-2712-be8f-de336bc83fcc',
+    remoteId: orderLine.id,
     remoteId_object: orderLine,
     titleId: '7cef39f1-4fb1-49d5-9a6b-a072e632144d',
     title: 'Interesting Times',
