@@ -4,13 +4,19 @@ import {
   MessageBanner,
 } from '@folio/stripes-erm-testing';
 
+import { translationsProperties } from '../../../../test/helpers';
+
+import {
+  pieceSet,
+  omissionPieceSet,
+  serial,
+  combinationPieceSet,
+} from '../../../../test/resources';
+
 import GenerateReceivingModalInfo from './GenerateReceivingModalInfo';
 
-import { translationsProperties } from '../../../../test/helpers';
-import { pieceSet, omissionPieceSet, serial } from '../../../../test/resources';
-
 describe('GenerateReceivingModalInfo', () => {
-  describe('Render component with locations and standard pieceset', () => {
+  describe('render component with locations and standard pieceset', () => {
     beforeEach(() => {
       renderWithIntl(
         <GenerateReceivingModalInfo
@@ -21,7 +27,7 @@ describe('GenerateReceivingModalInfo', () => {
       );
     });
 
-    test('Renders the "Generate receiving info" message', async () => {
+    test('renders the "Generate receiving info" message', async () => {
       await MessageBanner(
         "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete."
       ).exists();
@@ -35,7 +41,7 @@ describe('GenerateReceivingModalInfo', () => {
       { keyValueLabel: 'First piece', value: '2024-10-01, 5 9' },
       { keyValueLabel: 'Last piece', value: '2024-05-01, 2 4' },
     ])(
-      'Renders KeyValue component with label $keyValueLabel with value $value ',
+      'renders KeyValue component with label $keyValueLabel with value $value ',
       async ({ keyValueLabel, value }) => {
         await KeyValue(keyValueLabel).has({ value });
       }
@@ -48,7 +54,7 @@ describe('GenerateReceivingModalInfo', () => {
     });
   });
 
-  describe('Render component with no locations and standard pieceset', () => {
+  describe('render component with no locations and standard pieceset', () => {
     beforeEach(() => {
       renderWithIntl(
         <GenerateReceivingModalInfo
@@ -59,14 +65,14 @@ describe('GenerateReceivingModalInfo', () => {
       );
     });
 
-    test('Renders the "No orderline locations or holdings" message', async () => {
+    test('renders the "No orderline locations or holdings" message', async () => {
       await MessageBanner(
         'There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.'
       ).exists();
     });
   });
 
-  describe('Render component with an omissionPieceSet in which the first/last piece is omitted', () => {
+  describe('render component with an omissionPieceSet in which the first/last piece is omitted', () => {
     beforeEach(() => {
       renderWithIntl(
         <GenerateReceivingModalInfo
@@ -77,8 +83,26 @@ describe('GenerateReceivingModalInfo', () => {
       );
     });
 
-    test('Renders the First piece KeyValue component with value only containing a date', async () => {
+    test('renders the First piece KeyValue component with value only containing a date', async () => {
       await KeyValue('First piece').has({ value: '2025-01-01' });
+    });
+  });
+
+  describe('render component with a combinationPieceSet in which the first/last piece is combined', () => {
+    beforeEach(() => {
+      renderWithIntl(
+        <GenerateReceivingModalInfo
+          orderLineLocations={[]}
+          pieceSet={combinationPieceSet}
+        />,
+        translationsProperties
+      );
+    });
+
+    test('renders the First piece KeyValue component with value containing the date and label of the first of the combined pieces', async () => {
+      await KeyValue('First piece').has({
+        value: '2025-01-01, Wednesday 1 January 2025',
+      });
     });
   });
 });
