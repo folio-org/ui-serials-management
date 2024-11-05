@@ -10,7 +10,7 @@ import {
   HasCommand,
   TextLink,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, useStripes } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import { SerialView } from '../../components/views';
@@ -35,8 +35,6 @@ const SerialsRoute = ({ children, path }) => {
       },
     },
   };
-  const stripes = useStripes();
-  console.log(stripes);
 
   const handleCreate = () => {
     history.push(`${urls.serialCreate()}${location.search}`);
