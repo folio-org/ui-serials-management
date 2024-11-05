@@ -1,5 +1,6 @@
 import { omissionRuleset } from '../rulesets';
 import { dayMonth as omissionDayMonth } from '../rulesetResources/omissionsRules';
+import { findRefdataValue } from '../utils';
 
 const omissionPieceSet = {
   id: 'e06cdeed-acb7-46aa-abaa-d771a4192435',
@@ -119,11 +120,10 @@ const omissionPieceSet = {
       {
         id: 'c4403cd9-b476-46ec-a95b-a88302100503',
         index: 0,
-        userConfiguredTemplateMetadataType: {
-          id: '2c91809f92f9ff2e0192fa08e50c004d',
-          value: 'chronology',
-          label: 'Chronology',
-        },
+        userConfiguredTemplateMetadataType: findRefdataValue(
+          'UserConfiguredTemplateMetadata.UserConfiguredTemplateMetadataType',
+          'chronology'
+        ),
         metadataType: {
           id: '96771f99-ea46-4ecf-86b1-8a6c53f644f0',
           monthDay: '1',
