@@ -11,84 +11,143 @@ import {
 import GenerateReceivingModalForm from './GenerateReceivingModalForm';
 
 import { translationsProperties } from '../../../../test/helpers';
-import {
-  locations as mockLocations,
-  serial,
-} from '../../../../test/resources';
+import { holdings, locations, serial } from '../../../../test/resources';
 
 const onSubmit = jest.fn();
 
-const TestComponent = () => {
-  // We need actual state in here for close test
-  return (
-    <TestForm onSubmit={onSubmit}>
-      <GenerateReceivingModalForm
-        holdings={[]}
-        locations={mockLocations}
-        orderLine={serial?.orderLine}
-      />
-    </TestForm>
-  );
-};
-
-let renderComponent;
-describe('GenerateReceivingModal', () => {
-  beforeEach(() => {
-    renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
-  });
-
-  test('renders the expected label', async () => {
-    const { getByText } = renderComponent;
-    expect(
-      getByText('Time between publication and receipt (days)')
-    ).toBeInTheDocument();
-  });
-
-  test('renders the expected label', async () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Piece format')).toBeInTheDocument();
-  });
-
-  test('renders the Supplement checkbox', async () => {
-    await Checkbox('Supplement').is({ checked: false });
-  });
-
-  test('does not render the Display in holding checkbox', async () => {
-    await Checkbox('Display in holding').absent();
-  });
-
-  test('does not render the Display to public checkbox', async () => {
-    await Checkbox('Display to public').absent();
-  });
-
-  test('renders the expected Location label', async () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Location')).toBeInTheDocument();
-  });
-
-  describe('filling out required fields', () => {
-    beforeEach(async () => {
-      await waitFor(async () => {
-        await TextField('Time between publication and receipt (days)*').fillIn(
-          '0'
-        );
-        await Select('Location*').choose(mockLocations[0].name);
-      });
+describe('GenerateReceivingModalForm', () => {
+  describe('renders the component with an orderLine and locations', () => {
+    beforeEach(() => {
+      renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <GenerateReceivingModalForm
+            locations={locations}
+            orderLine={serial?.orderLine}
+          />
+        </TestForm>,
+        translationsProperties
+      );
     });
 
-    test('Select field is now has a value', async () => {
-      await Select('Location*').has({ value: mockLocations[0].id });
+    test('renders the TextField component with label Time between publication and receipt (days)*', async () => {
+      await TextField('Time between publication and receipt (days)*').exists();
+    });
+
+    test('renders the Select component with label Piece format', async () => {
+      await Select('Piece format').exists();
+    });
+
+    test('renders the Checkbox component with label Supplement', async () => {
+      await Checkbox('Supplement').exists();
+    });
+
+    test('renders the Checkbox component with label Create item', async () => {
+      await Checkbox('Create item').exists();
+    });
+
+    test('renders the Select component with label Location*', async () => {
+      await Select('Location*').exists();
+    });
+
+    test('does not render the Checkbox component with label Display to public', async () => {
+      await Checkbox('Display to public').absent();
+    });
+
+    test('does not render the Checkbox component with label Display in holding', async () => {
+      await Checkbox('Display in holding').absent();
+    });
+
+    describe('filling out required fields', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await TextField(
+            'Time between publication and receipt (days)*'
+          ).fillIn('1');
+          await Select('Location*').choose(locations[0].name);
+        });
+      });
+
+      test('render TextField component Time between publication and receipt (days)* with correct value', async () => {
+        await TextField('Time between publication and receipt (days)*').has({
+          value: '1',
+        });
+      });
+
+      test('render TextField component Location* with correct value', async () => {
+        await Select('Location*').has({ value: locations[0].id });
+      });
     });
 
     describe('checking the checkboxes', () => {
       beforeEach(async () => {
         await waitFor(async () => {
           await Checkbox('Supplement').click();
+          await Checkbox('Create item').click();
         });
       });
 
-      test('supplement checkbox is now checked', async () => {
+      test('render Checkbox component Supplement as checked', async () => {
         await Checkbox('Supplement').is({ checked: true });
+      });
+
+      test('render Checkbox component Create item as checked', async () => {
+        await Checkbox('Create item').is({ checked: true });
+      });
+    });
+  });
+
+  describe('renders the component with an orderLine, locations and holdings', () => {
+    beforeEach(() => {
+      renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <GenerateReceivingModalForm
+            holdings={holdings}
+            locations={locations}
+            orderLine={serial?.orderLine}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    test('renders the Select component with label Holding*', async () => {
+      await Select('Holding*').exists();
+    });
+
+    test('renders the Checkbox component with label Display to public', async () => {
+      await Checkbox('Display to public').exists();
+    });
+
+    test('renders the Checkbox component with label Display in holding', async () => {
+      await Checkbox('Display in holding').exists();
+    });
+
+    describe('filling out Holding* field', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Select('Holding*').choose(`${locations[3].name} > ${holdings[0].callNumber}`);
+        });
+      });
+
+      test('render Select component Holding* with correct value', async () => {
+        await Select('Holding*').has({ value: holdings[0].id });
+      });
+    });
+
+    describe('checking the checkboxes', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Checkbox('Display to public').click();
+          await Checkbox('Display in holding').click();
+        });
+      });
+
+      test('render Checkbox component Display to public as checked', async () => {
+        await Checkbox('Display to public').is({ checked: true });
+      });
+
+      test('render Checkbox component Display in holding as checked', async () => {
+        await Checkbox('Display in holding').is({ checked: true });
       });
     });
   });
