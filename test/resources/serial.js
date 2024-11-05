@@ -1,4 +1,4 @@
-import ruleset from './ruleset';
+import ruleset from './rulesets/ruleset';
 import orderLine from './externalResources/orderLine';
 import { findRefdataValue } from './utils';
 

@@ -36,7 +36,7 @@ const GenerateReceivingModalInfo = ({ orderLineLocations = [], pieceSet }) => {
       <MessageBanner>
         <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
       </MessageBanner>
-      {!!orderLineLocations?.length && (
+      {!orderLineLocations?.length && (
         <>
           <MessageBanner type="warning">
             <FormattedMessage id="ui-serials-management.pieceSets.noOrderLineLocationsOrHoldings" />
