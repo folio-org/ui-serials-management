@@ -33,6 +33,12 @@ describe('GenerateReceivingModalInfo', () => {
       ).exists();
     });
 
+    test('does not render the "No orderline locations or holdings" message', async () => {
+      await MessageBanner(
+        'There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.'
+      ).absent();
+    });
+
     test.each([
       { keyValueLabel: 'Total pieces', value: '12' },
       { keyValueLabel: 'Piece set generated', value: '2024-02-26T10:02:37Z' },
@@ -46,19 +52,12 @@ describe('GenerateReceivingModalInfo', () => {
         await KeyValue(keyValueLabel).has({ value });
       }
     );
-
-    test('Does not render the "No orderline locations or holdings" message', async () => {
-      await MessageBanner(
-        'There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.'
-      ).exists();
-    });
   });
 
   describe('render component with no locations and standard pieceset', () => {
     beforeEach(() => {
       renderWithIntl(
         <GenerateReceivingModalInfo
-          orderLineLocations={[]}
           pieceSet={pieceSet}
         />,
         translationsProperties
