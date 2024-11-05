@@ -73,7 +73,7 @@ describe('GenerateReceivingModalForm', () => {
         });
       });
 
-      test('render TextField component Location* with correct value', async () => {
+      test('render Select component Location* with correct value', async () => {
         await Select('Location*').has({ value: locations[0].id });
       });
     });
@@ -125,7 +125,9 @@ describe('GenerateReceivingModalForm', () => {
     describe('filling out Holding* field', () => {
       beforeEach(async () => {
         await waitFor(async () => {
-          await Select('Holding*').choose(`${locations[3].name} > ${holdings[0].callNumber}`);
+          await Select('Holding*').choose(
+            `${locations[3].name} > ${holdings[0].callNumber}`
+          );
         });
       });
 
@@ -149,6 +151,29 @@ describe('GenerateReceivingModalForm', () => {
       test('render Checkbox component Display in holding as checked', async () => {
         await Checkbox('Display in holding').is({ checked: true });
       });
+    });
+  });
+
+  describe('renders the component with an orderLine with an empty locations property', () => {
+    beforeEach(() => {
+      renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <GenerateReceivingModalForm
+            orderLine={{
+              ...serial?.orderLine,
+              remoteId_object: {
+                ...serial.orderLine.remoteId_object,
+                locations: [],
+              },
+            }}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    test('does not render Select component Location*', async () => {
+      await Select('Location*').absent();
     });
   });
 });
