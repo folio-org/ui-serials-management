@@ -42,9 +42,9 @@ const GenerateReceivingModal = ({
 
   const holdingIds = orderLine?.remoteId_object?.locations?.[0]?.holdingId
     ? orderLine?.remoteId_object?.locations?.map((hi) => hi?.holdingId)
-    : null;
+    : [];
 
-  const { data: holdings } = useHoldings({ enabled: holdingIds });
+  const { data: holdings } = useHoldings(holdingIds);
 
   const closeModal = () => {
     setShowModal(false);
@@ -121,43 +121,45 @@ const GenerateReceivingModal = ({
   };
 
   const formatReceivingPiece = (piece, values) => {
-    if (piece?.class !== INTERNAL_OMISSION_PIECE) {
-      const pieceInfo =
+    const pieceInfo = {
+      label: piece?.label,
+      date: addDays(
         piece?.class === INTERNAL_COMBINATION_PIECE
-          ? {
-            date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-            label: piece?.recurrencePieces[0]?.label,
-          }
-          : {
-            date: addDays(piece?.date, values?.interval),
-            label: piece?.label,
-          };
+          ? piece?.recurrencePieces[0]?.date
+          : piece?.date,
+        values?.interval
+      ),
+    };
 
-      return {
-        ...(values?.createItem && { createItem: values.createItem }),
-        receiving: {
-          poLineId: orderLine?.remoteId,
-          titleId: orderLine?.titleId,
-          format: values?.format,
-          displayOnHolding: values?.displayOnHolding,
-          displayToPublic: values?.displayToPublic,
-          supplement: values?.supplement,
-          displaySummary: pieceInfo?.label,
-          receiptDate: pieceInfo?.date,
-          ...(values?.holdingId && { holdingId: values?.holdingId }),
-          ...(values?.locationId && { locationId: values?.locationId }),
-        },
-        piece,
-      };
-    }
-    return null;
+    return {
+      ...(values?.createItem && { createItem: values.createItem }),
+      receiving: {
+        poLineId: orderLine?.remoteId,
+        titleId: orderLine?.titleId,
+        format: values?.format,
+        displayOnHolding: values?.displayOnHolding,
+        displayToPublic: values?.displayToPublic,
+        supplement: values?.supplement,
+        displaySummary: pieceInfo?.label,
+        receiptDate: pieceInfo?.date,
+        ...(values?.holdingId && { holdingId: values?.holdingId }),
+        ...(values?.locationId && { locationId: values?.locationId }),
+      },
+      piece,
+    };
   };
 
   const handleGeneration = async (values) => {
     try {
       const piecesArray = await Promise.all(
         (pieceSet?.pieces || [])
-          .map((piece) => formatReceivingPiece(piece, values))
+          .map((piece) => {
+            if (piece?.class !== INTERNAL_OMISSION_PIECE) {
+              return formatReceivingPiece(piece, values);
+            } else {
+              return null;
+            }
+          })
           .filter(Boolean)
           // Set up an array of Promises that will call receieving sequentially and respond
           // Then take that response and transform. We Promise.all to then have an array to send to our backend
