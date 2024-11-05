@@ -11,10 +11,10 @@ import GenerateReceivingModal from './GenerateReceivingModal';
 
 import { translationsProperties } from '../../../test/helpers';
 import {
-  holdings as mockHoldings,
-  locations as mockLocations,
   pieceSet,
   serial,
+  holdings as mockHoldings,
+  locations as mockLocations,
 } from '../../../test/resources';
 
 jest.mock('./GenerateReceivingModalInfo', () => () => (<div>GenerateReceivingModalInfo</div>));
@@ -47,7 +47,7 @@ jest.mock('react-query', () => {
 
         // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
         return mockMutateAsync(...incomingParams);
-      }
+      },
     })),
   };
 });
@@ -67,6 +67,7 @@ const TestComponent = () => {
 };
 
 let renderComponent;
+// TODO this test complains about rendering forwardRef... Maybe it's the formModal stuff. Again though, we ought to fix that.
 describe('GenerateReceivingModal', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(<TestComponent />, translationsProperties);

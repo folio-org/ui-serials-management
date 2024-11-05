@@ -45,9 +45,11 @@ describe('CombinationFieldArray', () => {
         });
       });
 
-      test('renders a Combination card', () => {
+      test('renders a Combination card', async () => {
         const { getByText } = renderComponent;
-        expect(getByText('Combination rule 1')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('Combination rule 1')).toBeInTheDocument();
+        });
       });
 
       test('does not yet render a combination field', () => {
@@ -104,9 +106,7 @@ describe('CombinationFieldArray', () => {
 
     test('renders the expected empty combination rule label', async () => {
       const { getByText } = renderComponent;
-      expect(
-        getByText('No combination rules for this publication pattern')
-      ).toBeInTheDocument();
+      expect(getByText('No combination rules for this publication pattern')).toBeInTheDocument();
     });
 
     test('renders a disabled Add combination rule button', async () => {

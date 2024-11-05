@@ -28,29 +28,15 @@ describe('EnumerationTextualFieldArray', () => {
       );
     });
 
-    test('renders the expected label', () => {
+    test.each([
+      'Pick list',
+      'No. of issues',
+      'Order',
+      'Label text',
+      'Internal note',
+    ])('renders heading %s', (heading) => {
       const { getByText } = renderComponent;
-      expect(getByText('Pick list')).toBeInTheDocument();
-    });
-
-    test('renders the expected label', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('No. of issues')).toBeInTheDocument();
-    });
-
-    test('renders the expected label', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Order')).toBeInTheDocument();
-    });
-
-    test('renders the expected label', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Label text')).toBeInTheDocument();
-    });
-
-    test('renders the expected label', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Internal note')).toBeInTheDocument();
+      expect(getByText(heading)).toBeInTheDocument();
     });
 
     test('renders the Add level button', async () => {
@@ -69,9 +55,12 @@ describe('EnumerationTextualFieldArray', () => {
         });
       });
 
-      test('renders one level', () => {
+      test('renders one level', async () => {
         const { queryByText } = renderComponent;
-        expect(queryByText('EnumerationTextualField: undefined')).toBeInTheDocument();
+        await waitFor(() => {
+          // TODO this feels wrong... we shouldn't ever have the user see undefined, so what's missing form our test?
+          expect(queryByText('EnumerationTextualField: undefined')).toBeInTheDocument();
+        });
       });
     });
   });
