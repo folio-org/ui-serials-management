@@ -35,7 +35,7 @@ describe('GenerateReceivingModalInfo', () => {
   });
 
   test('renders the expected Pattern ID value', async () => {
-    await KeyValue('Pattern ID').has({ value: 'No value set-' });
+    await KeyValue('Pattern ID').has({ value: 'Test Pattern ID' });
   });
 
   test('renders the expected First piece value', async () => {
