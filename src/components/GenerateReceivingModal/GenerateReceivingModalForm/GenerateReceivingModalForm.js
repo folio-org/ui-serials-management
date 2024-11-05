@@ -27,9 +27,9 @@ const GenerateReceivingModalForm = ({
 }) => {
   const formatDataOptions = () => {
     // If there are locations associated with a POL
-    if (orderLine?.remoteId_object?.locations?.length) {
+    if (orderLine?.remoteId_object?.locations?.length > 0) {
       // And none of these are holdings
-      if (!holdings?.length && locations?.length) {
+      if (!holdings?.length && locations?.length > 0) {
         // Data options should be an array of matched locations
         return orderLine?.remoteId_object?.locations?.map((e) => {
           const location = locations?.find((l) => e?.locationId === l?.id);
@@ -37,7 +37,7 @@ const GenerateReceivingModalForm = ({
         });
         // If both holdings and locations exist associated with the POL
         // Data options should be the location, concatenated with the holding call number
-      } else if (locations?.length && holdings?.length) {
+      } else if (locations?.length > 0 && holdings?.length > 0) {
         return holdings?.map((h) => {
           const holdingLocation = locations.find(
             (l) => h?.permanentLocationId === l?.id
