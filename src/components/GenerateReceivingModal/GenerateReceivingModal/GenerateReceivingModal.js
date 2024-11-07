@@ -29,7 +29,12 @@ const GenerateReceivingModal = ({
   open,
   onClose,
   pieceSet,
-  apiLayer: { locations, holdings, submitReceivingIds, submitReceivingPiece },
+  apiLayer: {
+    locations = [],
+    holdings = [],
+    submitReceivingIds,
+    submitReceivingPiece,
+  },
 }) => {
   const callout = useCallout();
 

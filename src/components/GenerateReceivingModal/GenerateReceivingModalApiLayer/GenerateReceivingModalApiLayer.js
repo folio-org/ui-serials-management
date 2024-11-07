@@ -11,7 +11,7 @@ import {
   RECEIVING_PIECES_ENDPOINT,
 } from '../../../constants/endpoints';
 
-import { GenerateReceivingModal } from '../GenerateReceivingModal';
+import GenerateReceivingModal from '../GenerateReceivingModal';
 
 const propTypes = {
   orderLine: PropTypes.object,

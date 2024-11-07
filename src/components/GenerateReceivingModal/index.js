@@ -1,1 +1,1 @@
-export { default } from './GenerateReceivingModal';
+export { default } from './GenerateReceivingModalApiLayer';
