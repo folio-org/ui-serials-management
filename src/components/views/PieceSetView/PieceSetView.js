@@ -14,7 +14,7 @@ import {
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 import { PieceSetInfo, PiecesList } from '../../PieceSetSections';
 
-import GenerateReceivingModal from '../../GenerateReceivingModal/GenerateReceivingModal';
+import GenerateReceivingModalApiLayer from '../../GenerateReceivingModal/GenerateReceivingModalApiLayer';
 import {
   SERIAL_ENDPOINT,
   PIECE_SET_ENDPOINT,
@@ -151,7 +151,7 @@ const PieceSetView = ({
         <PieceSetInfo key="piece-set-info" {...getSectionProps('info')} />
         <PiecesList key="pieces-list" {...getSectionProps('pieces-list')} />
       </Pane>
-      <GenerateReceivingModal
+      <GenerateReceivingModalApiLayer
         {...getSectionProps('generate-receiving-modal')}
         onClose={handleCloseReceivingModal}
         open={showReceivingModal}
