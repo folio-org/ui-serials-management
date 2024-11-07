@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
-import { useMutation, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy, useCallout } from '@folio/stripes/core';
+import { useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
@@ -11,12 +10,6 @@ import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
 import GenerateReceivingModalForm from '../GenerateReceivingModalForm';
 import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
-import { useHoldings, useLocations } from '../../../hooks';
-
-import {
-  PIECE_SET_ENDPOINT,
-  RECEIVING_PIECES_ENDPOINT,
-} from '../../../constants/endpoints';
 import {
   INTERNAL_COMBINATION_PIECE,
   INTERNAL_OMISSION_PIECE,
@@ -27,62 +20,18 @@ const propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   pieceSet: PropTypes.object,
+  // Needs to be updated
+  apiLayer: PropTypes.object,
 };
 
-const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
-  const ky = useOkapiKy();
-  const queryClient = useQueryClient();
+const GenerateReceivingModal = ({
+  orderLine,
+  open,
+  onClose,
+  pieceSet,
+  apiLayer: { locations, holdings, submitReceivingIds, submitReceivingPiece },
+}) => {
   const callout = useCallout();
-
-  // TODO Seperate into API layer
-  const { data: locations } = useLocations();
-
-  const holdingIds = orderLine?.remoteId_object?.locations?.[0]?.holdingId
-    ? orderLine?.remoteId_object?.locations?.map((hi) => hi?.holdingId)
-    : [];
-
-  const { data: holdings } = useHoldings(holdingIds);
-
-  const { mutateAsync: submitReceivingPiece } = useMutation(
-    [
-      'ui-serials-management',
-      'GeneratingReceivingModal',
-      'submitReceivingPiece',
-    ],
-    (data) => {
-      return ky
-        .post(
-          `${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`,
-          { json: data?.receiving }
-        )
-        .json();
-    }
-  );
-
-  const { mutateAsync: submitReceivingIds } = useMutation(
-    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
-    (data) => ky
-      .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
-      .json()
-      .then(() => {
-        queryClient.invalidateQueries([
-          '@folio/serials-management',
-          'SASQ',
-          'piece-sets',
-          'view',
-          pieceSet?.id,
-        ]);
-        callout.sendCallout({
-          message: (
-            <FormattedMessage
-              id="ui-serials-management.pieceSets.countReceivingGenerated"
-              values={{ count: data?.pieces?.length }}
-            />
-          ),
-        });
-        onClose();
-      })
-  );
 
   const getInitialValues = () => {
     const fixedInitialValues = {
@@ -92,9 +41,9 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       displayToPublic: false,
     };
     if (orderLine?.remoteId_object?.locations?.length === 1) {
-      if (holdingIds) {
+      if (holdings?.length > 0) {
         return {
-          holdingId: holdingIds[0],
+          holdingId: holdings[0]?.id,
           ...fixedInitialValues,
         };
       } else {
