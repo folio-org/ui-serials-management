@@ -65,6 +65,10 @@ const PieceSetView = ({
     }
   );
 
+  const handleCloseReceivingModal = () => {
+    setShowReceivingModal(false);
+  };
+
   const handleDelete = async () => {
     await deletePieceSet(pieceSet?.id);
     history.push(`${urls.pieceSets()}${location.search}`);
@@ -149,9 +153,9 @@ const PieceSetView = ({
       </Pane>
       <GenerateReceivingModal
         {...getSectionProps('generate-receiving-modal')}
+        onClose={handleCloseReceivingModal}
+        open={showReceivingModal}
         orderLine={serial?.orderLine}
-        setShowModal={setShowReceivingModal}
-        showModal={showReceivingModal}
       />
       <ConfirmationModal
         cancelLabel={<FormattedMessage id="ui-serials-management.cancel" />}

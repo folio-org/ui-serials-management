@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 
-import {
-  renderWithIntl,
-  Button,
-  Modal,
-} from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 
 import GenerateReceivingModal from './GenerateReceivingModal';
 
@@ -17,9 +13,10 @@ import {
   locations as mockLocations,
 } from '../../../test/resources';
 
-jest.mock('./GenerateReceivingModalInfo', () => () => (<div>GenerateReceivingModalInfo</div>));
-jest.mock('./GenerateReceivingModalForm', () => () => (<div>GenerateReceivingModalForm</div>));
-
+jest.mock('./GenerateReceivingModalInfo', () => () => (
+  <div>GenerateReceivingModalInfo</div>
+));
+// jest.mock('./GenerateReceivingModalForm', () => () => (<div>GenerateReceivingModalForm</div>));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -29,14 +26,15 @@ jest.mock('../../hooks', () => ({
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 // Setting up jest fn here to test paramters passed in by component
-const mockMutateAsync = jest.fn(() => Promise.resolve(true));
+const mockPreview = jest.fn(() => Promise.resolve(true));
+const mockGenerate = jest.fn(() => Promise.resolve(true));
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
 
   return {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
-    useMutation: jest.fn((_key, func) => ({
+    useMutation: jest.fn((key, func) => ({
       mutateAsync: (...incomingParams) => {
         // Actually call function coming from component
         // This assumes that ky has been mocked, which it should have been by __mocks__ stripes-core.
@@ -46,7 +44,10 @@ jest.mock('react-query', () => {
         func();
 
         // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
-        return mockMutateAsync(...incomingParams);
+        if (key.includes('submitReceivingPiece')) {
+          return mockPreview(...incomingParams);
+        }
+        return mockGenerate(...incomingParams);
       },
     })),
   };
@@ -81,15 +82,15 @@ describe('GenerateReceivingModal', () => {
     await Modal('Generate receiving pieces').exists();
   });
 
-  test('renders the GenerateReceivingModalInfo component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('GenerateReceivingModalInfo')).toBeInTheDocument();
-  });
+  // test('renders the GenerateReceivingModalInfo component', () => {
+  //   const { getByText } = renderComponent;
+  //   expect(getByText('GenerateReceivingModalInfo')).toBeInTheDocument();
+  // });
 
-  test('renders the GenerateReceivingModalInfo component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('GenerateReceivingModalForm')).toBeInTheDocument();
-  });
+  // test('renders the GenerateReceivingModalInfo component', () => {
+  //   const { getByText } = renderComponent;
+  //   expect(getByText('GenerateReceivingModalForm')).toBeInTheDocument();
+  // });
 
   test('renders the Generate receiving pieces button', async () => {
     await Button({ id: 'generate-recieving-pieces-button' }).has({

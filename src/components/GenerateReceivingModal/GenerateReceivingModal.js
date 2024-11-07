@@ -24,20 +24,17 @@ import {
 
 const propTypes = {
   orderLine: PropTypes.object,
-  showModal: PropTypes.bool,
-  setShowModal: PropTypes.func,
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
   pieceSet: PropTypes.object,
 };
 
-const GenerateReceivingModal = ({
-  orderLine,
-  showModal,
-  setShowModal,
-  pieceSet,
-}) => {
+const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const callout = useCallout();
+
+  // TODO Seperate into API layer
   const { data: locations } = useLocations();
 
   const holdingIds = orderLine?.remoteId_object?.locations?.[0]?.holdingId
@@ -45,10 +42,6 @@ const GenerateReceivingModal = ({
     : [];
 
   const { data: holdings } = useHoldings(holdingIds);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
@@ -87,7 +80,7 @@ const GenerateReceivingModal = ({
             />
           ),
         });
-        closeModal();
+        onClose();
       })
   );
 
@@ -114,6 +107,7 @@ const GenerateReceivingModal = ({
     return { ...fixedInitialValues };
   };
 
+  // TODO Use dayjs
   const addDays = (date, days) => {
     const result = new Date(date);
     result.setDate(result.getDate() + Number(days));
@@ -222,8 +216,8 @@ const GenerateReceivingModal = ({
     <FormModal
       initialValues={getInitialValues()}
       modalProps={{
-        onClose: closeModal,
-        open: showModal,
+        onClose,
+        open,
         label: (
           <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingPieces" />
         ),
