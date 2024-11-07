@@ -8,19 +8,19 @@ import { useOkapiKy, useCallout } from '@folio/stripes/core';
 import { FormModal } from '@k-int/stripes-kint-components';
 import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
 
-import GenerateReceivingModalForm from './GenerateReceivingModalForm';
-import GenerateReceivingModalInfo from './GenerateReceivingModalInfo';
+import GenerateReceivingModalForm from '../GenerateReceivingModalForm';
+import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
-import { useHoldings, useLocations } from '../../hooks';
+import { useHoldings, useLocations } from '../../../hooks';
 
 import {
   PIECE_SET_ENDPOINT,
   RECEIVING_PIECES_ENDPOINT,
-} from '../../constants/endpoints';
+} from '../../../constants/endpoints';
 import {
   INTERNAL_COMBINATION_PIECE,
   INTERNAL_OMISSION_PIECE,
-} from '../../constants/internalPieceClasses';
+} from '../../../constants/internalPieceClasses';
 
 const propTypes = {
   orderLine: PropTypes.object,

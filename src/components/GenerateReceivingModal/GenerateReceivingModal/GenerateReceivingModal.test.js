@@ -1,25 +1,27 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+
 import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 
 import GenerateReceivingModal from './GenerateReceivingModal';
 
-import { translationsProperties } from '../../../test/helpers';
+import { translationsProperties } from '../../../../test/helpers';
 import {
   pieceSet,
   serial,
   holdings as mockHoldings,
   locations as mockLocations,
-} from '../../../test/resources';
+} from '../../../../test/resources';
 
-jest.mock('./GenerateReceivingModalInfo', () => () => (
+jest.mock('../GenerateReceivingModalInfo', () => () => (
   <div>GenerateReceivingModalInfo</div>
 ));
 // jest.mock('./GenerateReceivingModalForm', () => () => (<div>GenerateReceivingModalForm</div>));
 
-jest.mock('../../hooks', () => ({
-  ...jest.requireActual('../../hooks'),
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
   useLocations: () => ({ isLoading: false, data: mockLocations }),
   useHoldings: () => ({ isLoading: false, data: mockHoldings }),
 }));
@@ -57,21 +59,22 @@ const TestComponent = () => {
   // We need actual state in here for close test
   const [showModal, setShowModal] = useState(true);
 
+  const onClose = () => setShowModal(true);
+
   return (
     <GenerateReceivingModal
+      onClose={onClose}
+      open={showModal}
       orderLine={serial?.orderLine}
       pieceSet={pieceSet}
-      setShowModal={setShowModal}
-      showModal={showModal}
     />
   );
 };
 
-let renderComponent;
 // TODO this test complains about rendering forwardRef... Maybe it's the formModal stuff. Again though, we ought to fix that.
 describe('GenerateReceivingModal', () => {
   beforeEach(() => {
-    renderComponent = renderWithIntl(<TestComponent />, translationsProperties);
+    renderWithIntl(<TestComponent />, translationsProperties);
   });
 
   test('useMutation has been called', () => {
@@ -93,7 +96,7 @@ describe('GenerateReceivingModal', () => {
   // });
 
   test('renders the Generate receiving pieces button', async () => {
-    await Button({ id: 'generate-recieving-pieces-button' }).has({
+    await Button('Generate receiving pieces').has({
       disabled: true,
     });
   });
