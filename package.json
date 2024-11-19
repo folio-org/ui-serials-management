@@ -125,7 +125,7 @@
         "visible": true,
         "subPermissions": [
           "ui-serials-management.predictedpieces.view",
-          "serials-management.predictedPieceSets.delete"
+          "serials-management.predictedPieceSets.item.delete"
         ]
       },
       {
