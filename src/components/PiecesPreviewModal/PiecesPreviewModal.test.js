@@ -134,10 +134,10 @@ describe('PiecesPreviewModal', () => {
         mockMutateAsync.mockClear();
         await waitFor(async () => {
           await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2026');
-          await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+          await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
             '1'
           );
-          await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+          await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
             '1'
           );
         });
@@ -176,10 +176,10 @@ describe('PiecesPreviewModal', () => {
         mockMutateAsync.mockClear();
         await waitFor(async () => {
           await Datepicker({ id: 'ruleset-start-date' }).fillIn('02/01/2024');
-          await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+          await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
             '1'
           );
-          await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+          await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
             '1'
           );
         });
@@ -268,10 +268,10 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
     beforeEach(async () => {
       await waitFor(async () => {
         await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
-        await TextField({ name: 'startingValues[1].levels[0].value' }).fillIn(
+        await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
           '1'
         );
-        await TextField({ name: 'startingValues[1].levels[1].value' }).fillIn(
+        await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
           '1'
         );
       });
