@@ -50,8 +50,6 @@ const PiecesPreviewModalForm = ({
   const startingValueDataOptions = existingPieceSets
     ?.filter((ps) => ps?.ruleset?.id === ruleset?.id)
     ?.map((fps) => {
-      const adjustedStartDate = new Date(fps?.startDate);
-      adjustedStartDate.setFullYear(adjustedStartDate.getFullYear() + 1);
       return {
         value: fps?.id,
         label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}:
@@ -67,14 +65,16 @@ const PiecesPreviewModalForm = ({
     );
     // When changes fields at the top level of the form, change function requires an empty string, funky
     change('', {
-      startDate: getAdjustedStartDate(selectedPieceSet?.startDate),
+      startDate: selectedPieceSet?.startDate
+        ? getAdjustedStartDate(selectedPieceSet?.startDate)
+        : null,
       startingValues:
         selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
           (uc) => {
             if (uc?.metadataType?.levels?.length) {
               return {
                 levels: uc?.metadataType?.levels?.map((ucl) => {
-                  return { value: ucl?.rawValue };
+                  return { rawValue: ucl?.rawValue };
                 }),
               };
             }
@@ -109,7 +109,7 @@ const PiecesPreviewModalForm = ({
                     values={{ index: i + 1 }}
                   />
                 }
-                name={`startingValues[${index}].levels[${i}].value`}
+                name={`startingValues[${index}].levels[${i}].rawValue`}
                 required
                 validate={
                   e?.sequence?.value === 'reset'
