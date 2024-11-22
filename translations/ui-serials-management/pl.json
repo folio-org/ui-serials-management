@@ -115,7 +115,7 @@
     "ruleset.combinationRulesPopover": "Running this publication pattern will generate a minimum of one year's worth of predicted issues. Combination rules can be applied to combine sequences of issues into a single issue. {br} For example, to combine a number of days, weeks or months. {br} The time unit \"Issue\" can be used to select the \"nth\" issue in the set of predicted issues.",
     "ruleset.noCombinationRules": "No combination rules for this publication pattern",
     "ruleset.addCombinationDisabledTooltip": "Combination rules cannot be added because an omission rule exists",
-    "lastUpdated": "Last updated",
+    "lastUpdated": "Ostatnia aktualizacja",
     "serials.publicationPattern": "Wzór publikacji",
     "ruleset.patternId": "Pattern ID",
     "ruleset.patternDescription": "Pattern description",
