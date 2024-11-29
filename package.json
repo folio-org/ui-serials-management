@@ -192,5 +192,8 @@
   },
   "optionalDependencies": {
     "@folio/plugin-find-po-line": "^5.2.0"
+  },
+  "resolutions": {
+    "nwsapi": "2.2.13"
   }
 }
