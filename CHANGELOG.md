@@ -1,5 +1,11 @@
 # change history for ui-serials-management
 
+## 1.1.1 2024-11-29
+  * UISER-174 In Generated predicted piece confirmation warning the wrong date is used
+  * UISER-172 Receiving pieces for combined pieces do not include correct display summary
+  * UISER-178 Non-existant permission referenced in ui-serials-management leading to no permission to delete a predicted piece set
+  * MODSER-62 Multiple levels of continuous enumeration in a publication pattern result in incorrect numbering
+
 ## 1.1.0 2024-11-01
   * UISER-167 Update module license and guidance for ui-serials-management
   * UISER-166 Update permissions and menu display for serials
