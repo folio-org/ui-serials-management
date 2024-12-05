@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -49,29 +49,32 @@ const PiecesPreviewModalForm = ({
     change('numberOfCycles', 1);
   }, [change]);
 
-  const TIME_UNIT_PER_YEAR = {
-    day: { timeUnitsPerYear: 365.2425 },
-    week: { timeUnitsPerYear: 52.1775 },
-    month: { timeUnitsPerYear: 12 },
-  };
+  const calculateAllowedCycles = useMemo(() => {
+    const TIME_UNIT_PER_YEAR = {
+      day: 365.2425,
+      week: 52.1775,
+      month: 12,
+    };
 
-  const MAX_PIECES = 366;
+    const MAX_PIECES = 366;
 
-  const calculateAllowedCycles = () => {
     const { issues, period, timeUnit } = ruleset?.recurrence ?? {};
 
     if (timeUnit?.value === 'year') {
-      return Math.floor((MAX_PIECES / issues));
+      return Math.floor(MAX_PIECES / issues);
     } else {
-      const timeUnitsPerYear = TIME_UNIT_PER_YEAR[timeUnit?.value]?.timeUnitsPerYear;
-      return Math.floor(MAX_PIECES / ((timeUnitsPerYear / period) * issues));
+      return Math.floor(
+        MAX_PIECES / ((TIME_UNIT_PER_YEAR[timeUnit?.value] / period) * issues)
+      );
     }
-  };
+  }, [ruleset]);
 
-  const customValidationMessage = <FormattedMessage
-    id="ui-serials-management.validate.allowedCycles"
-    values={{ maxValue: calculateAllowedCycles() }}
-  />;
+  const customValidationMessage = (
+    <FormattedMessage
+      id="ui-serials-management.validate.allowedCycles"
+      values={{ maxValue: calculateAllowedCycles }}
+    />
+  );
 
   const getAdjustedStartDate = (date) => {
     const adjustedStartDate = new Date(date);
@@ -173,7 +176,7 @@ const PiecesPreviewModalForm = ({
         {ruleset?.templateConfig?.rules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+              'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -233,9 +236,7 @@ const PiecesPreviewModalForm = ({
                 <FormattedMessage id="ui-serials-management.ruleset.numberOfCycles" />
                 <InfoPopover
                   content={
-                    <FormattedMessage
-                      id="ui-serials-management.numberOfCycles.infoPopover"
-                    />
+                    <FormattedMessage id="ui-serials-management.numberOfCycles.infoPopover" />
                   }
                 />
               </>
@@ -245,7 +246,11 @@ const PiecesPreviewModalForm = ({
             validate={composeValidators(
               requiredValidator,
               validateNotNegative,
-              validateWithinRange(1, calculateAllowedCycles(), customValidationMessage)
+              validateWithinRange(
+                1,
+                calculateAllowedCycles,
+                customValidationMessage
+              )
             )}
           />
         </Col>
@@ -265,7 +270,7 @@ const PiecesPreviewModalForm = ({
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
-          'enumeration_numeric' ||
+            'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
