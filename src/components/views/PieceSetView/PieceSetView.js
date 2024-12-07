@@ -65,19 +65,13 @@ const PieceSetView = ({
     }
   );
 
+  const handleCloseReceivingModal = () => {
+    setShowReceivingModal(false);
+  };
+
   const handleDelete = async () => {
     await deletePieceSet(pieceSet?.id);
     history.push(`${urls.pieceSets()}${location.search}`);
-  };
-
-  const getHoldingIds = () => {
-    if (serial?.orderLine?.remoteId_object?.locations?.[0]?.holdingId) {
-      return serial?.orderLine?.remoteId_object?.locations?.map(
-        (hi) => hi?.holdingId
-      );
-    } else {
-      return null;
-    }
   };
 
   const sortedPieces = useMemo(() => sortPieces(pieceSet?.pieces), [pieceSet]);
@@ -159,10 +153,9 @@ const PieceSetView = ({
       </Pane>
       <GenerateReceivingModal
         {...getSectionProps('generate-receiving-modal')}
-        holdingIds={getHoldingIds()}
-        serial={serial}
-        setShowModal={setShowReceivingModal}
-        showModal={showReceivingModal}
+        onClose={handleCloseReceivingModal}
+        open={showReceivingModal}
+        orderLine={serial?.orderLine}
       />
       <ConfirmationModal
         cancelLabel={<FormattedMessage id="ui-serials-management.cancel" />}

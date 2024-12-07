@@ -1,7 +1,7 @@
-import { chronologyYear } from './rulesetResources/chronologyRules';
-import { enumerationNumeric } from './rulesetResources/enumerationRules';
-import { monthDate } from './rulesetResources/recurrences';
-import { findRefdataValue } from './utils';
+import { chronologyYear } from '../rulesetResources/chronologyRules';
+import { enumerationNumeric } from '../rulesetResources/enumerationRules';
+import { monthDate } from '../rulesetResources/recurrences';
+import { findRefdataValue } from '../utils';
 
 const ruleset = {
   id: 'a3a45cc5-5c16-46aa-93a3-e64bb4defef0',

@@ -1,10 +1,10 @@
-import ruleset from './ruleset';
 import orderLine from './externalResources/orderLine';
 import { findRefdataValue } from './utils';
+import { ruleset, combinationRuleset, omissionRuleset } from './rulesets';
 
 const serial = {
   id: '9be5cebf-c676-4430-9439-4f47973d8a47',
-  serialRulesets: [ruleset],
+  serialRulesets: [ruleset, omissionRuleset, combinationRuleset],
   dateCreated: '2024-02-26T09:58:02Z',
   lastUpdated: '2024-02-26T09:58:02Z',
   orderLine: {
