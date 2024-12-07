@@ -8,6 +8,7 @@ import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
+import { useCentralOrderingSettings, useConsortiumLocations } from '@folio/stripes-acq-components';
 import {
   Row,
   Col,
@@ -57,6 +58,12 @@ const GenerateReceivingModal = ({
   const callout = useCallout();
   const { data: locations } = useLocations();
   const { data: holdings } = useHoldings(holdingIds);
+  const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
+  const { locations: consortiaLocations } = useConsortiumLocations();
+  console.log(serial?.orderLine?.remoteId_object?.locations);
+  console.log(locations);
+  console.log(consortiaLocations);
+  console.log(isCentralOrderingEnabled);
 
   const closeModal = () => {
     setShowModal(false);
