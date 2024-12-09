@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -44,10 +44,6 @@ const PiecesPreviewModalForm = ({
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
-
-  useEffect(() => {
-    change('numberOfCycles', 1);
-  }, [change]);
 
   const calculateAllowedCycles = useMemo(() => {
     const TIME_UNIT_PER_YEAR = {
@@ -176,7 +172,7 @@ const PiecesPreviewModalForm = ({
         {ruleset?.templateConfig?.rules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
-              'enumeration_numeric' ||
+            'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -270,7 +266,7 @@ const PiecesPreviewModalForm = ({
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+          'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (

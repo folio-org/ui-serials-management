@@ -114,6 +114,7 @@ const PiecesPreviewModal = ({
       startDate: values?.startDate,
       note: values?.note,
       startingValues: formatStartingValues(values),
+      numberOfCycles: values?.numberOfCycles,
     };
     await createPieces(submitValues);
   };
@@ -125,6 +126,7 @@ const PiecesPreviewModal = ({
       ...submitValues,
       startDate: values?.startDate,
       startingValues: formatStartingValues(values),
+      numberOfCycles: values?.numberOfCycles,
     });
   };
 
@@ -239,6 +241,7 @@ const PiecesPreviewModal = ({
   return (
     <>
       <FormModal
+        initialValues={{ numberOfCycles: 1 }}
         modalProps={{
           onClose: closeModal,
           open: showModal,
@@ -255,6 +258,7 @@ const PiecesPreviewModal = ({
         <PiecesPreviewModalForm
           allowCreation={allowCreation}
           existingPieceSets={existingPieceSets}
+          intialValues={{ numberOfCycles: 1 }}
           ruleset={ruleset}
           serialName={serialName}
         />

@@ -160,7 +160,7 @@
   "ruleset.issueCount": "Issue count",
   "ruleset.issuePublicationDate": "Issue publication date",
   "ruleset.confirmGeneration": "Confirm generation of overlapping piece sets",
-  "ruleset.numberOfCycles": "Number of of years / cycles",
+  "ruleset.numberOfCycles": "Number of years/cycles",
 
   "ruleset.combinationRules": "Combination rules",
   "ruleset.combinationRulesPopover": "Running this publication pattern will generate a minimum of one year's worth of predicted issues. Combination rules can be applied to combine sequences of issues into a single issue. {br} For example, to combine a number of days, weeks or months. {br} The time unit \"Issue\" can be used to select the \"nth\" issue in the set of predicted issues.",
