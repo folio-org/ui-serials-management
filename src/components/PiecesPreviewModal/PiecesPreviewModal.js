@@ -258,7 +258,6 @@ const PiecesPreviewModal = ({
         <PiecesPreviewModalForm
           allowCreation={allowCreation}
           existingPieceSets={existingPieceSets}
-          intialValues={{ numberOfCycles: 1 }}
           ruleset={ruleset}
           serialName={serialName}
         />
