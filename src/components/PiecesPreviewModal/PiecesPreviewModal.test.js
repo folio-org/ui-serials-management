@@ -74,7 +74,7 @@ describe('PiecesPreviewModal', () => {
     expect(getByText('Generate predicted pieces')).toBeInTheDocument();
   });
 
-  test('renders the expected tesxtfield start date label', async () => {
+  test('renders the expected textfield start date label', async () => {
     const { getByText } = renderComponent;
     expect(getByText('Start date')).toBeInTheDocument();
   });
@@ -83,7 +83,16 @@ describe('PiecesPreviewModal', () => {
     await Datepicker({ id: 'ruleset-start-date' }).exists();
   });
 
-  test('renders the expected tesxtfield note label', async () => {
+  test('renders the expected numberfield numberOfCycles label', async () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Number of years/cycles')).toBeInTheDocument();
+  });
+
+  test('renders the expected numberfield', async () => {
+    await TextField({ id: 'number-of-cycles' }).exists();
+  });
+
+  test('renders the expected textfield note label', async () => {
     const { getByText } = renderComponent;
     expect(getByText('Note')).toBeInTheDocument();
   });

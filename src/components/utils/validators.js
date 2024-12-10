@@ -1,13 +1,13 @@
 import { FormattedMessage } from 'react-intl';
 
-const validateWithinRange = (minValue, maxValue) => (value) => {
+const validateWithinRange = (minValue, maxValue, customMessage) => (value) => {
   return !value ||
     (Number(value) <= Number(maxValue) &&
       Number(value) >= Number(minValue)) ? undefined : (
-        <FormattedMessage
-          id="ui-serials-management.validate.withinRange"
-          values={{ minValue, maxValue }}
-        />
+      customMessage ?? <FormattedMessage
+        id="ui-serials-management.validate.withinRange"
+        values={{ minValue, maxValue }}
+      />
     );
 };
 
