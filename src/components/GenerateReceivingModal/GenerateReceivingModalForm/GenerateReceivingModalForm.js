@@ -18,12 +18,14 @@ const propTypes = {
   orderLine: PropTypes.object,
   locations: PropTypes.arrayOf(PropTypes.object),
   holdings: PropTypes.arrayOf(PropTypes.object),
+  tenants: PropTypes.arrayOf(PropTypes.object),
 };
 
 const GenerateReceivingModalForm = ({
   orderLine,
   holdings = [],
   locations = [],
+  tenants = [],
 }) => {
   const formatDataOptions = () => {
     // If there are locations associated with a POL
@@ -42,9 +44,10 @@ const GenerateReceivingModalForm = ({
           const holdingLocation = locations.find(
             (l) => h?.permanentLocationId === l?.id
           );
-          // FIXME Call number is not always supplied by holdings
           return {
-            label: `${holdingLocation?.name} > ${h?.callNumber}`,
+            label: h?.callNumber
+              ? `${holdingLocation?.name} > ${h?.callNumber}`
+              : `${holdingLocation?.name}`,
             value: h?.id,
           };
         });

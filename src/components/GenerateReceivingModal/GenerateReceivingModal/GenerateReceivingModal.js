@@ -41,6 +41,9 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
 
   // Hooks to be used within an environment when cental ordering is enabled
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
+  const { tenants: consortiumTenants } = useConsortiumTenants({
+    enabled: isCentralOrderingEnabled,
+  });
   const { locations: consortiumLocations } = useConsortiumLocations({
     enabled: isCentralOrderingEnabled,
   });
@@ -247,6 +250,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         pieceSet={pieceSet}
       />
       <GenerateReceivingModalForm
+        tenants={consortiumTenants}
         holdings={isCentralOrderingEnabled ? consortiumHoldings : holdings}
         locations={isCentralOrderingEnabled ? consortiumLocations : locations}
         orderLine={orderLine}
