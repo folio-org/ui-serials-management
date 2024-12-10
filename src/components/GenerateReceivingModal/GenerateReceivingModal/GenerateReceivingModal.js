@@ -38,18 +38,23 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const callout = useCallout();
-  console.log(orderLine);
 
+  // Hooks to be used within an environment when cental ordering is enabled
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
-  const { locations: consortiumLocations } = useConsortiumLocations();
-  const { holdings: consortiumHoldings } = useConsortiumInstanceHoldings();
-  console.log(consortiumHoldings);
-
-  const { locations } = useLocations();
-  const { holdings } = useInstanceHoldings(
-    orderLine?.remoteId_object?.instanceId
+  const { locations: consortiumLocations } = useConsortiumLocations({
+    enabled: isCentralOrderingEnabled,
+  });
+  const { holdings: consortiumHoldings } = useConsortiumInstanceHoldings(
+    orderLine?.remoteId_object?.instanceId,
+    { enabled: isCentralOrderingEnabled }
   );
-  console.log(holdings);
+
+  // Hooks to be used outside of a central ordering environment
+  const { locations } = useLocations({ enabled: !isCentralOrderingEnabled });
+  const { holdings } = useInstanceHoldings(
+    orderLine?.remoteId_object?.instanceId,
+    { enabled: !isCentralOrderingEnabled }
+  );
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
@@ -242,8 +247,8 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         pieceSet={pieceSet}
       />
       <GenerateReceivingModalForm
-        holdings={holdings}
-        locations={locations}
+        holdings={isCentralOrderingEnabled ? consortiumHoldings : holdings}
+        locations={isCentralOrderingEnabled ? consortiumLocations : locations}
         orderLine={orderLine}
       />
     </FormModal>
