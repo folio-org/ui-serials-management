@@ -42,6 +42,7 @@ const GenerateReceivingModalForm = ({
           const holdingLocation = locations.find(
             (l) => h?.permanentLocationId === l?.id
           );
+          // FIXME Call number is not always supplied by holdings
           return {
             label: `${holdingLocation?.name} > ${h?.callNumber}`,
             value: h?.id,
