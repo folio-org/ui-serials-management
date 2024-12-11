@@ -28,24 +28,8 @@ const GenerateReceivingModalForm = ({
   locations = [],
   tenants = [],
 }) => {
-  const { values } = useFormState();
-  const filteredLocations = useMemo(() => {
-    return orderLine?.remoteId_object?.locations?.map((e) => {
-      const location = locations?.find((l) => e?.locationId === l?.id);
-      return location;
-    }) || [];
-  }, [locations, orderLine?.remoteId_object?.locations]);
-
-  const filteredHoldings = useMemo(() => {
-    return holdings?.map((h) => {
-      const holdingLocation = locations.find(
-        (l) => h?.permanentLocationId === l?.id
-      );
-      return { ...h, holdingLocationName: holdingLocation?.name };
-    });
-  }, [holdings, locations]);
-
-
+  console.log(holdings);
+  console.log(orderLine);
   const locationsDataOptions = useMemo(() => {
     // If there are locations associated with a POL
     if (orderLine?.remoteId_object?.locations?.length > 0) {
@@ -54,7 +38,11 @@ const GenerateReceivingModalForm = ({
         // Data options should be an array of matched locations
         return orderLine?.remoteId_object?.locations?.map((e) => {
           const location = locations?.find((l) => e?.locationId === l?.id);
-          return { label: location?.name, value: location?.id };
+          return {
+            label: location?.name,
+            value: location?.id,
+            ...(location?.tenantId && { tenantId: location?.tenantId }),
+          };
         });
         // If both holdings and locations exist associated with the POL
         // Data options should be the location, concatenated with the holding call number
@@ -68,12 +56,19 @@ const GenerateReceivingModalForm = ({
               ? `${holdingLocation?.name} > ${h?.callNumber}`
               : `${holdingLocation?.name}`,
             value: h?.id,
+            ...(h?.tenantId && { tenantId: h?.tenantId }),
           };
         });
       }
     }
     return [];
   }, [holdings, locations, orderLine?.remoteId_object?.locations]);
+  console.log(locationsDataOptions);
+
+  const filteredAffiliations = useMemo(() => {
+    const usedTenantIds = locationsDataOptions?.map((o) => o?.tenantId) || [];
+    return tenants?.filter((t) => usedTenantIds?.includes(t?.id));
+  });
 
   return (
     <>
@@ -100,7 +95,13 @@ const GenerateReceivingModalForm = ({
         <Col xs={6}>
           <Field
             component={Select}
-            dataOptions={[{ label: '', value: '' }]}
+            dataOptions={[
+              { label: '', value: '' },
+              ...filteredAffiliations?.map((a) => ({
+                label: a?.code,
+                value: a?.id,
+              })),
+            ]}
             label={
               <FormattedMessage id="ui-serials-management.pieceSets.affiliation" />
             }
