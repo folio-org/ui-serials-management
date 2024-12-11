@@ -13,6 +13,7 @@ import {
   useConsortiumInstanceHoldings,
   useInstanceHoldings,
   useLocations,
+  useConsortiumTenants
 } from '@folio/stripes-acq-components';
 
 import GenerateReceivingModalForm from '../GenerateReceivingModalForm';
@@ -77,28 +78,27 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
 
   const { mutateAsync: submitReceivingIds } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
-    (data) =>
-      ky
-        .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
-        .json()
-        .then(() => {
-          queryClient.invalidateQueries([
-            '@folio/serials-management',
-            'SASQ',
-            'piece-sets',
-            'view',
-            pieceSet?.id,
-          ]);
-          callout.sendCallout({
-            message: (
-              <FormattedMessage
-                id="ui-serials-management.pieceSets.countReceivingGenerated"
-                values={{ count: data?.pieces?.length }}
-              />
-            ),
-          });
-          onClose();
-        })
+    (data) => ky
+      .put(PIECE_SET_ENDPOINT(pieceSet?.id), { json: data })
+      .json()
+      .then(() => {
+        queryClient.invalidateQueries([
+          '@folio/serials-management',
+          'SASQ',
+          'piece-sets',
+          'view',
+          pieceSet?.id,
+        ]);
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id="ui-serials-management.pieceSets.countReceivingGenerated"
+              values={{ count: data?.pieces?.length }}
+            />
+          ),
+        });
+        onClose();
+      })
   );
 
   const getInitialValues = () => {
@@ -191,18 +191,16 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
     } catch (e) {
       const { errors } = await e.response.json();
-      errors?.map((error) =>
-        callout.sendCallout({
-          message: (
-            <>
-              <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingErrorMessage" />
-              {error?.message}
-            </>
-          ),
-          type: 'error',
-          timeout: 0,
-        })
-      );
+      errors?.map((error) => callout.sendCallout({
+        message: (
+          <>
+            <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingErrorMessage" />
+            {error?.message}
+          </>
+        ),
+        type: 'error',
+        timeout: 0,
+      }));
     }
   };
 
@@ -250,10 +248,10 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         pieceSet={pieceSet}
       />
       <GenerateReceivingModalForm
-        tenants={consortiumTenants}
         holdings={isCentralOrderingEnabled ? consortiumHoldings : holdings}
         locations={isCentralOrderingEnabled ? consortiumLocations : locations}
         orderLine={orderLine}
+        tenants={consortiumTenants}
       />
     </FormModal>
   );

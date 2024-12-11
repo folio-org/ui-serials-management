@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { Field } from 'react-final-form';
+import { useMemo } from 'react';
+import { Field, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -27,7 +28,25 @@ const GenerateReceivingModalForm = ({
   locations = [],
   tenants = [],
 }) => {
-  const formatDataOptions = () => {
+  const { values } = useFormState();
+  const filteredLocations = useMemo(() => {
+    return orderLine?.remoteId_object?.locations?.map((e) => {
+      const location = locations?.find((l) => e?.locationId === l?.id);
+      return location;
+    }) || [];
+  }, [locations, orderLine?.remoteId_object?.locations]);
+
+  const filteredHoldings = useMemo(() => {
+    return holdings?.map((h) => {
+      const holdingLocation = locations.find(
+        (l) => h?.permanentLocationId === l?.id
+      );
+      return { ...h, holdingLocationName: holdingLocation?.name };
+    });
+  }, [holdings, locations]);
+
+
+  const locationsDataOptions = useMemo(() => {
     // If there are locations associated with a POL
     if (orderLine?.remoteId_object?.locations?.length > 0) {
       // And none of these are holdings
@@ -54,7 +73,7 @@ const GenerateReceivingModalForm = ({
       }
     }
     return [];
-  };
+  }, [holdings, locations, orderLine?.remoteId_object?.locations]);
 
   return (
     <>
@@ -75,6 +94,18 @@ const GenerateReceivingModalForm = ({
             name="interval"
             required
             type="number"
+            validate={requiredValidator}
+          />
+        </Col>
+        <Col xs={6}>
+          <Field
+            component={Select}
+            dataOptions={[{ label: '', value: '' }]}
+            label={
+              <FormattedMessage id="ui-serials-management.pieceSets.affiliation" />
+            }
+            name="receivingTenantId"
+            required
             validate={requiredValidator}
           />
         </Col>
@@ -136,7 +167,7 @@ const GenerateReceivingModalForm = ({
           <Col xs={6}>
             <Field
               component={Select}
-              dataOptions={[{ label: '', value: '' }, ...formatDataOptions()]}
+              dataOptions={[{ label: '', value: '' }, ...locationsDataOptions]}
               disabled={orderLine?.remoteId_object?.locations?.length === 1}
               label={
                 holdings?.length ? (
