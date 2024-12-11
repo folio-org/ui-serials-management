@@ -28,8 +28,13 @@ const GenerateReceivingModalForm = ({
   locations = [],
   tenants = [],
 }) => {
-  console.log(holdings);
-  console.log(orderLine);
+  console.log('POL LOCATIONS: %o', orderLine?.remoteId_object?.locations);
+  console.log('HOLDINGS: %o', holdings);
+  console.log('LOCATIONS: %o', locations);
+  console.log('TENANTS: %o', tenants);
+  // if Tenants - assume in ecs environment
+  // if no holdings which match tenant id or no holdings
+  // filter locations base on tenantIds and id vs tenantId and locationId
   const locationsDataOptions = useMemo(() => {
     // If there are locations associated with a POL
     if (orderLine?.remoteId_object?.locations?.length > 0) {
@@ -63,7 +68,6 @@ const GenerateReceivingModalForm = ({
     }
     return [];
   }, [holdings, locations, orderLine?.remoteId_object?.locations]);
-  console.log(locationsDataOptions);
 
   const filteredAffiliations = useMemo(() => {
     const usedTenantIds = locationsDataOptions?.map((o) => o?.tenantId) || [];
