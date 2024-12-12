@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
-import { Field, useFormState } from 'react-final-form';
+import { useCallback, useMemo } from 'react';
+import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
@@ -29,49 +29,38 @@ const GenerateReceivingModalForm = ({
   tenants = [],
 }) => {
   const { values } = useFormState();
+  const { change, batch } = useForm();
   // if Tenants - assume in ecs environment
   // if no holdings which match tenant id or no holdings
   // filter locations base on tenantIds and id vs tenantId and locationId
   const locationsDataOptions = useMemo(() => {
     // If there are locations associated with a POL
-    if (orderLine?.remoteId_object?.locations?.length > 0) {
-      // And none of these are holdings
-      if (!holdings?.length && locations?.length > 0) {
-        // Data options should be an array of matched locations
-        return locations
-          ?.filter((l) => (tenants?.length > 0
-            ? l?.tenantId === values?.receivingTenantId
-            : true))
-          ?.map((fl) => ({ label: fl?.name, value: fl?.id }));
+    // And none of these are holdings
+    if (!holdings?.length && locations?.length > 0) {
+      // Data options should be an array of matched locations
+      return locations
+        ?.filter((l) => (tenants?.length > 0 ? l?.tenantId === values?.receivingTenantId : true))
+        ?.map((fl) => ({ label: fl?.name, value: fl?.id }));
 
-        // If both holdings and locations exist associated with the POL
-        // Data options should be the location, concatenated with the holding call number
-      } else if (locations?.length > 0 && holdings?.length > 0) {
-        return holdings
-          ?.filter((h) => (tenants?.length > 0
-            ? h?.tenantId === values?.receivingTenantId
-            : true))
-          ?.map((fh) => {
-            const holdingLocation = locations.find(
-              (l) => fh?.permanentLocationId === l?.id
-            );
-            return {
-              label: fh?.callNumber
-                ? `${holdingLocation?.name} > ${fh?.callNumber}`
-                : `${holdingLocation?.name}`,
-              value: fh?.id,
-            };
-          });
-      }
+      // If both holdings and locations exist associated with the POL
+      // Data options should be the location, concatenated with the holding call number
+    } else if (locations?.length > 0 && holdings?.length > 0) {
+      return holdings
+        ?.filter((h) => (tenants?.length > 0 ? h?.tenantId === values?.receivingTenantId : true))
+        ?.map((fh) => {
+          const holdingLocation = locations.find(
+            (l) => fh?.permanentLocationId === l?.id
+          );
+          return {
+            label: fh?.callNumber
+              ? `${holdingLocation?.name} > ${fh?.callNumber}`
+              : `${holdingLocation?.name}`,
+            value: fh?.id,
+          };
+        });
     }
     return [];
-  }, [
-    holdings,
-    locations,
-    orderLine?.remoteId_object?.locations?.length,
-    tenants?.length,
-    values?.receivingTenantId,
-  ]);
+  }, [holdings, locations, tenants?.length, values?.receivingTenantId]);
 
   const affiliationDataOptions = useMemo(() => {
     return tenants?.map((t) => ({
@@ -79,6 +68,22 @@ const GenerateReceivingModalForm = ({
       value: t?.id,
     }));
   }, [tenants]);
+
+  const affiliationOnChange = (e) => {
+    if (holdings?.length > 0) {
+    // Could do this onChange as we normally do but testing this
+    // Is there a reason we never really use batch for multiple change calls?
+      batch(() => {
+        change('receivingTenantId', e?.target?.value);
+        change('holdingId', undefined);
+      });
+    } else {
+      batch(() => {
+        change('receivingTenantId', e?.target?.value);
+        change('locationId', undefined);
+      });
+    }
+  };
 
   return (
     <>
@@ -115,6 +120,7 @@ const GenerateReceivingModalForm = ({
                 <FormattedMessage id="ui-serials-management.pieceSets.affiliation" />
               }
               name="receivingTenantId"
+              onChange={(e) => affiliationOnChange(e)}
               required
               validate={requiredValidator}
             />
@@ -179,7 +185,10 @@ const GenerateReceivingModalForm = ({
             <Field
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...locationsDataOptions]}
-              disabled={orderLine?.remoteId_object?.locations?.length === 1}
+              disabled={
+                orderLine?.remoteId_object?.locations?.length === 1 ||
+                (tenants?.length > 0 && !values?.receivingTenantId)
+              }
               label={
                 holdings?.length ? (
                   <FormattedMessage id="ui-serials-management.pieceSets.holding" />
