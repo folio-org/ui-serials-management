@@ -38,42 +38,30 @@ const GenerateReceivingModalForm = ({
       // And none of these are holdings
       if (!holdings?.length && locations?.length > 0) {
         // Data options should be an array of matched locations
-        if (tenants?.length > 0) {
-          return locations
-            ?.filter((l) => l?.tenantId === values?.receivingTenantId)
-            ?.map((fl) => ({ label: fl?.name, value: fl?.id }));
-        } else {
-          return locations?.map((l) => ({ label: l?.name, value: l?.id }));
-        }
+        return locations
+          ?.filter((l) => (tenants?.length > 0
+            ? l?.tenantId === values?.receivingTenantId
+            : true))
+          ?.map((fl) => ({ label: fl?.name, value: fl?.id }));
+
         // If both holdings and locations exist associated with the POL
         // Data options should be the location, concatenated with the holding call number
       } else if (locations?.length > 0 && holdings?.length > 0) {
-        if (tenants?.length > 0) {
-          return holdings
-            ?.filter((e) => e?.tenantId === values?.receivingTenantId)
-            ?.map((h) => {
-              const holdingLocation = locations.find(
-                (l) => h?.permanentLocationId === l?.id
-              );
-              return {
-                label: h?.callNumber
-                  ? `${holdingLocation?.name} > ${h?.callNumber}`
-                  : `${holdingLocation?.name}`,
-                value: h?.id,
-              };
-            });
-        }
-        return holdings?.map((h) => {
-          const holdingLocation = locations.find(
-            (l) => h?.permanentLocationId === l?.id
-          );
-          return {
-            label: h?.callNumber
-              ? `${holdingLocation?.name} > ${h?.callNumber}`
-              : `${holdingLocation?.name}`,
-            value: h?.id,
-          };
-        });
+        return holdings
+          ?.filter((h) => (tenants?.length > 0
+            ? h?.tenantId === values?.receivingTenantId
+            : true))
+          ?.map((fh) => {
+            const holdingLocation = locations.find(
+              (l) => fh?.permanentLocationId === l?.id
+            );
+            return {
+              label: fh?.callNumber
+                ? `${holdingLocation?.name} > ${fh?.callNumber}`
+                : `${holdingLocation?.name}`,
+              value: fh?.id,
+            };
+          });
       }
     }
     return [];
@@ -85,15 +73,12 @@ const GenerateReceivingModalForm = ({
     values?.receivingTenantId,
   ]);
 
-  // Will there ever be asituation where a tenantId on a location will not match the tenantId on an associated holding?
-  const filteredAffiliations = useMemo(() => {
-    const useLocationTenantIds = locations?.map((o) => o?.tenantId) || [];
-    const usedHoldingsTenantIds = holdings?.map((o) => o?.tenantId) || [];
-    return tenants?.filter(
-      (t) => useLocationTenantIds?.includes(t?.id) ||
-        usedHoldingsTenantIds?.includes(t?.id)
-    );
-  }, [holdings, locations, tenants]);
+  const affiliationDataOptions = useMemo(() => {
+    return tenants?.map((t) => ({
+      label: t?.code,
+      value: t?.id,
+    }));
+  }, [tenants]);
 
   return (
     <>
@@ -123,10 +108,7 @@ const GenerateReceivingModalForm = ({
               component={Select}
               dataOptions={[
                 { label: '', value: '' },
-                ...filteredAffiliations?.map((a) => ({
-                  label: a?.code,
-                  value: a?.id,
-                })),
+                ...affiliationDataOptions,
               ]}
               disabled={orderLine?.remoteId_object?.locations?.length === 1}
               label={

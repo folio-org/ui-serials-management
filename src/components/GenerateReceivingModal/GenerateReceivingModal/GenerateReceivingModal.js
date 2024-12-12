@@ -114,6 +114,14 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     orderLine?.remoteId_object?.locations,
   ]);
 
+  // Will there ever be asituation where a tenantId on a location will not match the tenantId on an associated holding?
+  const filteredAffiliations = useMemo(() => {
+    return consortiumTenants?.filter(
+      (t) => filteredConsortiumLocations?.some((l) => l?.tenantId === t?.id) ||
+        filteredConsortiumHoldings?.some((l) => l?.tenantId === t?.id)
+    );
+  }, [consortiumTenants, filteredConsortiumLocations, filteredConsortiumHoldings]);
+
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
       'ui-serials-management',
@@ -323,7 +331,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
             : filteredLocations
         }
         orderLine={orderLine}
-        tenants={consortiumTenants}
+        tenants={filteredAffiliations}
       />
     </FormModal>
   );
