@@ -68,58 +68,51 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   // First filter the holdings by id, checking if holdingId exist in POL locations
   // If its part of an ECS environment also compare tenantId
   const filteredHoldings = useMemo(() => {
-    if (isCentralOrderingEnabled) {
-      return consortiumHoldings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
-        return rol?.holdingId === h?.id && rol?.tenantId === h?.tenantId;
-      }));
-    } else {
-      return holdings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
-        return rol?.holdingId === h?.id;
-      }));
-    }
-  }, [
-    consortiumHoldings,
-    holdings,
-    isCentralOrderingEnabled,
-    orderLine?.remoteId_object?.locations,
-  ]);
-  console.log('FILTERED HOLDINGS: %o', filteredHoldings);
+    return holdings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
+      return rol?.holdingId === h?.id;
+    }));
+  }, [holdings, orderLine?.remoteId_object?.locations]);
 
   // Filter locations the same way we did with holdings
-  // locatio?.id being comapred against the POL locations arrays location?.id
+  // location?.id being comapred against the POL locations arrays location?.id
   // We will also need to filter these for the locations that are the permanentLocationIds on a given holding
   const filteredLocations = useMemo(() => {
-    if (isCentralOrderingEnabled) {
-      return consortiumLocations?.filter((l) => {
-        return (
-          orderLine?.remoteId_object?.locations?.some((rol) => {
-            return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
-          }) ||
-          filteredHoldings?.some((ch) => {
-            return (
-              l?.id === ch?.permanentLocationId && l?.tenantId === ch?.tenantId
-            );
-          })
-        );
-      });
-    } else {
-      return locations?.filter(
-        (l) => orderLine?.remoteId_object?.locations?.some((rol) => {
-          return rol?.locationId === l?.id;
+    return locations?.filter(
+      (l) => orderLine?.remoteId_object?.locations?.some((rol) => {
+        return rol?.locationId === l?.id;
+      }) ||
+        filteredHoldings?.some((h) => {
+          return l?.id === h?.permanentLocationId;
+        })
+    );
+  }, [filteredHoldings, locations, orderLine?.remoteId_object?.locations]);
+
+  const filteredConsortiumHoldings = useMemo(() => {
+    return (
+      consortiumHoldings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
+        return rol?.holdingId === h?.id && rol?.tenantId === h?.tenantId;
+      })) || []
+    );
+  }, [consortiumHoldings, orderLine?.remoteId_object?.locations]);
+
+  const filteredConsortiumLocations = useMemo(() => {
+    return consortiumLocations?.filter((l) => {
+      return (
+        orderLine?.remoteId_object?.locations?.some((rol) => {
+          return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
         }) ||
-          filteredHoldings?.some((h) => {
-            return l?.id === h?.permanentLocationId;
-          })
+        filteredConsortiumHoldings?.some((ch) => {
+          return (
+            l?.id === ch?.permanentLocationId && l?.tenantId === ch?.tenantId
+          );
+        })
       );
-    }
+    });
   }, [
     consortiumLocations,
-    filteredHoldings,
-    isCentralOrderingEnabled,
-    locations,
+    filteredConsortiumHoldings,
     orderLine?.remoteId_object?.locations,
   ]);
-  console.log('FILTERED LOCATIONS: %o', filteredLocations);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
@@ -170,14 +163,21 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       displayToPublic: false,
     };
     if (orderLine?.remoteId_object?.locations?.length === 1) {
-      if (holdings) {
+      const singleLocation = orderLine?.remoteId_object?.locations?.[0];
+      if (singleLocation?.holdingId) {
         return {
-          holdingId: orderLine?.remoteId_object?.locations?.[0]?.holdingId,
+          holdingId: singleLocation?.holdingId,
+          ...(singleLocation?.tenantId && {
+            receivingTenantId: singleLocation?.tenantId,
+          }),
           ...fixedInitialValues,
         };
       } else {
         return {
-          locationId: orderLine?.remoteId_object?.locations?.[0]?.locationId,
+          locationId: singleLocation?.locationId,
+          ...(singleLocation?.tenantId && {
+            receivingTenantId: singleLocation?.tenantId,
+          }),
           ...fixedInitialValues,
         };
       }
@@ -309,8 +309,16 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         pieceSet={pieceSet}
       />
       <GenerateReceivingModalForm
-        holdings={filteredHoldings}
-        locations={filteredLocations}
+        holdings={
+          isCentralOrderingEnabled
+            ? filteredConsortiumHoldings
+            : filteredHoldings
+        }
+        locations={
+          isCentralOrderingEnabled
+            ? filteredConsortiumLocations
+            : filteredLocations
+        }
         orderLine={orderLine}
         tenants={consortiumTenants}
       />
