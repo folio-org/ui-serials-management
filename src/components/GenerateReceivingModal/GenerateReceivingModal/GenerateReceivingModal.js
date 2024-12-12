@@ -216,6 +216,9 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         receiptDate: pieceInfo?.date,
         ...(values?.holdingId && { holdingId: values?.holdingId }),
         ...(values?.locationId && { locationId: values?.locationId }),
+        ...(values?.receivingTenantId && {
+          receivingTenantId: values?.receivingTenantId,
+        }),
       },
       piece,
     };

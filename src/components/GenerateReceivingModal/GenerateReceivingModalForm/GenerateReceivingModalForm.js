@@ -29,10 +29,6 @@ const GenerateReceivingModalForm = ({
   tenants = [],
 }) => {
   const { values } = useFormState();
-  console.log('POL LOCATIONS: %o', orderLine?.remoteId_object?.locations);
-  console.log('HOLDINGS: %o', holdings);
-  console.log('LOCATIONS: %o', locations);
-  console.log('TENANTS: %o', tenants);
   // if Tenants - assume in ecs environment
   // if no holdings which match tenant id or no holdings
   // filter locations base on tenantIds and id vs tenantId and locationId
@@ -121,24 +117,27 @@ const GenerateReceivingModalForm = ({
             validate={requiredValidator}
           />
         </Col>
-        <Col xs={6}>
-          <Field
-            component={Select}
-            dataOptions={[
-              { label: '', value: '' },
-              ...filteredAffiliations?.map((a) => ({
-                label: a?.code,
-                value: a?.id,
-              })),
-            ]}
-            label={
-              <FormattedMessage id="ui-serials-management.pieceSets.affiliation" />
-            }
-            name="receivingTenantId"
-            required
-            validate={requiredValidator}
-          />
-        </Col>
+        {!!tenants?.length && (
+          <Col xs={6}>
+            <Field
+              component={Select}
+              dataOptions={[
+                { label: '', value: '' },
+                ...filteredAffiliations?.map((a) => ({
+                  label: a?.code,
+                  value: a?.id,
+                })),
+              ]}
+              disabled={orderLine?.remoteId_object?.locations?.length === 1}
+              label={
+                <FormattedMessage id="ui-serials-management.pieceSets.affiliation" />
+              }
+              name="receivingTenantId"
+              required
+              validate={requiredValidator}
+            />
+          </Col>
+        )}
       </Row>
       <Row>
         <Col xs={6}>
