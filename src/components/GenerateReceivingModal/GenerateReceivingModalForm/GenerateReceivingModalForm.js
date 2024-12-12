@@ -30,23 +30,26 @@ const GenerateReceivingModalForm = ({
 }) => {
   const { values } = useFormState();
   const { change, batch } = useForm();
-  // if Tenants - assume in ecs environment
-  // if no holdings which match tenant id or no holdings
-  // filter locations base on tenantIds and id vs tenantId and locationId
+
+  // Figuring out what locations/holdings go into the location/holding field
   const locationsDataOptions = useMemo(() => {
     // If there are locations associated with a POL
     // And none of these are holdings
     if (!holdings?.length && locations?.length > 0) {
       // Data options should be an array of matched locations
       return locations
+      // if there are tenants, assume this is an ECS environment and also filter for matching tenantIds from the receivingTenantId field
         ?.filter((l) => (tenants?.length > 0 ? l?.tenantId === values?.receivingTenantId : true))
+        // Format into select field array format
         ?.map((fl) => ({ label: fl?.name, value: fl?.id }));
 
       // If both holdings and locations exist associated with the POL
       // Data options should be the location, concatenated with the holding call number
     } else if (locations?.length > 0 && holdings?.length > 0) {
       return holdings
+        // if there are tenants, assume this is an ECS environment and also filter for matching tenantIds from the receivingTenantId field
         ?.filter((h) => (tenants?.length > 0 ? h?.tenantId === values?.receivingTenantId : true))
+        // Format into select field array format, also grabbing the location name from holdings associated location
         ?.map((fh) => {
           const holdingLocation = locations.find(
             (l) => fh?.permanentLocationId === l?.id

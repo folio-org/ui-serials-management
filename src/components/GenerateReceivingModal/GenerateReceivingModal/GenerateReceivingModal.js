@@ -65,8 +65,8 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   // Since we cant filter the locations paticularly well using the hook search params
   // We have to filter the holdings and locations in the front end
 
+  // Filtering holdings/locaitons for non ecs environments
   // First filter the holdings by id, checking if holdingId exist in POL locations
-  // If its part of an ECS environment also compare tenantId
   const filteredHoldings = useMemo(() => {
     return holdings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
       return rol?.holdingId === h?.id;
@@ -87,6 +87,8 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     );
   }, [filteredHoldings, locations, orderLine?.remoteId_object?.locations]);
 
+  // Filtering holdings/locations/tenants for ecs environments
+  // Same filtering as above but also having to compare tenantids on pol location and holding
   const filteredConsortiumHoldings = useMemo(() => {
     return (
       consortiumHoldings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
@@ -95,6 +97,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     );
   }, [consortiumHoldings, orderLine?.remoteId_object?.locations]);
 
+  // Same filtering as filteredLocations but with tenantId comparison
   const filteredConsortiumLocations = useMemo(() => {
     return consortiumLocations?.filter((l) => {
       return (
@@ -114,8 +117,9 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     orderLine?.remoteId_object?.locations,
   ]);
 
+  // Taking consortium holdings/locations and extracting the tenantIds within those from the list of tenants
   // Will there ever be asituation where a tenantId on a location will not match the tenantId on an associated holding?
-  const filteredAffiliations = useMemo(() => {
+  const filteredConsortiumTenants = useMemo(() => {
     return consortiumTenants?.filter(
       (t) => filteredConsortiumLocations?.some((l) => l?.tenantId === t?.id) ||
         filteredConsortiumHoldings?.some((l) => l?.tenantId === t?.id)
@@ -331,7 +335,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
             : filteredLocations
         }
         orderLine={orderLine}
-        tenants={filteredAffiliations}
+        tenants={filteredConsortiumTenants}
       />
     </FormModal>
   );
