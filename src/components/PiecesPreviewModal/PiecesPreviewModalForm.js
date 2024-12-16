@@ -99,6 +99,7 @@ const PiecesPreviewModalForm = ({
       startDate: selectedPieceSet?.startDate
         ? getAdjustedStartDate(selectedPieceSet?.startDate)
         : null,
+      numberOfCycles: selectedPieceSet?.numberOfCycles ?? 1,
       startingValues:
         selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
           (uc) => {
