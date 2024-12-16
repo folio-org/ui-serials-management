@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -6,6 +7,7 @@ import {
   Datepicker,
   Row,
   Col,
+  InfoPopover,
   Label,
   TextField,
   Layout,
@@ -14,12 +16,14 @@ import {
   MessageBanner,
 } from '@folio/stripes/components';
 
+import { NumberField } from '@k-int/stripes-kint-components';
+
 import {
   composeValidators,
   requiredValidator,
 } from '@folio/stripes-erm-components';
 
-import { validateWithinRange } from '../utils';
+import { validateNotNegative, validateWithinRange } from '../utils';
 
 import css from './PiecesPreviewModal.css';
 
@@ -40,6 +44,33 @@ const PiecesPreviewModalForm = ({
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
+
+  const calculateAllowedCycles = useMemo(() => {
+    const TIME_UNIT_PER_YEAR = {
+      day: 365.2425,
+      week: 52.1775,
+      month: 12,
+    };
+
+    const MAX_PIECES = 366;
+
+    const { issues, period, timeUnit } = ruleset?.recurrence ?? {};
+
+    if (timeUnit?.value === 'year') {
+      return Math.floor(MAX_PIECES / issues);
+    } else {
+      return Math.floor(
+        MAX_PIECES / ((TIME_UNIT_PER_YEAR[timeUnit?.value] / period) * issues)
+      );
+    }
+  }, [ruleset]);
+
+  const customValidationMessage = (
+    <FormattedMessage
+      id="ui-serials-management.validate.allowedCycles"
+      values={{ maxValue: calculateAllowedCycles }}
+    />
+  );
 
   const getAdjustedStartDate = (date) => {
     const adjustedStartDate = new Date(date);
@@ -68,6 +99,7 @@ const PiecesPreviewModalForm = ({
       startDate: selectedPieceSet?.startDate
         ? getAdjustedStartDate(selectedPieceSet?.startDate)
         : null,
+      numberOfCycles: selectedPieceSet?.numberOfCycles ?? 1,
       startingValues:
         selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
           (uc) => {
@@ -141,7 +173,7 @@ const PiecesPreviewModalForm = ({
         {ruleset?.templateConfig?.rules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
-              'enumeration_numeric' ||
+            'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -192,8 +224,37 @@ const PiecesPreviewModalForm = ({
             validate={requiredValidator}
           />
         </Col>
+        <Col xs={4}>
+          <Field
+            component={NumberField}
+            id="number-of-cycles"
+            label={
+              <>
+                <FormattedMessage id="ui-serials-management.ruleset.numberOfCycles" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage id="ui-serials-management.numberOfCycles.infoPopover" />
+                  }
+                />
+              </>
+            }
+            name="numberOfCycles"
+            required
+            validate={composeValidators(
+              requiredValidator,
+              validateNotNegative,
+              validateWithinRange(
+                1,
+                calculateAllowedCycles,
+                customValidationMessage
+              )
+            )}
+          />
+        </Col>
+      </Row>
+      <Row>
         {allowCreation && (
-          <Col xs={8}>
+          <Col xs={12}>
             <Field
               component={TextArea}
               label={
@@ -206,7 +267,7 @@ const PiecesPreviewModalForm = ({
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+          'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
