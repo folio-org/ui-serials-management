@@ -160,6 +160,7 @@
   "ruleset.issueCount": "Issue count",
   "ruleset.issuePublicationDate": "Issue publication date",
   "ruleset.confirmGeneration": "Confirm generation of overlapping piece sets",
+  "ruleset.numberOfCycles": "Number of years/cycles",
 
   "ruleset.combinationRules": "Combination rules",
   "ruleset.combinationRulesPopover": "Running this publication pattern will generate a minimum of one year's worth of predicted issues. Combination rules can be applied to combine sequences of issues into a single issue. {br} For example, to combine a number of days, weeks or months. {br} The time unit \"Issue\" can be used to select the \"nth\" issue in the set of predicted issues.",
@@ -258,6 +259,8 @@
   "validate.wholeNumber": "Must be a whole number",
   "validate.mustEqual": "Must equal {value}",
   "validate.greaterThanOne": "Must be greater than 1",
+  "validate.allowedCycles": "For this publication pattern it is only possible to generate issues for up to {maxValue} years/cycles at one time to avoid generating very large piece sets",
+  "numberOfCycles.infoPopover": "This controls the number of years of predicted pieces that are to be generated, except in the case of multi-year cycles (e.g. 1 issue every 2 years) where it controls the number of multi-year cycles to be used for prediction. The total number of issues to be predicted cannot be >366 (e.g. one year of daily issues or 30 years of monthly issues). Note that it is recommend not to predict large numbers of years in one go in case the serial changes publication frequency in the future.",
 
   "piece.label": "Label",
   "day.issue": "Day, Issue {issueNr}",
