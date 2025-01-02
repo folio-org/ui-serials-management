@@ -246,5 +246,8 @@
     "pieceSets.overlappingDates.warning": "Aviso: Uma peça prevista definida com a data de início <strong>{startDate}</strong> já existe para o seriado <strong>{serialName}</strong>",
     "ruleset.editPublicationPattern": "Editar padrão de publicação",
     "ruleset.copyAndDeprecate": "Copiar e descontinuar",
-    "ruleset.copyAndDeprecatePublicationPattern": "Copiar e descontinuar o padrão de publicação"
+    "ruleset.copyAndDeprecatePublicationPattern": "Copiar e descontinuar o padrão de publicação",
+    "ruleset.numberOfCycles": "Número de anos/ciclos",
+    "validate.allowedCycles": "Para este padrão de publicação, só é possível gerar edições de até {maxValue} anos/ciclos de uma vez para evitar a geração de conjuntos de peças muito grandes",
+    "numberOfCycles.infoPopover": "Isso controla o número de anos de peças previstas que devem ser geradas, exceto no caso de ciclos multianuais (por exemplo, 1 edição a cada 2 anos), onde controla o número de ciclos multianuais a serem usados para previsão. O número total de edições a serem previstas não pode ser >366 (por exemplo, um ano de edições diárias ou 30 anos de edições mensais). Observe que é recomendável não prever grandes números de anos de uma só vez, caso a série altere a frequência de publicação no futuro."
 }
