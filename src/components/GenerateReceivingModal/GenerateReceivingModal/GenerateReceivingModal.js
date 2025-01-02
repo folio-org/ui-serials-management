@@ -10,12 +10,13 @@ import { FormModal } from '@k-int/stripes-kint-components';
 import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
 import {
   useCentralOrderingSettings,
-  useConsortiumLocations,
   useConsortiumInstanceHoldings,
   useInstanceHoldings,
-  useLocations,
+  // useLocations,
   useConsortiumTenants,
 } from '@folio/stripes-acq-components';
+
+import { useLocations } from '../../../hooks';
 
 import GenerateReceivingModalForm from '../GenerateReceivingModalForm';
 import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
@@ -46,20 +47,25 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const { tenants: consortiumTenants } = useConsortiumTenants({
     enabled: isCentralOrderingEnabled,
   });
-  const { locations: consortiumLocations } = useConsortiumLocations({
-    enabled: isCentralOrderingEnabled,
-  });
+
   const { holdings: consortiumHoldings } = useConsortiumInstanceHoldings(
     orderLine?.remoteId_object?.instanceId,
     { enabled: isCentralOrderingEnabled }
   );
 
   // Hooks to be used outside of a central ordering environment
-  const { locations } = useLocations({ enabled: !isCentralOrderingEnabled });
+  // const { locations } = useLocations({ enabled: !isCentralOrderingEnabled });
   const { holdings } = useInstanceHoldings(
     orderLine?.remoteId_object?.instanceId,
     { enabled: !isCentralOrderingEnabled }
   );
+
+  const { data: locations = [] } = useLocations({
+    consortium: isCentralOrderingEnabled,
+    options: {
+      enabled: true,
+    },
+  });
 
   // Good lord this is a bit of a mind bender
   // Since we cant filter the locations paticularly well using the hook search params
@@ -99,7 +105,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
 
   // Same filtering as filteredLocations but with tenantId comparison
   const filteredConsortiumLocations = useMemo(() => {
-    return consortiumLocations?.filter((l) => {
+    return locations?.filter((l) => {
       return (
         orderLine?.remoteId_object?.locations?.some((rol) => {
           return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
@@ -112,7 +118,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       );
     });
   }, [
-    consortiumLocations,
+    locations,
     filteredConsortiumHoldings,
     orderLine?.remoteId_object?.locations,
   ]);
@@ -124,7 +130,11 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       (t) => filteredConsortiumLocations?.some((l) => l?.tenantId === t?.id) ||
         filteredConsortiumHoldings?.some((l) => l?.tenantId === t?.id)
     );
-  }, [consortiumTenants, filteredConsortiumLocations, filteredConsortiumHoldings]);
+  }, [
+    consortiumTenants,
+    filteredConsortiumLocations,
+    filteredConsortiumHoldings,
+  ]);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
