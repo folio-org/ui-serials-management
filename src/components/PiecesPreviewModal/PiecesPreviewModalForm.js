@@ -42,7 +42,7 @@ const PiecesPreviewModalForm = ({
   allowCreation = false,
 }) => {
   const { values } = useFormState();
-  const { change } = useForm();
+  const { change, batch } = useForm();
   const intl = useIntl();
 
   const calculateAllowedCycles = useMemo(() => {
@@ -67,7 +67,7 @@ const PiecesPreviewModalForm = ({
 
   // Copied across from mod-serials PieceGenerationService for calculating minNumberOfYears
   const calculateMinimumNumberOfYears = (numberOfCycles) => {
-    const timeUnitValues = {
+    const TIME_UNIT_DAY_AMOUNT = {
       day: 1,
       week: 7,
       month: 31,
@@ -78,7 +78,7 @@ const PiecesPreviewModalForm = ({
     // Time unit * period / 365 - rounded up to next whole number
     return (
       Math.ceil(
-        (timeUnitValues[ruleset?.recurrence?.timeUnit?.value] *
+        (TIME_UNIT_DAY_AMOUNT[ruleset?.recurrence?.timeUnit?.value] *
           ruleset?.recurrence?.period) /
           365
       ) * numberOfCycles
@@ -88,8 +88,8 @@ const PiecesPreviewModalForm = ({
   const getAdjustedStartDate = (date, numberOfCycles = 1) => {
     const adjustedStartDate = new Date(date);
     adjustedStartDate.setFullYear(
-      adjustedStartDate.getFullYear(),
-      calculateMinimumNumberOfYears(numberOfCycles)
+      adjustedStartDate.getFullYear() +
+        calculateMinimumNumberOfYears(numberOfCycles)
     );
     return adjustedStartDate;
   };
@@ -110,16 +110,19 @@ const PiecesPreviewModalForm = ({
     const selectedPieceSet = existingPieceSets?.find(
       (ps) => ps.id === e?.target?.value || ''
     );
-    // When changes fields at the top level of the form, change function requires an empty string, funky
-    change('', {
-      startDate: selectedPieceSet?.startDate
-        ? getAdjustedStartDate(
-          selectedPieceSet?.startDate,
-          selectedPieceSet?.numberOfCycles ?? 1
-        )
-        : null,
-      numberOfCycles: selectedPieceSet?.numberOfCycles ?? 1,
-      startingValues:
+    batch(() => {
+      change(
+        'startDate',
+        selectedPieceSet?.startDate
+          ? getAdjustedStartDate(
+            selectedPieceSet?.startDate,
+            selectedPieceSet?.numberOfCycles ?? 1
+          )
+          : null
+      );
+      change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
+      change(
+        'startingValues',
         selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
           (uc) => {
             if (uc?.metadataType?.levels?.length) {
@@ -131,7 +134,8 @@ const PiecesPreviewModalForm = ({
             }
             return null;
           }
-        ),
+        )
+      );
     });
   };
 
