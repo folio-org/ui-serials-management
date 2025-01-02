@@ -45,7 +45,7 @@ const PiecesPreviewModalForm = ({
   const { change, batch } = useForm();
   const intl = useIntl();
 
-  const calculateAllowedCycles = useMemo(() => {
+  const maxAllowedCycles = useMemo(() => {
     const TIME_UNIT_PER_YEAR = {
       day: 365.2425,
       week: 52.1775,
@@ -66,7 +66,7 @@ const PiecesPreviewModalForm = ({
   }, [ruleset]);
 
   // Copied across from mod-serials PieceGenerationService for calculating minNumberOfYears
-  const calculateMinimumNumberOfYears = (numberOfCycles) => {
+  const minimumNumberOfYears = useMemo(() => {
     const TIME_UNIT_DAY_AMOUNT = {
       day: 1,
       week: 7,
@@ -76,20 +76,17 @@ const PiecesPreviewModalForm = ({
 
     // Calculate minimum whole number of years
     // Time unit * period / 365 - rounded up to next whole number
-    return (
-      Math.ceil(
-        (TIME_UNIT_DAY_AMOUNT[ruleset?.recurrence?.timeUnit?.value] *
-          ruleset?.recurrence?.period) /
-          365
-      ) * numberOfCycles
+    return Math.ceil(
+      (TIME_UNIT_DAY_AMOUNT[ruleset?.recurrence?.timeUnit?.value] *
+        ruleset?.recurrence?.period) /
+        365
     );
-  };
+  }, [ruleset?.recurrence?.period, ruleset?.recurrence?.timeUnit?.value]);
 
   const getAdjustedStartDate = (date, numberOfCycles = 1) => {
     const adjustedStartDate = new Date(date);
     adjustedStartDate.setFullYear(
-      adjustedStartDate.getFullYear() +
-        calculateMinimumNumberOfYears(numberOfCycles)
+      adjustedStartDate.getFullYear() + minimumNumberOfYears * numberOfCycles
     );
     return adjustedStartDate;
   };
@@ -268,10 +265,10 @@ const PiecesPreviewModalForm = ({
               validateNotNegative,
               validateWithinRange(
                 1,
-                calculateAllowedCycles,
+                maxAllowedCycles,
                 <FormattedMessage
                   id="ui-serials-management.validate.allowedCycles"
-                  values={{ maxValue: calculateAllowedCycles }}
+                  values={{ maxValue: maxAllowedCycles }}
                 />
               )
             )}
