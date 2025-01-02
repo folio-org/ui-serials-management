@@ -34,7 +34,7 @@ const propTypes = {
   allowCreation: PropTypes.bool,
 };
 
-// TODO Definitely needs to be refactored at some point, additionall will need to be moved elsewhere
+// TODO Definitely needs to be refactored at some point, additionally will need to be moved elsewhere
 const PiecesPreviewModalForm = ({
   serialName,
   ruleset,
@@ -65,16 +65,32 @@ const PiecesPreviewModalForm = ({
     }
   }, [ruleset]);
 
-  const customValidationMessage = (
-    <FormattedMessage
-      id="ui-serials-management.validate.allowedCycles"
-      values={{ maxValue: calculateAllowedCycles }}
-    />
-  );
+  // Copied across from mod-serials PieceGenerationService for calculating minNumberOfYears
+  const calculateMinimumNumberOfYears = (numberOfCycles) => {
+    const timeUnitValues = {
+      day: 1,
+      week: 7,
+      month: 31,
+      year: 365,
+    };
 
-  const getAdjustedStartDate = (date) => {
+    // Calculate minimum whole number of years
+    // Time unit * period / 365 - rounded up to next whole number
+    return (
+      Math.ceil(
+        (timeUnitValues[ruleset?.recurrence?.timeUnit?.value] *
+          ruleset?.recurrence?.period) /
+          365
+      ) * numberOfCycles
+    );
+  };
+
+  const getAdjustedStartDate = (date, numberOfCycles = 1) => {
     const adjustedStartDate = new Date(date);
-    adjustedStartDate.setFullYear(adjustedStartDate.getFullYear() + 1);
+    adjustedStartDate.setFullYear(
+      adjustedStartDate.getFullYear(),
+      calculateMinimumNumberOfYears(numberOfCycles)
+    );
     return adjustedStartDate;
   };
 
@@ -84,7 +100,7 @@ const PiecesPreviewModalForm = ({
       return {
         value: fps?.id,
         label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}:
-                ${intl.formatDate(getAdjustedStartDate(fps?.startDate))},
+                ${intl.formatDate(getAdjustedStartDate(fps?.startDate, fps?.numberOfCycles ?? 1))},
                 ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}:
                 ${intl.formatDate(fps?.dateCreated)} ${intl.formatTime(fps?.dateCreated)} `,
       };
@@ -97,7 +113,10 @@ const PiecesPreviewModalForm = ({
     // When changes fields at the top level of the form, change function requires an empty string, funky
     change('', {
       startDate: selectedPieceSet?.startDate
-        ? getAdjustedStartDate(selectedPieceSet?.startDate)
+        ? getAdjustedStartDate(
+          selectedPieceSet?.startDate,
+          selectedPieceSet?.numberOfCycles ?? 1
+        )
         : null,
       numberOfCycles: selectedPieceSet?.numberOfCycles ?? 1,
       startingValues:
@@ -173,7 +192,7 @@ const PiecesPreviewModalForm = ({
         {ruleset?.templateConfig?.rules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+              'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -246,7 +265,10 @@ const PiecesPreviewModalForm = ({
               validateWithinRange(
                 1,
                 calculateAllowedCycles,
-                customValidationMessage
+                <FormattedMessage
+                  id="ui-serials-management.validate.allowedCycles"
+                  values={{ maxValue: calculateAllowedCycles }}
+                />
               )
             )}
           />
@@ -267,7 +289,7 @@ const PiecesPreviewModalForm = ({
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
-          'enumeration_numeric' ||
+            'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
