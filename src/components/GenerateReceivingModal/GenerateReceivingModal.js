@@ -160,7 +160,7 @@ const GenerateReceivingModal = ({
         piece?.class === INTERNAL_COMBINATION_PIECE
           ? {
             date: addDays(piece?.recurrencePieces[0]?.date, values?.interval),
-            label: piece?.recurrencePieces[0]?.label,
+            label: piece?.label,
           }
           : {
             date: addDays(piece?.date, values?.interval),
