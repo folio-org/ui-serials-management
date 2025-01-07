@@ -34,7 +34,7 @@ const propTypes = {
   allowCreation: PropTypes.bool,
 };
 
-// TODO Definitely needs to be refactored at some point, additionall will need to be moved elsewhere
+// TODO Definitely needs to be refactored at some point, additionally will need to be moved elsewhere
 const PiecesPreviewModalForm = ({
   serialName,
   ruleset,
@@ -42,10 +42,10 @@ const PiecesPreviewModalForm = ({
   allowCreation = false,
 }) => {
   const { values } = useFormState();
-  const { change } = useForm();
+  const { change, batch } = useForm();
   const intl = useIntl();
 
-  const calculateAllowedCycles = useMemo(() => {
+  const maxAllowedCycles = useMemo(() => {
     const TIME_UNIT_PER_YEAR = {
       day: 365.2425,
       week: 52.1775,
@@ -65,16 +65,29 @@ const PiecesPreviewModalForm = ({
     }
   }, [ruleset]);
 
-  const customValidationMessage = (
-    <FormattedMessage
-      id="ui-serials-management.validate.allowedCycles"
-      values={{ maxValue: calculateAllowedCycles }}
-    />
-  );
+  // Copied across from mod-serials PieceGenerationService for calculating minNumberOfYears
+  const minimumNumberOfYears = useMemo(() => {
+    const TIME_UNIT_DAY_AMOUNT = {
+      day: 1,
+      week: 7,
+      month: 31,
+      year: 365,
+    };
 
-  const getAdjustedStartDate = (date) => {
+    // Calculate minimum whole number of years
+    // Time unit * period / 365 - rounded up to next whole number
+    return Math.ceil(
+      (TIME_UNIT_DAY_AMOUNT[ruleset?.recurrence?.timeUnit?.value] *
+        ruleset?.recurrence?.period) /
+        365
+    );
+  }, [ruleset?.recurrence?.period, ruleset?.recurrence?.timeUnit?.value]);
+
+  const getAdjustedStartDate = (date, numberOfCycles = 1) => {
     const adjustedStartDate = new Date(date);
-    adjustedStartDate.setFullYear(adjustedStartDate.getFullYear() + 1);
+    adjustedStartDate.setFullYear(
+      adjustedStartDate.getFullYear() + minimumNumberOfYears * numberOfCycles
+    );
     return adjustedStartDate;
   };
 
@@ -84,7 +97,7 @@ const PiecesPreviewModalForm = ({
       return {
         value: fps?.id,
         label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}:
-                ${intl.formatDate(getAdjustedStartDate(fps?.startDate))},
+                ${intl.formatDate(getAdjustedStartDate(fps?.startDate, fps?.numberOfCycles ?? 1))},
                 ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}:
                 ${intl.formatDate(fps?.dateCreated)} ${intl.formatTime(fps?.dateCreated)} `,
       };
@@ -94,13 +107,19 @@ const PiecesPreviewModalForm = ({
     const selectedPieceSet = existingPieceSets?.find(
       (ps) => ps.id === e?.target?.value || ''
     );
-    // When changes fields at the top level of the form, change function requires an empty string, funky
-    change('', {
-      startDate: selectedPieceSet?.startDate
-        ? getAdjustedStartDate(selectedPieceSet?.startDate)
-        : null,
-      numberOfCycles: selectedPieceSet?.numberOfCycles ?? 1,
-      startingValues:
+    batch(() => {
+      change(
+        'startDate',
+        selectedPieceSet?.startDate
+          ? getAdjustedStartDate(
+            selectedPieceSet?.startDate,
+            selectedPieceSet?.numberOfCycles ?? 1
+          )
+          : null
+      );
+      change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
+      change(
+        'startingValues',
         selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
           (uc) => {
             if (uc?.metadataType?.levels?.length) {
@@ -112,7 +131,8 @@ const PiecesPreviewModalForm = ({
             }
             return null;
           }
-        ),
+        )
+      );
     });
   };
 
@@ -173,7 +193,7 @@ const PiecesPreviewModalForm = ({
         {ruleset?.templateConfig?.rules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+              'enumeration_numeric' ||
             e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -245,8 +265,11 @@ const PiecesPreviewModalForm = ({
               validateNotNegative,
               validateWithinRange(
                 1,
-                calculateAllowedCycles,
-                customValidationMessage
+                maxAllowedCycles,
+                <FormattedMessage
+                  id="ui-serials-management.validate.allowedCycles"
+                  values={{ maxValue: maxAllowedCycles }}
+                />
               )
             )}
           />
@@ -267,7 +290,7 @@ const PiecesPreviewModalForm = ({
       </Row>
       {!!ruleset?.templateConfig?.rules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
-          'enumeration_numeric' ||
+            'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
