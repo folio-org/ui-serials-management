@@ -1,5 +1,9 @@
 # change history for ui-serials-management
 
+## 1.0.6 2025-01-07
+  * UISER-172 Receiving pieces for combined pieces do not include correct display summary
+  * MODSER-54 Combination pieces do not get allocated a `date`
+
 ## 1.0.5 2024-08-23
   * UISER-129 Add "Create item" checkbox to "Generate in receiving" dialog
 

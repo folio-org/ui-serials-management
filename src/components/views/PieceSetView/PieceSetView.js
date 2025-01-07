@@ -5,6 +5,8 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
 import { Pane, LoadingPane, Button, Icon } from '@folio/stripes/components';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
+import { INTERNAL_COMBINATION_PIECE } from '../../../constants/internalPieceClasses';
+
 import { PieceSetInfo, PiecesList } from '../../PieceSetSections';
 
 import GenerateReceivingModal from '../../GenerateReceivingModal/GenerateReceivingModal';
@@ -44,10 +46,39 @@ const PieceSetView = ({
     }
   };
 
+  const sortedPieces = pieceSet?.pieces
+    // Itereate through the pieces and find combination pieces
+    ?.map((p) => {
+      return p?.class === INTERNAL_COMBINATION_PIECE
+        ? {
+          ...p,
+          // Sort combination piece's recurrence pieces by date
+          recurrencePieces: p?.recurrencePieces?.sort((a, b) => (a?.date < b?.date ? -1 : 1)),
+        }
+        : p;
+    })
+    .sort((a, b) => {
+      // Sort all pieces by date or by the recurrence pieces of a combination piece
+      return (a?.class === INTERNAL_COMBINATION_PIECE
+        ? a?.recurrencePieces[0]?.date
+        : a?.date) <
+        (b?.class === INTERNAL_COMBINATION_PIECE
+          ? b?.recurrencePieces[0]?.date
+          : b?.date)
+        ? -1
+        : 1;
+    });
+
   const getSectionProps = (name) => {
     return {
       id: `piece-set-section-${name}`,
-      pieceSet: { ...pieceSet, titleId: serial?.orderLine?.titleId },
+      pieceSet: {
+        ...pieceSet,
+        // This is a bit annoying with regard to the sorting that needs to be done
+        // Grails doesnt like attempting to sort uniderectional one to many relationships
+        pieces: sortedPieces,
+        titleId: serial?.orderLine?.titleId,
+      },
     };
   };
 
@@ -92,8 +123,8 @@ const PieceSetView = ({
         <PiecesList key="pieces-list" {...getSectionProps('pieces-list')} />
       </Pane>
       <GenerateReceivingModal
+        {...getSectionProps('generate-receiving-modal')}
         holdingIds={getHoldingIds()}
-        pieceSet={pieceSet}
         serial={serial}
         setShowModal={setShowReceivingModal}
         showModal={showReceivingModal}

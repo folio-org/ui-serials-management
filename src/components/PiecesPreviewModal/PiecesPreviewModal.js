@@ -33,6 +33,8 @@ import {
   CREATE_PREDICTED_PIECES,
   GENERATE_PIECES_PREVIEW,
 } from '../../constants/endpoints';
+import { INTERNAL_OMISSION_PIECE } from '../../constants/internalPieceClasses';
+
 import PiecePublicationDate from '../PiecePublicationDate';
 
 const propTypes = {
@@ -128,9 +130,9 @@ const PiecesPreviewModal = ({
 
   /* istanbul ignore next */
   const formatter = {
-    // If omissionOrigins exist then piece is omitted
+    // If pieces class is internal omission piece then piece is omitted
     issueCount: (e) => {
-      return e?.omissionOrigins ? '-' : e.rowIndex + 1;
+      return e?.class === INTERNAL_OMISSION_PIECE ? '-' : e.rowIndex + 1;
     },
     publicationDate: (e) => renderPublicationDate(e),
     displaySummary: (e) => {
