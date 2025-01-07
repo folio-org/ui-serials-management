@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-
 import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 
 import GenerateReceivingModal from './GenerateReceivingModal';
@@ -18,12 +16,11 @@ import {
 jest.mock('../GenerateReceivingModalInfo', () => () => (
   <div>GenerateReceivingModalInfo</div>
 ));
-// jest.mock('./GenerateReceivingModalForm', () => () => (<div>GenerateReceivingModalForm</div>));
 
-jest.mock('../../../hooks', () => ({
-  ...jest.requireActual('../../../hooks'),
+jest.mock('@folio/stripes-acq-components', () => ({
+  ...jest.requireActual('@folio/stripes-acq-components'),
+  useInstanceHoldings: () => ({ isLoading: false, data: mockHoldings }),
   useLocations: () => ({ isLoading: false, data: mockLocations }),
-  useHoldings: () => ({ isLoading: false, data: mockHoldings }),
 }));
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
