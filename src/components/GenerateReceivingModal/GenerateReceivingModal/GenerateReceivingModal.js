@@ -41,19 +41,16 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
 
   // Hooks to be used within an environment when cental ordering is enabled
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
-  const { tenants: consortiumTenants } = useConsortiumTenants({
+  const { tenants = [] } = useConsortiumTenants({
     enabled: isCentralOrderingEnabled,
   });
-
-  const { holdings } = useInstanceHoldingsQuery(
+  const { holdings = [] } = useInstanceHoldingsQuery(
     orderLine?.remoteId_object?.instanceId,
-    { options: { consortium: isCentralOrderingEnabled } }
+    { consortium: isCentralOrderingEnabled }
   );
 
   const { locations = [] } = useLocationsQuery({
-    options: {
-      consortium: isCentralOrderingEnabled,
-    },
+    consortium: isCentralOrderingEnabled,
   });
 
   // Good lord this is a bit of a mind bender
@@ -77,6 +74,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const filteredLocations = useMemo(() => {
     return locations?.filter(
       (l) => orderLine?.remoteId_object?.locations?.some((rol) => {
+        // console.log(rol);
         if (rol?.tenantId) {
           return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
         }
@@ -94,15 +92,14 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   }, [filteredHoldings, locations, orderLine?.remoteId_object?.locations]);
 
   // Taking consortium holdings/locations and extracting the tenantIds within those from the list of tenants
-  // Will there ever be asituation where a tenantId on a location will not match the tenantId on an associated holding?
-  const filteredConsortiumTenants = useMemo(() => {
+  const filteredTenants = useMemo(() => {
     return (
-      consortiumTenants?.filter(
+      tenants?.filter(
         (t) => filteredLocations?.some((l) => l?.tenantId === t?.id) ||
           filteredHoldings?.some((l) => l?.tenantId === t?.id)
       ) || []
     );
-  }, [consortiumTenants, filteredLocations, filteredHoldings]);
+  }, [tenants, filteredLocations, filteredHoldings]);
 
   const { mutateAsync: submitReceivingPiece } = useMutation(
     [
@@ -305,7 +302,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         holdings={filteredHoldings}
         locations={filteredLocations}
         orderLine={orderLine}
-        tenants={filteredConsortiumTenants}
+        tenants={filteredTenants}
       />
     </FormModal>
   );
