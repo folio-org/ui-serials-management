@@ -2,14 +2,26 @@ import { useQuery } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { LOCATIONS_ENDPOINT } from '../constants/endpoints';
+import {
+  LOCATIONS_API,
+  CONSORTIUM_LOCATIONS_API,
+} from '@folio/stripes-acq-components';
 
-export const useLocations = () => {
+export const useLocations = ({
+  consortium = false,
+  options = {},
+} = {}) => {
+  const { enabled = true } = options;
   const ky = useOkapiKy();
 
+  const locationsEndpoint = consortium
+    ? CONSORTIUM_LOCATIONS_API
+    : LOCATIONS_API;
+
   const { isLoading, data = [] } = useQuery(
-    ['ui-serials-management', LOCATIONS_ENDPOINT],
-    () => ky.get(`${LOCATIONS_ENDPOINT}`).json(),
+    ['ui-serials-management', locationsEndpoint],
+    () => ky.get(`${locationsEndpoint}`).json(),
+    { enabled }
   );
 
   return {
