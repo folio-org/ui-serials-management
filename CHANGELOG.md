@@ -1,5 +1,9 @@
 # change history for ui-serials-management
 
+## 1.1.2 2025-01-09
+  * UISER-161 Enable support for serials to create receiving pieces in ECS environments with central ordering
+  * Updated translations
+
 ## 1.1.1 2024-11-29
   * UISER-174 In Generated predicted piece confirmation warning the wrong date is used
   * UISER-172 Receiving pieces for combined pieces do not include correct display summary
