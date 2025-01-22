@@ -1,6 +1,3 @@
-// utils/getRulesetFormValues.js
-
-// Importing deepDeleteKeys from the same directory
 import deepDeleteKeys from './deepDeleteKeys';
 
 /**
@@ -8,6 +5,7 @@ import deepDeleteKeys from './deepDeleteKeys';
  * @param {Object} ruleset - The ruleset data to be transformed.
  * @returns {Object} - The transformed ruleset as initial form values, with specific keys removed.
  */
+
 const getRulesetFormValues = (ruleset) => {
   const initialValues = {
     ...ruleset,
@@ -41,7 +39,6 @@ const getRulesetFormValues = (ruleset) => {
     },
   };
 
-  // Hardcoded keys to delete
   const keysToDelete = ['id', 'label', 'dateCreated', 'lastUpdated', 'owner'];
 
   return deepDeleteKeys(initialValues, keysToDelete);
