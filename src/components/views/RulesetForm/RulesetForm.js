@@ -39,6 +39,7 @@ import {
   OmissionFieldArray,
   CombinationFieldArray,
   LabelFieldArray,
+  ModelRulesetSelection
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal';
@@ -163,6 +164,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           )}
         >
           <RulesetInfoForm />
+          <ModelRulesetSelection />
           <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>
@@ -180,7 +182,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                )}
+                  )}
               </Accordion>
               <Accordion
                 label={

@@ -279,21 +279,21 @@ const LabelFieldArray = () => {
               </Col>
               {values?.templateConfig?.rules[index]
                 ?.templateMetadataRuleType === 'chronology' && (
-                <Col xs={3}>
-                  <Field
-                    component={Selection}
-                    dataOptions={locales}
-                    label={
-                      <FormattedMessage id="ui-serials-management.ruleset.chronology.locale" />
-                    }
-                    name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
-                    onFilter={filterSelectValues}
-                    parse={(v) => v}
-                    required
-                    validate={requiredValidator}
-                  />
-                </Col>
-              )}
+                  <Col xs={3}>
+                    <Field
+                      component={Selection}
+                      dataOptions={locales}
+                      label={
+                        <FormattedMessage id="ui-serials-management.ruleset.chronology.locale" />
+                      }
+                      name={`templateConfig.rules[${index}].ruleType.ruleLocale`}
+                      onFilter={filterSelectValues}
+                      parse={(v) => v}
+                      required
+                      validate={requiredValidator}
+                    />
+                  </Col>
+                )}
             </>
           )}
         </Row>
@@ -308,7 +308,7 @@ const LabelFieldArray = () => {
               tokensInfo={renderTemplateTokensInfo()}
               values={values}
             />
-        )}
+          )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -324,7 +324,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationValues[index]}
             </>
-        )}
+          )}
         {values?.templateConfig?.rules[index]?.templateMetadataRuleType ===
           'enumeration' &&
           values?.templateConfig?.rules[index]?.ruleType
@@ -341,7 +341,7 @@ const LabelFieldArray = () => {
               </Label>
               {enumerationValues[index]}
             </>
-        )}
+          )}
       </EditCard>
     );
   };
@@ -371,7 +371,7 @@ const LabelFieldArray = () => {
             component={TextArea}
             label={
               <>
-                <FormattedMessage id="ui-serials-management.ruleset.template" />
+                <FormattedMessage id="ui-serials-management.ruleset.labelTemplate" />
                 {renderTemplateInfo()}
               </>
             }
