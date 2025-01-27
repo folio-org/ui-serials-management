@@ -64,10 +64,8 @@ const RulesetCreateRoute = () => {
 
   return (
     <Form
-      // enableReinitialize
-      // keepDirtyOnReinitialize
       initialValues={initialValues}
-      keepDirtyOnReinitialize={false}
+      keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitRuleset}
     >

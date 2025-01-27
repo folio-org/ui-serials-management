@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useFormState, useForm } from 'react-final-form';
 import { useParams } from 'react-router-dom';
+import isEqual from 'lodash/isEqual';
 
 import { AppIcon } from '@folio/stripes/core';
 
@@ -30,7 +31,7 @@ import {
   REPLACE_AND_DELETE,
   REPLACE_AND_DEPRECATE,
 } from '../../../constants/replaceTypes';
-import { handleSaveKeyCommand } from '../../utils';
+import { getRulesetFormValues, handleSaveKeyCommand } from '../../utils';
 
 import {
   RulesetInfoForm,
@@ -55,15 +56,19 @@ const propTypes = {
 
 const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelRuleset }) => {
   const params = useParams();
-  const { pristine, submitting, invalid, values } = useFormState();
+  const { pristine, submitting, invalid, values, initialValues } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
+  const noModelRulesetPresent = !isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
+  console.log('noModelRulesetPresent', noModelRulesetPresent);
   console.log('values', values);
+  console.log('selectedModelRuleset.serialRuleset', getRulesetFormValues(selectedModelRuleset?.serialRuleset));
+
   console.log('pristine', pristine);
-  console.log('submitting', submitting);
   // istanbul ignore next
+
   const shortcuts = [
     {
       name: 'save',
@@ -104,7 +109,8 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
             <Button
               buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
-              disabled={pristine || invalid || submitting}
+              // disabled={pristine || invalid || submitting}
+              disabled={noModelRulesetPresent || invalid || submitting}
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -112,7 +118,8 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
             </Button>
             <Button
               buttonStyle="primary mega"
-              disabled={pristine || submitting}
+              // disabled={pristine || submitting}
+              disabled={noModelRulesetPresent || submitting}
               marginBottom0
               onClick={onSubmit}
               type="submit"
@@ -190,7 +197,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                )}
+                  )}
               </Accordion>
               <Accordion
                 label={
