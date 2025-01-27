@@ -48,16 +48,21 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
   }).isRequired,
+  selectedModelRuleset: PropTypes.object.isRequired,
 };
 
-const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
+const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelRuleset }) => {
   const params = useParams();
   const { pristine, submitting, invalid, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
+  console.log('values', values);
+  console.log('pristine', pristine);
+  console.log('submitting', submitting);
   // istanbul ignore next
   const shortcuts = [
     {
@@ -164,7 +169,10 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           )}
         >
           <RulesetInfoForm />
-          <ModelRulesetSelection />
+          <ModelRulesetSelection
+            onSelect={onSelect}
+            selectedModelRuleset={selectedModelRuleset}
+          />
           <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>

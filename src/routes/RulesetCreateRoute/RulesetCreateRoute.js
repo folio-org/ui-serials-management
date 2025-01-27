@@ -10,13 +10,17 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import { urls, rulesetSubmitValuesHandler } from '../../components/utils';
+import { getRulesetFormValues, urls, rulesetSubmitValuesHandler } from '../../components/utils';
+
+import { useModelRuleset } from '../../hooks';
 
 const RulesetCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
+
+  const { selectedModelRuleset, handleSelectModelRuleset } = useModelRuleset();
 
   const { generate } = useGenerateNumber({
     callback: (string) => {
@@ -54,12 +58,16 @@ const RulesetCreateRoute = () => {
     await postRuleset(submitValues);
   };
 
+  const initialValues = selectedModelRuleset?.serialRuleset
+    ? getRulesetFormValues(selectedModelRuleset.serialRuleset)
+    : { rulesetStatus: { value: 'active' } };
+
   return (
     <Form
-      initialValues={{
-        rulesetStatus: { value: 'active' },
-      }}
-      keepDirtyOnReinitialize
+      // enableReinitialize
+      // keepDirtyOnReinitialize
+      initialValues={initialValues}
+      keepDirtyOnReinitialize={false}
       mutators={arrayMutators}
       onSubmit={submitRuleset}
     >
@@ -69,7 +77,9 @@ const RulesetCreateRoute = () => {
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
+              onSelect: handleSelectModelRuleset
             }}
+            selectedModelRuleset={selectedModelRuleset}
           />
         </form>
       )}

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useForm, useFormState } from 'react-final-form';
+import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
 import { Col, InfoPopover, Row } from '@folio/stripes/components';
@@ -7,34 +6,14 @@ import { Col, InfoPopover, Row } from '@folio/stripes/components';
 import { generateKiwtQuery, QueryTypedown } from '@k-int/stripes-kint-components';
 
 import { MODEL_RULESETS_ENDPOINT } from '../../../constants/endpoints';
-import { getRulesetFormValues } from '../../utils';
 
-const ModelRulesetSelection = () => {
+const propTypes = {
+  onSelect: PropTypes.func.isRequired,
+  selectedModelRuleset: PropTypes.object.isRequired
+};
+
+const ModelRulesetSelection = ({ onSelect, selectedModelRuleset }) => {
   const intl = useIntl();
-  const { change } = useForm();
-  const { values, initialValues } = useFormState();
-
-  const [selectedModelRuleset, setSelectedModelRuleset] = useState();
-
-  const handleModelRulesetChange = (selectedRuleset) => {
-    Object.keys(values).forEach(key => {
-      change(key, 'undefined');
-    });
-
-    setSelectedModelRuleset(selectedRuleset);
-
-    if (selectedRuleset?.serialRuleset) {
-      const formattedValues = getRulesetFormValues(selectedRuleset.serialRuleset);
-
-      Object.keys(formattedValues).forEach(key => {
-        change(key, formattedValues[key]);
-      });
-    } else {
-      Object.keys(initialValues).forEach(key => {
-        change(key, initialValues[key]);
-      });
-    }
-  };
 
   const pathMutator = (input, path) => {
     const query = generateKiwtQuery(
@@ -65,8 +44,7 @@ const ModelRulesetSelection = () => {
           id="model-ruleset-typedown"
           input={{
             name: 'model-ruleset-typedown',
-            // onChange: (rs) => setSelectedModelRuleset(rs),
-            onChange: handleModelRulesetChange,
+            onChange: rs => onSelect(rs),
             value: selectedModelRuleset
           }}
           label={
@@ -85,5 +63,7 @@ const ModelRulesetSelection = () => {
     </Row>
   );
 };
+
+ModelRulesetSelection.propTypes = propTypes;
 
 export default ModelRulesetSelection;
