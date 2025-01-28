@@ -3,7 +3,15 @@ import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import { ClipCopy } from '@folio/stripes/smart-components';
-import { Select, Col, Row, Label } from '@folio/stripes/components';
+import {
+  Select,
+  Col,
+  Row,
+  Label,
+  Layout,
+  Button,
+  InfoPopover,
+} from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
@@ -14,34 +22,55 @@ import {
   CHRONOLOGY_YEAR_FORMAT,
 } from '../../../constants/selectOptionTranslations';
 
-const ChronologyField = ({
-  name,
-  chronologyRule,
-  tokensInfo,
-  tokenIndex,
-}) => {
+const ChronologyField = ({ name, chronologyRule, index }) => {
   const intl = useIntl();
 
   const tokenText = useMemo(() => {
     switch (chronologyRule?.templateMetadataRuleFormat) {
       case 'chronology_date':
         return [
-          `{{chronology${tokenIndex + 1}.weekday}}`,
-          `{{chronology${tokenIndex + 1}.monthDay}}`,
-          `{{chronology${tokenIndex + 1}.month}}`,
-          `{{chronology${tokenIndex + 1}.year}}`,
+          `{{chronology${index + 1}.weekday}}`,
+          `{{chronology${index + 1}.monthDay}}`,
+          `{{chronology${index + 1}.month}}`,
+          `{{chronology${index + 1}.year}}`,
         ].join(' ');
       case 'chronology_month':
         return [
-          `{{chronology${tokenIndex + 1}.month}}`,
-          `{{chronology${tokenIndex + 1}.year}}`,
+          `{{chronology${index + 1}.month}}`,
+          `{{chronology${index + 1}.year}}`,
         ].join(' ');
       case 'chronology_year':
-        return [`{{chronology${tokenIndex + 1}.year}}`].join(' ');
+        return [`{{chronology${index + 1}.year}}`].join(' ');
       default:
         return '';
     }
-  }, [chronologyRule?.templateMetadataRuleFormat, tokenIndex]);
+  }, [chronologyRule?.templateMetadataRuleFormat, index]);
+
+  const renderTemplateTokensInfo = () => {
+    return (
+      <InfoPopover
+        content={
+          <Layout className="flex flex-direction-column centerContent">
+            <Layout>
+              <FormattedMessage id="ui-serials-management.ruleset.templateTokensPopover" />
+            </Layout>
+            <Layout className="marginTop1">
+              <Button
+                allowAnchorClick
+                buttonStyle="primary"
+                href="https://folio-org.atlassian.net/wiki/x/dwA7CQ"
+                marginBottom0
+                rel="noreferrer"
+                target="blank"
+              >
+                <FormattedMessage id="ui-serials-management.learnMore" />
+              </Button>
+            </Layout>
+          </Layout>
+        }
+      />
+    );
+  };
 
   const renderWeekdayFormatField = () => {
     return (
@@ -145,7 +174,7 @@ const ChronologyField = ({
         <div>
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {tokensInfo}
+            {renderTemplateTokensInfo()}
             <ClipCopy text={tokenText} />
           </Label>
           {tokenText}
@@ -159,7 +188,7 @@ const ChronologyField = ({
         <div>
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {tokensInfo}
+            {renderTemplateTokensInfo()}
             <ClipCopy text={tokenText} />
           </Label>
           {tokenText}
@@ -172,7 +201,7 @@ const ChronologyField = ({
         <div>
           <Label id="template-token-header">
             <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {tokensInfo}
+            {renderTemplateTokensInfo()}
             <ClipCopy text={tokenText} />
           </Label>
           {tokenText}
@@ -186,9 +215,9 @@ const ChronologyField = ({
       <Row>
         {chronologyFormats[
           chronologyRule?.templateMetadataRuleFormat
-        ]?.fields?.map((chronologyField, index) => {
+        ]?.fields?.map((chronologyField, fieldIndex) => {
           return (
-            <Col key={`chronology-field-${name}[${index}]`} xs={3}>
+            <Col key={`chronology-field-${name}[${fieldIndex}]`} xs={3}>
               {chronologyField}
             </Col>
           );
@@ -201,8 +230,7 @@ const ChronologyField = ({
 ChronologyField.propTypes = {
   name: PropTypes.string,
   chronologyRule: PropTypes.object,
-  tokensInfo: PropTypes.func,
-  tokenIndex: PropTypes.number,
+  index: PropTypes.number,
 };
 
 export default ChronologyField;

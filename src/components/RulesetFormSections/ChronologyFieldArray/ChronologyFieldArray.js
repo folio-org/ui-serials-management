@@ -8,8 +8,6 @@ import {
   Row,
   Col,
   Selection,
-  InfoPopover,
-  Layout,
 } from '@folio/stripes/components';
 import {
   EditCard,
@@ -50,31 +48,6 @@ const ChronologyFieldArray = () => {
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
   };
 
-  const renderTemplateTokensInfo = () => {
-    return (
-      <InfoPopover
-        content={
-          <Layout className="flex flex-direction-column centerContent">
-            <Layout>
-              <FormattedMessage id="ui-serials-management.ruleset.templateTokensPopover" />
-            </Layout>
-            <Layout className="marginTop1">
-              <Button
-                allowAnchorClick
-                buttonStyle="primary"
-                href="https://folio-org.atlassian.net/wiki/x/dwA7CQ"
-                marginBottom0
-                rel="noreferrer"
-                target="blank"
-              >
-                <FormattedMessage id="ui-serials-management.learnMore" />
-              </Button>
-            </Layout>
-          </Layout>
-        }
-      />
-    );
-  };
   const renderLabelRule = (chronologyRule, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
     const indexKey = index;
@@ -160,9 +133,8 @@ const ChronologyFieldArray = () => {
           ?.templateMetadataRuleFormat && (
           <ChronologyField
             chronologyRule={chronologyRule}
+            index={index}
             name={`templateConfig.chronologyRules[${index}].ruleFormat`}
-            tokenIndex={index}
-            tokensInfo={renderTemplateTokensInfo()}
           />
         )}
       </EditCard>
