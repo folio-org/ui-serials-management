@@ -13,3 +13,5 @@ export { default as EnumerationNumericFieldArray } from './EnumerationNumericFie
 export { default as EnumerationNumericField } from './EnumerationNumericField';
 export { default as EnumerationTextualFieldArray } from './EnumerationTextualFieldArray';
 export { default as EnumerationTextualField } from './EnumerationTextualField';
+export { default as TemplateStringField } from './TemplateStringField';
+

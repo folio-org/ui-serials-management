@@ -39,7 +39,8 @@ import {
   OmissionFieldArray,
   CombinationFieldArray,
   ChronologyFieldArray,
-  EnumerationFieldArray
+  EnumerationFieldArray,
+  TemplateStringField,
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal';
@@ -213,6 +214,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
               </Accordion>
             </AccordionSet>
           </AccordionStatus>
+          <TemplateStringField />
         </Pane>
         <PiecesPreviewModal
           ruleset={values}
