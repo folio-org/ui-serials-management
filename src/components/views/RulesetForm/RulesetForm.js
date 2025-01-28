@@ -56,13 +56,13 @@ const propTypes = {
 
 const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelRuleset }) => {
   const params = useParams();
-  const { pristine, submitting, invalid, values, initialValues } = useFormState();
+  const { pristine, submitting, invalid, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
-  const noModelRulesetPresent = !isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
-  console.log('noModelRulesetPresent', noModelRulesetPresent);
+  const ModelRulesetPresent = isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
+  console.log('ModelRulesetPresent', ModelRulesetPresent);
   console.log('values', values);
   console.log('selectedModelRuleset.serialRuleset', getRulesetFormValues(selectedModelRuleset?.serialRuleset));
 
@@ -110,7 +110,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
               buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
               // disabled={pristine || invalid || submitting}
-              disabled={noModelRulesetPresent || invalid || submitting}
+              disabled={(!ModelRulesetPresent && pristine) || invalid || submitting}
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -119,7 +119,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
             <Button
               buttonStyle="primary mega"
               // disabled={pristine || submitting}
-              disabled={noModelRulesetPresent || submitting}
+              disabled={(!ModelRulesetPresent && pristine) || submitting}
               marginBottom0
               onClick={onSubmit}
               type="submit"
