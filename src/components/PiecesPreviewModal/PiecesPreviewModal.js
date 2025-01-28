@@ -82,29 +82,41 @@ const PiecesPreviewModal = ({
       .then((res) => history.push(urls.pieceSetView(res?.id)))
   );
 
+  // Slightly annoying implementation here, for future work we expect to refactor the UserConfiguredMetadata on the backend
+  // At which point this should be refactored aswell
   const formatStartingValues = (values) => {
-    return ruleset?.templateConfig?.rules?.map((rule, ruleIndex) => {
-      const tmrt =
-        rule?.templateMetadataRuleType?.value ?? rule?.templateMetadataRuleType;
-      const tmrf =
-        rule?.ruleType?.templateMetadataRuleFormat?.value ??
-        rule?.ruleType?.templateMetadataRuleFormat;
-      return {
-        userConfiguredTemplateMetadataType: tmrt,
-        index: ruleIndex,
-        metadataType: {
-          ...(tmrf === 'enumeration_numeric' && {
-            levels:
-              rule?.ruleType?.ruleFormat?.levels?.map((_level, levelIndex) => {
-                return {
-                  ...values?.startingValues[ruleIndex]?.levels[levelIndex],
-                  index: levelIndex,
-                };
-              }) || {},
-          }),
-        },
-      };
-    });
+    const chronologyRules = ruleset?.templateConfig?.enumerationRules?.map(
+      (rule, ruleIndex) => {
+        return {
+          userConfiguredTemplateMetadataType: 'chronology',
+          index: ruleIndex,
+          metadataType: {},
+        };
+      }
+    );
+    const enumerationRules = ruleset?.templateConfig?.enumerationRules?.map(
+      (rule, ruleIndex) => {
+        const tmrf =
+          rule?.templateMetadataRuleFormat?.value ??
+          rule?.templateMetadataRuleFormat;
+        return {
+          userConfiguredTemplateMetadataType: 'enumeration',
+          index: ruleIndex,
+          metadataType: {
+            ...(tmrf === 'enumeration_numeric' && {
+              levels:
+                rule?.ruleFormat?.levels?.map((_level, levelIndex) => {
+                  return {
+                    ...values?.startingValues[ruleIndex]?.levels[levelIndex],
+                    index: levelIndex,
+                  };
+                }) || {},
+            }),
+          },
+        };
+      }
+    );
+    return chronologyRules.concat(enumerationRules);
   };
 
   // istanbul ignore next
@@ -220,14 +232,9 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            // DEPRECATED - This handles the older case in which generatePieces responded with an array of pieces
-            // Now supports newer response of the predicted piece set object, containing an array of pieces
-            // TODO Remove this once interface version has been increased
-            contentData={
-              Array.isArray(generatedPieceSet)
-                ? generatedPieceSet
-                : generatedPieceSet?.pieces
-            }
+            // We have removed the Array handling of this as of MODSER-42 which is an interface version bump
+            // Should be 2.0 I believe, or 1.3, eitherway as of sunflower release this frontend no longer supports older backend interfaces
+            contentData={generatedPieceSet?.pieces}
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}

@@ -190,7 +190,7 @@ const PiecesPreviewModalForm = ({
           </Col>
         </Row>
         <br />
-        {ruleset?.templateConfig?.rules?.map((e, i) => {
+        {ruleset?.templateConfig?.enumerationRules?.map((e, i) => {
           if (
             e?.ruleType?.templateMetadataRuleFormat?.value ===
               'enumeration_numeric' ||
@@ -288,7 +288,7 @@ const PiecesPreviewModalForm = ({
           </Col>
         )}
       </Row>
-      {!!ruleset?.templateConfig?.rules?.some(
+      {!!ruleset?.templateConfig?.enumerationRules?.some(
         (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
             'enumeration_numeric' ||
           e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'

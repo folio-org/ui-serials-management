@@ -108,14 +108,18 @@ const RulesetReplaceRoute = () => {
       }),
       templateConfig: {
         templateString: ruleset?.templateConfig?.templateString,
-        rules: ruleset?.templateConfig?.rules?.map((r) => {
+        chronologyRules: ruleset?.templateConfig?.chronologyRules?.map((r) => {
           return {
-            templateMetadataRuleType: r?.templateMetadataRuleType?.value,
-            ruleType: {
-              ...r?.ruleType,
-              templateMetadataRuleFormat:
-                r?.ruleType?.templateMetadataRuleFormat?.value,
-            },
+            ...r?.ruleFormat,
+            templateMetadataRuleFormat:
+              r?.templateMetadataRuleFormat?.value,
+          };
+        }),
+        enumerationRules: ruleset?.templateConfig?.enumerationRules?.map((r) => {
+          return {
+            ...r?.ruleFormat,
+            templateMetadataRuleFormat:
+              r?.templateMetadataRuleFormat?.value,
           };
         }),
       },
