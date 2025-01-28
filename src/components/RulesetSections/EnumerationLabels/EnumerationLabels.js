@@ -19,11 +19,9 @@ const proptypes = {
 
 const EnumerationLabels = ({ ruleset }) => {
   const intl = useIntl();
-  // The filterning of templateConfig rules will be irrelevant when enumeration and chronology have been seperated
+
   const sortedLabels = getSortedItems(
-    ruleset?.templateConfig?.rules?.filter(
-      (e) => e?.templateMetadataRuleType?.value === 'enumeration'
-    ),
+    ruleset?.templateConfig?.enumerationRules,
     null,
     {
       column: 'index',
@@ -127,14 +125,14 @@ const EnumerationLabels = ({ ruleset }) => {
         return (
           <>
             <Row>
-              {rule?.ruleType?.templateMetadataRuleFormat?.value ===
+              {rule?.templateMetadataRuleFormat?.value ===
               'enumeration_numeric' ? (
                 <>
                   <Col xs={12}>
                     {renderEnumerationLabelName(rule, ruleIndex)}
                   </Col>
                   <Col xs={12}>
-                    {renderEnumerationNumericMCL(rule?.ruleType?.ruleFormat)}
+                    {renderEnumerationNumericMCL(rule?.ruleFormat)}
                   </Col>
                 </>
                 ) : (
@@ -143,7 +141,7 @@ const EnumerationLabels = ({ ruleset }) => {
                       {renderEnumerationLabelName(rule, ruleIndex)}
                     </Col>
                     <Col xs={12}>
-                      {renderEnumerationTextualMCL(rule?.ruleType?.ruleFormat)}
+                      {renderEnumerationTextualMCL(rule?.ruleFormat)}
                     </Col>
                   </>
                 )}

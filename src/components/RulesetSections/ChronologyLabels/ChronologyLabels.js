@@ -18,11 +18,9 @@ const proptypes = {
 
 const ChronologyLabels = ({ ruleset }) => {
   const intl = useIntl();
-  // The filterning of templateConfig rules will be irrelevant when enumeration and chronology have been seperated
+
   const sortedLabels = getSortedItems(
-    ruleset?.templateConfig?.rules?.filter(
-      (e) => e?.templateMetadataRuleType?.value === 'chronology'
-    ),
+    ruleset?.templateConfig?.chronologyRules,
     null,
     {
       column: 'index',
@@ -36,12 +34,12 @@ const ChronologyLabels = ({ ruleset }) => {
         .formatMessage({ id: 'ui-serials-management.ruleset.chronology' })
         ?.concat(' ', e?.index + 1);
     },
-    chronologyFormat: (e) => e?.ruleType?.templateMetadataRuleFormat?.label,
-    weekdayFormat: (e) => e?.ruleType?.ruleFormat?.weekdayFormat?.label,
-    monthdayFormat: (e) => e?.ruleType?.ruleFormat?.monthDayFormat?.label,
-    monthFormat: (e) => e?.ruleType?.ruleFormat?.monthFormat?.label,
-    yearFormat: (e) => e?.ruleType?.ruleFormat?.yearFormat?.label,
-    locale: (e) => e?.ruleType?.ruleLocale,
+    chronologyFormat: (e) => e?.templateMetadataRuleFormat?.label,
+    weekdayFormat: (e) => e?.ruleFormat?.weekdayFormat?.label,
+    monthdayFormat: (e) => e?.ruleFormat?.monthDayFormat?.label,
+    monthFormat: (e) => e?.ruleFormat?.monthFormat?.label,
+    yearFormat: (e) => e?.ruleFormat?.yearFormat?.label,
+    locale: (e) => e?.ruleLocale,
   };
 
   const renderBadge = () => {

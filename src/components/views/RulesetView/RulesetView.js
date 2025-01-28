@@ -134,19 +134,18 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
           />
           <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
           <IssuePublication {...getSectionProps('issue-publication')} />
-          {!!ruleset?.omission?.rules?.length && (
+          {ruleset?.omission?.rules?.length > 0 && (
             <OmissionRules {...getSectionProps('omission-rules')} />
           )}
-          {!!ruleset?.combination?.rules?.length && (
+          {ruleset?.combination?.rules?.length > 0 && (
             <CombinationRules {...getSectionProps('combination-rules')} />
           )}
-          {/* When chrnology and enumeration are seperated out, this conditional will need to be changed */}
-          {ruleset?.templateConfig?.rules?.some(
-            (e) => e?.templateMetadataRuleType?.value === 'chronology'
-          ) && <ChronologyLabels {...getSectionProps('chronology-labels')} />}
-          {ruleset?.templateConfig?.rules?.some(
-            (e) => e?.templateMetadataRuleType?.value === 'enumeration'
-          ) && <EnumerationLabels {...getSectionProps('enumeration-labels')} />}
+          {ruleset?.templateConfig?.chronologyRules?.length > 0 && (
+            <ChronologyLabels {...getSectionProps('chronology-labels')} />
+          )}
+          {ruleset?.templateConfig?.enumerationRules?.length > 0 && (
+            <EnumerationLabels {...getSectionProps('enumeration-labels')} />
+          )}
           <DisplaySummaryTemplate
             {...getSectionProps('display-template-summary')}
           />
