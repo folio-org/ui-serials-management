@@ -38,7 +38,7 @@ import {
   IssuePublicationFieldArray,
   OmissionFieldArray,
   CombinationFieldArray,
-  LabelFieldArray,
+  ChronologyFieldArray
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal';
@@ -198,10 +198,10 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
               </Accordion>
               <Accordion
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.labelling" />
+                  <FormattedMessage id="ui-serials-management.ruleset.chronologyLabels" />
                 }
               >
-                <LabelFieldArray />
+                <ChronologyFieldArray />
               </Accordion>
             </AccordionSet>
           </AccordionStatus>
