@@ -8,6 +8,7 @@ export { default as CombinationField } from './CombinationField';
 export { default as CombinationFieldArray } from './CombinationFieldArray';
 export { default as ChronologyFieldArray } from './ChronologyFieldArray';
 export { default as ChronologyField } from './ChronologyField';
+export { default as EnumerationFieldArray } from './EnumerationFieldArray';
 export { default as EnumerationNumericFieldArray } from './EnumerationNumericFieldArray';
 export { default as EnumerationNumericField } from './EnumerationNumericField';
 export { default as EnumerationTextualFieldArray } from './EnumerationTextualFieldArray';

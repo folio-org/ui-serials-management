@@ -2,13 +2,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-  Select,
-  Row,
-  Col,
-  Selection,
-} from '@folio/stripes/components';
+import { Button, Select, Row, Col, Selection } from '@folio/stripes/components';
 import {
   EditCard,
   requiredValidator,
@@ -22,10 +16,8 @@ import { useSerialsManagementRefdata } from '../../utils';
 import ChronologyField from '../ChronologyField';
 import { useLocales } from '../../../hooks';
 
-const [RULE_TYPE, CHRONOLOGY_LABEL_FORMAT, ENUMERATION_LABEL_FORMAT] = [
-  'TemplateMetadataRule.TemplateMetadataRuleType',
+const [CHRONOLOGY_LABEL_FORMAT] = [
   'ChronologyTemplateMetadataRule.TemplateMetadataRuleFormat',
-  'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
 ];
 
 const ChronologyFieldArray = () => {
@@ -36,11 +28,7 @@ const ChronologyFieldArray = () => {
     'templateConfig.chronologyRules'
   );
 
-  const refdataValues = useSerialsManagementRefdata([
-    RULE_TYPE,
-    CHRONOLOGY_LABEL_FORMAT,
-    ENUMERATION_LABEL_FORMAT,
-  ]);
+  const refdataValues = useSerialsManagementRefdata([CHRONOLOGY_LABEL_FORMAT]);
 
   const filterSelectValues = (value, dataOptions) => {
     const regex = new RegExp(value, 'i');
