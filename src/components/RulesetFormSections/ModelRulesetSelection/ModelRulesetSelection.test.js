@@ -1,4 +1,4 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, mockTypedownGetter } from '@folio/stripes-erm-testing';
 import ModelRulesetSelection from './ModelRulesetSelection';
 import { translationsProperties } from '../../../../test/helpers';
@@ -34,5 +34,14 @@ describe('ModelRulesetSelection', () => {
   test('renders the QueryTypedown label', () => {
     const { getByText } = renderComponent;
     expect(getByText('Typedown-model-ruleset-typedown')).toBeInTheDocument();
+  });
+
+  test('onSelect callback is triggered when the button is clicked', () => {
+    const { getByText } = renderComponent;
+
+    const button = getByText(/Typedown-model-ruleset-typedown-option-undefined/i);
+    fireEvent.click(button);
+
+    expect(onSelectMock).toHaveBeenCalledWith(selectedModelRulesetMock);
   });
 });
