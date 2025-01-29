@@ -64,6 +64,7 @@ const RulesetCreateRoute = () => {
 
   return (
     <Form
+      id="ruleset-create-form"
       initialValues={initialValues}
       keepDirtyOnReinitialize
       mutators={arrayMutators}

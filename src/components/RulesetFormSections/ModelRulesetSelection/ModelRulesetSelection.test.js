@@ -1,0 +1,38 @@
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, mockTypedownGetter } from '@folio/stripes-erm-testing';
+import ModelRulesetSelection from './ModelRulesetSelection';
+import { translationsProperties } from '../../../../test/helpers';
+
+const onSelectMock = jest.fn();
+const selectedModelRulesetMock = { name: 'Test Ruleset', description: 'Test Description', exampleLabel: 'Test Label' };
+
+jest.mock('@k-int/stripes-kint-components', () => {
+  const { mockKintComponents } = jest.requireActual('@folio/stripes-erm-testing');
+  const KintComps = jest.requireActual('@k-int/stripes-kint-components');
+
+  return ({
+    ...KintComps,
+    ...mockKintComponents,
+    QueryTypedown: mockTypedownGetter([selectedModelRulesetMock])
+  });
+});
+
+let renderComponent;
+
+describe('ModelRulesetSelection', () => {
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <ModelRulesetSelection
+        onSelect={onSelectMock}
+        selectedModelRuleset={selectedModelRulesetMock}
+      />,
+      translationsProperties
+    );
+    screen.debug();
+  });
+
+  test('renders the QueryTypedown label', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Typedown-model-ruleset-typedown')).toBeInTheDocument();
+  });
+});

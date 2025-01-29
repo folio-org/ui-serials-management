@@ -61,14 +61,9 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
-  const ModelRulesetPresent = isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
-  console.log('ModelRulesetPresent', ModelRulesetPresent);
-  console.log('values', values);
-  console.log('selectedModelRuleset.serialRuleset', getRulesetFormValues(selectedModelRuleset?.serialRuleset));
+  const modelRulesetPresent = isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
 
-  console.log('pristine', pristine);
   // istanbul ignore next
-
   const shortcuts = [
     {
       name: 'save',
@@ -110,7 +105,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
               buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
               // disabled={pristine || invalid || submitting}
-              disabled={(!ModelRulesetPresent && pristine) || invalid || submitting}
+              disabled={(!modelRulesetPresent && pristine) || invalid || submitting}
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -119,7 +114,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
             <Button
               buttonStyle="primary mega"
               // disabled={pristine || submitting}
-              disabled={(!ModelRulesetPresent && pristine) || submitting}
+              disabled={(!modelRulesetPresent && pristine) || submitting}
               marginBottom0
               onClick={onSubmit}
               type="submit"
@@ -197,7 +192,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                  )}
+                )}
               </Accordion>
               <Accordion
                 label={

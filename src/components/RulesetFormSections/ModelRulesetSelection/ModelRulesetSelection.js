@@ -57,6 +57,8 @@ const ModelRulesetSelection = ({ onSelect, selectedModelRuleset }) => {
           }
           path={MODEL_RULESETS_ENDPOINT}
           pathMutator={pathMutator}
+          // test will fail if renderFooter is not provided
+          renderFooter={() => true}
           renderListItem={renderListItem}
         />
       </Col>

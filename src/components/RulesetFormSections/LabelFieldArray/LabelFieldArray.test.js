@@ -146,7 +146,7 @@ describe('LabelFieldArray', () => {
 
     test('renders the expected Template label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Template')).toBeInTheDocument();
+      expect(getByText('Label template')).toBeInTheDocument();
     });
 
     test('renders the expected empty label text', async () => {
@@ -188,7 +188,7 @@ describe('LabelFieldArray', () => {
 
         // Ensure the template has been added in the beforeEach is a way to shortcut the waits in each test
         await waitFor(() => {
-          expect(getByText('Template')).toBeInTheDocument();
+          expect(getByText('Label template')).toBeInTheDocument();
         });
       });
 
@@ -199,7 +199,7 @@ describe('LabelFieldArray', () => {
         // There is no "right" answer here, but this way makes this test redundant and repeated
         // and removing it would make the test case implicit, which isn't necessarily the best idea always
         // await waitFor(() => {
-        expect(getByText('Template')).toBeInTheDocument();
+        expect(getByText('Label template')).toBeInTheDocument();
         // });
       });
 
@@ -264,7 +264,7 @@ describe('LabelFieldArray', () => {
     // TODO Async only needs to be applied to those tests acting asynchronously
     test('renders the expected Template label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Template')).toBeInTheDocument();
+      expect(getByText('Label template')).toBeInTheDocument();
     });
 
     test('renders the Add label button', async () => {
@@ -296,7 +296,7 @@ describe('LabelFieldArray', () => {
       });
 
       test('renders the expected Template with correct value', async () => {
-        await TextArea('Template*').has({ value: 'test' });
+        await TextArea('Label template*').has({ value: 'test' });
       });
 
       test('renders a label card', () => {

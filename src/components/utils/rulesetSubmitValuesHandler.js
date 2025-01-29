@@ -1,10 +1,14 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 const rulesetSubmitValuesHandler = (values) => {
+  // We don't want to manipulate the original values object
+  const returnValues = cloneDeep(values);
   return {
-    ...values,
+    ...returnValues,
 
     recurrence: {
-      ...values?.recurrence,
-      rules: values?.recurrence?.rules?.map((e) => {
+      ...returnValues?.recurrence,
+      rules: returnValues?.recurrence?.rules?.map((e) => {
         // If no ordinal specified, assume ordinal is 1 for all rules
         if (!e?.ordinal) {
           e.ordinal = 1;
@@ -14,13 +18,13 @@ const rulesetSubmitValuesHandler = (values) => {
         if (!e?.pattern) {
           e.pattern = {};
         }
-        e.patternType = values?.patternType;
+        e.patternType = returnValues?.patternType;
         return e;
       }),
     },
     templateConfig: {
-      ...values?.templateConfig,
-      rules: values?.templateConfig?.rules?.map((rule, ruleIndex) => {
+      ...returnValues?.templateConfig,
+      rules: returnValues?.templateConfig?.rules?.map((rule, ruleIndex) => {
         rule.index = ruleIndex;
         rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
           level.index = levelIndex;

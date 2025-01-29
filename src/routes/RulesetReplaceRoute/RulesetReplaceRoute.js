@@ -114,6 +114,7 @@ const RulesetReplaceRoute = () => {
 
   return (
     <Form
+      id="ruleset-replace-form"
       initialValues={initialValues}
       mutators={arrayMutators}
       onSubmit={submitRuleset}
