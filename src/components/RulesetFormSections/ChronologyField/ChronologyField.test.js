@@ -11,76 +11,12 @@ import ChronologyField from './ChronologyField';
 import { translationsProperties } from '../../../../test/helpers';
 import mockRefdata from '../../../../test/resources/refdata';
 
-const templateConfig = {
-  templateMetadataRuleType: 'chronology',
-  ruleType: {
-    templateMetadataRuleFormat: 'chronology_date',
-    ruleFormat: {
-      weekdayFormat: {
-        value: 'full_lower',
-      },
-      monthDayFormat: {
-        value: 'ordinal',
-      },
-      monthFormat: {
-        value: 'full',
-      },
-      yearFormat: {
-        value: 'full',
-      },
-    },
-  },
-};
+const index = 0;
 
-const tokenIndex = 2;
-
-const values = {
-  'rulesetStatus': {
-    'value': 'active'
-  },
-  'templateConfig': {
-    'rules': [
-      {
-        'templateMetadataRuleType': 'enumeration',
-        'ruleType': {
-          'templateMetadataRuleFormat': 'enumeration_numeric',
-          'ruleFormat': {
-            'levels': [
-              '{}'
-            ]
-          }
-        }
-      },
-      {
-        'templateMetadataRuleType': 'enumeration',
-        'ruleType': {
-          'templateMetadataRuleFormat': 'enumeration_numeric',
-          'ruleFormat': '{levels: Array(1)}'
-        }
-      },
-      {
-        'templateMetadataRuleType': 'chronology',
-        'ruleType': {
-          'ruleLocale': 'en',
-          'templateMetadataRuleFormat': 'chronology_date'
-        }
-      },
-      {
-        'templateMetadataRuleType': 'chronology',
-        'ruleType': {
-          'ruleLocale': 'en',
-          'templateMetadataRuleFormat': 'chronology_year'
-        }
-      },
-      {
-        'templateMetadataRuleType': 'enumeration',
-        'ruleType': {
-          'templateMetadataRuleFormat': 'enumeration_textual',
-          'ruleFormat': '{levels: Array(1)}'
-        }
-      }
-    ]
-  }
+// TODO This needs to be moved over to using the centralised resources
+const chronologyRule = {
+  ruleLocale: 'en',
+  templateMetadataRuleFormat: 'chronology_date',
 };
 
 jest.mock('../../utils', () => ({
@@ -96,10 +32,9 @@ describe('ChronologyField', () => {
     renderComponent = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <ChronologyField
-          name="templateConfig.rules[0].ruleType.ruleFormat"
-          templateConfig={templateConfig}
-          tokenIndex={tokenIndex}
-          values={values}
+          chronologyRule={chronologyRule}
+          index={index}
+          name="templateConfig.chronologyRules[0].ruleFormat"
         />
       </TestForm>,
       translationsProperties
