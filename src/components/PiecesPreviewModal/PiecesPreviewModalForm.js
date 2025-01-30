@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -83,13 +83,16 @@ const PiecesPreviewModalForm = ({
     );
   }, [ruleset?.recurrence?.period, ruleset?.recurrence?.timeUnit?.value]);
 
-  const getAdjustedStartDate = (date, numberOfCycles = 1) => {
-    const adjustedStartDate = new Date(date);
-    adjustedStartDate.setFullYear(
-      adjustedStartDate.getFullYear() + minimumNumberOfYears * numberOfCycles
-    );
-    return adjustedStartDate;
-  };
+  const getAdjustedStartDate = useCallback(
+    (date, numberOfCycles = 1) => {
+      const adjustedStartDate = new Date(date);
+      adjustedStartDate.setFullYear(
+        adjustedStartDate.getFullYear() + minimumNumberOfYears * numberOfCycles
+      );
+      return adjustedStartDate;
+    },
+    [minimumNumberOfYears]
+  );
 
   const startingValueDataOptions = existingPieceSets
     ?.filter((ps) => ps?.ruleset?.id === ruleset?.id)
@@ -103,38 +106,38 @@ const PiecesPreviewModalForm = ({
       };
     });
 
-  const handleStartingValuesChange = (e) => {
-    const selectedPieceSet = existingPieceSets?.find(
-      (ps) => ps.id === e?.target?.value || ''
-    );
-    batch(() => {
-      change(
-        'startDate',
-        selectedPieceSet?.startDate
+  const handleStartingValuesChange = useCallback(
+    (e) => {
+      const selectedPieceSet = existingPieceSets?.find(
+        (ps) => ps.id === e?.target?.value || ''
+      );
+      batch(() => {
+        change('startDate', selectedPieceSet?.startDate
           ? getAdjustedStartDate(
             selectedPieceSet?.startDate,
             selectedPieceSet?.numberOfCycles ?? 1
           )
-          : null
-      );
-      change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
-      change(
-        'startingValues',
-        selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
-          (uc) => {
-            if (uc?.metadataType?.levels?.length) {
-              return {
-                levels: uc?.metadataType?.levels?.map((ucl) => {
-                  return { rawValue: ucl?.rawValue };
-                }),
-              };
+          : null);
+        change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
+        change(
+          'startingValues',
+          selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
+            (uc) => {
+              if (uc?.metadataType?.levels?.length) {
+                return {
+                  levels: uc?.metadataType?.levels?.map((ucl) => {
+                    return { rawValue: ucl?.rawValue };
+                  }),
+                };
+              }
+              return null;
             }
-            return null;
-          }
-        )
-      );
-    });
-  };
+          )
+        );
+      });
+    },
+    [batch, change, existingPieceSets, getAdjustedStartDate]
+  );
 
   const renderEnumerationNumericField = (formatValues, index) => {
     return (
@@ -192,8 +195,7 @@ const PiecesPreviewModalForm = ({
         <br />
         {ruleset?.templateConfig?.enumerationRules?.map((e, i) => {
           if (
-            e?.templateMetadataRuleFormat?.value ===
-              'enumeration_numeric' ||
+            e?.templateMetadataRuleFormat?.value === 'enumeration_numeric' ||
             e?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
@@ -213,7 +215,7 @@ const PiecesPreviewModalForm = ({
 
   return (
     <>
-      {!!startingValueDataOptions?.length && (
+      {startingValueDataOptions?.length > 0 && (
         <Row>
           <Col xs={12}>
             <Select
@@ -288,9 +290,8 @@ const PiecesPreviewModalForm = ({
           </Col>
         )}
       </Row>
-      {!!ruleset?.templateConfig?.enumerationRules?.some(
-        (e) => e?.templateMetadataRuleFormat?.value ===
-            'enumeration_numeric' ||
+      {ruleset?.templateConfig?.enumerationRules?.some(
+        (e) => e?.templateMetadataRuleFormat?.value === 'enumeration_numeric' ||
           e?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
