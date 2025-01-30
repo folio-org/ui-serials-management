@@ -57,7 +57,8 @@ const ModelRulesetSelection = ({ onSelect, selectedModelRuleset }) => {
           }
           path={MODEL_RULESETS_ENDPOINT}
           pathMutator={pathMutator}
-          // test will fail if renderFooter is not provided
+          // FIXME Test will fail if renderFooter is not provided
+          // May be fixed in future releases of stripes-erm-testing
           renderFooter={() => true}
           renderListItem={renderListItem}
         />
