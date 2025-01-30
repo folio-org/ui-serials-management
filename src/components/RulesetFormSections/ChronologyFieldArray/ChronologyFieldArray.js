@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
@@ -35,6 +36,17 @@ const ChronologyFieldArray = () => {
 
     return dataOptions.filter(({ label }) => label.search(regex) !== -1);
   };
+
+  const chronologySelectorOnChange = useCallback(
+    (e, index) => {
+      change(`templateConfig.chronologyRules[${index}]`, {
+        ruleLocale: 'en',
+        templateMetadataRuleFormat: e?.target?.value,
+        ruleFormat: {},
+      });
+    },
+    [change]
+  );
 
   const renderLabelRule = (chronologyRule, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
@@ -82,16 +94,7 @@ const ChronologyFieldArray = () => {
                         <FormattedMessage id="ui-serials-management.ruleset.chronologyFormat" />
                       }
                       meta={meta}
-                      onChange={(e) => {
-                        change(
-                          `templateConfig.chronologyRules[${index}].templateMetadataRuleFormat`,
-                          e?.target?.value
-                        );
-                        change(
-                          `templateConfig.chronologyRules[${index}].ruleFormat`,
-                          undefined
-                        );
-                      }}
+                      onChange={(e) => chronologySelectorOnChange(e, index)}
                       required
                     />
                   );

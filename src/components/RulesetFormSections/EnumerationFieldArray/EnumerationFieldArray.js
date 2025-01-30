@@ -1,13 +1,9 @@
+import { useCallback, useMemo } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-  Select,
-  Row,
-  Col,
-} from '@folio/stripes/components';
+import { Button, Select, Row, Col } from '@folio/stripes/components';
 import {
   EditCard,
   requiredValidator,
@@ -33,6 +29,22 @@ const EnumerationFieldArray = () => {
   );
 
   const refdataValues = useSerialsManagementRefdata([ENUMERATION_LABEL_FORMAT]);
+
+  const enumerationOptions = useMemo(() => {
+    return selectifyRefdata(refdataValues, ENUMERATION_LABEL_FORMAT, 'value');
+  }, [refdataValues]);
+
+  const enumerationSelectorOnChange = useCallback(
+    (e, index) => {
+      change(`templateConfig.enumerationRules[${index}]`, {
+        templateMetadataRuleFormat: e?.target?.value,
+        ruleFormat: {
+          levels: [{}],
+        },
+      });
+    },
+    [change]
+  );
 
   const renderLabelRule = (templateConfig, index) => {
     // Using indexCount to prevent sonarlint from flagging this as an issue
@@ -63,37 +75,18 @@ const EnumerationFieldArray = () => {
             <Field
               name={`templateConfig.enumerationRules[${index}].templateMetadataRuleFormat`}
               render={({ input, meta }) => {
-                const selectedDataOptions = selectifyRefdata(
-                  refdataValues,
-                  ENUMERATION_LABEL_FORMAT,
-                  'value'
-                );
-
                 return (
                   <Select
                     dataOptions={[
                       { value: '', label: '' },
-                      ...selectedDataOptions,
+                      ...enumerationOptions,
                     ]}
                     input={input}
                     label={
                       <FormattedMessage id="ui-serials-management.ruleset.enumerationFormat" />
                     }
                     meta={meta}
-                    onChange={(e) => {
-                      change(
-                        `templateConfig.enumerationRules[${index}].templateMetadataRuleFormat`,
-                        e?.target?.value
-                      );
-                      change(
-                        `templateConfig.enumerationRules[${index}].ruleFormat`,
-                        undefined
-                      );
-                      change(
-                        `templateConfig.enumerationRules[${index}].ruleFormat.levels`,
-                        [{}]
-                      );
-                    }}
+                    onChange={(e) => enumerationSelectorOnChange(e, index)}
                     required
                   />
                 );
@@ -102,6 +95,10 @@ const EnumerationFieldArray = () => {
             />
           </Col>
         </Row>
+        {/*
+        Previously discussed that this could maybe be a switch, as it stands I think its fine
+        If we end up expanding the enumeration options, then its something to reconsider
+        */}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
           <>

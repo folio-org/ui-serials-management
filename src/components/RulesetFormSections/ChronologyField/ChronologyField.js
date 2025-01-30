@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import { ClipCopy } from '@folio/stripes/smart-components';
@@ -72,7 +72,7 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
     );
   };
 
-  const renderWeekdayFormatField = () => {
+  const renderWeekdayFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -93,9 +93,9 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderMonthDayFormatField = () => {
+  const renderMonthDayFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -116,9 +116,9 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderMonthFormatField = () => {
+  const renderMonthFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -139,9 +139,9 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const renderYearFormatField = () => {
+  const renderYearFormatField = useCallback(() => {
     return (
       <Field
         component={Select}
@@ -162,60 +162,69 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
         validate={requiredValidator}
       />
     );
-  };
+  }, [intl, name]);
 
-  const chronologyFormats = {
-    chronology_date: {
-      fields: [
-        renderWeekdayFormatField(),
-        renderMonthDayFormatField(),
-        renderMonthFormatField(),
-        renderYearFormatField(),
-        <div>
-          <Label id="template-token-header">
-            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {renderTemplateTokensInfo()}
-            <ClipCopy text={tokenText} />
-          </Label>
-          {tokenText}
-        </div>,
-      ],
-    },
-    chronology_month: {
-      fields: [
-        renderMonthFormatField(),
-        renderYearFormatField(),
-        <div>
-          <Label id="template-token-header">
-            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {renderTemplateTokensInfo()}
-            <ClipCopy text={tokenText} />
-          </Label>
-          {tokenText}
-        </div>,
-      ],
-    },
-    chronology_year: {
-      fields: [
-        renderYearFormatField(),
-        <div>
-          <Label id="template-token-header">
-            <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
-            {renderTemplateTokensInfo()}
-            <ClipCopy text={tokenText} />
-          </Label>
-          {tokenText}
-        </div>,
-      ],
-    },
-  };
+  const chronologyFormats = useMemo(
+    () => ({
+      chronology_date: {
+        getFields: () => [
+          renderWeekdayFormatField(),
+          renderMonthDayFormatField(),
+          renderMonthFormatField(),
+          renderYearFormatField(),
+          <div>
+            <Label id="template-token-header">
+              <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+              {renderTemplateTokensInfo()}
+              <ClipCopy text={tokenText} />
+            </Label>
+            {tokenText}
+          </div>,
+        ],
+      },
+      chronology_month: {
+        getFields: () => [
+          renderMonthFormatField(),
+          renderYearFormatField(),
+          <div>
+            <Label id="template-token-header">
+              <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+              {renderTemplateTokensInfo()}
+              <ClipCopy text={tokenText} />
+            </Label>
+            {tokenText}
+          </div>,
+        ],
+      },
+      chronology_year: {
+        getFields: () => [
+          renderYearFormatField(),
+          <div>
+            <Label id="template-token-header">
+              <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
+              {renderTemplateTokensInfo()}
+              <ClipCopy text={tokenText} />
+            </Label>
+            {tokenText}
+          </div>,
+        ],
+      },
+    }),
+    [
+      renderMonthDayFormatField,
+      renderMonthFormatField,
+      renderWeekdayFormatField,
+      renderYearFormatField,
+      tokenText,
+    ]
+  );
 
   return (
     <>
       <Row>
         {chronologyFormats[
           chronologyRule?.templateMetadataRuleFormat
-        ]?.fields?.map((chronologyField, fieldIndex) => {
+        ]?.getFields()?.map((chronologyField, fieldIndex) => {
           return (
             <Col key={`chronology-field-${name}[${fieldIndex}]`} xs={3}>
               {chronologyField}
