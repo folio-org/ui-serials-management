@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, Field, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
@@ -30,6 +30,10 @@ const ChronologyFieldArray = () => {
   );
 
   const refdataValues = useSerialsManagementRefdata([CHRONOLOGY_LABEL_FORMAT]);
+
+  const chronologyOptions = useMemo(() => {
+    return selectifyRefdata(refdataValues, CHRONOLOGY_LABEL_FORMAT, 'value');
+  }, [refdataValues]);
 
   const filterSelectValues = (value, dataOptions) => {
     const regex = new RegExp(value, 'i');
@@ -78,16 +82,11 @@ const ChronologyFieldArray = () => {
               <Field
                 name={`templateConfig.chronologyRules[${index}].templateMetadataRuleFormat`}
                 render={({ input, meta }) => {
-                  const selectedDataOptions = selectifyRefdata(
-                    refdataValues,
-                    CHRONOLOGY_LABEL_FORMAT,
-                    'value'
-                  );
                   return (
                     <Select
                       dataOptions={[
                         { value: '', label: '' },
-                        ...selectedDataOptions,
+                        ...chronologyOptions,
                       ]}
                       input={input}
                       label={
