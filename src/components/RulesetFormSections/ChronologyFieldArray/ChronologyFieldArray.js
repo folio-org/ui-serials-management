@@ -101,7 +101,6 @@ const ChronologyFieldArray = () => {
                 validate={requiredValidator}
               />
             </Col>
-
             <Col xs={3}>
               <Field
                 component={Selection}

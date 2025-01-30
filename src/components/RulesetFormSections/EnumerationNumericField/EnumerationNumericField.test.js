@@ -53,7 +53,7 @@ describe('EnumerationNumericField', () => {
           index={0}
           items={items}
           level={level}
-          name="templateConfig.rules[0].ruleType.ruleFormat.levels[0]"
+          name="templateConfig.enumerationRules[0].ruleFormat.levels[0]"
           onDeleteField={onDeleteField}
         />
       </TestForm>,

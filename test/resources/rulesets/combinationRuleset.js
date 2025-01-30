@@ -19,7 +19,7 @@ const combinationRuleset = {
   rulesetNumber: '5',
   templateConfig: {
     id: '28cb5cab-ce30-4b48-8d1b-2c7f86b2232e',
-    rules: [chronologyDate],
+    chronologyRules: [chronologyDate],
     templateString:
       '{{chronology1.weekday}} {{chronology1.monthDay}} {{chronology1.month}} {{chronology1.year}}',
   },

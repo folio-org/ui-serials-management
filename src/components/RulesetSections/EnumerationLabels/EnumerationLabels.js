@@ -35,7 +35,7 @@ const EnumerationLabels = ({ ruleset }) => {
         {`${intl.formatMessage({
           id: 'ui-serials-management.ruleset.enumeration',
         })} ${ruleIndex + 1}: ${
-          rule?.ruleType?.templateMetadataRuleFormat?.label
+          rule?.templateMetadataRuleFormat?.label
         }`}
       </Label>
     );

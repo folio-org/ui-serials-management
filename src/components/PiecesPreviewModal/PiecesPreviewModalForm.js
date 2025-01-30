@@ -149,7 +149,7 @@ const PiecesPreviewModalForm = ({
             </strong>
           </Layout>
         </Col>
-        {formatValues?.ruleType?.ruleFormat?.levels?.map((e, i) => {
+        {formatValues?.ruleFormat?.levels?.map((e, i) => {
           return (
             <Col key={`${index}-${i}`} xs={2}>
               <Field
@@ -192,9 +192,9 @@ const PiecesPreviewModalForm = ({
         <br />
         {ruleset?.templateConfig?.enumerationRules?.map((e, i) => {
           if (
-            e?.ruleType?.templateMetadataRuleFormat?.value ===
+            e?.templateMetadataRuleFormat?.value ===
               'enumeration_numeric' ||
-            e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+            e?.templateMetadataRuleFormat === 'enumeration_numeric'
           ) {
             // Required so that sonarcloud doesnt flag use of index within key prop
             const indexCounter = i;
@@ -289,9 +289,9 @@ const PiecesPreviewModalForm = ({
         )}
       </Row>
       {!!ruleset?.templateConfig?.enumerationRules?.some(
-        (e) => e?.ruleType?.templateMetadataRuleFormat?.value ===
+        (e) => e?.templateMetadataRuleFormat?.value ===
             'enumeration_numeric' ||
-          e?.ruleType?.templateMetadataRuleFormat === 'enumeration_numeric'
+          e?.templateMetadataRuleFormat === 'enumeration_numeric'
       ) && renderTemplateStartingValues()}
       {existingPieceSets?.some((ps) => ps?.startDate === values?.startDate) && (
         <MessageBanner type="warning">

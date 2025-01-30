@@ -147,6 +147,7 @@ const PiecesPreviewModal = ({
     const dateExists = existingPieceSets?.some(
       (ps) => ps?.startDate === values?.startDate
     );
+
     return (
       <>
         {allowCreation && (
@@ -175,7 +176,7 @@ const PiecesPreviewModal = ({
           key="preview-predicated-pieces-button"
           buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
-          id="rulset-preview-button"
+          id="ruleset-preview-button"
           marginBottom0
           onClick={() => handleGeneration(values)}
           type="submit"

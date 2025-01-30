@@ -19,7 +19,7 @@ const omissionRuleset = {
   },
   templateConfig: {
     id: '154f5edc-883e-4066-b0c4-ba7b91497ed7',
-    rules: [chronologyDate],
+    chronologyRules: [chronologyDate],
     templateString:
       '{{chronology1.weekday}} {{chronology1.monthDay}} {{chronology1.month}} {{chronology1.year}}',
   },
