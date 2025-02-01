@@ -1,9 +1,9 @@
-import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, mockTypedownGetter } from '@folio/stripes-erm-testing';
 import ModelRulesetSelection from './ModelRulesetSelection';
 import { translationsProperties } from '../../../../test/helpers';
 
-const onSelectMock = jest.fn();
+const onChangeMock = jest.fn();
 const selectedModelRulesetMock = { name: 'Test Ruleset', description: 'Test Description', exampleLabel: 'Test Label' };
 
 jest.mock('@k-int/stripes-kint-components', () => {
@@ -23,12 +23,11 @@ describe('ModelRulesetSelection', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <ModelRulesetSelection
-        onSelect={onSelectMock}
+        onChange={onChangeMock}
         selectedModelRuleset={selectedModelRulesetMock}
       />,
       translationsProperties
     );
-    screen.debug();
   });
 
   test('renders the QueryTypedown label', () => {
@@ -42,6 +41,6 @@ describe('ModelRulesetSelection', () => {
     const button = getByText(/Typedown-model-ruleset-typedown-option-undefined/i);
     fireEvent.click(button);
 
-    expect(onSelectMock).toHaveBeenCalledWith(selectedModelRulesetMock);
+    expect(onChangeMock).toHaveBeenCalledWith(selectedModelRulesetMock);
   });
 });

@@ -33,7 +33,7 @@ jest.mock('../../RulesetFormSections/ModelRulesetSelection', () => () => (
 ));
 
 const onSubmit = jest.fn();
-const onSelect = jest.fn();
+const onModelRulesetChange = jest.fn();
 
 describe('RulesetForm', () => {
   let renderComponent;
@@ -42,7 +42,10 @@ describe('RulesetForm', () => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           {/* From next version handleSubmit should be passed down in TestForm children func */}
-          <RulesetForm handlers={{ onClose: handlers.onClose, onSubmit, onSelect }} />
+          <RulesetForm
+            handlers={{ onClose: handlers.onClose, onSubmit }}
+            modelRuleset={{ onChange: onModelRulesetChange }}
+          />
         </TestForm>,
         translationsProperties
       );

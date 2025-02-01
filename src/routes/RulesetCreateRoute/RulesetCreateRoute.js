@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
@@ -10,9 +11,11 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import { getRulesetFormValues, urls, rulesetSubmitValuesHandler } from '../../components/utils';
-
-import { useModelRuleset } from '../../hooks';
+import {
+  getRulesetFormValues,
+  urls,
+  rulesetSubmitValuesHandler,
+} from '../../components/utils';
 
 const RulesetCreateRoute = () => {
   const history = useHistory();
@@ -20,7 +23,7 @@ const RulesetCreateRoute = () => {
   const ky = useOkapiKy();
   const { id } = useParams();
 
-  const { selectedModelRuleset, handleSelectModelRuleset } = useModelRuleset();
+  const [modelRuleset, setModelRuleset] = useState();
 
   const { generate } = useGenerateNumber({
     callback: (string) => {
@@ -29,6 +32,10 @@ const RulesetCreateRoute = () => {
     generator: 'serialsManagement_patternNumber',
     sequence: 'patternNumber',
   });
+
+  const handleModelRulesetChange = (ms) => {
+    setModelRuleset(ms);
+  };
 
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
@@ -58,9 +65,11 @@ const RulesetCreateRoute = () => {
     await postRuleset(submitValues);
   };
 
-  const initialValues = selectedModelRuleset?.serialRuleset
-    ? getRulesetFormValues(selectedModelRuleset.serialRuleset)
-    : { rulesetStatus: { value: 'active' } };
+  const initialValues = useMemo(() => {
+    return modelRuleset?.serialRuleset
+      ? getRulesetFormValues(modelRuleset.serialRuleset)
+      : { rulesetStatus: { value: 'active' } };
+  }, [modelRuleset]);
 
   return (
     <Form
@@ -76,9 +85,11 @@ const RulesetCreateRoute = () => {
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
-              onSelect: handleSelectModelRuleset
             }}
-            selectedModelRuleset={selectedModelRuleset}
+            modelRuleset={{
+              onChange: handleModelRulesetChange,
+              modelRuleset,
+            }}
           />
         </form>
       )}

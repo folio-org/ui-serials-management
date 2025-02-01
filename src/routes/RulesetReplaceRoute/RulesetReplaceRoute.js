@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
@@ -24,8 +25,6 @@ import {
   urls,
 } from '../../components/utils';
 
-import { useModelRuleset } from '../../hooks';
-
 const RulesetReplaceRoute = () => {
   const history = useHistory();
   const location = useLocation();
@@ -39,7 +38,11 @@ const RulesetReplaceRoute = () => {
     sequence: 'patternNumber',
   });
 
-  const { selectedModelRuleset, handleSelectModelRuleset } = useModelRuleset();
+  const [modelRuleset, setModelRuleset] = useState();
+
+  const handleModelRulesetChange = (ms) => {
+    setModelRuleset(ms);
+  };
 
   const handleClose = (newRulesetId) => {
     if (newRulesetId) {
@@ -88,9 +91,11 @@ const RulesetReplaceRoute = () => {
     };
   };
 
-  const initialValues = selectedModelRuleset?.serialRuleset
-    ? getRulesetFormValues(selectedModelRuleset.serialRuleset)
-    : getRulesetFormValues(ruleset);
+  const initialValues = useMemo(() => {
+    return modelRuleset?.serialRuleset
+      ? getRulesetFormValues(modelRuleset.serialRuleset)
+      : getRulesetFormValues(ruleset);
+  }, [modelRuleset, ruleset]);
 
   const submitRuleset = async (values) => {
     const submitValues = handleSubmitValues(values);
@@ -125,9 +130,11 @@ const RulesetReplaceRoute = () => {
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
-              onSelect: handleSelectModelRuleset
             }}
-            selectedModelRuleset={selectedModelRuleset}
+            modelRuleset={{
+              onChange: handleModelRulesetChange,
+              modelRuleset,
+            }}
           />
         </form>
       )}

@@ -40,7 +40,7 @@ import {
   OmissionFieldArray,
   CombinationFieldArray,
   LabelFieldArray,
-  ModelRulesetSelection
+  ModelRulesetSelection,
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal';
@@ -51,17 +51,26 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
   }).isRequired,
-  selectedModelRuleset: PropTypes.object.isRequired,
+  modelRuleset: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    selectedModelRuleset: PropTypes.object.isRequired,
+  }).isRequired,
 };
 
-const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelRuleset }) => {
+const RulesetForm = ({
+  handlers: { onClose, onSubmit },
+  modelRuleset: { onChange, selectedModelRuleset },
+}) => {
   const params = useParams();
   const { pristine, submitting, invalid, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
 
-  const modelRulesetPresent = isEqual(values, getRulesetFormValues(selectedModelRuleset?.serialRuleset));
+  const modelRulesetPresent = isEqual(
+    values,
+    getRulesetFormValues(selectedModelRuleset?.serialRuleset)
+  );
 
   // istanbul ignore next
   const shortcuts = [
@@ -105,7 +114,9 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
               buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
               // disabled={pristine || invalid || submitting}
-              disabled={(!modelRulesetPresent && pristine) || invalid || submitting}
+              disabled={
+                (!modelRulesetPresent && pristine) || invalid || submitting
+              }
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -172,7 +183,7 @@ const RulesetForm = ({ handlers: { onClose, onSubmit, onSelect }, selectedModelR
         >
           <RulesetInfoForm />
           <ModelRulesetSelection
-            onSelect={onSelect}
+            onChange={onChange}
             selectedModelRuleset={selectedModelRuleset}
           />
           <AccordionStatus ref={accordionStatusRef}>
