@@ -31,8 +31,12 @@ jest.mock('../../RulesetFormSections/EnumerationFieldArray', () => () => (
 jest.mock('../../RulesetFormSections/ChronologyFieldArray', () => () => (
   <div>ChronologyFieldArray</div>
 ));
+jest.mock('../../RulesetFormSections/ModelRulesetSelection', () => () => (
+  <div>ModelRulesetSelection</div>
+));
 
 const onSubmit = jest.fn();
+const onModelRulesetChange = jest.fn();
 
 describe('RulesetForm', () => {
   let renderComponent;
@@ -41,7 +45,10 @@ describe('RulesetForm', () => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           {/* From next version handleSubmit should be passed down in TestForm children func */}
-          <RulesetForm handlers={{ onClose: handlers.onClose, onSubmit }} />
+          <RulesetForm
+            handlers={{ onClose: handlers.onClose, onSubmit }}
+            modelRuleset={{ onChange: onModelRulesetChange }}
+          />
         </TestForm>,
         translationsProperties
       );
@@ -50,6 +57,11 @@ describe('RulesetForm', () => {
     test('renders RulesetInfoForm Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('RulesetInfoForm')).toBeInTheDocument();
+    });
+
+    test('renders ModelRulesetSelection Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ModelRulesetSelection')).toBeInTheDocument();
     });
 
     test('renders PatternTimePeriodForm Component', () => {

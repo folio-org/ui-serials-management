@@ -249,6 +249,7 @@ const PiecesPreviewModal = ({
   return (
     <>
       <FormModal
+        id="pieces-preview-modal"
         initialValues={{ numberOfCycles: 1 }}
         modalProps={{
           onClose: closeModal,

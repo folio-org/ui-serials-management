@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useFormState, useForm } from 'react-final-form';
 import { useParams } from 'react-router-dom';
+import isEqual from 'lodash/isEqual';
 
 import { AppIcon } from '@folio/stripes/core';
 
@@ -30,10 +31,11 @@ import {
   REPLACE_AND_DELETE,
   REPLACE_AND_DEPRECATE,
 } from '../../../constants/replaceTypes';
-import { handleSaveKeyCommand } from '../../utils';
+import { getRulesetFormValues, handleSaveKeyCommand } from '../../utils';
 
 import {
   RulesetInfoForm,
+  ModelRulesetSelection,
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
   OmissionFieldArray,
@@ -49,15 +51,28 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+  }).isRequired,
+  modelRuleset: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    selectedModelRuleset: PropTypes.object.isRequired,
   }).isRequired,
 };
 
-const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
+const RulesetForm = ({
+  handlers: { onClose, onSubmit },
+  modelRuleset: { onChange, selectedModelRuleset },
+}) => {
   const params = useParams();
   const { pristine, submitting, invalid, values } = useFormState();
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
+
+  const modelRulesetPresent = isEqual(
+    values,
+    getRulesetFormValues(selectedModelRuleset?.serialRuleset)
+  );
 
   // istanbul ignore next
   const shortcuts = [
@@ -100,7 +115,10 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
             <Button
               buttonStyle="default mega"
               // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
-              disabled={pristine || invalid || submitting}
+              // disabled={pristine || invalid || submitting}
+              disabled={
+                (!modelRulesetPresent && pristine) || invalid || submitting
+              }
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -108,7 +126,8 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
             </Button>
             <Button
               buttonStyle="primary mega"
-              disabled={pristine || submitting}
+              // disabled={pristine || submitting}
+              disabled={(!modelRulesetPresent && pristine) || submitting}
               marginBottom0
               onClick={onSubmit}
               type="submit"
@@ -165,6 +184,10 @@ const RulesetForm = ({ handlers: { onClose, onSubmit } }) => {
           )}
         >
           <RulesetInfoForm />
+          <ModelRulesetSelection
+            onChange={onChange}
+            selectedModelRuleset={selectedModelRuleset}
+          />
           <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>

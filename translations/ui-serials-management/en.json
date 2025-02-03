@@ -17,6 +17,8 @@
   "lastUpdated": "Last updated",
   "learnMore": "Learn more",
   "cancelGeneration": "Cancel generation",
+  "patternTemplate": "Pattern template (replaces content in the form below with pre-defined values)",
+  "patternTemplatePopover": "Search for a pattern template name or description. Then select from the filter list to apply the template and fill out the form below with pre-defined values",
 
   "refdata.label": "Label",
   "refdata.value": "Value",
@@ -220,7 +222,8 @@
   "ruleset.editPublicationPattern": "Edit publication pattern",
   "ruleset.copyAndDeprecate": "Copy and deprecate",
   "ruleset.copyAndDeprecatePublicationPattern": "Copy and deprecate publication pattern",
-  
+  "ruleset.labelTemplate": "Label template",
+
   "pieceSets": "Piece sets",
   "pieceSets.predictedPieceSets": "Predicted piece sets",
   "pieceSets.dateGenerated": "Date generated",
@@ -260,7 +263,6 @@
   "pieceSets.overlappingDates.warning": "Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>",
   "pieceSets.deletePredictedPieceSet": "Delete predicted piece set",
   "pieceSets.deletePredictedPieceSet.confirmMessage": "Are you sure you wish to delete this predicted piece set?",
-
 
   "validate.withinRange": "Must be within range {minValue} and {maxValue}",
   "validate.notNegative": "Cannot be negative",
