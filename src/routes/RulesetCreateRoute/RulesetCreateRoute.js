@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
@@ -10,13 +11,19 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
-import { urls, rulesetSubmitValuesHandler } from '../../components/utils';
+import {
+  getRulesetFormValues,
+  urls,
+  rulesetSubmitValuesHandler,
+} from '../../components/utils';
 
 const RulesetCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
   const { id } = useParams();
+
+  const [modelRuleset, setModelRuleset] = useState();
 
   const { generate } = useGenerateNumber({
     callback: (string) => {
@@ -25,6 +32,10 @@ const RulesetCreateRoute = () => {
     generator: 'serialsManagement_patternNumber',
     sequence: 'patternNumber',
   });
+
+  const handleModelRulesetChange = (ms) => {
+    setModelRuleset(ms);
+  };
 
   const handleClose = () => {
     history.push(`${urls.serialView(id)}${location.search}`);
@@ -54,11 +65,16 @@ const RulesetCreateRoute = () => {
     await postRuleset(submitValues);
   };
 
+  const initialValues = useMemo(() => {
+    return modelRuleset?.serialRuleset
+      ? getRulesetFormValues(modelRuleset.serialRuleset)
+      : { rulesetStatus: { value: 'active' } };
+  }, [modelRuleset]);
+
   return (
     <Form
-      initialValues={{
-        rulesetStatus: { value: 'active' },
-      }}
+      id="ruleset-create-form"
+      initialValues={initialValues}
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitRuleset}
@@ -69,6 +85,10 @@ const RulesetCreateRoute = () => {
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
+            }}
+            modelRuleset={{
+              onChange: handleModelRulesetChange,
+              selectedModelRuleset: modelRuleset,
             }}
           />
         </form>

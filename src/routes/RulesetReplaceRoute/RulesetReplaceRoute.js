@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
@@ -19,7 +20,7 @@ import {
 } from '../../constants/endpoints';
 
 import {
-  deepDeleteKeys,
+  getRulesetFormValues,
   rulesetSubmitValuesHandler,
   urls,
 } from '../../components/utils';
@@ -36,6 +37,12 @@ const RulesetReplaceRoute = () => {
     generator: 'serialsManagement_patternNumber',
     sequence: 'patternNumber',
   });
+
+  const [modelRuleset, setModelRuleset] = useState();
+
+  const handleModelRulesetChange = (ms) => {
+    setModelRuleset(ms);
+  };
 
   const handleClose = (newRulesetId) => {
     if (newRulesetId) {
@@ -84,52 +91,11 @@ const RulesetReplaceRoute = () => {
     };
   };
 
-  const getInitialValues = () => {
-    // Used to format saved ruleset values into workable form values
-    const initialValues = {
-      ...ruleset,
-      recurrence: ruleset?.recurrence,
-      patternType: ruleset?.recurrence?.rules?.[0]?.patternType?.value,
-      ...(ruleset?.omission && {
-        omission: {
-          rules: ruleset?.omission?.rules?.map((rule) => ({
-            ...rule,
-            patternType: rule?.patternType?.value,
-          })),
-        },
-      }),
-      ...(ruleset?.combination && {
-        combination: {
-          rules: ruleset?.combination?.rules?.map((rule) => ({
-            ...rule,
-            patternType: rule?.patternType?.value,
-          })),
-        },
-      }),
-      templateConfig: {
-        templateString: ruleset?.templateConfig?.templateString,
-        rules: ruleset?.templateConfig?.rules?.map((r) => {
-          return {
-            templateMetadataRuleType: r?.templateMetadataRuleType?.value,
-            ruleType: {
-              ...r?.ruleType,
-              templateMetadataRuleFormat:
-                r?.ruleType?.templateMetadataRuleFormat?.value,
-            },
-          };
-        }),
-      },
-    };
-    // TODO This could do with being refactored into a contruct function as opposed to delete
-    // Deep delete defined keys to prevent issues upon saving
-    return deepDeleteKeys(initialValues, [
-      'id',
-      'label',
-      'dateCreated',
-      'lastUpdated',
-      'owner',
-    ]);
-  };
+  const initialValues = useMemo(() => {
+    return modelRuleset?.serialRuleset
+      ? getRulesetFormValues(modelRuleset.serialRuleset)
+      : getRulesetFormValues(ruleset);
+  }, [modelRuleset, ruleset]);
 
   const submitRuleset = async (values) => {
     const submitValues = handleSubmitValues(values);
@@ -153,7 +119,8 @@ const RulesetReplaceRoute = () => {
 
   return (
     <Form
-      initialValues={getInitialValues()}
+      id="ruleset-replace-form"
+      initialValues={initialValues}
       mutators={arrayMutators}
       onSubmit={submitRuleset}
     >
@@ -163,6 +130,10 @@ const RulesetReplaceRoute = () => {
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
+            }}
+            modelRuleset={{
+              onChange: handleModelRulesetChange,
+              modelRuleset,
             }}
           />
         </form>

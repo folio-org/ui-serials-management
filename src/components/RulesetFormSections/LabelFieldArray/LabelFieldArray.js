@@ -371,7 +371,7 @@ const LabelFieldArray = () => {
             component={TextArea}
             label={
               <>
-                <FormattedMessage id="ui-serials-management.ruleset.template" />
+                <FormattedMessage id="ui-serials-management.ruleset.labelTemplate" />
                 {renderTemplateInfo()}
               </>
             }

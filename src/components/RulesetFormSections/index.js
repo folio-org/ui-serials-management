@@ -7,6 +7,7 @@ export { default as OmissionFieldArray } from './OmissionFieldArray';
 export { default as CombinationField } from './CombinationField';
 export { default as CombinationFieldArray } from './CombinationFieldArray';
 export { default as LabelFieldArray } from './LabelFieldArray';
+export { default as ModelRulesetSelection } from './ModelRulesetSelection';
 export { default as ChronologyField } from './ChronologyField';
 export { default as EnumerationNumericFieldArray } from './EnumerationNumericFieldArray';
 export { default as EnumerationNumericField } from './EnumerationNumericField';
