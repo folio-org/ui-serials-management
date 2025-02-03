@@ -88,7 +88,7 @@ const RulesetCreateRoute = () => {
             }}
             modelRuleset={{
               onChange: handleModelRulesetChange,
-              modelRuleset,
+              selectedModelRuleset: modelRuleset,
             }}
           />
         </form>

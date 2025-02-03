@@ -2,6 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 const rulesetSubmitValuesHandler = (values) => {
   // We don't want to manipulate the original values object
+  // TODO This clone deep needs to be sorted out at some point
   const returnValues = cloneDeep(values);
   return {
     ...returnValues,
