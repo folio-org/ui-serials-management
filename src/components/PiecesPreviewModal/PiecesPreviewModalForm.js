@@ -106,32 +106,41 @@ const PiecesPreviewModalForm = ({
       };
     });
 
+  // Seperated out due to sonarcloud code smells
+  const formatUserConfiguredMetadata = (userConfiguredMetadata = []) => {
+    return userConfiguredMetadata?.map((uc) => {
+      if (uc?.metadataType?.levels?.length) {
+        return {
+          levels: uc?.metadataType?.levels?.map((ucl) => {
+            return { rawValue: ucl?.rawValue };
+          }),
+        };
+      }
+      return null;
+    });
+  };
+
   const handleStartingValuesChange = useCallback(
     (e) => {
       const selectedPieceSet = existingPieceSets?.find(
         (ps) => ps.id === e?.target?.value || ''
       );
       batch(() => {
-        change('startDate', selectedPieceSet?.startDate
-          ? getAdjustedStartDate(
-            selectedPieceSet?.startDate,
-            selectedPieceSet?.numberOfCycles ?? 1
-          )
-          : null);
+        change(
+          'startDate',
+          selectedPieceSet?.startDate
+            ? getAdjustedStartDate(
+              selectedPieceSet?.startDate,
+              selectedPieceSet?.numberOfCycles ?? 1
+            )
+            : null
+        );
         change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
         change(
           'startingValues',
-          selectedPieceSet?.continuationPieceRecurrenceMetadata?.userConfigured?.map(
-            (uc) => {
-              if (uc?.metadataType?.levels?.length) {
-                return {
-                  levels: uc?.metadataType?.levels?.map((ucl) => {
-                    return { rawValue: ucl?.rawValue };
-                  }),
-                };
-              }
-              return null;
-            }
+          formatUserConfiguredMetadata(
+            selectedPieceSet?.continuationPieceRecurrenceMetadata
+              ?.userConfigured
           )
         );
       });
