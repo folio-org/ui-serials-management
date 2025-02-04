@@ -34,9 +34,7 @@ const EnumerationLabels = ({ ruleset }) => {
       <Label>
         {`${intl.formatMessage({
           id: 'ui-serials-management.ruleset.enumeration',
-        })} ${ruleIndex + 1}: ${
-          rule?.templateMetadataRuleFormat?.label
-        }`}
+        })} ${ruleIndex + 1}: ${rule?.templateMetadataRuleFormat?.label}`}
       </Label>
     );
   };
@@ -68,6 +66,7 @@ const EnumerationLabels = ({ ruleset }) => {
         }}
         contentData={ruleFormat?.levels}
         formatter={formatter}
+        id="enumeration-numeric-labels-list"
         interactive={false}
         visibleColumns={[
           'level',
@@ -103,6 +102,7 @@ const EnumerationLabels = ({ ruleset }) => {
         }}
         contentData={ruleFormat?.levels}
         formatter={formatter}
+        id="enumeration-textual-labels-list"
         interactive={false}
         visibleColumns={['order', 'issues', 'labelText', 'internalNote']}
       />

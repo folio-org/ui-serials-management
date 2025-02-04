@@ -31,8 +31,6 @@ describe('ChronologyLabels', () => {
       );
     });
 
-    console.log({ ...ruleset, chronologyRules: [chronologyDate] });
-
     test('renders the Accordion', async () => {
       await Accordion('Chronology labels').exists();
     });
