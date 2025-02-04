@@ -133,7 +133,7 @@ const RulesetReplaceRoute = () => {
             }}
             modelRuleset={{
               onChange: handleModelRulesetChange,
-              modelRuleset,
+              selectedModelRuleset: modelRuleset,
             }}
           />
         </form>
