@@ -58,8 +58,8 @@ const ChronologyFieldArray = () => {
 
     return (
       <EditCard
-        key={`label-rule-card-${indexKey}`}
-        data-testid="editCard"
+        key={`chronology-label-card-${indexKey}`}
+        deleteBtnProps={{ id: `chronology-${indexKey}-delete-button` }}
         deleteButtonTooltipText={
           <FormattedMessage
             id="ui-serials-management.ruleset.removeChronologyLabelIndex"
