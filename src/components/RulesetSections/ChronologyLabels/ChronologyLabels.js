@@ -82,6 +82,7 @@ const ChronologyLabels = ({ ruleset }) => {
             }}
             contentData={sortedLabels}
             formatter={formatter}
+            id="chronology-labels-list"
             interactive={false}
             visibleColumns={[
               'label',
