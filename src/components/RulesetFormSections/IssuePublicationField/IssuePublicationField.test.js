@@ -8,7 +8,8 @@ import {
   Select,
 } from '@folio/stripes-erm-testing';
 
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
+
 import IssuePublicationField from './IssuePublicationField';
 import { translationsProperties } from '../../../../test/helpers';
 

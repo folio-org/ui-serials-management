@@ -4,20 +4,20 @@ import { renderWithIntl, TestForm, Select } from '@folio/stripes-erm-testing';
 import OmissionField from './OmissionField';
 
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
 const omission = {
-  'timeUnit': {
-    'value': 'month',
+  timeUnit: {
+    value: 'month',
   },
-  'patternType': 'month',
-  'pattern': {
-    'monthFrom': {
-      'value': 'january',
+  patternType: 'month',
+  pattern: {
+    monthFrom: {
+      value: 'january',
     },
-    'isRange': true,
-    'monthTo': {
-      'value': 'december',
+    isRange: true,
+    monthTo: {
+      value: 'december',
     },
   },
 };

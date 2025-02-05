@@ -8,7 +8,7 @@ import {
 import ChronologyField from './ChronologyField';
 
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -42,7 +42,9 @@ const monthSelector = {
   optionsArray: ['October', '10', 'Oct', ''],
 };
 const yearSelector = {
-  selector: { name: 'templateConfig.chronologyRules[0].ruleFormat.yearFormat.value' },
+  selector: {
+    name: 'templateConfig.chronologyRules[0].ruleFormat.yearFormat.value',
+  },
   selectorName: 'Year format*',
   optionsArray: ['2023', '23', ''],
 };

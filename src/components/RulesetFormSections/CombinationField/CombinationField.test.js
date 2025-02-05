@@ -10,18 +10,18 @@ import {
 import CombinationField from './CombinationField';
 
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
 const combination = {
-  'timeUnit': {
-    'value': 'issue',
+  timeUnit: {
+    value: 'issue',
   },
-  'patternType': 'issue_week',
-  'pattern': {
-    'issue': '1',
-    'week': '1',
+  patternType: 'issue_week',
+  pattern: {
+    issue: '1',
+    week: '1',
   },
-  'issuesToCombine': '3',
+  issuesToCombine: '3',
 };
 
 jest.mock('../../utils', () => ({
@@ -100,7 +100,9 @@ describe('CombinationField', () => {
       await Select('Combination rule type*').choose(
         'Issue (1-n), Week (1-4), Month (Jan-Dec)'
       );
-      await Select('Combination rule type*').choose('Issue (1-n), Month (Jan-Dec)');
+      await Select('Combination rule type*').choose(
+        'Issue (1-n), Month (Jan-Dec)'
+      );
     });
   });
 
