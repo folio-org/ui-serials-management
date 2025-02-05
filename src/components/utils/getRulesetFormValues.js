@@ -29,13 +29,18 @@ const getRulesetFormValues = (ruleset) => {
     }),
     templateConfig: {
       templateString: ruleset?.templateConfig?.templateString,
-      rules: ruleset?.templateConfig?.rules?.map((rule) => ({
-        templateMetadataRuleType: rule?.templateMetadataRuleType?.value,
-        ruleType: {
-          ...rule?.ruleType,
-          templateMetadataRuleFormat: rule?.ruleType?.templateMetadataRuleFormat?.value,
-        },
-      })),
+      chronologyRules: ruleset?.templateConfig?.chronologyRules?.map(
+        (rule) => ({
+          ...rule,
+          templateMetadataRuleFormat: rule?.templateMetadataRuleFormat?.value,
+        })
+      ),
+      enumerationRules: ruleset?.templateConfig?.enumerationRules?.map(
+        (rule) => ({
+          ...rule,
+          templateMetadataRuleFormat: rule?.templateMetadataRuleFormat?.value,
+        })
+      ),
     },
   };
 

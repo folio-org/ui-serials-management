@@ -82,20 +82,30 @@ const PiecesPreviewModal = ({
       .then((res) => history.push(urls.pieceSetView(res?.id)))
   );
 
+  // Slightly annoying implementation here, for future work we expect to refactor the UserConfiguredMetadata on the backend
+  // At which point this should be refactored aswell
   const formatStartingValues = (values) => {
-    return ruleset?.templateConfig?.rules?.map((rule, ruleIndex) => {
-      const tmrt =
-        rule?.templateMetadataRuleType?.value ?? rule?.templateMetadataRuleType;
+    const startingValuesArray = [];
+
+    ruleset?.templateConfig?.chronologyRules?.forEach((rule, ruleIndex) => {
+      startingValuesArray.push({
+        userConfiguredTemplateMetadataType: 'chronology',
+        index: ruleIndex,
+        metadataType: {},
+      });
+    });
+
+    ruleset?.templateConfig?.enumerationRules?.forEach((rule, ruleIndex) => {
       const tmrf =
-        rule?.ruleType?.templateMetadataRuleFormat?.value ??
-        rule?.ruleType?.templateMetadataRuleFormat;
-      return {
-        userConfiguredTemplateMetadataType: tmrt,
+        rule?.templateMetadataRuleFormat?.value ??
+        rule?.templateMetadataRuleFormat;
+      startingValuesArray.push({
+        userConfiguredTemplateMetadataType: 'enumeration',
         index: ruleIndex,
         metadataType: {
           ...(tmrf === 'enumeration_numeric' && {
             levels:
-              rule?.ruleType?.ruleFormat?.levels?.map((_level, levelIndex) => {
+              rule?.ruleFormat?.levels?.map((_level, levelIndex) => {
                 return {
                   ...values?.startingValues[ruleIndex]?.levels[levelIndex],
                   index: levelIndex,
@@ -103,8 +113,9 @@ const PiecesPreviewModal = ({
               }) || {},
           }),
         },
-      };
+      });
     });
+    return startingValuesArray;
   };
 
   // istanbul ignore next
@@ -135,6 +146,7 @@ const PiecesPreviewModal = ({
     const dateExists = existingPieceSets?.some(
       (ps) => ps?.startDate === values?.startDate
     );
+
     return (
       <>
         {allowCreation && (
@@ -163,7 +175,7 @@ const PiecesPreviewModal = ({
           key="preview-predicated-pieces-button"
           buttonStyle={allowCreation ? 'default' : 'primary'}
           disabled={submitting || invalid || pristine}
-          id="rulset-preview-button"
+          id="ruleset-preview-button"
           marginBottom0
           onClick={() => handleGeneration(values)}
           type="submit"
@@ -184,7 +196,7 @@ const PiecesPreviewModal = ({
     );
   };
 
-  // TODO what is the point of this
+  // Added to prevent SonarCloud smells
   const renderPublicationDate = (piece) => {
     return <PiecePublicationDate piece={piece} />;
   };
@@ -220,14 +232,9 @@ const PiecesPreviewModal = ({
             columnWidths={{
               publicationDate: { min: 100, max: 165 },
             }}
-            // DEPRECATED - This handles the older case in which generatePieces responded with an array of pieces
-            // Now supports newer response of the predicted piece set object, containing an array of pieces
-            // TODO Remove this once interface version has been increased
-            contentData={
-              Array.isArray(generatedPieceSet)
-                ? generatedPieceSet
-                : generatedPieceSet?.pieces
-            }
+            // We have removed the Array handling of this as of MODSER-42 which is an interface version bump
+            // Should be 2.0 I believe, or 1.3, eitherway as of sunflower release this frontend no longer supports older backend interfaces
+            contentData={generatedPieceSet?.pieces}
             formatter={formatter}
             id="pieces-preview-multi-columns"
             interactive={false}

@@ -1,4 +1,5 @@
 export { default as RulesetInfoForm } from './RulesetInfoForm';
+export { default as ModelRulesetSelection } from './ModelRulesetSelection';
 export { default as PatternTimePeriodForm } from './PatternTimePeriodForm';
 export { default as IssuePublicationFieldArray } from './IssuePublicationFieldArray';
 export { default as IssuePublicationField } from './IssuePublicationField';
@@ -6,10 +7,12 @@ export { default as OmissionField } from './OmissionField';
 export { default as OmissionFieldArray } from './OmissionFieldArray';
 export { default as CombinationField } from './CombinationField';
 export { default as CombinationFieldArray } from './CombinationFieldArray';
-export { default as LabelFieldArray } from './LabelFieldArray';
-export { default as ModelRulesetSelection } from './ModelRulesetSelection';
+export { default as ChronologyFieldArray } from './ChronologyFieldArray';
 export { default as ChronologyField } from './ChronologyField';
+export { default as EnumerationFieldArray } from './EnumerationFieldArray';
 export { default as EnumerationNumericFieldArray } from './EnumerationNumericFieldArray';
 export { default as EnumerationNumericField } from './EnumerationNumericField';
 export { default as EnumerationTextualFieldArray } from './EnumerationTextualFieldArray';
 export { default as EnumerationTextualField } from './EnumerationTextualField';
+export { default as TemplateStringField } from './TemplateStringField';
+

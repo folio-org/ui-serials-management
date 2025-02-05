@@ -35,12 +35,14 @@ import { getRulesetFormValues, handleSaveKeyCommand } from '../../utils';
 
 import {
   RulesetInfoForm,
+  ModelRulesetSelection,
   PatternTimePeriodForm,
   IssuePublicationFieldArray,
   OmissionFieldArray,
   CombinationFieldArray,
-  LabelFieldArray,
-  ModelRulesetSelection,
+  ChronologyFieldArray,
+  EnumerationFieldArray,
+  TemplateStringField,
 } from '../../RulesetFormSections';
 
 import PiecesPreviewModal from '../../PiecesPreviewModal';
@@ -221,13 +223,21 @@ const RulesetForm = ({
               </Accordion>
               <Accordion
                 label={
-                  <FormattedMessage id="ui-serials-management.ruleset.labelling" />
+                  <FormattedMessage id="ui-serials-management.ruleset.chronologyLabels" />
                 }
               >
-                <LabelFieldArray />
+                <ChronologyFieldArray />
+              </Accordion>
+              <Accordion
+                label={
+                  <FormattedMessage id="ui-serials-management.ruleset.enumerationLabels" />
+                }
+              >
+                <EnumerationFieldArray />
               </Accordion>
             </AccordionSet>
           </AccordionStatus>
+          <TemplateStringField />
         </Pane>
         <PiecesPreviewModal
           ruleset={values}

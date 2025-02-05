@@ -68,7 +68,6 @@ describe('PiecesPreviewModal', () => {
       translationsProperties
     );
   });
-
   test('renders the expected modal header', async () => {
     const { getByText } = renderComponent;
     expect(getByText('Generate predicted pieces')).toBeInTheDocument();
@@ -105,7 +104,7 @@ describe('PiecesPreviewModal', () => {
 
   test('renders the expected label 1 label', async () => {
     const { getByText } = renderComponent;
-    expect(getByText('Label 2')).toBeInTheDocument();
+    expect(getByText('Label 1')).toBeInTheDocument();
   });
 
   test('renders the expected level 1 label', async () => {
@@ -129,7 +128,7 @@ describe('PiecesPreviewModal', () => {
   });
 
   test('renders the preview button', async () => {
-    await Button({ id: 'rulset-preview-button' }).has({ disabled: true });
+    await Button({ id: 'ruleset-preview-button' }).has({ disabled: true });
   });
 
   test('renders the close button', async () => {
@@ -143,10 +142,10 @@ describe('PiecesPreviewModal', () => {
         mockMutateAsync.mockClear();
         await waitFor(async () => {
           await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2026');
-          await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
+          await TextField({ name: 'startingValues[0].levels[0].rawValue' }).fillIn(
             '1'
           );
-          await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
+          await TextField({ name: 'startingValues[0].levels[1].rawValue' }).fillIn(
             '1'
           );
         });
@@ -185,10 +184,10 @@ describe('PiecesPreviewModal', () => {
         mockMutateAsync.mockClear();
         await waitFor(async () => {
           await Datepicker({ id: 'ruleset-start-date' }).fillIn('02/01/2024');
-          await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
+          await TextField({ name: 'startingValues[0].levels[0].rawValue' }).fillIn(
             '1'
           );
-          await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
+          await TextField({ name: 'startingValues[0].levels[1].rawValue' }).fillIn(
             '1'
           );
         });
@@ -269,7 +268,7 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
   });
 
   test('renders the preview button', async () => {
-    await Button({ id: 'rulset-preview-button' }).has({ disabled: true });
+    await Button({ id: 'ruleset-preview-button' }).has({ disabled: true });
   });
 
   // TODO better name for this
@@ -277,10 +276,10 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
     beforeEach(async () => {
       await waitFor(async () => {
         await Datepicker({ id: 'ruleset-start-date' }).fillIn('01/01/2025');
-        await TextField({ name: 'startingValues[1].levels[0].rawValue' }).fillIn(
+        await TextField({ name: 'startingValues[0].levels[0].rawValue' }).fillIn(
           '1'
         );
-        await TextField({ name: 'startingValues[1].levels[1].rawValue' }).fillIn(
+        await TextField({ name: 'startingValues[0].levels[1].rawValue' }).fillIn(
           '1'
         );
       });
@@ -293,13 +292,13 @@ describe('PiecesPreviewModal w/o allowCreation', () => {
     });
 
     test('preview button is not disabled', async () => {
-      await Button({ id: 'rulset-preview-button' }).has({ disabled: false });
+      await Button({ id: 'ruleset-preview-button' }).has({ disabled: false });
     });
 
     describe('clicking preview button', () => {
       beforeEach(async () => {
         await waitFor(async () => {
-          await Button({ id: 'rulset-preview-button' }).click();
+          await Button({ id: 'ruleset-preview-button' }).click();
         });
       });
 

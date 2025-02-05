@@ -16,9 +16,11 @@ const ruleset = {
   },
   templateConfig: {
     id: 'e6f9dad2-88f0-429e-8686-beddf4c8088a',
-    rules: [
+    chronologyRules: [
       { ...chronologyYear, index: 0 },
-      { ...enumerationNumeric, index: 1 },
+    ],
+    enumerationRules: [
+      { ...enumerationNumeric, index: 0 },
     ],
     templateString:
       'Vol:{{enumeration1.level1}} Issue:{{enumeration1.level2}}, {{chronology1.year}}',

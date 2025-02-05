@@ -24,15 +24,23 @@ const rulesetSubmitValuesHandler = (values) => {
       }),
     },
     templateConfig: {
-      ...returnValues?.templateConfig,
-      rules: returnValues?.templateConfig?.rules?.map((rule, ruleIndex) => {
-        rule.index = ruleIndex;
-        rule?.ruleType?.ruleFormat?.levels?.forEach((level, levelIndex) => {
-          level.index = levelIndex;
-          return level;
-        });
-        return rule;
-      }),
+      ...values?.templateConfig,
+      chronologyRules: values?.templateConfig?.chronologyRules?.map(
+        (chronologyRule, chronologyRuleIndex) => {
+          chronologyRule.index = chronologyRuleIndex;
+          return chronologyRule;
+        }
+      ),
+      enumerationRules: values?.templateConfig?.enumerationRules?.map(
+        (enumerationRule, enumerationRuleIndex) => {
+          enumerationRule.index = enumerationRuleIndex;
+          enumerationRule?.ruleFormat?.levels?.forEach((level, levelIndex) => {
+            level.index = levelIndex;
+            return level;
+          });
+          return enumerationRule;
+        }
+      ),
     },
   };
 };

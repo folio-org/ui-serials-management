@@ -25,8 +25,11 @@ jest.mock('../../RulesetFormSections/OmissionFieldArray', () => () => (
 jest.mock('../../RulesetFormSections/CombinationFieldArray', () => () => (
   <div>CombinationFieldArray</div>
 ));
-jest.mock('../../RulesetFormSections/LabelFieldArray', () => () => (
-  <div>LabelFieldArray</div>
+jest.mock('../../RulesetFormSections/EnumerationFieldArray', () => () => (
+  <div>EnumerationFieldArray</div>
+));
+jest.mock('../../RulesetFormSections/ChronologyFieldArray', () => () => (
+  <div>ChronologyFieldArray</div>
 ));
 jest.mock('../../RulesetFormSections/ModelRulesetSelection', () => () => (
   <div>ModelRulesetSelection</div>
@@ -76,9 +79,14 @@ describe('RulesetForm', () => {
       expect(getByText('CombinationFieldArray')).toBeInTheDocument();
     });
 
-    test('renders LabelFieldArray Component', () => {
+    test('renders ChronologyFieldArray Component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('LabelFieldArray')).toBeInTheDocument();
+      expect(getByText('ChronologyFieldArray')).toBeInTheDocument();
+    });
+
+    test('renders EnumerationFieldArray Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EnumerationFieldArray')).toBeInTheDocument();
     });
 
     test('renders the New publication patternPane', async () => {
@@ -101,8 +109,12 @@ describe('RulesetForm', () => {
       await Accordion('Combination rules').exists();
     });
 
-    test('renders the Labelling Accordion', async () => {
-      await Accordion('Labelling').exists();
+    test('renders the Chronology Accordion', async () => {
+      await Accordion('Chronology labels').exists();
+    });
+
+    test('renders the Enumeration Accordion', async () => {
+      await Accordion('Enumeration labels').exists();
     });
 
     test('renders the  button', async () => {
