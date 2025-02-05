@@ -108,16 +108,15 @@ const PiecesPreviewModalForm = ({
 
   // Seperated out due to sonarcloud code smells
   const formatUserConfiguredMetadata = (userConfiguredMetadata = []) => {
-    return userConfiguredMetadata?.map((uc) => {
-      if (uc?.metadataType?.levels?.length) {
+    return userConfiguredMetadata
+      .filter((uc) => uc?.metadataType?.levels?.length)
+      .map((uc) => {
         return {
           levels: uc?.metadataType?.levels?.map((ucl) => {
             return { rawValue: ucl?.rawValue };
           }),
         };
-      }
-      return null;
-    });
+      });
   };
 
   const handleStartingValuesChange = useCallback(
