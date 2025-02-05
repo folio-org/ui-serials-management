@@ -85,38 +85,37 @@ const PiecesPreviewModal = ({
   // Slightly annoying implementation here, for future work we expect to refactor the UserConfiguredMetadata on the backend
   // At which point this should be refactored aswell
   const formatStartingValues = (values) => {
-    const chronologyRules = ruleset?.templateConfig?.enumerationRules?.map(
-      (rule, ruleIndex) => {
-        return {
-          userConfiguredTemplateMetadataType: 'chronology',
-          index: ruleIndex,
-          metadataType: {},
-        };
-      }
-    );
-    const enumerationRules = ruleset?.templateConfig?.enumerationRules?.map(
-      (rule, ruleIndex) => {
-        const tmrf =
-          rule?.templateMetadataRuleFormat?.value ??
-          rule?.templateMetadataRuleFormat;
-        return {
-          userConfiguredTemplateMetadataType: 'enumeration',
-          index: ruleIndex,
-          metadataType: {
-            ...(tmrf === 'enumeration_numeric' && {
-              levels:
-                rule?.ruleFormat?.levels?.map((_level, levelIndex) => {
-                  return {
-                    ...values?.startingValues[ruleIndex]?.levels[levelIndex],
-                    index: levelIndex,
-                  };
-                }) || {},
-            }),
-          },
-        };
-      }
-    );
-    return chronologyRules.concat(enumerationRules);
+    const startingValuesArray = [];
+
+    ruleset?.templateConfig?.chronologyRules?.forEach((rule, ruleIndex) => {
+      startingValuesArray.push({
+        userConfiguredTemplateMetadataType: 'chronology',
+        index: ruleIndex,
+        metadataType: {},
+      });
+    });
+
+    ruleset?.templateConfig?.enumerationRules?.forEach((rule, ruleIndex) => {
+      const tmrf =
+        rule?.templateMetadataRuleFormat?.value ??
+        rule?.templateMetadataRuleFormat;
+      startingValuesArray.push({
+        userConfiguredTemplateMetadataType: 'enumeration',
+        index: ruleIndex,
+        metadataType: {
+          ...(tmrf === 'enumeration_numeric' && {
+            levels:
+              rule?.ruleFormat?.levels?.map((_level, levelIndex) => {
+                return {
+                  ...values?.startingValues[ruleIndex]?.levels[levelIndex],
+                  index: levelIndex,
+                };
+              }) || {},
+          }),
+        },
+      });
+    });
+    return startingValuesArray;
   };
 
   // istanbul ignore next
@@ -197,7 +196,7 @@ const PiecesPreviewModal = ({
     );
   };
 
-  // TODO what is the point of this
+  // Added to prevent SonarCloud smells
   const renderPublicationDate = (piece) => {
     return <PiecePublicationDate piece={piece} />;
   };
