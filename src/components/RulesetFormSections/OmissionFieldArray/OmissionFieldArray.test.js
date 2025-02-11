@@ -53,6 +53,7 @@ const data = {
 };
 
 let renderComponent;
+// FIXME This test needs sorting, we're testing elements of other components within it
 describe('OmissionFieldArray', () => {
   describe('With no omission', () => {
     beforeEach(() => {
@@ -165,7 +166,6 @@ describe('OmissionFieldArray', () => {
       await Button('Add omission rule').exists();
     });
 
-    // FIXME Incorrect test
     describe('Adding omission level', () => {
       beforeEach(async () => {
         await waitFor(async () => {

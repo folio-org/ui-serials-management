@@ -22,7 +22,7 @@ import { useSerialsManagementRefdata } from '../../utils';
 
 import { SORTED_OMISSION_TIME_UNITS } from '../../../constants/sortedArrays';
 
-import OmissionField from '../OmissionField';
+import OmissionField from './OmissionField';
 
 const [TIME_UNITS] = ['OmissionRule.TimeUnits'];
 
