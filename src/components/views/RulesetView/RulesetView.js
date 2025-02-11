@@ -111,47 +111,45 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
   };
 
   return (
-    <>
-      <HasCommand
-        commands={shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Pane
+        actionMenu={renderActionMenu}
+        appIcon={
+          <AppIcon app="serials-management" iconKey="app" size="small" />
+        }
+        defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
+        dismissible
+        onClose={onClose}
       >
-        <Pane
-          actionMenu={renderActionMenu}
-          appIcon={
-            <AppIcon app="serials-management" iconKey="app" size="small" />
-          }
-          defaultWidth={DEFAULT_VIEW_PANE_WIDTH}
-          dismissible
-          onClose={onClose}
-        >
-          <MetaSection
-            contentId="rulesetMetaContent"
-            createdDate={ruleset?.dateCreated}
-            hideSource
-            lastUpdatedDate={ruleset?.lastUpdated}
-          />
-          <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
-          <IssuePublication {...getSectionProps('issue-publication')} />
-          {ruleset?.omission?.rules?.length > 0 && (
-            <OmissionRules {...getSectionProps('omission-rules')} />
-          )}
-          {ruleset?.combination?.rules?.length > 0 && (
-            <CombinationRules {...getSectionProps('combination-rules')} />
-          )}
-          {ruleset?.templateConfig?.chronologyRules?.length > 0 && (
-            <ChronologyLabels {...getSectionProps('chronology-labels')} />
-          )}
-          {ruleset?.templateConfig?.enumerationRules?.length > 0 && (
-            <EnumerationLabels {...getSectionProps('enumeration-labels')} />
-          )}
-          <DisplaySummaryTemplate
-            {...getSectionProps('display-template-summary')}
-          />
-        </Pane>
-      </HasCommand>
-    </>
+        <MetaSection
+          contentId="rulesetMetaContent"
+          createdDate={ruleset?.dateCreated}
+          hideSource
+          lastUpdatedDate={ruleset?.lastUpdated}
+        />
+        <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
+        <IssuePublication {...getSectionProps('issue-publication')} />
+        {ruleset?.omission?.rules?.length > 0 && (
+          <OmissionRules {...getSectionProps('omission-rules')} />
+        )}
+        {ruleset?.combination?.rules?.length > 0 && (
+          <CombinationRules {...getSectionProps('combination-rules')} />
+        )}
+        {ruleset?.templateConfig?.chronologyRules?.length > 0 && (
+          <ChronologyLabels {...getSectionProps('chronology-labels')} />
+        )}
+        {ruleset?.templateConfig?.enumerationRules?.length > 0 && (
+          <EnumerationLabels {...getSectionProps('enumeration-labels')} />
+        )}
+        <DisplaySummaryTemplate
+          {...getSectionProps('display-template-summary')}
+        />
+      </Pane>
+    </HasCommand>
   );
 };
 

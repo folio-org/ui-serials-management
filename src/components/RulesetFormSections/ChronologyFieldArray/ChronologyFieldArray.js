@@ -67,12 +67,10 @@ const ChronologyFieldArray = () => {
           />
         }
         header={
-          <>
-            <FormattedMessage
-              id="ui-serials-management.ruleset.chronologyLabelIndex"
-              values={{ index: index + 1 }}
-            />
-          </>
+          <FormattedMessage
+            id="ui-serials-management.ruleset.chronologyLabelIndex"
+            values={{ index: index + 1 }}
+          />
         }
         onDelete={() => onDeleteField(index, chronologyRule)}
       >
