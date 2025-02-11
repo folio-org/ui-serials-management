@@ -38,16 +38,14 @@ const TIME_UNIT_LIMITERS = {
 
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
-  const { change } = useForm();
+  const { change, batch } = useForm();
   const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
-  // FIXME Another annoying uses of '' to changes the entire form state in a single change function
-  // Defintely not a fan, the way we set patternType could do with some refactoring/re-thinking
+
   const timeUnitOnChange = (e) => {
-    change('', {
-      ...values,
-      recurrence: { timeUnit: { value: e?.target?.value } },
-      patternType: e?.target?.value,
+    batch(() => {
+      change('recurrence', { timeUnit: { value: e?.target?.value } });
+      change('patternType', e?.target?.value);
     });
   };
 
@@ -58,10 +56,9 @@ const PatternTimePeriodForm = () => {
       ordinal: undefined,
     }));
     // Update recurrence in formstate to contain updated rules and period value
-    change('recurrence', {
-      ...values?.recurrence,
-      period: e?.target?.value,
-      rules: unsetOrdinalRules,
+    batch(() => {
+      change('recurrence.period', e?.target?.value);
+      change('recurrence.rules', unsetOrdinalRules);
     });
   };
 
@@ -77,17 +74,15 @@ const PatternTimePeriodForm = () => {
       TIME_UNIT_LIMITERS[timeUnit]?.issues * (values?.recurrence?.period || 1);
     // If new number of issues is less than max, fill rules array with empty objects, otherwise clear
     // Additionally clear patternType so a new format can be selected
-    change('', {
-      ...values,
-      recurrence: {
-        ...values?.recurrence,
-        issues: e?.target?.value,
-        rules:
-          e.target.value <= maxIssues && e.target.value > 0
-            ? Array(Number(e?.target?.value)).fill({})
-            : undefined,
-      },
-      patternType,
+    batch(() => {
+      change('recurrence.issues', e?.target?.value);
+      change(
+        'recurrence.rules',
+        e.target.value <= maxIssues && e.target.value > 0
+          ? Array(Number(e?.target?.value)).fill({})
+          : undefined
+      );
+      change('patternType', patternType);
     });
   };
 
