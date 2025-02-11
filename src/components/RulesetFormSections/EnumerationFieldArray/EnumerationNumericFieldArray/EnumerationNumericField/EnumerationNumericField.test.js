@@ -9,11 +9,11 @@ import {
 
 import EnumerationNumericField from './EnumerationNumericField';
 
-import { translationsProperties } from '../../../../test/helpers';
-import { refdata as mockRefdata } from '../../../../test/resources';
+import { translationsProperties } from '../../../../../../test/helpers';
+import { refdata as mockRefdata } from '../../../../../../test/resources';
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../../utils', () => ({
+  ...jest.requireActual('../../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 

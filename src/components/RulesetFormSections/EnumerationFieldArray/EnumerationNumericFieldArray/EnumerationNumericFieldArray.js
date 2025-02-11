@@ -15,7 +15,7 @@ import { ClipCopy } from '@folio/stripes/smart-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import EnumerationNumericField from '../EnumerationNumericField';
+import EnumerationNumericField from './EnumerationNumericField';
 
 const EnumerationNumericFieldArray = ({ name, index }) => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(

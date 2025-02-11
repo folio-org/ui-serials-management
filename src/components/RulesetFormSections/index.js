@@ -8,11 +8,6 @@ export { default as OmissionFieldArray } from './OmissionFieldArray';
 export { default as CombinationField } from './CombinationField';
 export { default as CombinationFieldArray } from './CombinationFieldArray';
 export { default as ChronologyFieldArray } from './ChronologyFieldArray';
-export { default as ChronologyField } from './ChronologyField';
 export { default as EnumerationFieldArray } from './EnumerationFieldArray';
-export { default as EnumerationNumericFieldArray } from './EnumerationNumericFieldArray';
-export { default as EnumerationNumericField } from './EnumerationNumericField';
-export { default as EnumerationTextualFieldArray } from './EnumerationTextualFieldArray';
-export { default as EnumerationTextualField } from './EnumerationTextualField';
 export { default as TemplateStringField } from './TemplateStringField';
 

@@ -11,10 +11,10 @@ import EnumerationFieldArray from './EnumerationFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../EnumerationTextualFieldArray', () => () => (
+jest.mock('./EnumerationTextualFieldArray', () => () => (
   <div>EnumerationTextualFieldArray</div>
 ));
-jest.mock('../EnumerationNumericFieldArray', () => () => (
+jest.mock('./EnumerationNumericFieldArray', () => () => (
   <div>EnumerationNumericFieldArray</div>
 ));
 const onSubmit = jest.fn();

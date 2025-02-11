@@ -7,17 +7,17 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import EnumerationTextualFieldArray from './EnumerationTextualFieldArray';
-import { translationsProperties } from '../../../../test/helpers';
+import { translationsProperties } from '../../../../../test/helpers';
 
-import { refdata as mockRefdata } from '../../../../test/resources';
+import { refdata as mockRefdata } from '../../../../../test/resources';
 
-jest.mock('../EnumerationTextualField', () => ({ level }) => (
+jest.mock('./EnumerationTextualField', () => ({ level }) => (
   <div>{`EnumerationTextualField: ${level.value}`}</div>
 ));
 const onSubmit = jest.fn();
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 

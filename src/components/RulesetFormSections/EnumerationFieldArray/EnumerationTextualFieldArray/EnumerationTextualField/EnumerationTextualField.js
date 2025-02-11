@@ -15,7 +15,7 @@ import {
   composeValidators,
 } from '@folio/stripes-erm-components';
 
-import { validateWholeNumber } from '../../utils';
+import { validateWholeNumber } from '../../../../utils';
 
 const EnumerationTextualField = ({
   items,

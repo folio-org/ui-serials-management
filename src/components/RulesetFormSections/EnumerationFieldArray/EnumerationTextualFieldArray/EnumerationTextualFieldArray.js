@@ -22,8 +22,8 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import { useSerialsManagementRefdata } from '../../utils';
-import EnumerationTextualField from '../EnumerationTextualField';
+import { useSerialsManagementRefdata } from '../../../utils';
+import EnumerationTextualField from './EnumerationTextualField';
 
 const EnumerationTextualFieldArray = ({ name, index }) => {
   const { values } = useFormState();
