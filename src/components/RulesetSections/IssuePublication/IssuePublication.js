@@ -39,7 +39,7 @@ const IssuePublication = ({ ruleset }) => {
 
   const formatter = {
     issue: (e) => e?.rowIndex + 1,
-    day: (e) => (e?.pattern?.weekday?.label || e?.pattern?.day) || e?.ordinal,
+    day: (e) => e?.pattern?.weekday?.label || e?.pattern?.day || e?.ordinal,
     week: (e) => e?.pattern?.week || e?.ordinal,
     month: (e) => e?.pattern?.month?.label || e?.ordinal,
     year: (e) => e?.pattern?.year || e?.ordinal,
@@ -93,6 +93,7 @@ const IssuePublication = ({ ruleset }) => {
             }}
             contentData={sortedRules}
             formatter={formatter}
+            id="issue-publication-list"
             interactive={false}
             visibleColumns={
               patternTypeVisibleColumns[
