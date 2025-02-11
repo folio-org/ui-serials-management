@@ -5,8 +5,7 @@ import { translationsProperties } from '../../../../test/helpers';
 import RulesetView from './RulesetView';
 
 // TODO Imports like this need to be sorted, this is messy
-import { handlers } from '../../../../test/resources';
-import ruleset from '../../../../test/resources/rulesets/ruleset';
+import { handlers, ruleset } from '../../../../test/resources';
 import { dayMonth } from '../../../../test/resources/rulesetResources/omissionsRules';
 import { issue } from '../../../../test/resources/rulesetResources/combinationRules';
 
