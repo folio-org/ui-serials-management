@@ -12,7 +12,7 @@ import {
 import PatternTimePeriodForm from './PatternTimePeriodForm';
 import { translationsProperties } from '../../../../test/helpers';
 
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -107,7 +107,9 @@ describe('PatternTimePeriodForm', () => {
 
     test('renders the expected number of published per cycle label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('No. of issues published per cycle')).toBeInTheDocument();
+      expect(
+        getByText('No. of issues published per cycle')
+      ).toBeInTheDocument();
     });
 
     it('renders expected Time unit selection', async () => {
@@ -224,7 +226,9 @@ describe('PatternTimePeriodForm', () => {
 
     test('renders the correct heading', async () => {
       const { getByRole } = renderComponent;
-      expect(getByRole('heading', { name: 'Cycle length' })).toBeInTheDocument();
+      expect(
+        getByRole('heading', { name: 'Cycle length' })
+      ).toBeInTheDocument();
     });
 
     test('renders the correct heading', async () => {

@@ -6,7 +6,7 @@ import {
 } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
 import SerialsFilters from './SerialsFilters';
 
@@ -14,7 +14,7 @@ jest.mock('../POLineFilter', () => () => <div>POLineFilter</div>);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  useSerialsManagementRefdata: () => mockRefdata.filter(rdc => rdc.desc === 'Serial.SerialStatus'),
+  useSerialsManagementRefdata: () => mockRefdata.filter((rdc) => rdc.desc === 'Serial.SerialStatus'),
 }));
 
 const activeFilters = {

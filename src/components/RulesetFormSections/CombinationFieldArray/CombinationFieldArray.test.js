@@ -1,16 +1,22 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, Button, Select, IconButton } from '@folio/stripes-erm-testing';
+import {
+  renderWithIntl,
+  TestForm,
+  Button,
+  Select,
+  IconButton,
+} from '@folio/stripes-erm-testing';
 
 import CombinationFieldArray from './CombinationFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../CombinationField', () => () => <div>CombinationField</div>);
+jest.mock('./CombinationField', () => () => <div>CombinationField</div>);
 const onSubmit = jest.fn();
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  useSerialsManagementRefdata: () => mockRefdata.filter(mr => mr.desc === 'CombinationRule.TimeUnits'),
+  useSerialsManagementRefdata: () => mockRefdata.filter((mr) => mr.desc === 'CombinationRule.TimeUnits'),
 }));
 
 let renderComponent;
@@ -18,10 +24,9 @@ describe('CombinationFieldArray', () => {
   describe('with no values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <TestForm
-          onSubmit={onSubmit}
-        >
-          <CombinationFieldArray /> {/* This component renders a field array, so should not be within a field array here */}
+        <TestForm onSubmit={onSubmit}>
+          <CombinationFieldArray />{' '}
+          {/* This component renders a field array, so should not be within a field array here */}
         </TestForm>,
         translationsProperties
       );
@@ -94,7 +99,7 @@ describe('CombinationFieldArray', () => {
       renderComponent = renderWithIntl(
         <TestForm
           initialValues={{
-            omission: 'testOmission'
+            omission: 'testOmission',
           }}
           onSubmit={onSubmit}
         >
@@ -106,7 +111,9 @@ describe('CombinationFieldArray', () => {
 
     test('renders the expected empty combination rule label', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('No combination rules for this publication pattern')).toBeInTheDocument();
+      expect(
+        getByText('No combination rules for this publication pattern')
+      ).toBeInTheDocument();
     });
 
     test('renders a disabled Add combination rule button', async () => {

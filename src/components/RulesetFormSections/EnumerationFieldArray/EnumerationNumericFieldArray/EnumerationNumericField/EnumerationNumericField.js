@@ -17,8 +17,8 @@ import {
   selectifyRefdata,
 } from '@folio/stripes-erm-components';
 
-import { ENUMERATION_NUMBER_FORMAT } from '../../../constants/selectOptionTranslations';
-import { validateWholeNumber, useSerialsManagementRefdata } from '../../utils';
+import { ENUMERATION_NUMBER_FORMAT } from '../../../../../constants/selectOptionTranslations';
+import { validateWholeNumber, useSerialsManagementRefdata } from '../../../../utils';
 
 const [ENUMERATION_FORMAT, ENUMERATION_SEQUENCE] = [
   'EnumerationNumericLevelTMRF.Format',

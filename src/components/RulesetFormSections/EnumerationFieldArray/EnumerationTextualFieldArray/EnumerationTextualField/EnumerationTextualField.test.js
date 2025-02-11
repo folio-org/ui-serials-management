@@ -2,7 +2,7 @@ import { renderWithIntl, TestForm, Select } from '@folio/stripes-erm-testing';
 
 import EnumerationTextualField from './EnumerationTextualField';
 
-import { translationsProperties } from '../../../../test/helpers';
+import { translationsProperties } from '../../../../../../test/helpers';
 
 const onSubmit = jest.fn();
 const onDeleteField = jest.fn();

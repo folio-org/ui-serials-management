@@ -14,7 +14,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { RECURRENCE_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
-import IssuePublicationField from '../IssuePublicationField';
+import IssuePublicationField from './IssuePublicationField';
 
 const IssuePublicationFieldArray = () => {
   const intl = useIntl();

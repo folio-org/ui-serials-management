@@ -14,7 +14,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { useSerialsManagementRefdata } from '../../utils';
 
-import ChronologyField from '../ChronologyField';
+import ChronologyField from './ChronologyField';
 import { useLocales } from '../../../hooks';
 
 const [CHRONOLOGY_LABEL_FORMAT] = [

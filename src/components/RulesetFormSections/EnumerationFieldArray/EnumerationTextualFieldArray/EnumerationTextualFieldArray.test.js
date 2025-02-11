@@ -1,16 +1,23 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, Button, Select } from '@folio/stripes-erm-testing';
+import {
+  renderWithIntl,
+  TestForm,
+  Button,
+  Select,
+} from '@folio/stripes-erm-testing';
 
 import EnumerationTextualFieldArray from './EnumerationTextualFieldArray';
-import { translationsProperties } from '../../../../test/helpers';
+import { translationsProperties } from '../../../../../test/helpers';
 
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../../test/resources';
 
-jest.mock('../EnumerationTextualField', () => ({ level }) => <div>{`EnumerationTextualField: ${level.value}`}</div>);
+jest.mock('./EnumerationTextualField', () => ({ level }) => (
+  <div>{`EnumerationTextualField: ${level.value}`}</div>
+));
 const onSubmit = jest.fn();
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 
@@ -59,7 +66,9 @@ describe('EnumerationTextualFieldArray', () => {
         const { queryByText } = renderComponent;
         await waitFor(() => {
           // TODO this feels wrong... we shouldn't ever have the user see undefined, so what's missing form our test?
-          expect(queryByText('EnumerationTextualField: undefined')).toBeInTheDocument();
+          expect(
+            queryByText('EnumerationTextualField: undefined')
+          ).toBeInTheDocument();
         });
       });
     });
@@ -74,16 +83,16 @@ describe('EnumerationTextualFieldArray', () => {
               refdataCategory: 'Global.Yes_No', // Ensure this exists?
               levels: [
                 {
-                  value: 'a'
+                  value: 'a',
                 },
                 {
-                  value: 'b'
+                  value: 'b',
                 },
                 {
-                  value: 'c'
+                  value: 'c',
                 },
-              ]
-            }
+              ],
+            },
           }}
           onSubmit={onSubmit}
         >
@@ -112,9 +121,15 @@ describe('EnumerationTextualFieldArray', () => {
       // EXAMPLE getByText not in the document, use queryByText instead
       test('level values have been reset', () => {
         const { queryByText } = renderComponent;
-        expect(queryByText('EnumerationTextualField: a')).not.toBeInTheDocument();
-        expect(queryByText('EnumerationTextualField: b')).not.toBeInTheDocument();
-        expect(queryByText('EnumerationTextualField: c')).not.toBeInTheDocument();
+        expect(
+          queryByText('EnumerationTextualField: a')
+        ).not.toBeInTheDocument();
+        expect(
+          queryByText('EnumerationTextualField: b')
+        ).not.toBeInTheDocument();
+        expect(
+          queryByText('EnumerationTextualField: c')
+        ).not.toBeInTheDocument();
       });
     });
   });

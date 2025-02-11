@@ -4,10 +4,11 @@ import { Field, useForm } from 'react-final-form';
 import { NumberField } from '@k-int/stripes-kint-components';
 
 import {
-  Checkbox,
   Select,
   Col,
   Row,
+  Label,
+  InfoPopover,
 } from '@folio/stripes/components';
 
 import {
@@ -19,25 +20,33 @@ import {
 import {
   SORTED_MONTHS,
   SORTED_WEEKDAYS,
-} from '../../../constants/sortedArrays';
+} from '../../../../constants/sortedArrays';
 
 import {
   validateWithinRange,
   validateWholeNumber,
   useSerialsManagementRefdata,
-} from '../../utils';
+} from '../../../utils';
 
-import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
+import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../../constants/patternTypeOptions';
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 
-const OmissionField = ({ name, index, omission }) => {
+const CombinationField = ({ name, index, combination }) => {
   const intl = useIntl();
   const { change } = useForm();
-  const refdataValues = useSerialsManagementRefdata([
-    MONTHS,
-    WEEKDAYS
-  ]);
+  const refdataValues = useSerialsManagementRefdata([MONTHS, WEEKDAYS]);
+  /* istanbul ignore next */
+  const validateNumberOfIssues = (value) => {
+    if (value) {
+      if (value < 2) {
+        return (
+          <FormattedMessage id="ui-serials-management.validate.greaterThanOne" />
+        );
+      }
+    }
+    return undefined;
+  };
 
   const renderIssueField = () => {
     return (
@@ -67,7 +76,7 @@ const OmissionField = ({ name, index, omission }) => {
     );
   };
 
-  const renderMonthField = (labelId, fieldName = 'month.value') => {
+  const renderMonthField = (labelId) => {
     return (
       <Field
         component={Select}
@@ -82,14 +91,14 @@ const OmissionField = ({ name, index, omission }) => {
         label={
           <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
         }
-        name={`${name}[${index}].pattern.${fieldName}`}
+        name={`${name}[${index}].pattern.month.value`}
         required
         validate={requiredValidator}
       />
     );
   };
 
-  const renderWeekField = (minValue, maxValue, labelId, fieldName = 'week') => {
+  const renderWeekField = (minValue, maxValue, labelId) => {
     const dataOptions = [];
     for (let i = minValue; i <= maxValue; i++) {
       dataOptions.push({ value: i, label: i });
@@ -102,7 +111,7 @@ const OmissionField = ({ name, index, omission }) => {
         label={
           <FormattedMessage id={`ui-serials-management.ruleset.${labelId}`} />
         }
-        name={`${name}[${index}].pattern.${fieldName}`}
+        name={`${name}[${index}].pattern.week`}
         required
         validate={requiredValidator}
       />
@@ -135,12 +144,12 @@ const OmissionField = ({ name, index, omission }) => {
       fields: [renderDayField(1, 31), renderMonthField('ofMonth')],
     },
     day_week: {
-      fields: [renderWeekdayField(), renderWeekField(1, 53, 'inWeek')],
+      fields: [renderWeekdayField(), renderWeekField(1, 52, 'inWeek')],
     },
     day_week_month: {
       fields: [
         renderWeekdayField(),
-        renderWeekField(1, 5, 'inWeek'),
+        renderWeekField(1, 4, 'inWeek'),
         renderMonthField('ofMonth'),
       ],
     },
@@ -151,38 +160,24 @@ const OmissionField = ({ name, index, omission }) => {
       fields: [renderWeekdayField()],
     },
     week: {
-      fields: [
-        renderWeekField(
-          1,
-          53,
-          !omission?.pattern?.isRange ? 'week' : 'weekFrom',
-          'weekFrom'
-        ),
-      ],
-      range: [renderWeekField(1, 53, 'weekTo', 'weekTo')],
+      fields: [renderWeekField(1, 52, 'week')],
     },
     week_month: {
-      fields: [renderWeekField(1, 5, 'week'), renderMonthField('ofMonth')],
+      fields: [renderWeekField(1, 4, 'week'), renderMonthField('ofMonth')],
     },
     month: {
-      fields: [
-        renderMonthField(
-          !omission?.pattern?.isRange ? 'month' : 'monthFrom',
-          'monthFrom.value'
-        ),
-      ],
-      range: [renderMonthField('monthTo', 'monthTo.value')],
+      fields: [renderMonthField('month')],
     },
     issue: {
       fields: [renderIssueField()],
     },
     issue_week: {
-      fields: [renderIssueField(), renderWeekField(1, 53, 'inWeek')],
+      fields: [renderIssueField(), renderWeekField(1, 52, 'inWeek')],
     },
     issue_week_month: {
       fields: [
         renderIssueField(),
-        renderWeekField(1, 5, 'inWeek'),
+        renderWeekField(1, 4, 'inWeek'),
         renderMonthField('ofMonth'),
       ],
     },
@@ -194,28 +189,41 @@ const OmissionField = ({ name, index, omission }) => {
   return (
     <>
       <Row>
+        <Col xs={12}>
+          <Label tagName="h4">
+            <FormattedMessage id="ui-serials-management.ruleset.firstIssue" />
+            <InfoPopover
+              content={
+                <FormattedMessage id="ui-serials-management.ruleset.firstIssuePopover" />
+              }
+              id="retrospective-oa-tooltip"
+            />
+          </Label>
+        </Col>
+      </Row>
+      <Row>
         <Col xs={3}>
           <Field
             component={Select}
             dataOptions={[
               { label: '', value: '' },
-              ...OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS[
-                omission?.timeUnit?.value
-              ].map((e) => {
-                return {
-                  value: e?.value,
-                  label: e?.labels
-                    ?.map((l) => intl.formatMessage({ id: l?.id }))
-                    ?.join(', '),
-                };
-              }),
+              ...OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS[combination?.timeUnit?.value].map(
+                (e) => {
+                  return {
+                    value: e?.value,
+                    label: e?.labels
+                      ?.map((l) => intl.formatMessage({ id: l?.id }))
+                      ?.join(', '),
+                  };
+                }
+              ),
             ]}
             label={
-              <FormattedMessage id="ui-serials-management.ruleset.omissionRuleType" />
+              <FormattedMessage id="ui-serials-management.ruleset.combinationRuleType" />
             }
             name={`${name}[${index}].patternType`}
             onChange={(e) => change(`${name}[${index}]`, {
-              timeUnit: { value: omission?.timeUnit?.value },
+              timeUnit: { value: combination?.timeUnit?.value },
               patternType: e?.target?.value,
             })
             }
@@ -223,68 +231,38 @@ const OmissionField = ({ name, index, omission }) => {
             validate={requiredValidator}
           />
         </Col>
-        {patternTypeFormats[omission?.patternType]?.fields?.map(
-          (omissionField) => {
-            return (
-              <Col key={`omission-field-${omissionField}`} xs={3}>
-                {omissionField}
-              </Col>
-            );
-          }
-        )}
+        {patternTypeFormats[combination?.patternType]?.fields?.map((combinationField, i) => {
+          return <Col key={`combination-field-${name}-${i}`} xs={3}>{combinationField}</Col>;
+        })}
       </Row>
-      {(omission?.patternType === 'week' ||
-        omission?.patternType === 'month') && (
+      {combination?.patternType && (
         <Row>
           <Col xs={3}>
             <Field
-              component={Checkbox}
+              component={NumberField}
+              id="total-number-of-issues-to-combine"
               label={
-                <FormattedMessage
-                  id="ui-serials-management.ruleset.omitRangeOf"
-                  values={{ omissionType: `${omission?.patternType}s` }}
-                />
+                <FormattedMessage id="ui-serials-management.ruleset.totalNumberOfIssuesToCombine" />
               }
-              name={`${name}[${index}].pattern.isRange`}
-              onChange={(e) => {
-                // If isRange checkbox is checked, keep the 'From' value
-                if (e.target.checked) {
-                  change(`${name}[${index}].pattern`, {
-                    ...omission.pattern,
-                    isRange: e.target.checked,
-                  });
-                  // If isRange is unchecked, clear the field for the 'To' value
-                } else {
-                  change(`${name}[${index}].pattern.isRange`, e.target.checked);
-                  change(
-                    `${name}[${index}].pattern.${omission?.patternType}To`,
-                    undefined
-                  );
-                }
-              }}
-              type="checkbox"
+              name={`${name}[${index}].issuesToCombine`}
+              required
+              validate={composeValidators(
+                requiredValidator,
+                validateWholeNumber,
+                validateNumberOfIssues
+              )}
             />
           </Col>
-          {omission?.pattern?.isRange &&
-            patternTypeFormats[omission?.patternType]?.range?.map(
-              (omissionField) => {
-                return (
-                  <Col key={`omission-field-${omissionField}`} xs={3}>
-                    {omissionField}
-                  </Col>
-                );
-              }
-            )}
         </Row>
       )}
     </>
   );
 };
 
-OmissionField.propTypes = {
+CombinationField.propTypes = {
   name: PropTypes.string,
   index: PropTypes.number,
-  omission: PropTypes.object,
+  combination: PropTypes.object,
 };
 
-export default OmissionField;
+export default CombinationField;

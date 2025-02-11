@@ -6,7 +6,8 @@ import {
   Select,
 } from '@folio/stripes-erm-testing';
 import RulesetInfoForm from './RulesetInfoForm';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
+
 import { translationsProperties } from '../../../../test/helpers';
 
 const onSubmit = jest.fn();

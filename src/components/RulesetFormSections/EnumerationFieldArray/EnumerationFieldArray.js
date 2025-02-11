@@ -14,8 +14,8 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { useSerialsManagementRefdata } from '../../utils';
 
-import EnumerationNumericFieldArray from '../EnumerationNumericFieldArray';
-import EnumerationTextualFieldArray from '../EnumerationTextualFieldArray';
+import EnumerationNumericFieldArray from './EnumerationNumericFieldArray';
+import EnumerationTextualFieldArray from './EnumerationTextualFieldArray';
 
 const [ENUMERATION_LABEL_FORMAT] = [
   'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat',
