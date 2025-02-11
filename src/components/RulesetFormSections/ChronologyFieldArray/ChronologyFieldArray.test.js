@@ -15,7 +15,7 @@ import {
 
 import ChronologyFieldArray from './ChronologyFieldArray';
 
-jest.mock('../ChronologyField', () => () => <div>ChronologyField</div>);
+jest.mock('./ChronologyField', () => () => <div>ChronologyField</div>);
 
 const onSubmit = jest.fn();
 
