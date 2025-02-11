@@ -10,7 +10,7 @@ import OmissionFieldArray from './OmissionFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../CombinationField', () => () => <div>CombinationField</div>);
+jest.mock('../CombinationFieldArray/CombinationField', () => () => <div>CombinationField</div>);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -165,6 +165,7 @@ describe('OmissionFieldArray', () => {
       await Button('Add omission rule').exists();
     });
 
+    // FIXME Incorrect test
     describe('Adding omission level', () => {
       beforeEach(async () => {
         await waitFor(async () => {

@@ -11,7 +11,7 @@ import CombinationFieldArray from './CombinationFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../CombinationField', () => () => <div>CombinationField</div>);
+jest.mock('./CombinationField', () => () => <div>CombinationField</div>);
 const onSubmit = jest.fn();
 
 jest.mock('../../utils', () => ({

@@ -20,15 +20,15 @@ import {
 import {
   SORTED_MONTHS,
   SORTED_WEEKDAYS,
-} from '../../../constants/sortedArrays';
+} from '../../../../constants/sortedArrays';
 
 import {
   validateWithinRange,
   validateWholeNumber,
   useSerialsManagementRefdata,
-} from '../../utils';
+} from '../../../utils';
 
-import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
+import { OMISSION_COMBINATION_PATTERN_TYPE_OPTIONS } from '../../../../constants/patternTypeOptions';
 
 const [MONTHS, WEEKDAYS] = ['Global.Month', 'Global.Weekday'];
 

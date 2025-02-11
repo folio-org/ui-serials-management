@@ -9,8 +9,8 @@ import {
 
 import CombinationField from './CombinationField';
 
-import { translationsProperties } from '../../../../test/helpers';
-import { refdata as mockRefdata } from '../../../../test/resources';
+import { translationsProperties } from '../../../../../test/helpers';
+import { refdata as mockRefdata } from '../../../../../test/resources';
 
 const combination = {
   timeUnit: {
@@ -24,8 +24,8 @@ const combination = {
   issuesToCombine: '3',
 };
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 
