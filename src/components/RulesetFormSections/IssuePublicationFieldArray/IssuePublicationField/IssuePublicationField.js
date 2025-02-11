@@ -14,11 +14,11 @@ import {
   useSerialsManagementRefdata,
   validateWithinRange,
   validateWholeNumber,
-} from '../../utils';
+} from '../../../utils';
 import {
   SORTED_MONTHS,
   SORTED_WEEKDAYS,
-} from '../../../constants/sortedArrays';
+} from '../../../../constants/sortedArrays';
 
 const propTypes = {
   name: PropTypes.string,

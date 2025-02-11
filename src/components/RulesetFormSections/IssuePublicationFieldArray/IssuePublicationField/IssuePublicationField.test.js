@@ -8,15 +8,15 @@ import {
   Select,
 } from '@folio/stripes-erm-testing';
 
-import { refdata as mockRefdata } from '../../../../test/resources';
+import { refdata as mockRefdata } from '../../../../../test/resources';
 
 import IssuePublicationField from './IssuePublicationField';
-import { translationsProperties } from '../../../../test/helpers';
+import { translationsProperties } from '../../../../../test/helpers';
 
 const onSubmit = jest.fn();
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 
