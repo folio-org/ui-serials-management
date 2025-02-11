@@ -8,9 +8,9 @@ import {
 import OmissionFieldArray from './OmissionFieldArray';
 
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../CombinationField', () => () => <div>CombinationField</div>);
+jest.mock('../CombinationFieldArray/CombinationField', () => () => <div>CombinationField</div>);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -19,40 +19,41 @@ jest.mock('../../utils', () => ({
 const onSubmit = jest.fn();
 
 const data = {
-  'rulesetStatus': {
-    'value': 'active',
+  rulesetStatus: {
+    value: 'active',
   },
-  'omission': {
-    'rules': [
+  omission: {
+    rules: [
       {
-        'timeUnit': {
-          'value': 'month',
+        timeUnit: {
+          value: 'month',
         },
-        'patternType': 'month',
-        'pattern': {
-          'monthFrom': {
-            'value': 'january',
+        patternType: 'month',
+        pattern: {
+          monthFrom: {
+            value: 'january',
           },
-          'isRange': true,
-          'monthTo': {
-            'value': 'december',
+          isRange: true,
+          monthTo: {
+            value: 'december',
           },
         },
       },
     ],
   },
-  'recurrence': {
-    'timeUnit': {
-      'value': 'day',
+  recurrence: {
+    timeUnit: {
+      value: 'day',
     },
-    'period': '1',
-    'issues': '1',
-    'rules': [{}],
+    period: '1',
+    issues: '1',
+    rules: [{}],
   },
-  'patternType': 'day',
+  patternType: 'day',
 };
 
 let renderComponent;
+// FIXME This test needs sorting, we're testing elements of other components within it
 describe('OmissionFieldArray', () => {
   describe('With no omission', () => {
     beforeEach(() => {

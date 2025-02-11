@@ -20,7 +20,7 @@ import {
   CHRONOLOGY_WEEKDAY_FORMAT,
   CHRONOLOGY_MONTH_FORMAT,
   CHRONOLOGY_YEAR_FORMAT,
-} from '../../../constants/selectOptionTranslations';
+} from '../../../../constants/selectOptionTranslations';
 
 const ChronologyField = ({ name, chronologyRule, index }) => {
   const intl = useIntl();

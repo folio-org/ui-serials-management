@@ -9,21 +9,25 @@ import {
 
 import EnumerationFieldArray from './EnumerationFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { refdata as mockRefdata } from '../../../../test/resources';
 
-jest.mock('../EnumerationTextualFieldArray', () => () => (
+jest.mock('./EnumerationTextualFieldArray', () => () => (
   <div>EnumerationTextualFieldArray</div>
 ));
-jest.mock('../EnumerationNumericFieldArray', () => () => (
+jest.mock('./EnumerationNumericFieldArray', () => () => (
   <div>EnumerationNumericFieldArray</div>
 ));
 const onSubmit = jest.fn();
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  useSerialsManagementRefdata: () => mockRefdata.filter(
-    (mr) => mr.desc === 'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat'
-  ),
+  useSerialsManagementRefdata: () => {
+    return mockRefdata.filter((mr) => {
+      return (
+        mr.desc === 'EnumerationTemplateMetadataRule.TemplateMetadataRuleFormat'
+      );
+    });
+  },
 }));
 
 let renderComponent;

@@ -10,7 +10,7 @@ import {
 import IssuePublicationFieldArray from './IssuePublicationFieldArray';
 import { translationsProperties } from '../../../../test/helpers';
 
-jest.mock('../IssuePublicationField', () => () => <div>IssuePublicationField</div>);
+jest.mock('./IssuePublicationField', () => () => <div>IssuePublicationField</div>);
 const onSubmit = jest.fn();
 
 const props = {

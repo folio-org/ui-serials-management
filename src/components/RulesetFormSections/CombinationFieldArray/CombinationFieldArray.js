@@ -21,7 +21,7 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import { useSerialsManagementRefdata } from '../../utils';
 import { SORTED_COMBINATION_TIME_UNITS } from '../../../constants/sortedArrays';
 
-import CombinationField from '../CombinationField';
+import CombinationField from './CombinationField';
 
 const [TIME_UNITS] = ['CombinationRule.TimeUnits'];
 

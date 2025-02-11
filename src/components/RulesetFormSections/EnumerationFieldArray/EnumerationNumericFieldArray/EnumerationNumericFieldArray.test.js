@@ -3,9 +3,9 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 
 import EnumerationNumericFieldArray from './EnumerationNumericFieldArray';
-import { translationsProperties } from '../../../../test/helpers';
+import { translationsProperties } from '../../../../../test/helpers';
 
-jest.mock('../EnumerationNumericField', () => () => (
+jest.mock('./EnumerationNumericField', () => () => (
   <div>EnumerationNumericField</div>
 ));
 const onSubmit = jest.fn();

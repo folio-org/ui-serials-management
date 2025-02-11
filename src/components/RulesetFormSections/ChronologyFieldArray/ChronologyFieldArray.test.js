@@ -8,16 +8,16 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
-import { locales } from '../../../../test/resources';
+import {
+  refdata as mockRefdata,
+  locales as mockLocales,
+} from '../../../../test/resources';
 
 import ChronologyFieldArray from './ChronologyFieldArray';
 
-jest.mock('../ChronologyField', () => () => <div>ChronologyField</div>);
+jest.mock('./ChronologyField', () => () => <div>ChronologyField</div>);
 
 const onSubmit = jest.fn();
-
-const mockLocales = locales;
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),

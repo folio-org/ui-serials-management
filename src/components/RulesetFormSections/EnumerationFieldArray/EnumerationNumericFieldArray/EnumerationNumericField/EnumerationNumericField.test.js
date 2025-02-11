@@ -9,36 +9,36 @@ import {
 
 import EnumerationNumericField from './EnumerationNumericField';
 
-import { translationsProperties } from '../../../../test/helpers';
-import mockRefdata from '../../../../test/resources/refdata';
+import { translationsProperties } from '../../../../../../test/helpers';
+import { refdata as mockRefdata } from '../../../../../../test/resources';
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../../utils', () => ({
+  ...jest.requireActual('../../../../utils'),
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 
 const items = [
   {
-    'units': '1',
-    'format': {
-      'value': 'number',
+    units: '1',
+    format: {
+      value: 'number',
     },
-    'sequence': {
-      'value': 'continuous',
+    sequence: {
+      value: 'continuous',
     },
-    'internalNote': 'test',
+    internalNote: 'test',
   },
 ];
 
 const level = {
-  'units': '1',
-  'format': {
-    'value': 'number',
+  units: '1',
+  format: {
+    value: 'number',
   },
-  'sequence': {
-    'value': 'continuous',
+  sequence: {
+    value: 'continuous',
   },
-  'internalNote': 'test',
+  internalNote: 'test',
 };
 
 const onSubmit = jest.fn();
