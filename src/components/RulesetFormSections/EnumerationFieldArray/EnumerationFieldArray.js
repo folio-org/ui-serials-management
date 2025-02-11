@@ -61,12 +61,10 @@ const EnumerationFieldArray = () => {
           />
         }
         header={
-          <>
-            <FormattedMessage
-              id="ui-serials-management.ruleset.enumerationLabelIndex"
-              values={{ index: index + 1 }}
-            />
-          </>
+          <FormattedMessage
+            id="ui-serials-management.ruleset.enumerationLabelIndex"
+            values={{ index: index + 1 }}
+          />
         }
         onDelete={() => onDeleteField(index, templateConfig)}
       >
@@ -101,21 +99,17 @@ const EnumerationFieldArray = () => {
         */}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
-          <>
-            <EnumerationNumericFieldArray
-              index={index}
-              name={`templateConfig.enumerationRules[${index}].ruleFormat`}
-            />
-          </>
+          <EnumerationNumericFieldArray
+            index={index}
+            name={`templateConfig.enumerationRules[${index}].ruleFormat`}
+          />
         )}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_textual' && (
-          <>
-            <EnumerationTextualFieldArray
-              index={index}
-              name={`templateConfig.enumerationRules[${index}].ruleFormat`}
-            />
-          </>
+          <EnumerationTextualFieldArray
+            index={index}
+            name={`templateConfig.enumerationRules[${index}].ruleFormat`}
+          />
         )}
       </EditCard>
     );

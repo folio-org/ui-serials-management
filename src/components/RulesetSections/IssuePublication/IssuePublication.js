@@ -22,7 +22,6 @@ const proptypes = {
 const IssuePublication = ({ ruleset }) => {
   const intl = useIntl();
 
-  // TODO Find a more suitable sorting for recurrence rules
   const sortedRules = getSortedItems(ruleset?.recurrence?.rules, null, {
     column: 'ordinal',
     direction: 'asc',
@@ -77,7 +76,6 @@ const IssuePublication = ({ ruleset }) => {
       <Row>
         <Col xs={12}>
           <MultiColumnList
-          // TODO Correctly implement translations for MCL column headings
             columnMapping={{
               issue: (
                 <FormattedMessage id="ui-serials-management.ruleset.issue" />
