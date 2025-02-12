@@ -45,7 +45,7 @@ const EnumerationLabels = ({ ruleset }) => {
       units: (e) => e?.units,
       format: (e) => e?.format?.label,
       sequence: (e) => e?.sequence?.label,
-      monthFormat: (e) => e?.internalNote,
+      internalNote: (e) => e?.internalNote,
     };
     return (
       <MultiColumnList
