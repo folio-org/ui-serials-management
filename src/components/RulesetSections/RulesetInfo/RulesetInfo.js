@@ -28,7 +28,7 @@ const RulesetInfo = ({ serial, ruleset }) => {
             }
             value={
               <Link to={urls.serialView(serial?.id)}>
-                {serial?.title ?? serial?.id}
+                {serial?.orderLine?.title ?? serial?.id}
               </Link>
             }
           />
