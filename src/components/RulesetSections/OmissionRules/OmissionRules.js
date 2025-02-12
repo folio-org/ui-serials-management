@@ -38,12 +38,12 @@ const OmissionRules = ({ ruleset }) => {
     weeks: (e) => {
       return e?.pattern?.weekTo
         ? `${e?.pattern?.weekFrom} - ${e?.pattern?.weekTo}`
-        : e?.pattern?.weekFrom ?? e?.pattern?.week;
+        : (e?.pattern?.weekFrom ?? e?.pattern?.week);
     },
     months: (e) => {
       return e?.pattern?.monthTo
         ? `${e?.pattern?.monthFrom?.label} - ${e?.pattern?.monthTo?.label}`
-        : e?.pattern?.monthFrom?.label ?? e?.pattern?.month?.label;
+        : (e?.pattern?.monthFrom?.label ?? e?.pattern?.month?.label);
     },
     issue: (e) => e?.pattern?.issue,
   };
@@ -80,6 +80,7 @@ const OmissionRules = ({ ruleset }) => {
             }}
             contentData={sortedRules}
             formatter={formatter}
+            id="omission-rules-list"
             interactive={false}
             visibleColumns={[
               'omissionRuleType',
