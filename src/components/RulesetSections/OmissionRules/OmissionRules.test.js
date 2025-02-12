@@ -1,4 +1,3 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
   Accordion,
@@ -129,7 +128,6 @@ describe('OmissionRule', () => {
     test.each(fields)(
       'renders expected $name in the the first row, column index $columnIndex',
       async ({ columnIndex, content }) => {
-        screen.debug();
         await MultiColumnListCell({ row: 0, columnIndex }).has({
           content,
         });
