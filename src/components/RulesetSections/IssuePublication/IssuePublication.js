@@ -22,7 +22,6 @@ const proptypes = {
 const IssuePublication = ({ ruleset }) => {
   const intl = useIntl();
 
-  // TODO Find a more suitable sorting for recurrence rules
   const sortedRules = getSortedItems(ruleset?.recurrence?.rules, null, {
     column: 'ordinal',
     direction: 'asc',
@@ -40,7 +39,7 @@ const IssuePublication = ({ ruleset }) => {
 
   const formatter = {
     issue: (e) => e?.rowIndex + 1,
-    day: (e) => (e?.pattern?.weekday?.label || e?.pattern?.day) || e?.ordinal,
+    day: (e) => e?.pattern?.weekday?.label || e?.pattern?.day || e?.ordinal,
     week: (e) => e?.pattern?.week || e?.ordinal,
     month: (e) => e?.pattern?.month?.label || e?.ordinal,
     year: (e) => e?.pattern?.year || e?.ordinal,
@@ -77,7 +76,6 @@ const IssuePublication = ({ ruleset }) => {
       <Row>
         <Col xs={12}>
           <MultiColumnList
-          // TODO Correctly implement translations for MCL column headings
             columnMapping={{
               issue: (
                 <FormattedMessage id="ui-serials-management.ruleset.issue" />
@@ -95,6 +93,7 @@ const IssuePublication = ({ ruleset }) => {
             }}
             contentData={sortedRules}
             formatter={formatter}
+            id="issue-publication-list"
             interactive={false}
             visibleColumns={
               patternTypeVisibleColumns[

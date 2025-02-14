@@ -16,16 +16,13 @@ const ruleset = {
   },
   templateConfig: {
     id: 'e6f9dad2-88f0-429e-8686-beddf4c8088a',
-    chronologyRules: [
-      { ...chronologyYear, index: 0 },
-    ],
-    enumerationRules: [
-      { ...enumerationNumeric, index: 0 },
-    ],
+    chronologyRules: [{ ...chronologyYear, index: 0 }],
+    enumerationRules: [{ ...enumerationNumeric, index: 0 }],
     templateString:
       'Vol:{{enumeration1.level1}} Issue:{{enumeration1.level2}}, {{chronology1.year}}',
   },
   startDate: '2024-03-21',
+  description: 'Test Description',
 };
 
 export default ruleset;

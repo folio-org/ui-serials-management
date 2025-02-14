@@ -35,16 +35,8 @@ const CombinationRules = ({ ruleset }) => {
         ?.join(', ');
     },
     issue: (e) => e?.pattern?.issue,
-    ofWeek: (e) => {
-      return e?.pattern?.weekTo
-        ? `${e?.pattern?.weekFrom} - ${e?.pattern?.weekTo}`
-        : e?.pattern?.weekFrom ?? e?.pattern?.week;
-    },
-    ofMonth: (e) => {
-      return e?.pattern?.monthTo
-        ? `${e?.pattern?.monthFrom?.label} - ${e?.pattern?.monthTo?.label}`
-        : e?.pattern?.monthFrom?.label ?? e?.pattern?.month?.label;
-    },
+    ofWeek: (e) => e?.pattern?.week,
+    ofMonth: (e) => e?.pattern?.month?.label,
     issuesToCombine: (e) => e?.issuesToCombine,
   };
 
@@ -82,6 +74,7 @@ const CombinationRules = ({ ruleset }) => {
             }}
             contentData={sortedRules}
             formatter={formatter}
+            id="combination-rules-list"
             interactive={false}
             visibleColumns={[
               'combinationRuleType',

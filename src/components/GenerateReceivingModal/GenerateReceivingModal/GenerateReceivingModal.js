@@ -74,7 +74,6 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const filteredLocations = useMemo(() => {
     return locations?.filter(
       (l) => orderLine?.remoteId_object?.locations?.some((rol) => {
-        // console.log(rol);
         if (rol?.tenantId) {
           return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
         }

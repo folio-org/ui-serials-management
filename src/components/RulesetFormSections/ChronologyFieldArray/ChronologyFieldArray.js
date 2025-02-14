@@ -67,12 +67,10 @@ const ChronologyFieldArray = () => {
           />
         }
         header={
-          <>
-            <FormattedMessage
-              id="ui-serials-management.ruleset.chronologyLabelIndex"
-              values={{ index: index + 1 }}
-            />
-          </>
+          <FormattedMessage
+            id="ui-serials-management.ruleset.chronologyLabelIndex"
+            values={{ index: index + 1 }}
+          />
         }
         onDelete={() => onDeleteField(index, chronologyRule)}
       >
@@ -105,7 +103,9 @@ const ChronologyFieldArray = () => {
               <Field
                 component={Selection}
                 dataOptions={locales}
-                initialValue="en"
+                // This was causing an issue with model rulesets as the field initialValue prop was overriting the form state initialValues
+                // If on initialisation the rule is passed a ruleLocale, then dont use an initial value, otherwise use 'en'
+                initialValue={chronologyRule?.ruleLocale ? undefined : 'en'}
                 label={
                   <FormattedMessage id="ui-serials-management.ruleset.chronology.locale" />
                 }
