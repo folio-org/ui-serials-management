@@ -74,9 +74,11 @@ const PublicationPattern = ({ serial }) => {
   };
 
   const renderAddPublicationPatternButton = () => {
+    const isActive = serial?.serialStatus?.value === 'active';
     return (
       <IfPermission perm="ui-serials-management.rulesets.edit">
         <Button
+          disabled={!isActive}
           id="add-ruleset-button"
           to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
         >

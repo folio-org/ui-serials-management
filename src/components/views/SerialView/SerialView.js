@@ -85,6 +85,7 @@ const SerialView = ({
 
   const renderActionMenu = () => {
     const buttons = [];
+    const isActive = serial?.serialStatus?.value === 'active';
     if (stripes.hasPerm('ui-serials-management.serials.edit')) {
       buttons.push(
         <Button
@@ -98,7 +99,7 @@ const SerialView = ({
           </Icon>
         </Button>
       );
-      if (stripes.hasPerm('ui-serials-management.predictedpieces.edit')) {
+      if (isActive && stripes.hasPerm('ui-serials-management.predictedpieces.edit')) {
         buttons.push(
           <Button
             key="generate-pieces"
