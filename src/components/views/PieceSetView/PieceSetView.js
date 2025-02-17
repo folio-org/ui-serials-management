@@ -99,13 +99,14 @@ const PieceSetView = ({
     const hasReceiving = pieceSet?.pieces?.some(
       (p) => p?.receivingPieces?.length >= 1
     );
+    const isActive = serial?.serialStatus?.value === 'active';
 
     if (stripes?.hasPerm('ui-serials-management.predictedpieces.edit')) {
       buttons.push(
         <Button
           key="generate-receiving-option"
           buttonStyle="dropdownItem"
-          disabled={!serial?.orderLine?.remoteId_object || serialLoading}
+          disabled={!isActive || !serial?.orderLine?.remoteId_object || serialLoading}
           id="clickable-dropdown-generate-receiving"
           onClick={() => setShowReceivingModal(true)}
         >
