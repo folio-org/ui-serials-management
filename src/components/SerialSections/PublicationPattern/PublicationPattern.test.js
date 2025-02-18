@@ -5,40 +5,36 @@ import PublicationPattern from './PublicationPattern';
 
 import { translationsProperties } from '../../../../test/helpers';
 
-import { serial } from '../../../../test/resources';
+import { serial, ruleset } from '../../../../test/resources';
 
 describe('PublicationPattern', () => {
-  describe('renders components with serial', () => {
+  describe('with an active ruleset', () => {
     beforeEach(() => {
       renderWithIntl(
         <MemoryRouter>
-          <PublicationPattern serial={serial} />
+          <PublicationPattern
+            serial={{ ...serial, serialRulesets: [ruleset] }}
+          />
         </MemoryRouter>,
         translationsProperties
       );
     });
-    test('renders pattern Id KeyValue', async () => {
-      await KeyValue('Pattern ID').exists();
-    });
 
-    test('renders status KeyValue', async () => {
-      await KeyValue('Status').exists();
-    });
-
-    test('renders last updated KeyValue', async () => {
-      await KeyValue('Last updated').exists();
-    });
-
-    test('renders Time unit KeyValue', async () => {
-      await KeyValue('Time unit').exists();
-    });
-
-    test('renders Number of months KeyValue', async () => {
-      await KeyValue('Number of months').exists();
-    });
-
-    test('renders No. of issues published per cycle KeyValue', async () => {
-      await KeyValue('No. of issues published per cycle').exists();
-    });
+    // An example of using test.each for key values
+    test.each([
+      { keyValueLabel: 'Pattern ID', value: 'Test Pattern ID' },
+      { keyValueLabel: 'Status', value: 'Active' },
+      { keyValueLabel: 'Last updated', value: '2/18/2025' },
+      { keyValueLabel: 'Pattern description', value: 'Test Description' },
+      { keyValueLabel: 'Time unit', value: 'Month' },
+      // This key value label is based on the time unit of the ruleset
+      { keyValueLabel: 'Number of months', value: '1' },
+      { keyValueLabel: 'No. of issues published per cycle', value: '1' },
+    ])(
+      'renders KeyValue component with label $keyValueLabel with value $value ',
+      async ({ keyValueLabel, value }) => {
+        await KeyValue(keyValueLabel).has({ value });
+      }
+    );
   });
 });
