@@ -7,10 +7,12 @@ import { translationsProperties } from '../../../../test/helpers';
 
 import { serial, ruleset } from '../../../../test/resources';
 
+let renderComponent;
+
 describe('PublicationPattern', () => {
-  describe('with an active ruleset', () => {
+  describe('with an active ruleset and no draft rulesets', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderComponent = renderWithIntl(
         <MemoryRouter>
           <PublicationPattern
             serial={{ ...serial, serialRulesets: [ruleset] }}
@@ -36,5 +38,10 @@ describe('PublicationPattern', () => {
         await KeyValue(keyValueLabel).has({ value });
       }
     );
+
+    test('does not render the draft patterns MCL', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Draft patterns')).not.toBeInTheDocument();
+    });
   });
 });

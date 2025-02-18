@@ -208,6 +208,7 @@ const PublicationPattern = ({ serial }) => {
                 }}
                 contentData={draftRulesets}
                 formatter={formatter}
+                id="draft-patterns-list"
                 interactive={false}
                 visibleColumns={['patternId', 'lastUpdated', 'description']}
               />
