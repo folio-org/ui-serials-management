@@ -1,11 +1,15 @@
-import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
-import PublicationPattern from './PublicationPattern';
+import {
+  renderWithIntl,
+  KeyValue,
+  Button,
+  MultiColumnListCell
+} from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-
 import { serial, ruleset } from '../../../../test/resources';
+import PublicationPattern from './PublicationPattern';
 
 let renderComponent;
 
@@ -42,6 +46,41 @@ describe('PublicationPattern', () => {
     test('does not render the draft patterns MCL', async () => {
       const { queryByText } = renderComponent;
       expect(queryByText('Draft patterns')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('with draft rulesets', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <PublicationPattern
+            serial={{ ...serial, serialRulesets: [ruleset, { ...ruleset, rulesetStatus: { value: 'draft' } }] }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders "Add publication pattern" button', async () => {
+      await Button('Add publication pattern').exists();
+    });
+
+    test.each([
+      { propertyName: 'Pattern ID', columnIndex: 0, content: 'Test Pattern ID' },
+      { propertyName: 'Last updated', columnIndex: 1, content: '2/18/2025' },
+      { propertyName: 'Pattern description', columnIndex: 2, content: 'Test Description' },
+    ])(
+      'renders expected $propertyName in the the first row, column index $columnIndex',
+      async ({ columnIndex, content }) => {
+        await MultiColumnListCell({ row: 0, columnIndex }).has({
+          content,
+        });
+      }
+    );
+
+    test('does not render the draft patterns MCL', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Draft patterns')).toBeInTheDocument();
     });
   });
 });
