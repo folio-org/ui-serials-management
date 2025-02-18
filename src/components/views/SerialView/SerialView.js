@@ -1,14 +1,15 @@
-import { createRef, useState } from 'react';
+import { createRef, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { AppIcon, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { AppIcon, CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   Pane,
   LoadingPane,
   Button,
+  ConfirmationModal,
   Icon,
   MetaSection,
   expandAllSections,
@@ -30,7 +31,7 @@ import {
 import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
-import { PIECE_SETS_ENDPOINT } from '../../../constants/endpoints';
+import { PIECE_SETS_ENDPOINT, SERIAL_ENDPOINT } from '../../../constants/endpoints';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -49,8 +50,13 @@ const SerialView = ({
   const stripes = useStripes();
   const accordionStatusRef = createRef();
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+  const callout = useContext(CalloutContext);
 
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+
+  const serialPath = SERIAL_ENDPOINT(serial?.id);
 
   const { data: existingPieceSets, existingPieceSetsLoading } = useQuery(
     ['ui-serials-management', 'SerialView', serial?.id],
@@ -59,8 +65,53 @@ const SerialView = ({
       .json()
   );
 
+  const { mutateAsync: deleteSerial } = useMutation(
+    [serialPath, 'ui-serials-management', 'SerialView', 'deleteSerial'],
+    () => ky
+      .delete(serialPath)
+      .then(() => queryClient.invalidateQueries(['@folio/serials-management', 'SASQ', 'viewAll']))
+  );
+
   const handleEdit = () => {
     history.push(`${urls.serialEdit(params?.id)}${location.search}`);
+  };
+
+  const handleDelete = () => {
+    if (serial.serialRulesets?.length) {
+      callout.sendCallout({
+        type: 'error',
+        timeout: 0,
+        message: (
+          <FormattedMessage id="ui-serials-management.serials.deleteSerial.error.hasSerialRulesets" />
+        ),
+      });
+      return;
+    }
+
+    deleteSerial()
+      .then(() => {
+        history.push(`${urls.serials()}${location.search}`);
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id="ui-serials-management.serials.deleteSerial.success"
+              values={{ serial: serial.orderLine?.title ?? serial.id }}
+            />
+          ),
+        });
+      })
+      .catch((error) => {
+        callout.sendCallout({
+          type: 'error',
+          timeout: 0,
+          message: (
+            <FormattedMessage
+              id="ui-serials-management.serials.deleteSerial.error.noDeleteSerialBackendError"
+              values={{ message: error.message }}
+            />
+          ),
+        });
+      });
   };
 
   const getSectionProps = (name) => {
@@ -83,7 +134,7 @@ const SerialView = ({
     },
   ];
 
-  const renderActionMenu = () => {
+  const renderActionMenu = ({ onToggle }) => {
     const buttons = [];
     if (stripes.hasPerm('ui-serials-management.serials.edit')) {
       buttons.push(
@@ -117,6 +168,24 @@ const SerialView = ({
           </Button>
         );
       }
+    }
+
+    if (stripes.hasPerm('ui-serials-management.serials.manage')) {
+      buttons.push(
+        <Button
+          key="delete-serial"
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-delete-serial"
+          onClick={() => {
+            setShowDeleteConfirmationModal(true);
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-serials-management.delete" />
+          </Icon>
+        </Button>
+      );
     }
     return buttons.length ? buttons : null;
   };
@@ -196,6 +265,20 @@ const SerialView = ({
           </AccordionStatus>
         </Pane>
       </HasCommand>
+      <ConfirmationModal
+        buttonStyle="danger"
+        confirmLabel={<FormattedMessage id="ui-serials-management.delete" />}
+        data-test-delete-confirmation-modal
+        heading={<FormattedMessage id="ui-serials-management.serials.deleteSerial" />}
+        id="delete-serial-confirmation"
+        message={<FormattedMessage id="ui-serials-management.serials.deleteSerial.confirmMessage" values={{ serial: serial.orderLine?.title ?? serial.id }} />}
+        onCancel={() => setShowDeleteConfirmationModal(false)}
+        onConfirm={() => {
+          handleDelete();
+          setShowDeleteConfirmationModal(false);
+        }}
+        open={showDeleteConfirmationModal}
+      />
       <PiecesPreviewModal
         allowCreation
         existingPieceSets={existingPieceSets}
