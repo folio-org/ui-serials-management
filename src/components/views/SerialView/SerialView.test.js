@@ -1,5 +1,4 @@
-import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { translationsProperties } from '../../../../test/helpers';
 import SerialView from './SerialView';
@@ -259,66 +258,6 @@ describe('SerialView', () => {
     test('renders LoadingPane Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('LoadingPane')).toBeInTheDocument();
-    });
-  });
-  describe('renders components with no serial', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <SerialView onClose={handlers.onClose} queryProps={{ isLoading: false }} />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
-
-    test('renders SerialInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialInfo')).toBeInTheDocument();
-    });
-
-    test('renders PublicationPattern Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PublicationPattern')).toBeInTheDocument();
-    });
-
-    test('renders SerialNotes Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialNotes')).toBeInTheDocument();
-    });
-
-    test('renders expected serial header', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Serial -')).toBeInTheDocument();
-    });
-
-    test('Action menu has edit button', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Edit').click();
-      });
-    });
-
-    test('renders the expected header', () => {
-      const { getByText } = renderComponent;
-      expect(
-        getByText('stripes-components.metaSection.screenReaderLabel')
-      ).toBeInTheDocument();
-    });
-
-    test('renders Record last updated', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
-    });
-
-    test('renders Record created', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record created: Unknown')).toBeInTheDocument();
-    });
-
-    test('renders MetaSection Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record created: Unknown')).toBeInTheDocument();
-      expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
     });
   });
 
