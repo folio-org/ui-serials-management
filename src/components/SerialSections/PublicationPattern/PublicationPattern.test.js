@@ -78,7 +78,7 @@ describe('PublicationPattern', () => {
       }
     );
 
-    test('does not render the draft patterns MCL', async () => {
+    test('does render the draft patterns MCL', async () => {
       const { queryByText } = renderComponent;
       expect(queryByText('Draft patterns')).toBeInTheDocument();
     });
