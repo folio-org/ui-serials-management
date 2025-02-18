@@ -19,6 +19,7 @@ const PieceSetsRoute = ({ children, path }) => {
     endpoint: PIECE_SETS_ENDPOINT,
     SASQ_MAP: {
       searchKey: 'id,ruleset.rulesetNumber,note',
+      perPage: 50
     },
   };
   /* istanbul ignore next */
