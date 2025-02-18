@@ -90,7 +90,7 @@ const SerialsRoute = ({ children, path }) => {
 
   const renderTitle = (serial) => {
     return (
-      <TextLink to={urls.serialView(serial?.id)}>
+      <TextLink to={`${urls.serialView(serial?.id)}${location.search}`}>
         {serial?.orderLine?.title ?? serial?.id}
       </TextLink>
     );

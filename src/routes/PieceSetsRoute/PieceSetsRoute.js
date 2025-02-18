@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage, FormattedDate } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 
 import { TextLink } from '@folio/stripes/components';
 
@@ -15,11 +16,12 @@ import { urls } from '../../components/utils';
 import { PIECE_SETS_ENDPOINT } from '../../constants/endpoints';
 
 const PieceSetsRoute = ({ children, path }) => {
+  const location = useLocation();
   const fetchParameters = {
     endpoint: PIECE_SETS_ENDPOINT,
     SASQ_MAP: {
       searchKey: 'id,ruleset.rulesetNumber,note',
-      perPage: 50
+      perPage: 50,
     },
   };
   /* istanbul ignore next */
@@ -34,7 +36,9 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'dateCreated',
-      label: <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />,
+      label: (
+        <FormattedMessage id="ui-serials-management.pieceSets.dateGenerated" />
+      ),
     },
     {
       propertyPath: 'total',
@@ -42,11 +46,15 @@ const PieceSetsRoute = ({ children, path }) => {
     },
     {
       propertyPath: 'startDate',
-      label: <FormattedMessage id="ui-serials-management.pieceSets.startDate" />,
+      label: (
+        <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
+      ),
     },
     {
       propertyPath: 'patternId',
-      label: <FormattedMessage id="ui-serials-management.pieceSets.patternId" />,
+      label: (
+        <FormattedMessage id="ui-serials-management.pieceSets.patternId" />
+      ),
     },
     {
       propertyPath: 'note',
@@ -56,7 +64,7 @@ const PieceSetsRoute = ({ children, path }) => {
 
   const renderTitle = (pieceSet) => {
     return (
-      <TextLink to={urls.pieceSetView(pieceSet?.id)}>
+      <TextLink to={`${urls.pieceSetView(pieceSet?.id)}${location.search}`}>
         {pieceSet?.title ? (
           <>{`${pieceSet?.title} (${pieceSet?.dateCreated})`}</>
         ) : (
