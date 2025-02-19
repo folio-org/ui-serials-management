@@ -5,7 +5,7 @@ import {
   KeyValue,
   Button,
   MultiColumnListCell,
-  Accordion
+  Accordion,
 } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
@@ -15,7 +15,7 @@ import PublicationPattern from './PublicationPattern';
 let renderComponent;
 
 describe('PublicationPattern', () => {
-  describe('with an active ruleset and no draft rulesets', () => {
+  describe('with an active serial, ruleset and no draft rulesets', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -77,7 +77,9 @@ describe('PublicationPattern', () => {
 
     test('does render the draft patterns MCL', async () => {
       const { queryByText } = renderComponent;
-      expect(queryByText('Serial has no active publication patterns')).toBeInTheDocument();
+      expect(
+        queryByText('Serial has no active publication patterns')
+      ).toBeInTheDocument();
     });
 
     test('does render the draft patterns MCL', async () => {
@@ -105,5 +107,22 @@ describe('PublicationPattern', () => {
         });
       }
     );
+  });
+
+  describe('with a closed serial', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <PublicationPattern
+            serial={{ ...serial, serialStatus: { value: 'closed' } }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders a disabled "Add publication pattern" button', async () => {
+      await Button('Add publication pattern').has({ disabled: true });
+    });
   });
 });
