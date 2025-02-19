@@ -82,7 +82,7 @@ const SerialView = ({
         type: 'error',
         timeout: 0,
         message: (
-          <FormattedMessage id="ui-serials-management.serials.deleteSerial.error.hasSerialRulesets" />
+          <FormattedMessage id="ui-serials-management.serials.deleteSerial.error.hasPublicationPattern" />
         ),
       });
       return;
