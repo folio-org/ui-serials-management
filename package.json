@@ -148,6 +148,16 @@
           "serials-management.refdata.manage",
           "settings.configuration.manage"
         ]
+      },
+      {
+        "permissionName": "ui-serials-management.serials.manage",
+        "displayName": "Serials: Manage serials",
+        "description": "Grants all permissions included in Serials: Edit serials plus the ability to delete serials.",
+        "visible": true,
+        "subPermissions": [
+          "ui-serials-management.serials.edit",
+          "serials-management.serials.manage"
+        ]
       }
     ]
   },

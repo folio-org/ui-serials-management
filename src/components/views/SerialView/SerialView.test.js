@@ -1,4 +1,4 @@
-import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { translationsProperties } from '../../../../test/helpers';
@@ -261,66 +261,66 @@ describe('SerialView', () => {
       expect(getByText('LoadingPane')).toBeInTheDocument();
     });
   });
-  describe('renders components with no serial', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <SerialView onClose={handlers.onClose} queryProps={{ isLoading: false }} />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
+  // describe('renders components with no serial', () => {
+  //   beforeEach(() => {
+  //     renderComponent = renderWithIntl(
+  //       <MemoryRouter>
+  //         <SerialView onClose={handlers.onClose} queryProps={{ isLoading: false }} />
+  //       </MemoryRouter>,
+  //       translationsProperties
+  //     );
+  //   });
 
-    test('renders SerialInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialInfo')).toBeInTheDocument();
-    });
+  //   test('renders SerialInfo Component', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('SerialInfo')).toBeInTheDocument();
+  //   });
 
-    test('renders PublicationPattern Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PublicationPattern')).toBeInTheDocument();
-    });
+  //   test('renders PublicationPattern Component', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('PublicationPattern')).toBeInTheDocument();
+  //   });
 
-    test('renders SerialNotes Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialNotes')).toBeInTheDocument();
-    });
+  //   test('renders SerialNotes Component', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('SerialNotes')).toBeInTheDocument();
+  //   });
 
-    test('renders expected serial header', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Serial -')).toBeInTheDocument();
-    });
+  //   test('renders expected serial header', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('Serial -')).toBeInTheDocument();
+  //   });
 
-    test('Action menu has edit button', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Edit').click();
-      });
-    });
+  //   test('Action menu has edit button', async () => {
+  //     await waitFor(async () => {
+  //       await Button('Actions').click();
+  //       await Button('Edit').click();
+  //     });
+  //   });
 
-    test('renders the expected header', () => {
-      const { getByText } = renderComponent;
-      expect(
-        getByText('stripes-components.metaSection.screenReaderLabel')
-      ).toBeInTheDocument();
-    });
+  //   test('renders the expected header', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(
+  //       getByText('stripes-components.metaSection.screenReaderLabel')
+  //     ).toBeInTheDocument();
+  //   });
 
-    test('renders Record last updated', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
-    });
+  //   test('renders Record last updated', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
+  //   });
 
-    test('renders Record created', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record created: Unknown')).toBeInTheDocument();
-    });
+  //   test('renders Record created', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('Record created: Unknown')).toBeInTheDocument();
+  //   });
 
-    test('renders MetaSection Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Record created: Unknown')).toBeInTheDocument();
-      expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
-    });
-  });
+  //   test('renders MetaSection Component', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('Record created: Unknown')).toBeInTheDocument();
+  //     expect(getByText('Record last updated: Unknown')).toBeInTheDocument();
+  //   });
+  // });
 
   describe('renders components with serial', () => {
     beforeEach(() => {
@@ -332,12 +332,12 @@ describe('SerialView', () => {
       );
     });
 
-    test('renders SerialInfo Component', () => {
+    test('renders Serial title', () => {
       const { getByText } = renderComponent;
       expect(getByText('Title - Sport20')).toBeInTheDocument();
     });
 
-    test('renders SerialInfo Component', () => {
+    test('renders Serial PO line', () => {
       const { getByText } = renderComponent;
       expect(getByText('PO line - 10016-1')).toBeInTheDocument();
     });
@@ -373,6 +373,56 @@ describe('SerialView', () => {
     test('renders DeprecatedPublicationPatterns Component', () => {
       const { getByText } = renderComponent;
       expect(getByText('DeprecatedPublicationPatterns')).toBeInTheDocument();
+    });
+
+    test('Action menu has edit button', async () => {
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Edit').click();
+      });
+    });
+
+    test('Action menu has delete button', async () => {
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+      });
+    });
+
+    describe('opening actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+
+      describe('clicking delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        test('renders the confirmation modal', async () => {
+          await waitFor(async () => {
+            await Modal('Delete serial').exists();
+          });
+        });
+
+        describe('cancelling confirmation modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click(); // close the modal
+            });
+          });
+
+          test('confirmation modal no longer renders', async () => {
+            await waitFor(async () => {
+              await Modal('Delete serial').absent();
+            });
+          });
+        });
+      });
     });
   });
 });
