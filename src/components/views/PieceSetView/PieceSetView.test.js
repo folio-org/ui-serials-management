@@ -1,6 +1,4 @@
-import {
-  waitFor,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
@@ -43,7 +41,7 @@ describe('PieceSetView', () => {
   let renderComponent;
 
   // This can probs be ".each-ified"... there's a lot of repeated tests
-  describe('renders with a loading piece set', () => {
+  describe('with a loading piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -62,36 +60,7 @@ describe('PieceSetView', () => {
     });
   });
 
-  describe('renders components with no piece set', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <PieceSetView
-            onClose={handlers.onClose}
-            queryProps={{ isLoading: false }}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
-
-    test('renders PieceSetInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PieceSetInfo')).toBeInTheDocument();
-    });
-
-    test('renders PiecesList Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PiecesList')).toBeInTheDocument();
-    });
-
-    test('renders GenerateReceivingModal Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('GenerateReceivingModal')).toBeInTheDocument();
-    });
-  });
-
-  describe('renders components with piece set', () => {
+  describe('with a piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -109,14 +78,13 @@ describe('PieceSetView', () => {
       await Button('Actions').exists();
     });
 
-    test('renders PieceSetInfo Component', () => {
+    test.each([
+      { componentName: 'PieceSetInfo' },
+      { componentName: 'PiecesList' },
+      { componentName: 'GenerateReceivingModal' },
+    ])('renders $componentName component ', async ({ componentName }) => {
       const { getByText } = renderComponent;
-      expect(getByText('PieceSetInfo')).toBeInTheDocument();
-    });
-
-    test('renders PiecesList Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PiecesList')).toBeInTheDocument();
+      await expect(getByText(componentName)).toBeInTheDocument();
     });
 
     describe('clicking action menu', () => {
