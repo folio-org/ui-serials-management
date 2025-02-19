@@ -37,7 +37,7 @@ const PublicationPattern = ({ serial }) => {
   );
 
   const renderLastUpdated = (ruleset) => {
-    return <FormattedDate date={ruleset?.lastUpdated} />;
+    return <FormattedDate value={ruleset?.lastUpdated} />;
   };
 
   const renderRulesetLink = (ruleset) => {
@@ -122,7 +122,7 @@ const PublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDate date={activeRuleset?.lastUpdated} />}
+                value={<FormattedDate value={activeRuleset?.lastUpdated} />}
               />
             </Col>
           </Row>

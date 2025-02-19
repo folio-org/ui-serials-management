@@ -4,7 +4,8 @@ import {
   renderWithIntl,
   KeyValue,
   Button,
-  MultiColumnListCell
+  MultiColumnListCell,
+  Accordion
 } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
@@ -26,11 +27,19 @@ describe('PublicationPattern', () => {
       );
     });
 
+    test('renders the Publication patterns Accordion', async () => {
+      await Accordion('Publication pattern').exists();
+    });
+
+    test('renders "Add publication pattern" button', async () => {
+      await Button('Add publication pattern').exists();
+    });
+
     // An example of using test.each for key values
     test.each([
       { keyValueLabel: 'Pattern ID', value: 'Test Pattern ID' },
       { keyValueLabel: 'Status', value: 'Active' },
-      { keyValueLabel: 'Last updated', value: '2/18/2025' },
+      { keyValueLabel: 'Last updated', value: '3/21/2024' },
       { keyValueLabel: 'Pattern description', value: 'Test Description' },
       { keyValueLabel: 'Time unit', value: 'Month' },
       // This key value label is based on the time unit of the ruleset
@@ -49,26 +58,45 @@ describe('PublicationPattern', () => {
     });
   });
 
-  describe('with draft rulesets', () => {
+  describe('with draft rulesets and no active ruleset', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <PublicationPattern
-            serial={{ ...serial, serialRulesets: [ruleset, { ...ruleset, rulesetStatus: { value: 'draft' } }] }}
+            serial={{
+              ...serial,
+              serialRulesets: [
+                { ...ruleset, rulesetStatus: { value: 'draft' } },
+              ],
+            }}
           />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders "Add publication pattern" button', async () => {
-      await Button('Add publication pattern').exists();
+    test('does render the draft patterns MCL', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Serial has no active publication patterns')).toBeInTheDocument();
+    });
+
+    test('does render the draft patterns MCL', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Draft patterns')).toBeInTheDocument();
     });
 
     test.each([
-      { propertyName: 'Pattern ID', columnIndex: 0, content: 'Test Pattern ID' },
-      { propertyName: 'Last updated', columnIndex: 1, content: '2/18/2025' },
-      { propertyName: 'Pattern description', columnIndex: 2, content: 'Test Description' },
+      {
+        propertyName: 'Pattern ID',
+        columnIndex: 0,
+        content: 'Test Pattern ID',
+      },
+      { propertyName: 'Last updated', columnIndex: 1, content: '3/21/2024' },
+      {
+        propertyName: 'Pattern description',
+        columnIndex: 2,
+        content: 'Test Description',
+      },
     ])(
       'renders expected $propertyName in the the first row, column index $columnIndex',
       async ({ columnIndex, content }) => {
@@ -77,10 +105,5 @@ describe('PublicationPattern', () => {
         });
       }
     );
-
-    test('does render the draft patterns MCL', async () => {
-      const { queryByText } = renderComponent;
-      expect(queryByText('Draft patterns')).toBeInTheDocument();
-    });
   });
 });
