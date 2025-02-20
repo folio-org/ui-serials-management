@@ -136,6 +136,8 @@ const SerialView = ({
 
   const renderActionMenu = ({ onToggle }) => {
     const buttons = [];
+    const isActive = serial?.serialStatus?.value === 'active';
+
     if (stripes.hasPerm('ui-serials-management.serials.edit')) {
       buttons.push(
         <Button
@@ -149,25 +151,19 @@ const SerialView = ({
           </Icon>
         </Button>
       );
-      if (stripes.hasPerm('ui-serials-management.predictedpieces.edit')) {
-        buttons.push(
-          <Button
-            key="generate-pieces"
-            buttonStyle="dropdownItem"
-            disabled={
-              !serial?.serialRulesets?.some(
-                (sr) => sr?.rulesetStatus?.value === 'active'
-              )
-            }
-            id="clickable-dropdown-generate-pieces"
-            onClick={() => setShowModal(true)}
-          >
-            <Icon icon="replace">
-              <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
-            </Icon>
-          </Button>
-        );
-      }
+      buttons.push(
+        <Button
+          key="generate-pieces"
+          buttonStyle="dropdownItem"
+          disabled={!isActive || !stripes.hasPerm('ui-serials-management.predictedpieces.edit')}
+          id="clickable-dropdown-generate-pieces"
+          onClick={() => setShowModal(true)}
+        >
+          <Icon icon="replace">
+            <FormattedMessage id="ui-serials-management.ruleset.generatePredictedPieces" />
+          </Icon>
+        </Button>
+      );
     }
 
     if (stripes.hasPerm('ui-serials-management.serials.manage')) {

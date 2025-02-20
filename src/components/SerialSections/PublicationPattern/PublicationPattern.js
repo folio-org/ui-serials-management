@@ -37,7 +37,7 @@ const PublicationPattern = ({ serial }) => {
   );
 
   const renderLastUpdated = (ruleset) => {
-    return <FormattedDate date={ruleset?.lastUpdated} />;
+    return <FormattedDate value={ruleset?.lastUpdated} />;
   };
 
   const renderRulesetLink = (ruleset) => {
@@ -74,9 +74,11 @@ const PublicationPattern = ({ serial }) => {
   };
 
   const renderAddPublicationPatternButton = () => {
+    const isActive = serial?.serialStatus?.value === 'active';
     return (
       <IfPermission perm="ui-serials-management.rulesets.edit">
         <Button
+          disabled={!isActive}
           id="add-ruleset-button"
           to={`${urls.rulesetCreate(serial?.id)}${location.search}`}
         >
@@ -120,7 +122,7 @@ const PublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDate date={activeRuleset?.lastUpdated} />}
+                value={<FormattedDate value={activeRuleset?.lastUpdated} />}
               />
             </Col>
           </Row>
@@ -206,6 +208,7 @@ const PublicationPattern = ({ serial }) => {
                 }}
                 contentData={draftRulesets}
                 formatter={formatter}
+                id="draft-patterns-list"
                 interactive={false}
                 visibleColumns={['patternId', 'lastUpdated', 'description']}
               />
