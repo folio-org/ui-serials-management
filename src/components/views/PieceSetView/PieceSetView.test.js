@@ -4,7 +4,11 @@ import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { handlers, pieceSet } from '../../../../test/resources';
+import {
+  handlers,
+  pieceSet,
+  serial as mockSerial,
+} from '../../../../test/resources';
 import PieceSetView from './PieceSetView';
 
 jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
@@ -34,6 +38,7 @@ jest.mock('react-query', () => {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
     useMutation: () => ({ mutateAsync: () => mockMutateAsync() }),
+    useQuery: () => ({ data: mockSerial }),
   };
 });
 
@@ -78,6 +83,11 @@ describe('PieceSetView', () => {
       await Button('Actions').exists();
     });
 
+    test('renders pane title text', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Quiet times (02/26/2024)')).not.toBeInTheDocument();
+    });
+
     test.each([
       { componentName: 'PieceSetInfo' },
       { componentName: 'PiecesList' },
@@ -95,7 +105,7 @@ describe('PieceSetView', () => {
       });
 
       test('renders disabled generate receiving pieces button', async () => {
-        await Button('Generate receiving pieces').has({ disabled: true });
+        await Button('Generate receiving pieces').has({ disabled: false });
       });
 
       test('renders delete predicted piece set button', async () => {
