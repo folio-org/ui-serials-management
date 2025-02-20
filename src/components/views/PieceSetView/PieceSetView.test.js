@@ -170,6 +170,23 @@ describe('PieceSetView', () => {
           });
         });
       });
+
+      describe('clicking generate receiving pieces button', () => {
+        beforeEach(async () => {
+          // Ensure fresh mock for each test
+          mockMutateAsync.mockClear();
+          await waitFor(async () => {
+            await Button('Generate receiving pieces').click();
+          });
+        });
+
+        test('renders the GenerateReceivingModal component ', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(() => {
+            expect(getByText('GenerateReceivingModal')).toBeVisible();
+          });
+        });
+      });
     });
   });
 });
