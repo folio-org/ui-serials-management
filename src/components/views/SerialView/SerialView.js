@@ -1,10 +1,10 @@
-import { createRef, useContext, useState } from 'react';
+import { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { AppIcon, CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { AppIcon, useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   Pane,
   LoadingPane,
@@ -51,7 +51,7 @@ const SerialView = ({
   const accordionStatusRef = createRef();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
 
   const [showModal, setShowModal] = useState(false);
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);

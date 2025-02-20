@@ -1,4 +1,4 @@
-import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, Callout, Modal } from '@folio/stripes-erm-testing';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { translationsProperties } from '../../../../test/helpers';
@@ -17,9 +17,6 @@ jest.mock('../../SerialSections/DeprecatedPublicationPatterns', () => () => (
 ));
 jest.mock('../../SerialSections/SerialNotes', () => () => (
   <div>SerialNotes</div>
-));
-jest.mock('../../SerialSections/SerialPieceSets', () => () => (
-  <div>SerialPieceSets</div>
 ));
 jest.mock('../../PiecesPreviewModal/PiecesPreviewModal', () => () => (
   <div>PiecesPreviewModal</div>
@@ -51,7 +48,7 @@ describe('SerialView', () => {
     });
   });
 
-  describe('with a serial', () => {
+  describe('with a serial with serialRulesets', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -110,6 +107,11 @@ describe('SerialView', () => {
       expect(getByText('DeprecatedPublicationPatterns')).toBeInTheDocument();
     });
 
+    test('renders PiecesPreviewModal Component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PiecesPreviewModal')).toBeInTheDocument();
+    });
+
     test('Action menu has edit button', async () => {
       await waitFor(async () => {
         await Button('Actions').click();
@@ -154,6 +156,65 @@ describe('SerialView', () => {
           test('confirmation modal no longer renders', async () => {
             await waitFor(async () => {
               await Modal('Delete serial').absent();
+            });
+          });
+        });
+
+        describe('clicking the confirmation delete button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Delete').click();
+            });
+          });
+
+          test('delete rejected callout fires', async () => {
+            await waitFor(async () => {
+              await Callout('Serial was not deleted because it has one or more publication patterns.').exists();
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe('with a serial w/o serialRulesets', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <SerialView
+            onClose={handlers.onClose}
+            queryProps={{ isLoading: false }}
+            resource={{ ...serial, serialRulesets: [] }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    describe('opening actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+
+      describe('clicking delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        describe('clicking the confirmation delete button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Delete').click();
+            });
+          });
+
+          test('delete success callout fires', async () => {
+            await waitFor(async () => {
+              await Callout('Serial deleted: <strong>{serial}</strong>').exists();
             });
           });
         });
