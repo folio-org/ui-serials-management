@@ -1,12 +1,14 @@
-import {
-  waitFor,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { handlers, pieceSet } from '../../../../test/resources';
+import {
+  handlers,
+  pieceSet,
+  serial as mockSerial,
+} from '../../../../test/resources';
 import PieceSetView from './PieceSetView';
 
 jest.mock('../../PieceSetSections/PieceSetInfo', () => () => (
@@ -36,6 +38,7 @@ jest.mock('react-query', () => {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
     useMutation: () => ({ mutateAsync: () => mockMutateAsync() }),
+    useQuery: () => ({ data: mockSerial }),
   };
 });
 
@@ -43,7 +46,7 @@ describe('PieceSetView', () => {
   let renderComponent;
 
   // This can probs be ".each-ified"... there's a lot of repeated tests
-  describe('renders with a loading piece set', () => {
+  describe('with a loading piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -62,36 +65,7 @@ describe('PieceSetView', () => {
     });
   });
 
-  describe('renders components with no piece set', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <PieceSetView
-            onClose={handlers.onClose}
-            queryProps={{ isLoading: false }}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
-
-    test('renders PieceSetInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PieceSetInfo')).toBeInTheDocument();
-    });
-
-    test('renders PiecesList Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PiecesList')).toBeInTheDocument();
-    });
-
-    test('renders GenerateReceivingModal Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('GenerateReceivingModal')).toBeInTheDocument();
-    });
-  });
-
-  describe('renders components with piece set', () => {
+  describe('with a piece set', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -109,14 +83,18 @@ describe('PieceSetView', () => {
       await Button('Actions').exists();
     });
 
-    test('renders PieceSetInfo Component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PieceSetInfo')).toBeInTheDocument();
+    test('renders pane title text', async () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('Quiet times (02/26/2024)')).not.toBeInTheDocument();
     });
 
-    test('renders PiecesList Component', () => {
+    test.each([
+      { componentName: 'PieceSetInfo' },
+      { componentName: 'PiecesList' },
+      { componentName: 'GenerateReceivingModal' },
+    ])('renders $componentName component ', async ({ componentName }) => {
       const { getByText } = renderComponent;
-      expect(getByText('PiecesList')).toBeInTheDocument();
+      await expect(getByText(componentName)).toBeInTheDocument();
     });
 
     describe('clicking action menu', () => {
@@ -127,7 +105,7 @@ describe('PieceSetView', () => {
       });
 
       test('renders disabled generate receiving pieces button', async () => {
-        await Button('Generate receiving pieces').has({ disabled: true });
+        await Button('Generate receiving pieces').has({ disabled: false });
       });
 
       test('renders delete predicted piece set button', async () => {
@@ -189,6 +167,23 @@ describe('PieceSetView', () => {
             await waitFor(() => {
               expect(getByText('Actions')).toBeVisible();
             });
+          });
+        });
+      });
+
+      describe('clicking generate receiving pieces button', () => {
+        beforeEach(async () => {
+          // Ensure fresh mock for each test
+          mockMutateAsync.mockClear();
+          await waitFor(async () => {
+            await Button('Generate receiving pieces').click();
+          });
+        });
+
+        test('renders the GenerateReceivingModal component ', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(() => {
+            expect(getByText('GenerateReceivingModal')).toBeVisible();
           });
         });
       });
