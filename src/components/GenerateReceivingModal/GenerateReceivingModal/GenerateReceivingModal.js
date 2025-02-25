@@ -21,7 +21,6 @@ import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
 import {
   PIECE_SET_ENDPOINT,
-  // RECEIVING_PIECES_ENDPOINT,
   BATCH_RECEIVING_PIECES_ENDPOINT
 } from '../../../constants/endpoints';
 import {
@@ -102,27 +101,13 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     );
   }, [tenants, filteredLocations, filteredHoldings]);
 
-  // const { mutateAsync: submitReceivingPiece } = useMutation(
-  //   [
-  //     'ui-serials-management',
-  //     'GeneratingReceivingModal',
-  //     'submitReceivingPiece',
-  //   ],
-  //   (data) => {
-  //     return ky
-  //       .post(
-  //         `${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`,
-  //         { json: data?.receiving }
-  //       )
-  //       .json();
-  //   }
-  // );
-
   const { mutateAsync: submitReceivingPieces } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPieces'],
-    (data) => ky.post(`${BATCH_RECEIVING_PIECES_ENDPOINT}`, { json: data }).json()
+    (data) => ky.post(
+      `${BATCH_RECEIVING_PIECES_ENDPOINT}${data.createItem ? '?createItem=true' : ''}`,
+      { json: { pieces: data.pieces } }
+    ).json()
   );
-
 
   const { mutateAsync: submitReceivingIds } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingId'],
@@ -215,51 +200,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     };
   };
 
-  // const handleGeneration = async (values) => {
-  //   try {
-  //     const piecesArray = await Promise.all(
-  //       (pieceSet?.pieces || [])
-  //         .map((piece) => {
-  //           if (piece?.class !== INTERNAL_OMISSION_PIECE) {
-  //             return formatReceivingPiece(piece, values);
-  //           } else {
-  //             return null;
-  //           }
-  //         })
-  //         .filter(Boolean)
-  //         // Set up an array of Promises that will call receieving sequentially and respond
-  //         // Then take that response and transform. We Promise.all to then have an array to send to our backend
-  //         .map(async (pieceInReceivingShape) => {
-  //           let returnObj;
-  //           await submitReceivingPiece(pieceInReceivingShape).then((res) => {
-  //             returnObj = {
-  //               ...pieceInReceivingShape?.piece,
-  //               receivingPieces: [
-  //                 ...(pieceInReceivingShape?.piece?.receivingPieces || []),
-  //                 { receivingId: res?.id },
-  //               ],
-  //             };
-  //           });
-  //           return returnObj;
-  //         })
-  //     );
-  //     await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
-  //   } catch (e) {
-  //     const { errors } = await e.response.json();
-  //     errors?.map((error) => callout.sendCallout({
-  //       message: (
-  //         <>
-  //           <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingErrorMessage" />
-  //           {error?.message}
-  //         </>
-  //       ),
-  //       type: 'error',
-  //       timeout: 0,
-  //     }));
-  //   }
-  // };
-
-  const handleBatchGeneration = async (values) => {
+  const handleGeneration = async (values) => {
     try {
       const piecesArray = (pieceSet?.pieces || [])
         .filter(piece => piece?.class !== INTERNAL_OMISSION_PIECE)
@@ -268,9 +209,10 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
           return { originalPiece: piece, formattedPiece };
         });
 
-      const batchPayload = { pieces: piecesArray.map(p => p.formattedPiece) };
-
-      await submitReceivingPieces(batchPayload);
+      await submitReceivingPieces({
+        pieces: piecesArray.map(p => p.formattedPiece),
+        createItem: values?.createItem,
+      });
 
       const updatedPieces = piecesArray.map(p => ({
         ...p.originalPiece,
@@ -333,8 +275,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         footer: renderFooter,
       }}
       mutators={arrayMutators}
-      // onSubmit={handleGeneration}
-      onSubmit={handleBatchGeneration}
+      onSubmit={handleGeneration}
     >
       <GenerateReceivingModalInfo
         orderLineLocations={orderLine?.remoteId_object?.locations}
