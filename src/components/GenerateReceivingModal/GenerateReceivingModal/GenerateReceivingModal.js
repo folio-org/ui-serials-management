@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 import { useMutation, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
@@ -20,7 +21,7 @@ import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
 import {
   PIECE_SET_ENDPOINT,
-  RECEIVING_PIECES_ENDPOINT,
+  BATCH_RECEIVING_PIECES_ENDPOINT
 } from '../../../constants/endpoints';
 import {
   INTERNAL_COMBINATION_PIECE,
@@ -100,20 +101,12 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     );
   }, [tenants, filteredLocations, filteredHoldings]);
 
-  const { mutateAsync: submitReceivingPiece } = useMutation(
-    [
-      'ui-serials-management',
-      'GeneratingReceivingModal',
-      'submitReceivingPiece',
-    ],
-    (data) => {
-      return ky
-        .post(
-          `${RECEIVING_PIECES_ENDPOINT}${data?.createItem ? '?createItem=true' : ''}`,
-          { json: data?.receiving }
-        )
-        .json();
-    }
+  const { mutateAsync: submitReceivingPieces } = useMutation(
+    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPieces'],
+    (data) => ky.post(
+      `${BATCH_RECEIVING_PIECES_ENDPOINT}${data.createItem ? '?createItem=true' : ''}`,
+      { json: { pieces: data.pieces } }
+    ).json()
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -190,55 +183,46 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     };
 
     return {
-      ...(values?.createItem && { createItem: values.createItem }),
-      receiving: {
-        poLineId: orderLine?.remoteId,
-        titleId: orderLine?.titleId,
-        format: values?.format,
-        displayOnHolding: values?.displayOnHolding,
-        displayToPublic: values?.displayToPublic,
-        supplement: values?.supplement,
-        displaySummary: pieceInfo?.label,
-        receiptDate: pieceInfo?.date,
-        ...(values?.holdingId && { holdingId: values?.holdingId }),
-        ...(values?.locationId && { locationId: values?.locationId }),
-        ...(values?.receivingTenantId && {
-          receivingTenantId: values?.receivingTenantId,
-        }),
-      },
-      piece,
+      id: uuidv4(),
+      poLineId: orderLine?.remoteId,
+      titleId: orderLine?.titleId,
+      format: values?.format,
+      displayOnHolding: values?.displayOnHolding,
+      displayToPublic: values?.displayToPublic,
+      supplement: values?.supplement,
+      displaySummary: pieceInfo?.label,
+      receiptDate: pieceInfo?.date,
+      ...(values?.holdingId && { holdingId: values?.holdingId }),
+      ...(values?.locationId && { locationId: values?.locationId }),
+      ...(values?.receivingTenantId && {
+        receivingTenantId: values?.receivingTenantId,
+      }),
     };
   };
 
   const handleGeneration = async (values) => {
     try {
-      const piecesArray = await Promise.all(
-        (pieceSet?.pieces || [])
-          .map((piece) => {
-            if (piece?.class !== INTERNAL_OMISSION_PIECE) {
-              return formatReceivingPiece(piece, values);
-            } else {
-              return null;
-            }
-          })
-          .filter(Boolean)
-          // Set up an array of Promises that will call receieving sequentially and respond
-          // Then take that response and transform. We Promise.all to then have an array to send to our backend
-          .map(async (pieceInReceivingShape) => {
-            let returnObj;
-            await submitReceivingPiece(pieceInReceivingShape).then((res) => {
-              returnObj = {
-                ...pieceInReceivingShape?.piece,
-                receivingPieces: [
-                  ...(pieceInReceivingShape?.piece?.receivingPieces || []),
-                  { receivingId: res?.id },
-                ],
-              };
-            });
-            return returnObj;
-          })
-      );
-      await submitReceivingIds({ id: pieceSet?.id, pieces: piecesArray });
+      const piecesArray = (pieceSet?.pieces || [])
+        .filter(piece => piece?.class !== INTERNAL_OMISSION_PIECE)
+        .map(piece => {
+          const formattedPiece = formatReceivingPiece(piece, values);
+          return { originalPiece: piece, formattedPiece };
+        });
+
+      await submitReceivingPieces({
+        pieces: piecesArray.map(p => p.formattedPiece),
+        createItem: values?.createItem,
+      });
+
+      const updatedPieces = piecesArray.map(p => ({
+        ...p.originalPiece,
+        receivingPieces: [
+          ...(p.originalPiece?.receivingPieces || []),
+          { receivingId: p.formattedPiece.id },
+        ],
+      }));
+
+      await submitReceivingIds({ id: pieceSet?.id, pieces: updatedPieces });
     } catch (e) {
       const { errors } = await e.response.json();
       errors?.map((error) => callout.sendCallout({

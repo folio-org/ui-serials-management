@@ -166,8 +166,8 @@
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
     "@folio/service-interaction": "^4.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
     "@folio/stripes": "^10.0.0",
+    "@folio/stripes-acq-components": "^6.0.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-erm-testing": "^3.0.0",
@@ -189,13 +189,14 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
-    "react-final-form-arrays": "^3.1.1"
+    "react-final-form-arrays": "^3.1.1",
+    "uuid": "^11.1.0"
   },
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-erm-components": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",
