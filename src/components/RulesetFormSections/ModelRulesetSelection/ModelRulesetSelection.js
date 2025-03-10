@@ -12,7 +12,10 @@ import { MODEL_RULESETS_ENDPOINT } from '../../../constants/endpoints';
 
 const propTypes = {
   onChange: PropTypes.func.isRequired,
-  selectedModelRuleset: PropTypes.object.isRequired,
+  selectedModelRuleset: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 const ModelRulesetSelection = ({ onChange, selectedModelRuleset }) => {
@@ -21,9 +24,10 @@ const ModelRulesetSelection = ({ onChange, selectedModelRuleset }) => {
   const pathMutator = (input, path) => {
     const query = generateKiwtQuery(
       {
-        searchKey: 'name,description,exampleLabel',
+        searchKey: 'name,description',
         stats: false,
         sort: [{ path: 'name' }],
+        perPage: 30
       },
       {
         query: input || '',
@@ -36,7 +40,6 @@ const ModelRulesetSelection = ({ onChange, selectedModelRuleset }) => {
     return (
       <span>
         <strong>{item.name}</strong> &quot;{item.description}&quot;{' '}
-        <i>{item.exampleLabel}</i>
       </span>
     );
   };
