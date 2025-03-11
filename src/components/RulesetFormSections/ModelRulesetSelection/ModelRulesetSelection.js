@@ -27,7 +27,6 @@ const ModelRulesetSelection = ({ onChange, selectedModelRuleset }) => {
         searchKey: 'name,description',
         stats: false,
         sort: [{ path: 'name' }],
-        perPage: 30
       },
       {
         query: input || '',
