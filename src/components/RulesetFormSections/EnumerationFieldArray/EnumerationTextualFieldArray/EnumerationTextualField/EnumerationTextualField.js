@@ -53,7 +53,8 @@ const EnumerationTextualField = ({
               dataOptions={[{ label: '', value: '' }, ...dataOptions]}
               disabled={!dataOptions}
               id="label-text-select"
-              name={`${name}.value`}
+              // This NEEDS to be the refdata value ID due to backend binding issues
+              name={`${name}.refdataValue.id`}
               required
               validate={requiredValidator}
             />
