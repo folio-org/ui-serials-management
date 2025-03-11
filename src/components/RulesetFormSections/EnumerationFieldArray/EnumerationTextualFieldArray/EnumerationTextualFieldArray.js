@@ -71,7 +71,7 @@ const EnumerationTextualFieldArray = ({ name, index }) => {
       <Row>
         <Col xs={3}>
           <Field
-            name={`${name}.refdataCategory`}
+            name={`${name}.refdataCategory.desc`}
             render={({ input, meta }) => (
               <Select
                 dataOptions={[{ label: '', value: '' }, ...refdataOptions]}
@@ -88,7 +88,7 @@ const EnumerationTextualFieldArray = ({ name, index }) => {
                       i < get(values, `${name}.levels`, null)?.length;
                       i++
                     ) {
-                      change(`${name}.levels[${i}].value`, undefined);
+                      change(`${name}.levels[${i}].refdataValue.id`, undefined);
                     }
                   }
                 }}
@@ -129,10 +129,10 @@ const EnumerationTextualFieldArray = ({ name, index }) => {
               dataOptions={
                   refdata
                     ?.find(
-                      (e) => e?.desc === get(values, `${name}.refdataCategory`, null)
+                      (e) => e?.desc === get(values, `${name}.refdataCategory.desc`, null)
                     )
                     ?.values.map((e) => {
-                      return { label: e?.label, value: e?.label };
+                      return { label: e?.label, value: e?.id };
                     }) ?? []
                 }
               index={levelIndex}
