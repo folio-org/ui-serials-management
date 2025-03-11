@@ -89,13 +89,33 @@
         ]
       },
       {
+        "permissionName": "ui-serials-management.serials.manage",
+        "displayName": "Serials: Manage serials",
+        "description": "Grants all permissions included in Serials: Edit serials plus the ability to delete serials.",
+        "visible": true,
+        "subPermissions": [
+          "ui-serials-management.serials.edit",
+          "serials-management.serials.manage"
+        ]
+      },
+      {
         "permissionName": "ui-serials-management.rulesets.edit",
         "displayName": "Serials: Edit publication patterns",
         "description": "Grants all permissions included in Serials: Edit serials plus the ability to create publication patterns.",
         "visible": true,
         "subPermissions": [
           "ui-serials-management.serials.edit",
-          "serials-management.rulesets.edit"
+          "serials-management.rulesets.edit",
+          "serials-management.modelRulesets.view"
+        ]
+      },
+      {
+        "permissionName": "ui-serials-management.modelrulesets.manage",
+        "displayName": "Serials: Manage publication pattern templates",
+        "description": "Grants permissions to create and delete publication pattern templates.",
+        "visible": true,
+        "subPermissions": [
+          "serials-management.modelRulesets.manage"
         ]
       },
       {
@@ -147,16 +167,6 @@
           "ui-serials-management.picklists.view",
           "serials-management.refdata.manage",
           "settings.configuration.manage"
-        ]
-      },
-      {
-        "permissionName": "ui-serials-management.serials.manage",
-        "displayName": "Serials: Manage serials",
-        "description": "Grants all permissions included in Serials: Edit serials plus the ability to delete serials.",
-        "visible": true,
-        "subPermissions": [
-          "ui-serials-management.serials.edit",
-          "serials-management.serials.manage"
         ]
       }
     ]
