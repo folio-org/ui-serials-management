@@ -12,7 +12,7 @@ import { translationsProperties } from '../../../../../test/helpers';
 import { refdata as mockRefdata } from '../../../../../test/resources';
 
 jest.mock('./EnumerationTextualField', () => ({ level }) => (
-  <div>{`EnumerationTextualField: ${level.value}`}</div>
+  <div>{`EnumerationTextualField: ${level?.refdataValue?.id}`}</div>
 ));
 const onSubmit = jest.fn();
 
@@ -80,16 +80,24 @@ describe('EnumerationTextualFieldArray', () => {
         <TestForm
           initialValues={{
             test: {
-              refdataCategory: 'Global.Yes_No', // Ensure this exists?
+              refdataCategory: {
+                desc: 'Global.Yes_No',
+              }, // Ensure this exists?
               levels: [
                 {
-                  value: 'a',
+                  refdataValue: {
+                    id: 'a',
+                  },
                 },
                 {
-                  value: 'b',
+                  refdataValue: {
+                    id: 'b',
+                  },
                 },
                 {
-                  value: 'c',
+                  refdataValue: {
+                    id: 'c',
+                  },
                 },
               ],
             },

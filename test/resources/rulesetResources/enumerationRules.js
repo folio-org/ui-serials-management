@@ -1,4 +1,4 @@
-import { findRefdataValue } from '../utils';
+import { findRefdataValue, findRefdataCategory } from '../utils';
 
 export const enumerationNumeric = {
   id: '6fb7e0db-90ff-4e9e-bf8c-9fa56271061a',
@@ -51,20 +51,21 @@ export const enumerationTextual = {
   ),
   ruleFormat: {
     id: '18b9bb72-aeef-43d3-9e83-b7e6df3b3eb9',
+    refdataCategory: findRefdataCategory('Global.Weekday'),
     levels: [
       {
         id: 'ac83f615-cad8-46be-9ea4-10c6d6a75f07',
         index: 0,
         internalNote: 'Order 1',
         units: 1,
-        value: 'Friday',
+        refdataValue: findRefdataValue('Global.Weekday', 'friday'),
       },
       {
         id: '01530c47-4a46-42e6-974f-12a08036c9f6',
         index: 1,
         internalNote: 'Order 2',
         units: 2,
-        value: 'Monday',
+        refdataValue: findRefdataValue('Global.Weekday', 'monday'),
       },
     ],
   },
