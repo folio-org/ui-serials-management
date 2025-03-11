@@ -38,7 +38,7 @@ const ModelRulesetSelection = ({ onChange, selectedModelRuleset }) => {
   const renderListItem = (item) => {
     return (
       <span>
-        <strong>{item.name}</strong> &quot;{item.description}&quot;{' '}
+        <strong>{item.name}</strong> &quot;{item.description}&quot;
       </span>
     );
   };
