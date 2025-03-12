@@ -261,5 +261,10 @@
     "ruleset.noChronologyLabels": "No chronology labels for this publication pattern",
     "ruleset.noEnumerationLabels": "No enumeration labels for this publication pattern",
     "ruleset.addChronologyLabel": "Add chronology label",
-    "ruleset.addEnumerationLabel": "Add enumeration label"
+    "ruleset.addEnumerationLabel": "Add enumeration label",
+    "serials.deleteSerial": "Delete serial",
+    "serials.deleteSerial.confirmMessage": "Serial <strong>{serial}</strong> will be deleted",
+    "serials.deleteSerial.error.hasPublicationPattern": "Serial was not deleted because it has one or more publication patterns.",
+    "serials.deleteSerial.success": "Serial deleted: <strong>{serial}</strong>",
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Serial was not deleted:</strong> {message}"
 }

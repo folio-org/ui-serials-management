@@ -193,7 +193,7 @@
     "ruleset.week.yearRange": "Semana (1-52)",
     "ruleset.month.yearRange": "Mês (Jan-Dez)",
     "ruleset.issue.nRange": "Fascículo (1-n)",
-    "serials.serial": "Seriado",
+    "serials.serial": "Publicação seriada",
     "ruleset.chronology.weekday.fullLower": "Segunda-feira",
     "ruleset.chronology.weekday.fullUpper": "SEGUNDA-FEIRA",
     "ruleset.chronology.weekday.sliceLower": "Seg",
@@ -261,5 +261,10 @@
     "ruleset.noChronologyLabels": "Não há rótulos de cronologia para este padrão de publicação",
     "ruleset.noEnumerationLabels": "Não há rótulos de enumeração para esse padrão de publicação",
     "ruleset.addChronologyLabel": "Adicionar rótulo de cronologia",
-    "ruleset.addEnumerationLabel": "Adicionar rótulo de enumeração"
+    "ruleset.addEnumerationLabel": "Adicionar rótulo de enumeração",
+    "serials.deleteSerial": "Excluir publicação seriada",
+    "serials.deleteSerial.confirmMessage": "Publicação seriada <strong>{serial}</strong> será excluída",
+    "serials.deleteSerial.error.hasPublicationPattern": "A publicação seriada não foi excluída porque possui um ou mais padrões de publicação.",
+    "serials.deleteSerial.success": "Publicação seriada excluída: <strong>{serial}</strong>",
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Publicação seriada não foi excluída:</strong> {message}"
 }

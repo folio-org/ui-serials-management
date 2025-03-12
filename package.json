@@ -89,13 +89,33 @@
         ]
       },
       {
+        "permissionName": "ui-serials-management.serials.manage",
+        "displayName": "Serials: Manage serials",
+        "description": "Grants all permissions included in Serials: Edit serials plus the ability to delete serials.",
+        "visible": true,
+        "subPermissions": [
+          "ui-serials-management.serials.edit",
+          "serials-management.serials.manage"
+        ]
+      },
+      {
         "permissionName": "ui-serials-management.rulesets.edit",
         "displayName": "Serials: Edit publication patterns",
         "description": "Grants all permissions included in Serials: Edit serials plus the ability to create publication patterns.",
         "visible": true,
         "subPermissions": [
           "ui-serials-management.serials.edit",
-          "serials-management.rulesets.edit"
+          "serials-management.rulesets.edit",
+          "serials-management.modelRulesets.view"
+        ]
+      },
+      {
+        "permissionName": "ui-serials-management.modelrulesets.manage",
+        "displayName": "Serials: Manage publication pattern templates",
+        "description": "Grants permissions to create and delete publication pattern templates.",
+        "visible": true,
+        "subPermissions": [
+          "serials-management.modelRulesets.manage"
         ]
       },
       {
@@ -156,8 +176,8 @@
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
     "@folio/service-interaction": "^4.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
     "@folio/stripes": "^10.0.0",
+    "@folio/stripes-acq-components": "^6.0.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-erm-testing": "^3.0.0",
@@ -179,13 +199,14 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
-    "react-final-form-arrays": "^3.1.1"
+    "react-final-form-arrays": "^3.1.1",
+    "uuid": "^11.1.0"
   },
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-erm-components": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",

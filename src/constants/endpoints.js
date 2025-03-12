@@ -21,6 +21,7 @@ export const CREATE_PREDICTED_PIECES = 'serials-management/predictedPieces/creat
 
 export const ORDERS_ENDPOINT = 'orders/composite-orders';
 export const RECEIVING_PIECES_ENDPOINT = 'orders/pieces';
+export const BATCH_RECEIVING_PIECES_ENDPOINT = 'orders/pieces-batch';
 export const VENDOR_ENDPOINT = 'organizations/organizations';
 export const MATERIAL_TYPE_ENDPOINT = 'material-types';
 export const IDENTIFIER_TYPES_ENDPOINT = 'identifier-types';
