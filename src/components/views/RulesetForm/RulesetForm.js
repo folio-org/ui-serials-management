@@ -55,7 +55,9 @@ const propTypes = {
   }).isRequired,
   modelRuleset: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
-    selectedModelRuleset: PropTypes.object.isRequired,
+    selectedModelRuleset: PropTypes.shape({
+      serialRuleset: PropTypes.object.isRequired,
+    }).isRequired,
   }).isRequired,
 };
 

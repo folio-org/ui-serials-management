@@ -26,4 +26,8 @@ const sortPieces = (pieces) => {
     });
 };
 
+const comparePieces = (a, b) => {
+  return a?.date < b?.date ? -1 : 1;
+}
+
 export default sortPieces;
