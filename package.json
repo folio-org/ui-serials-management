@@ -26,7 +26,7 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "serials-management": "1.0"
+      "serials-management": "1.0 2.0"
     },
     "optionalOkapiInterfaces": {
       "orders": "12.1",
@@ -177,7 +177,7 @@
     "@folio/jest-config-stripes": "^3.0.0",
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-erm-testing": "^3.0.0",
@@ -192,7 +192,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^5.11.0",
+    "@k-int/stripes-kint-components": "^5.15.0",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
     "final-form-set-field-data": "^1.0.2",
@@ -205,7 +205,7 @@
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -214,6 +214,6 @@
     "react-router-dom": "^5.2.0"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-po-line": "^5.2.0"
+    "@folio/plugin-find-po-line": "^6.0.0"
   }
 }
