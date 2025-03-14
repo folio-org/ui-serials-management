@@ -141,7 +141,7 @@ const EnumerationLabels = ({ ruleset }) => {
                     <Col xs={12}>
                       {renderEnumerationLabelName(rule, ruleIndex)}
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={6}>
                       <KeyValue
                         label={
                           <FormattedMessage id="ui-serials-management.ruleset.picklist" />
