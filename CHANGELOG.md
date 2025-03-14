@@ -1,5 +1,7 @@
 # change history for ui-serials-management
 
+## 2.1.0 IN PROGRESS
+
 ## 2.0.0 2025-03-14
   * UISER-204 Textual enumeration labels are not populated in edit/copy screens
   * UISER-203 On saving a new serial record the user should be returned to the serial view
