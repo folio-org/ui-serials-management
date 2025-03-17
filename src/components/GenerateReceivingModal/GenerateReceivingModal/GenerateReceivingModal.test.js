@@ -37,6 +37,9 @@ jest.mock('@folio/stripes-acq-components', () => ({
   useLocationsQuery: () => ({ isLoading: false, locations: mockLocations }),
 }));
 
+// Option to be selected in 'Location' dropdown
+const selectedLocationOption = mockLocations.find((l) => l.name === 'Annex');
+
 const TestComponent = () => {
   // We need actual state in here for close test
   const [showModal, setShowModal] = useState(true);
@@ -67,16 +70,6 @@ describe('GenerateReceivingModal', () => {
     await Modal('Generate receiving pieces').exists();
   });
 
-  // test('renders the GenerateReceivingModalInfo component', () => {
-  //   const { getByText } = renderComponent;
-  //   expect(getByText('GenerateReceivingModalInfo')).toBeInTheDocument();
-  // });
-
-  // test('renders the GenerateReceivingModalInfo component', () => {
-  //   const { getByText } = renderComponent;
-  //   expect(getByText('GenerateReceivingModalForm')).toBeInTheDocument();
-  // });
-
   test('renders the Generate receiving pieces button (disabled)', async () => {
     await waitFor(async () => {
       await Button('Generate receiving pieces').has({
@@ -90,7 +83,7 @@ describe('GenerateReceivingModal', () => {
       // Fill out fake value to enable button
       await waitFor(async () => {
         await TextField({ id: 'interval-field' }).fillIn('3');
-        await Select('Location*').chooseAndBlur('Annex');
+        await Select('Location*').chooseAndBlur(selectedLocationOption?.name);
       });
     });
 
@@ -102,9 +95,9 @@ describe('GenerateReceivingModal', () => {
 
     test('renders the location value as expected', async () => {
       await waitFor(async () => {
-        // FIXME this isn't great -- would rather use option label if you can figure that out -- or centralised testing. This needs work
+        // Switch this from using hardcoded Id to using find on mockLocations
         await Select('Location*').has({
-          value: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+          value: selectedLocationOption.id,
         });
       });
     });
@@ -124,33 +117,58 @@ describe('GenerateReceivingModal', () => {
         });
       });
 
-      // mock.calls[0] is the first call -- we iterate over a lot of calls here so we should test them all (I know this will change)
-      test('submitReceivingIds went to the right endpoint', () => {
+      // Since we're now using the order/parts endpoint, should only be making one call to orders
+      test('submitReceivingPieces went to the right endpoint', () => {
         // mock.calls[0][0] is the first argument (endpoint)
-        expect(mockKy.mock.calls[0][0]).toBe('orders/pieces-batch');
+        const endpointCalled = mockKy.mock.calls[0][0];
+        expect(endpointCalled).toBe('orders/pieces-batch');
       });
 
-      // FIXME Jack I have no idea where this info comes from, idk if this is the right stuff to test
-      test('submitReceivingIds sent the right information', () => {
-        const firstSendReceivingPiece =
-          mockKy.mock.calls[0][1]?.json?.pieces?.[0];
-        // FIXME you can do better than this Jack -- proof of concept
-        console.log(firstSendReceivingPiece);
-        expect(firstSendReceivingPiece.receiptDate?.toString()).toEqual(
+      test('submitReceivingPieces sent the right information', () => {
+        const firstReceivingPiece = mockKy.mock.calls[0][1]?.json?.pieces?.[0];
+
+        // First thing to check is that display summary is correct
+        expect(firstReceivingPiece.displaySummary?.toString()).toEqual('5 9');
+        // Secondly, check the recieptDate is the piece date adjusted by interval
+        // In this case its 2024-10-01 + 3 days
+        expect(firstReceivingPiece.receiptDate?.toString()).toEqual(
           'Fri Oct 04 2024 01:00:00 GMT+0100 (British Summer Time)'
         );
 
-        // mock.calls[0][1] is the second argument (data)
-        expect(omit(firstSendReceivingPiece, ['receiptDate', 'id'])).toEqual({
+        // Check the rest of the values, values that are taken from the serial, form values and defaults
+        // Id is somewhat irrelevant, since we actually want to make sure the same one is being passed to the next call
+        expect(
+          omit(firstReceivingPiece, ['receiptDate', 'id', 'displaySummary'])
+        ).toEqual({
+          // Defined by serial
+          poLineId: serial?.orderLine?.remoteId,
+          titleId: serial?.orderLine?.titleId,
+          // Selected form values
+          locationId: selectedLocationOption.id,
+          // Defaults
           displayOnHolding: false,
           displayToPublic: false,
-          locationId: '53cf956f-c1df-410b-8bea-27f712cca7c0',
-          displaySummary: '5 9',
           format: 'Physical',
-          poLineId: 'baec48dd-1594-2712-be8f-de336bc83fcc',
           supplement: false,
-          titleId: '7cef39f1-4fb1-49d5-9a6b-a072e632144d',
         });
+      });
+
+      test('submitReceivingIds went to the right endpoint', () => {
+        // mock.calls[1][0] is the first argument (endpoint)
+        const endpointCalled = mockKy.mock.calls[1][0];
+        expect(endpointCalled).toBe(
+          `serials-management/predictedPieces/${pieceSet.id}`
+        );
+      });
+
+      test('submitReceivingIds sent the right information', () => {
+        const firstInternalPiece = mockKy.mock.calls[1][1]?.json?.pieces?.[0];
+
+        // Check that the receivingId is the same as the one generated in the first call
+        // This is the only real important thing that matters wth regards to this call
+        expect(
+          firstInternalPiece.receivingPieces?.[0]?.receivingId?.toString()
+        ).toEqual(mockKy.mock.calls[0][1]?.json?.pieces?.[0]?.id?.toString());
       });
     });
   });
