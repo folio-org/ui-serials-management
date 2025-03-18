@@ -220,19 +220,17 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
   );
 
   return (
-    <>
-      <Row>
-        {chronologyFormats[chronologyRule?.templateMetadataRuleFormat]
-          ?.getFields()
-          ?.map((chronologyField, fieldIndex) => {
-            return (
-              <div key={`chronology-field-${name}[${fieldIndex}]`}>
-                <Col xs={3}>{chronologyField}</Col>
-              </div>
-            );
-          })}
-      </Row>
-    </>
+    <Row>
+      {chronologyFormats[chronologyRule?.templateMetadataRuleFormat]
+        ?.getFields()
+        ?.map((chronologyField, fieldIndex) => {
+          return (
+            <div key={`chronology-field-${name}[${fieldIndex}]`}>
+              <Col xs={3}>{chronologyField}</Col>
+            </div>
+          );
+        })}
+    </Row>
   );
 };
 
