@@ -131,9 +131,11 @@ describe('GenerateReceivingModal', () => {
         expect(firstReceivingPiece.displaySummary?.toString()).toEqual('5 9');
         // Secondly, check the recieptDate is the piece date adjusted by interval
         // In this case its 2024-10-01 + 3 days
-        expect(firstReceivingPiece.receiptDate?.toString()).toEqual(
-          'Fri Oct 04 2024 01:00:00 GMT+0100 (British Summer Time)'
-        );
+        // We're using toLocaleDateString to avoid timezone issues when running on different environments
+        // Should be ok since piece date is always at midnight, will want a refactor when we move to dayjs
+        expect(
+          new Date(firstReceivingPiece.receiptDate).toLocaleDateString('en')
+        ).toEqual('10/4/2024');
 
         // Check the rest of the values, values that are taken from the serial, form values and defaults
         // Id is somewhat irrelevant, since we actually want to make sure the same one is being passed to the next call
