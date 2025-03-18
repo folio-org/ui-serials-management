@@ -58,6 +58,9 @@ const propTypes = {
     selectedModelRuleset: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
+      serialRuleset: PropTypes.shape({
+        id: PropTypes.string,
+      }),
     }),
   }).isRequired,
 };
@@ -208,7 +211,7 @@ const RulesetForm = ({
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                )}
+                  )}
               </Accordion>
               <Accordion
                 label={
