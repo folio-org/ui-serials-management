@@ -6,6 +6,7 @@ const pieceSet = {
   titleId: '157b3857-f94b-45c9-9b0a-00e2d9c68dbb',
   startDate: '2024-02-01',
   note: 'Test note',
+  numberOfCycles: 1,
   ruleset,
   pieces: [
     {
@@ -105,6 +106,48 @@ const pieceSet = {
       recurrenceRule: ruleset.recurrence.rules[0],
     },
   ],
+  // TODO This may need to be put into its own centralised resource
+  continuationPieceRecurrenceMetadata: {
+    id: 'd7c955e2-d45b-4769-a592-ee1e52a0a302',
+    userConfigured: [
+      {
+        id: '85c4a0d8-2590-4c44-857e-2923b9d69cfb',
+        index: 0,
+        userConfiguredTemplateMetadataType: {
+          id: '2c91809d95a6eb7b0195a6f4e160004a',
+          value: 'enumeration',
+          label: 'Enumeration',
+        },
+        metadataType: {
+          id: 'b0fba028-c7a2-4b20-9c91-af1e673c2a05',
+          levels: [
+            {
+              id: '6d13aa57-1942-458e-98d8-d9d588c754ab',
+              index: 0,
+              rawValue: 3,
+              valueFormat: {
+                id: '2c91809d95a6eb7b0195a6f4e245005c',
+                value: 'number',
+                label: 'Number',
+              },
+              value: '3',
+            },
+            {
+              id: 'eff60cb3-09df-4a1b-b2bb-5a0f567be02a',
+              index: 1,
+              rawValue: 3,
+              valueFormat: {
+                id: '2c91809d95a6eb7b0195a6f4e245005c',
+                value: 'number',
+                label: 'Number',
+              },
+              value: '3',
+            },
+          ],
+        },
+      },
+    ],
+  },
   dateCreated: '2024-02-26T10:02:37Z',
   lastUpdated: '2024-02-26T10:02:37Z',
 };

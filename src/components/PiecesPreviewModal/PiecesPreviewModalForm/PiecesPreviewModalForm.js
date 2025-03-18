@@ -23,9 +23,9 @@ import {
   requiredValidator,
 } from '@folio/stripes-erm-components';
 
-import { validateNotNegative, validateWithinRange } from '../utils';
+import { validateNotNegative, validateWithinRange } from '../../utils';
 
-import css from './PiecesPreviewModal.css';
+import css from './PiecesPreviewModalForm.css';
 
 const propTypes = {
   serialName: PropTypes.string,
