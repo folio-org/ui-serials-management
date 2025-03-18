@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { useMutation } from 'react-query';
 import {
   renderWithIntl,
-  Button,
   Datepicker,
   MessageBanner,
   TextField,
@@ -15,8 +12,6 @@ import {
   screen,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
-
-import PiecesPreviewModal from '../PiecesPreviewModal';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { pieceSet, ruleset, serial } from '../../../../test/resources';
