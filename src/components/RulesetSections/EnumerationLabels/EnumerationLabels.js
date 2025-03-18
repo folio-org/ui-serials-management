@@ -9,6 +9,7 @@ import {
   Row,
   MultiColumnList,
   Label,
+  KeyValue,
 } from '@folio/stripes/components';
 
 import { getSortedItems } from '../../utils';
@@ -83,7 +84,7 @@ const EnumerationLabels = ({ ruleset }) => {
     const formatter = {
       order: (e) => e?.index + 1,
       issues: (e) => e?.units,
-      labelText: (e) => e?.value,
+      labelText: (e) => e?.refdataValue?.label ?? e?.staticValue,
       internalNote: (e) => e?.internalNote,
     };
     return (
@@ -139,6 +140,15 @@ const EnumerationLabels = ({ ruleset }) => {
                   <>
                     <Col xs={12}>
                       {renderEnumerationLabelName(rule, ruleIndex)}
+                    </Col>
+                    <Col xs={6}>
+                      <KeyValue
+                        label={
+                          <FormattedMessage id="ui-serials-management.ruleset.picklist" />
+                      }
+                      >
+                        {rule?.ruleFormat?.refdataCategory?.desc}
+                      </KeyValue>
                     </Col>
                     <Col xs={12}>
                       {renderEnumerationTextualMCL(rule?.ruleFormat)}

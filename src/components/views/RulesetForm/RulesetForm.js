@@ -51,13 +51,14 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func,
   }).isRequired,
   modelRuleset: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     selectedModelRuleset: PropTypes.shape({
-      serialRuleset: PropTypes.object.isRequired,
-    }).isRequired,
+      id: PropTypes.string,
+      name: PropTypes.string,
+    }),
   }).isRequired,
 };
 

@@ -25,7 +25,7 @@ const SerialCreateRoute = () => {
     (data) => {
       ky.post(SERIALS_ENDPOINT, { json: data })
         .json()
-        .then(() => handleClose());
+        .then(({ id }) => history.push(`${urls.serialView(id)}${location.search}`));
     }
   );
   /* istanbul ignore next */
