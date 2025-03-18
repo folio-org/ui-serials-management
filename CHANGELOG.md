@@ -1,6 +1,8 @@
 # change history for ui-serials-management
 
-## 2.1.0 IN PROGRESS
+## 2.0.1 2025-03-18
+  * UISER-188 Review current state of test coverage and sonarqube code smells
+    * Increased code coverage and resolved various code smells and reliability issues
 
 ## 2.0.0 2025-03-14
   * UISER-204 Textual enumeration labels are not populated in edit/copy screens
