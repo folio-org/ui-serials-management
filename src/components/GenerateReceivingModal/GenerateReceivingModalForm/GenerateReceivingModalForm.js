@@ -101,6 +101,7 @@ const GenerateReceivingModalForm = ({
         <Col xs={6}>
           <Field
             component={TextField}
+            id="interval-field"
             label={
               <>
                 <FormattedMessage id="ui-serials-management.pieceSets.timeBetweenPublicationAndReceipt" />
