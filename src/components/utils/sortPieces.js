@@ -1,15 +1,13 @@
 import { INTERNAL_COMBINATION_PIECE } from '../../constants/internalPieceClasses';
 
 const comparePieces = (a, b) => {
+  const parseDate = (piece) => {
+    return piece?.class === INTERNAL_COMBINATION_PIECE
+      ? piece?.recurrencePieces[0]?.date
+      : piece?.date;
+  };
   // Sort all pieces by date or by the recurrence pieces of a combination piece);
-  return (a?.class === INTERNAL_COMBINATION_PIECE
-    ? a?.recurrencePieces[0]?.date
-    : a?.date) <
-    (b?.class === INTERNAL_COMBINATION_PIECE
-      ? b?.recurrencePieces[0]?.date
-      : b?.date)
-    ? -1
-    : 1;
+  return parseDate(a) < parseDate(b) ? -1 : 1;
 };
 
 // Used to sort pieces by date and combination pieces by their recurrence pieces date
