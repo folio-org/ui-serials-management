@@ -16,13 +16,14 @@ import {
 import { translationsProperties } from '../../../../test/helpers';
 import { pieceSet, ruleset, serial } from '../../../../test/resources';
 import PiecesPreviewModalForm from './PiecesPreviewModalForm';
+import { getRulesetFormValues } from '../../utils';
 
 let renderComponent;
 
 const onSubmit = jest.fn();
 
 describe('PiecesPreviewModalForm', () => {
-  describe('with all props (existingPiecesets, ruleset, serialName, allowCreation)', () => {
+  describe('with all props (from a serial view component)', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
@@ -126,6 +127,51 @@ describe('PiecesPreviewModalForm', () => {
           'Warning: A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>'
         ).exists();
       });
+    });
+  });
+
+  describe('with limited props (from a ruleset form component)', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <PiecesPreviewModalForm
+            ruleset={getRulesetFormValues(ruleset)}
+            serialName={serial?.id}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    // Since this is within a RulesetForm component, there should be no previous sets
+    test('renders "Follow on from the last piece in a previous set" select component', async () => {
+      await Select('Follow on from the last piece in a previous set').absent();
+    });
+
+    // Since allowCreation is not passed, the Note text area should not be rendered
+    test('renders "Note" text area component', async () => {
+      await TextArea('Note').absent();
+    });
+
+    // We want to ensure enumeration fields are handled correctly when using form values
+    test('renders "Values to use for the first issue" label', async () => {
+      const { getByText } = renderComponent;
+      expect(
+        getByText('Values to use for the first issue')
+      ).toBeInTheDocument();
+    });
+
+    test('renders "Label 1" label', async () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Label 1')).toBeInTheDocument();
+    });
+
+    test('renders "Level 1" text field component', async () => {
+      await TextField('Level 1*').exists();
+    });
+
+    test('renders "Level 2" text field component', async () => {
+      await TextField('Level 2*').exists();
     });
   });
 });
