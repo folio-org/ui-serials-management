@@ -1,5 +1,5 @@
 import { Field, useFormState, useForm } from 'react-final-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { NumberField } from '@k-int/stripes-kint-components';
 
 import {
@@ -39,7 +39,6 @@ const TIME_UNIT_LIMITERS = {
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
   const { change, batch } = useForm();
-  const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
   const timeUnitOnChange = (e) => {
