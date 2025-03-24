@@ -64,7 +64,7 @@ const PatternTimePeriodForm = () => {
 
   const issuesOnChange = (e) => {
     // If timeunit is anything but 'day' clear patterntype, else keep as is
-    // FIXME Not a fan of this implementation
+    // TODO Not a fan of this implementation
     const timeUnit = values?.recurrence?.timeUnit?.value;
     const patternType = RECURRENCE_PATTERN_TYPE_OPTIONS[timeUnit]
       ? undefined

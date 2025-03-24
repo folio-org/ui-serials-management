@@ -1,6 +1,28 @@
 # change history for ui-serials-management
 
-## 1.2.0 IN PROGRESS
+## 2.1.0 IN PROGRESS
+
+## 2.0.1 2025-03-18
+  * UISER-188 Review current state of test coverage and sonarqube code smells
+    * Increased code coverage and resolved various code smells and reliability issues
+
+## 2.0.0 2025-03-14
+  * UISER-204 Textual enumeration labels are not populated in edit/copy screens
+  * UISER-203 On saving a new serial record the user should be returned to the serial view
+  * UISER-202 Add permission set for managing modelrulesets
+  * UISER-201 Add permission to GET modelRulesets to ui-serials-management.rulesets.edit
+  * UISER-200 Modify search options in pattern template (model ruleset) dropdown
+  * UISER-197 Support deleting Serials records via UI
+  * UISER-196 On applying a publication pattern template the `ruleLocale` values are not filled in correctly
+  * UISER-195 *BREAKING* Stripes v10 dependencies update
+    * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
+  * UISER-194 Move to use of batch receiving piece creation
+  * UISER-191 Textual enumeration labels should be stored with reference data IDs in rulesets
+  * UISER-189 On opening Serials search and sort and Piece sets search and sort, do not immediately retrieve records
+  * UISER-185 Change to paginated display in the serials and piece sets search and sort results
+  * UISER-184 Implement separation of chronology and enumeration
+  * UISER-182 Support use of publication pattern templates
+  * UISER-157: Serial status field does not impact ability to create publication patterns, predicted pieces, and receiving pieces
 
 ## 1.1.2 2025-01-09
   * UISER-161 Enable support for serials to create receiving pieces in ECS environments with central ordering

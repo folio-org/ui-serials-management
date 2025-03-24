@@ -172,41 +172,41 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
           renderMonthDayFormatField(),
           renderMonthFormatField(),
           renderYearFormatField(),
-          <div>
+          <>
             <Label id="template-token-header">
               <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
               {renderTemplateTokensInfo()}
               <ClipCopy text={tokenText} />
             </Label>
             {tokenText}
-          </div>,
+          </>,
         ],
       },
       chronology_month: {
         getFields: () => [
           renderMonthFormatField(),
           renderYearFormatField(),
-          <div>
+          <>
             <Label id="template-token-header">
               <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
               {renderTemplateTokensInfo()}
               <ClipCopy text={tokenText} />
             </Label>
             {tokenText}
-          </div>,
+          </>,
         ],
       },
       chronology_year: {
         getFields: () => [
           renderYearFormatField(),
-          <div>
+          <>
             <Label id="template-token-header">
               <FormattedMessage id="ui-serials-management.ruleset.template.tokens" />
               {renderTemplateTokensInfo()}
               <ClipCopy text={tokenText} />
             </Label>
             {tokenText}
-          </div>,
+          </>,
         ],
       },
     }),
@@ -220,19 +220,17 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
   );
 
   return (
-    <>
-      <Row>
-        {chronologyFormats[
-          chronologyRule?.templateMetadataRuleFormat
-        ]?.getFields()?.map((chronologyField, fieldIndex) => {
+    <Row>
+      {chronologyFormats[chronologyRule?.templateMetadataRuleFormat]
+        ?.getFields()
+        ?.map((chronologyField, fieldIndex) => {
           return (
-            <Col key={`chronology-field-${name}[${fieldIndex}]`} xs={3}>
-              {chronologyField}
-            </Col>
+            <div key={`chronology-field-${name}[${fieldIndex}]`}>
+              <Col xs={3}>{chronologyField}</Col>
+            </div>
           );
         })}
-      </Row>
-    </>
+    </Row>
   );
 };
 
