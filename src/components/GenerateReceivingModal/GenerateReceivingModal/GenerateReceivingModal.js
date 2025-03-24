@@ -12,10 +12,10 @@ import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
 import {
   useCentralOrderingSettings,
   useInstanceHoldingsQuery,
-  useLocationsQuery,
   useConsortiumTenants,
 } from '@folio/stripes-acq-components';
 
+import { useLocationsWithQueryParams } from '../../../hooks';
 import GenerateReceivingModalForm from '../GenerateReceivingModalForm';
 import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
@@ -42,24 +42,28 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
 
   // Hooks to be used within an environment when cental ordering is enabled
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
-  const { tenants = [] } = useConsortiumTenants({
-    enabled: isCentralOrderingEnabled,
-  });
-  const { holdings = [] } = useInstanceHoldingsQuery(
-    orderLine?.remoteId_object?.instanceId,
-    { consortium: isCentralOrderingEnabled }
-  );
+  const { tenants = [] } = useConsortiumTenants({ enabled: isCentralOrderingEnabled });
 
-  const { locations = [] } = useLocationsQuery({
+  const { holdings = [] } = useInstanceHoldingsQuery(orderLine?.remoteId_object?.instanceId, {
     consortium: isCentralOrderingEnabled,
   });
 
-  // Good lord this is a bit of a mind bender
-  // Since we cant filter the locations paticularly well using the hook search params
-  // We have to filter the holdings and locations in the front end
+  const locationQueryParams = useMemo(() => {
+    const locationIds = orderLine?.remoteId_object?.locations?.map(loc => loc.locationId).filter(Boolean);
 
-  // Filtering holdings/locaitons for non ecs environments
-  // First filter the holdings by id, checking if holdingId exist in POL locations
+    if (locationIds?.length > 0) {
+      return { query: locationIds.map(id => `id==${id}`).join(' or ') };
+    }
+    return {};
+  }, [orderLine?.remoteId_object?.locations]);
+
+  // fetch locations with backend filtering
+  const { locations = [] } = useLocationsWithQueryParams(locationQueryParams, {
+    consortium: isCentralOrderingEnabled,
+    options: { enabled: !!orderLine?.remoteId_object },
+  });
+
+  // Filter holdings by checking if holdingId exists in POL locations
   const filteredHoldings = useMemo(() => {
     return holdings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
       if (rol?.tenantId) {
@@ -69,37 +73,15 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
     }));
   }, [holdings, orderLine?.remoteId_object?.locations]);
 
-  // Filter locations the same way we did with holdings
-  // location?.id being comapred against the POL locations arrays location?.id
-  // We will also need to filter these for the locations that are the permanentLocationIds on a given holding
-  const filteredLocations = useMemo(() => {
-    return locations?.filter(
-      (l) => orderLine?.remoteId_object?.locations?.some((rol) => {
-        if (rol?.tenantId) {
-          return rol?.locationId === l?.id && rol?.tenantId === l?.tenantId;
-        }
-        return rol?.locationId === l?.id;
-      }) ||
-        filteredHoldings?.some((h) => {
-          if (h?.tenantId) {
-            return (
-              l?.id === h?.permanentLocationId && l?.tenantId === h?.tenantId
-            );
-          }
-          return l?.id === h?.permanentLocationId;
-        })
-    );
-  }, [filteredHoldings, locations, orderLine?.remoteId_object?.locations]);
-
   // Taking consortium holdings/locations and extracting the tenantIds within those from the list of tenants
   const filteredTenants = useMemo(() => {
     return (
       tenants?.filter(
-        (t) => filteredLocations?.some((l) => l?.tenantId === t?.id) ||
+        (t) => locations?.some((l) => l?.tenantId === t?.id) ||
           filteredHoldings?.some((l) => l?.tenantId === t?.id)
       ) || []
     );
-  }, [tenants, filteredLocations, filteredHoldings]);
+  }, [tenants, locations, filteredHoldings]);
 
   const { mutateAsync: submitReceivingPieces } = useMutation(
     ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPieces'],
@@ -283,7 +265,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
       />
       <GenerateReceivingModalForm
         holdings={filteredHoldings}
-        locations={filteredLocations}
+        locations={locations}
         orderLine={orderLine}
         tenants={filteredTenants}
       />
