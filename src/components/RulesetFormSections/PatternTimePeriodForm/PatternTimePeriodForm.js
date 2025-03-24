@@ -138,18 +138,13 @@ const PatternTimePeriodForm = () => {
                 id="number-of-time-unit"
                 input={input}
                 label={
-                  <FormattedMessage
-                    id="ui-serials-management.ruleset.numberOfTimeUnit"
-                    values={{
-                      timeUnit:
-                        values?.recurrence?.timeUnit?.value ||
-                        intl
-                          .formatMessage({
-                            id: 'ui-serials-management.ruleset.timeUnit',
-                          })
-                          .toLocaleLowerCase(),
-                    }}
-                  />
+                  values?.recurrence?.timeUnit?.value ? (
+                    <FormattedMessage
+                      id={`ui-serials-management.ruleset.numberOfTimeUnit.${values?.recurrence?.timeUnit?.value}`}
+                    />
+                  ) : (
+                    <FormattedMessage id="ui-serials-management.ruleset.numberOfTimeUnit" />
+                  )
                 }
                 meta={meta}
                 onChange={(e) => periodOnChange(e)}

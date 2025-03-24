@@ -55,7 +55,7 @@
     "description": "Description",
     "rulesets.editRuleset": "Edit ruleset",
     "ruleset.timeUnit": "Time unit",
-    "ruleset.numberOfTimeUnit": "Number of {timeUnit}s",
+    "ruleset.numberOfTimeUnit": "Number of time units",
     "ruleset.numberOfIssues": "No. of issues",
     "ruleset.day": "Day",
     "ruleset.week": "Week",

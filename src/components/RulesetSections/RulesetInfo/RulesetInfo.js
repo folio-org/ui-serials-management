@@ -86,10 +86,7 @@ const RulesetInfo = ({ serial, ruleset }) => {
           <KeyValue
             label={
               <FormattedMessage
-                id="ui-serials-management.ruleset.numberOfTimeUnit"
-                values={{
-                  timeUnit: ruleset?.recurrence?.timeUnit?.value,
-                }}
+                id={`ui-serials-management.ruleset.numberOfTimeUnit.${ruleset?.recurrence?.timeUnit?.value}`}
               />
             }
             value={ruleset?.recurrence?.period}
