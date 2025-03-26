@@ -1,5 +1,5 @@
 import { Field, useFormState, useForm } from 'react-final-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { NumberField } from '@k-int/stripes-kint-components';
 
 import {
@@ -39,7 +39,6 @@ const TIME_UNIT_LIMITERS = {
 const PatternTimePeriodForm = () => {
   const { values } = useFormState();
   const { change, batch } = useForm();
-  const intl = useIntl();
   const refdataValues = useSerialsManagementRefdata([TIME_UNITS]);
 
   const timeUnitOnChange = (e) => {
@@ -138,18 +137,13 @@ const PatternTimePeriodForm = () => {
                 id="number-of-time-unit"
                 input={input}
                 label={
-                  <FormattedMessage
-                    id="ui-serials-management.ruleset.numberOfTimeUnit"
-                    values={{
-                      timeUnit:
-                        values?.recurrence?.timeUnit?.value ||
-                        intl
-                          .formatMessage({
-                            id: 'ui-serials-management.ruleset.timeUnit',
-                          })
-                          .toLocaleLowerCase(),
-                    }}
-                  />
+                  values?.recurrence?.timeUnit?.value ? (
+                    <FormattedMessage
+                      id={`ui-serials-management.ruleset.numberOfTimeUnit.${values?.recurrence?.timeUnit?.value}`}
+                    />
+                  ) : (
+                    <FormattedMessage id="ui-serials-management.ruleset.numberOfTimeUnit" />
+                  )
                 }
                 meta={meta}
                 onChange={(e) => periodOnChange(e)}
