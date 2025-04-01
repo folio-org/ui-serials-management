@@ -1,8 +1,8 @@
 # change history for ui-serials-management
 
-## 2.0.1 2025-03-18
-  * UISER-188 Review current state of test coverage and sonarqube code smells
-    * Increased code coverage and resolved various code smells and reliability issues
+## 2.0.2 2025-04-01
+  * UISER-208 TypeError on the publication pattern create/edit form
+  * UISER-206 Fields in publication pattern creation form do not have correct width
 
 ## 2.0.1 2025-03-18
   * UISER-188 Review current state of test coverage and sonarqube code smells
