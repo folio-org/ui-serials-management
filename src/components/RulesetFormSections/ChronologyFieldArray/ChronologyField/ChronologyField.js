@@ -214,10 +214,8 @@ const ChronologyField = ({ name, chronologyRule, index }) => {
         ?.getFields()
         ?.map((chronologyField, fieldIndex) => {
           return (
-            <Col xs={3}>
-              <div key={`chronology-field-${name}[${fieldIndex}]`}>
-                {chronologyField}
-              </div>
+            <Col key={`chronology-field-${name}[${fieldIndex}]`} xs={3}>
+              {chronologyField}
             </Col>
           );
         })}
