@@ -161,10 +161,7 @@ const PublicationPattern = ({ serial }) => {
               <KeyValue
                 label={
                   <FormattedMessage
-                    id="ui-serials-management.ruleset.numberOfTimeUnit"
-                    values={{
-                      timeUnit: activeRuleset?.recurrence?.timeUnit?.value,
-                    }}
+                    id={`ui-serials-management.ruleset.numberOfTimeUnit.${activeRuleset?.recurrence?.timeUnit?.value}`}
                   />
                 }
                 value={activeRuleset?.recurrence?.period}
