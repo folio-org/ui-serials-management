@@ -266,5 +266,9 @@
     "serials.deleteSerial.confirmMessage": "Series <strong>{serial}</strong> wordt verwijderd",
     "serials.deleteSerial.error.hasPublicationPattern": "Series zijn niet verwijderd omdat ze een of meer publicatiepatronen hebben.",
     "serials.deleteSerial.success": "Series verwijderd: <strong>{serial}</strong>",
-    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Serie is niet verwijderd:</strong> {message}"
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Serie is niet verwijderd:</strong> {message}",
+    "ruleset.numberOfTimeUnit.day": "Number of days",
+    "ruleset.numberOfTimeUnit.week": "Number of weeks",
+    "ruleset.numberOfTimeUnit.month": "Number of months",
+    "ruleset.numberOfTimeUnit.year": "Number of years"
 }
