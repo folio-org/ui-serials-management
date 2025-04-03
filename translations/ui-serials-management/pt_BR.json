@@ -55,7 +55,7 @@
     "description": "Descrição",
     "rulesets.editRuleset": "Editar conjunto de regras",
     "ruleset.timeUnit": "Unidade de tempo",
-    "ruleset.numberOfTimeUnit": "Número de {timeUnit} s",
+    "ruleset.numberOfTimeUnit": "Número de unidades de tempo",
     "ruleset.numberOfIssues": "Número de fascículos",
     "ruleset.day": "Dia",
     "ruleset.week": "Semana",
@@ -266,5 +266,9 @@
     "serials.deleteSerial.confirmMessage": "Publicação seriada <strong>{serial}</strong> será excluída",
     "serials.deleteSerial.error.hasPublicationPattern": "A publicação seriada não foi excluída porque possui um ou mais padrões de publicação.",
     "serials.deleteSerial.success": "Publicação seriada excluída: <strong>{serial}</strong>",
-    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Publicação seriada não foi excluída:</strong> {message}"
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Publicação seriada não foi excluída:</strong> {message}",
+    "ruleset.numberOfTimeUnit.day": "Número de dias",
+    "ruleset.numberOfTimeUnit.week": "Número de semanas",
+    "ruleset.numberOfTimeUnit.month": "Número de meses",
+    "ruleset.numberOfTimeUnit.year": "Número de anos"
 }
