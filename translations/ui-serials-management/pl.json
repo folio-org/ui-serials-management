@@ -55,7 +55,7 @@
     "description": "Opis",
     "rulesets.editRuleset": "Edit ruleset",
     "ruleset.timeUnit": "Jednostka czasu",
-    "ruleset.numberOfTimeUnit": "Number of {timeUnit}s",
+    "ruleset.numberOfTimeUnit": "Number of time units",
     "ruleset.numberOfIssues": "Liczba zeszytów",
     "ruleset.day": "Dzień",
     "ruleset.week": "Tydzień",
@@ -266,5 +266,9 @@
     "serials.deleteSerial.confirmMessage": "Wydanictwo ciągłe <strong>{serial}</strong> zostanie usunięte",
     "serials.deleteSerial.error.hasPublicationPattern": "Wydawnictwo ciągłe nie zostało usunięte, ponieważ zawiera jeden lub więcej wzorów publikacji.",
     "serials.deleteSerial.success": "Wydawnictwo ciągłe zostało usunięte: <strong>{serial}</strong>",
-    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Wydawnictwo ciągłe nie zostało usunięte:</strong> {message}"
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Wydawnictwo ciągłe nie zostało usunięte:</strong> {message}",
+    "ruleset.numberOfTimeUnit.day": "Number of days",
+    "ruleset.numberOfTimeUnit.week": "Number of weeks",
+    "ruleset.numberOfTimeUnit.month": "Number of months",
+    "ruleset.numberOfTimeUnit.year": "Number of years"
 }
