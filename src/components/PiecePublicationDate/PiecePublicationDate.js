@@ -15,11 +15,11 @@ const propTypes = {
 const PiecePublicationDate = ({ piece }) => {
   switch (piece?.class) {
     case INTERNAL_RECURRENCE_PIECE:
-      return <FormattedDate value={piece?.date} />;
+      return <FormattedDate timeZone="UTC" value={piece?.date} />;
     case INTERNAL_OMISSION_PIECE:
       return (
         <>
-          <FormattedDate value={piece?.date} />
+          <FormattedDate timeZone="UTC" value={piece?.date} />
           {piece?.class === INTERNAL_OMISSION_PIECE && (
             <InfoBox type="success">
               <FormattedMessage id="ui-serials-management.pieceSets.omitted" />
@@ -30,7 +30,10 @@ const PiecePublicationDate = ({ piece }) => {
     case INTERNAL_COMBINATION_PIECE:
       return (
         <>
-          <FormattedDate value={piece?.recurrencePieces[0].date} />
+          <FormattedDate
+            timeZone="UTC"
+            value={piece?.recurrencePieces[0].date}
+          />
           <br />
           <FormattedMessage
             id="ui-serials-management.pieceSets.combinedPieces"
