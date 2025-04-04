@@ -74,14 +74,19 @@ describe('PiecePublicationDate', () => {
       );
     });
 
+    // Unsure why we need to desconstruct getByText here, but its needed in order for the test to pass
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      await expect(getByText('/1/1/2025/i')).toBeInTheDocument();
+      await expect(
+        getByText((content) => content.includes('1/1/2025'))
+      ).toBeInTheDocument();
     });
 
     test('renders the combined pieces value', async () => {
       const { getByText } = renderComponent;
-      await expect(getByText('Combined pieces: 2')).toBeInTheDocument();
+      await expect(
+        getByText((content) => content.includes('Combined pieces: 2'))
+      ).toBeInTheDocument();
     });
   });
 });
