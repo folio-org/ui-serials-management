@@ -28,13 +28,20 @@ jest.mock('../GenerateReceivingModalInfo', () => () => (
   <div>GenerateReceivingModalInfo</div>
 ));
 
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useLocationsWithQueryParams: () => ({
+    locations: mockLocations,
+    isLoading: false,
+  }),
+}));
+
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useInstanceHoldingsQuery: () => ({
     isLoading: false,
     holdings: mockHoldings,
   }),
-  useLocationsQuery: () => ({ isLoading: false, locations: mockLocations }),
 }));
 
 // Option to be selected in 'Location' dropdown

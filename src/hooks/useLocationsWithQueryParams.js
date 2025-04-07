@@ -11,12 +11,13 @@ import {
 const useLocationsWithQueryParams = (queryParams, { consortium = false, options = {} } = {}) => {
   const ky = useOkapiKy();
   const { enabled = true } = options;
+
   const transformedQueryParams = useMemo(() => {
     const params = [];
     if (queryParams?.query) {
       params.push(consortium ? `filter=${queryParams.query}` : `query=${queryParams.query}`);
     }
-    params.push(`limit=${queryParams?.limit || 1000}`); // Default limit is 100
+    params.push(`limit=${queryParams?.limit || 1000}`);
     return params.join('&');
   }, [queryParams, consortium]);
 
