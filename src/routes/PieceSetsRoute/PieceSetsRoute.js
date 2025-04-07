@@ -79,7 +79,7 @@ const PieceSetsRoute = ({ children, path }) => {
   };
   /* istanbul ignore next */
   const renderStartDate = (pieceSet) => {
-    return <FormattedDate value={pieceSet?.startDate} />;
+    return <FormattedDate timeZone="UTC" value={pieceSet?.startDate} />;
   };
 
   /* istanbul ignore next */

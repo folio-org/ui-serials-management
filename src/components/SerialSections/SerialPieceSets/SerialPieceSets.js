@@ -31,7 +31,7 @@ const SerialPieceSets = ({ pieceSets }) => {
   };
 
   const renderStartDate = (pieceSet) => {
-    return <FormattedDate value={pieceSet?.startDate} />;
+    return <FormattedDate timeZone="UTC" value={pieceSet?.startDate} />;
   };
 
   const formatter = {
