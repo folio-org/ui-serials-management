@@ -21,7 +21,7 @@ const RulesetCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
-  const { id } = useParams();
+  const { id: serialId } = useParams();
 
   const [modelRuleset, setModelRuleset] = useState();
 
@@ -37,8 +37,10 @@ const RulesetCreateRoute = () => {
     setModelRuleset(ms);
   };
 
-  const handleClose = () => {
-    history.push(`${urls.serialView(id)}${location.search}`);
+  const handleClose = (rulesetId) => {
+    history.push(
+      `${rulesetId ? urls.rulesetView(serialId, rulesetId) : urls.serialView(serialId)}${location.search}`
+    );
   };
   // istanbul ignore next
   const { mutateAsync: postRuleset } = useMutation(
@@ -46,7 +48,7 @@ const RulesetCreateRoute = () => {
     (data) => {
       ky.post(RULESETS_ENDPOINT, { json: data })
         .json()
-        .then(() => handleClose());
+        .then((res) => handleClose(res?.id));
     }
   );
   // istanbul ignore next
@@ -54,7 +56,7 @@ const RulesetCreateRoute = () => {
     const submitValues = rulesetSubmitValuesHandler(values);
     return {
       ...submitValues,
-      owner: { id },
+      owner: { serialId },
       rulesetNumber: numberGeneratorReturn?.data?.nextValue,
     };
   };
