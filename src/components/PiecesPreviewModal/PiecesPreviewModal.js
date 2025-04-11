@@ -287,7 +287,9 @@ const PiecesPreviewModal = ({
             id="ui-serials-management.pieceSets.overlappingDates.dialog"
             values={{
               br: <br />,
-              startDate: intl.formatDate(confirmationModal?.values?.startDate),
+              startDate: intl.formatDate(confirmationModal?.values?.startDate, {
+                timeZone: 'UTC',
+              }),
               serialName,
             }}
           />
