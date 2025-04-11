@@ -56,7 +56,7 @@ const RulesetCreateRoute = () => {
     const submitValues = rulesetSubmitValuesHandler(values);
     return {
       ...submitValues,
-      owner: { serialId },
+      owner: { id: serialId },
       rulesetNumber: numberGeneratorReturn?.data?.nextValue,
     };
   };
