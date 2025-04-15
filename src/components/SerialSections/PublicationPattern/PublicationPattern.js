@@ -37,7 +37,7 @@ const PublicationPattern = ({ serial }) => {
   );
 
   const renderLastUpdated = (ruleset) => {
-    return <FormattedDate value={ruleset?.lastUpdated} />;
+    return <FormattedDate timeZone="UTC" value={ruleset?.lastUpdated} />;
   };
 
   const renderRulesetLink = (ruleset) => {
@@ -122,7 +122,12 @@ const PublicationPattern = ({ serial }) => {
                 label={
                   <FormattedMessage id="ui-serials-management.lastUpdated" />
                 }
-                value={<FormattedDate value={activeRuleset?.lastUpdated} />}
+                value={
+                  <FormattedDate
+                    timeZone="UTC"
+                    value={activeRuleset?.lastUpdated}
+                  />
+                }
               />
             </Col>
           </Row>

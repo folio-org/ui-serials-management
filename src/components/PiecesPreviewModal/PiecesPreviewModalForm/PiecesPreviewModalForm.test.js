@@ -9,7 +9,6 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import {
-  screen,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -76,10 +75,13 @@ describe('PiecesPreviewModalForm', () => {
 
     describe('when an existing pieceset is selected from the "Follow on from the last piece in a previous set" select component', () => {
       beforeEach(async () => {
-        screen.debug();
-        await Select('Follow on from the last piece in a previous set').choose(
-          'Publication date: 2/1/2025, Date generated: 2/26/2024 10:02 AM'
-        );
+        await waitFor(async () => {
+          await Select(
+            'Follow on from the last piece in a previous set'
+          ).choose(
+            'Publication date: 2/1/2025, Date generated: 2/26/2024 10:02 AM'
+          );
+        });
       });
 
       test('datepicker start date renders expected date', async () => {

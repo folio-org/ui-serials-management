@@ -90,7 +90,7 @@ const PiecesPreviewModal = ({
     ruleset?.templateConfig?.chronologyRules?.forEach((rule, ruleIndex) => {
       startingValuesArray.push({
         userConfiguredTemplateMetadataType: 'chronology',
-        index: ruleIndex,
+        index: rule?.index ?? ruleIndex,
         metadataType: {},
       });
     });
@@ -101,16 +101,14 @@ const PiecesPreviewModal = ({
         rule?.templateMetadataRuleFormat;
       startingValuesArray.push({
         userConfiguredTemplateMetadataType: 'enumeration',
-        index: ruleIndex,
+        index: rule?.index ?? ruleIndex,
         metadataType: {
           ...(tmrf === 'enumeration_numeric' && {
             levels:
-              rule?.ruleFormat?.levels?.map((_level, levelIndex) => {
-                return {
-                  ...values?.startingValues[ruleIndex]?.levels[levelIndex],
-                  index: levelIndex,
-                };
-              }) || {},
+              rule?.ruleFormat?.levels?.map((level, levelIndex) => ({
+                ...values?.startingValues[ruleIndex]?.levels[levelIndex],
+                index: level?.index ?? levelIndex,
+              })) || {},
           }),
         },
       });
@@ -289,7 +287,9 @@ const PiecesPreviewModal = ({
             id="ui-serials-management.pieceSets.overlappingDates.dialog"
             values={{
               br: <br />,
-              startDate: intl.formatDate(confirmationModal?.values?.startDate),
+              startDate: intl.formatDate(confirmationModal?.values?.startDate, {
+                timeZone: 'UTC',
+              }),
               serialName,
             }}
           />

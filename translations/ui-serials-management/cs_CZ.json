@@ -55,7 +55,7 @@
     "description": "Popis",
     "rulesets.editRuleset": "Upravit sadu pravidel",
     "ruleset.timeUnit": "Časová jednotka",
-    "ruleset.numberOfTimeUnit": "Počet {timeUnit}",
+    "ruleset.numberOfTimeUnit": "Počet časových jednotek",
     "ruleset.numberOfIssues": "Počet vydání",
     "ruleset.day": "Denně",
     "ruleset.week": "Týdně",
@@ -266,5 +266,9 @@
     "serials.deleteSerial.confirmMessage": "Periodikum <strong>{serial}</strong> bude smazáno",
     "serials.deleteSerial.error.hasPublicationPattern": "Periodikum nebylo smazáno, protože obsahuje jeden, nebo více kalendáře publikování.",
     "serials.deleteSerial.success": "Periodikum smazáno: <strong>{serial}</strong>",
-    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Periodikum nebylo smazáno:</strong> {message}"
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Periodikum nebylo smazáno:</strong> {message}",
+    "ruleset.numberOfTimeUnit.day": "Počet dní",
+    "ruleset.numberOfTimeUnit.week": "Počet týdnů",
+    "ruleset.numberOfTimeUnit.month": "Počet měsíců",
+    "ruleset.numberOfTimeUnit.year": "Počet let"
 }

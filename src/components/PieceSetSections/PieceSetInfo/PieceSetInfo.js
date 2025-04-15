@@ -51,7 +51,7 @@ const PieceSetInfo = ({ pieceSet, id }) => {
               <FormattedMessage id="ui-serials-management.pieceSets.startDate" />
             }
           >
-            <FormattedDate value={pieceSet?.startDate} />
+            <FormattedDate timeZone="UTC" value={pieceSet?.startDate} />
           </KeyValue>
         </Col>
         <Col xs={3}>
@@ -84,7 +84,7 @@ const PieceSetInfo = ({ pieceSet, id }) => {
           </KeyValue>
         </Col>
       </Row>
-      {pieceSet?.titleId &&
+      {pieceSet?.titleId && (
         <Row start="xs">
           <Col xs={12}>
             <KeyValue
@@ -99,7 +99,7 @@ const PieceSetInfo = ({ pieceSet, id }) => {
             />
           </Col>
         </Row>
-      }
+      )}
     </div>
   );
 };
