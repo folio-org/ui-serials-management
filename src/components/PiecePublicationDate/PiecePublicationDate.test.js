@@ -2,43 +2,28 @@ import { renderWithIntl } from '@folio/stripes-erm-testing';
 import PiecePublicationDate from './PiecePublicationDate';
 import { translationsProperties } from '../../../test/helpers';
 
-const recurrencePiece = {
-  id: '582683dd-e971-44e6-bb4e-45b07fb06291',
-  date: '2024-04-01',
-  owner: {
-    id: '10e19919-dd8e-4a18-8846-14824100d853',
-  },
-  class: 'org.olf.internalPiece.InternalRecurrencePiece',
-  templateString: 'Volume: {{enumeration1.level1}} {{enumeration1.level2}}',
-  recurrenceRule: {
-    id: '7255a1d0-e7c3-4f9b-bd65-f3b28476ee88',
-  },
-  receivingPieces: '[]',
-  label: 'Volume: 25 1',
-  rowIndex: 0,
-};
+import {
+  INTERNAL_COMBINATION_PIECE,
+  INTERNAL_OMISSION_PIECE,
+  INTERNAL_RECURRENCE_PIECE,
+} from '../../constants/internalPieceClasses';
 
-const omissionPiece = {
-  id: 'e549636a-af5f-4249-88dc-f2d33e759d8c',
-  class: 'org.olf.internalPiece.InternalOmissionPiece',
-  date: '2024-04-01',
-  omissionOrigins: '[]',
-  owner: {
-    id: '5e63a7aa-953d-4f31-9eee-5b2782ca7b5c',
-  },
-  templateString: 'test',
-  label: 'test',
-  rowIndex: 0,
-};
+import {
+  pieceSet,
+  omissionPieceSet,
+  combinationPieceSet,
+} from '../../../test/resources/piecesets';
 
 describe('PiecePublicationDate', () => {
-  describe('PiecePublicationDate with recurrence pieces ', () => {
+  describe('with an internal recurrence piece ', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <PiecePublicationDate
           id="piece-set-section-info"
-          piece={recurrencePiece}
+          piece={pieceSet?.pieces?.find(
+            (piece) => piece.class === INTERNAL_RECURRENCE_PIECE
+          )}
         />,
         translationsProperties
       );
@@ -46,17 +31,19 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/1/2024')).toBeInTheDocument();
+      expect(getByText('10/1/2024')).toBeInTheDocument();
     });
   });
 
-  describe('PiecePublicationDate with omission origins', () => {
+  describe('with an internal omission piece', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <PiecePublicationDate
           id="piece-set-section-info"
-          piece={omissionPiece}
+          piece={omissionPieceSet?.pieces?.find(
+            (piece) => piece.class === INTERNAL_OMISSION_PIECE
+          )}
         />,
         translationsProperties
       );
@@ -64,12 +51,42 @@ describe('PiecePublicationDate', () => {
 
     test('renders the expected date value', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('4/1/2024')).toBeInTheDocument();
+      expect(getByText('1/1/2025')).toBeInTheDocument();
     });
 
-    test('renders the Omitted', async () => {
+    test('renders the Omitted label', async () => {
       const { getByText } = renderComponent;
       expect(getByText('Omitted')).toBeInTheDocument();
+    });
+  });
+
+  describe('with an internal combination piece', () => {
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <PiecePublicationDate
+          id="piece-set-section-info"
+          piece={combinationPieceSet?.pieces?.find(
+            (piece) => piece.class === INTERNAL_COMBINATION_PIECE
+          )}
+        />,
+        translationsProperties
+      );
+    });
+
+    // Unsure why we need to desconstruct getByText here, but its needed in order for the test to pass
+    test('renders the expected date value', async () => {
+      const { getByText } = renderComponent;
+      await expect(
+        getByText((content) => content.includes('1/1/2025'))
+      ).toBeInTheDocument();
+    });
+
+    test('renders the combined pieces value', async () => {
+      const { getByText } = renderComponent;
+      await expect(
+        getByText((content) => content.includes('Combined pieces: 2'))
+      ).toBeInTheDocument();
     });
   });
 });

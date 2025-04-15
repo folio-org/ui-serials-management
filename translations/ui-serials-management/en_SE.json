@@ -55,7 +55,7 @@
     "description": "Description",
     "rulesets.editRuleset": "Edit ruleset",
     "ruleset.timeUnit": "Time unit",
-    "ruleset.numberOfTimeUnit": "Number of {timeUnit}s",
+    "ruleset.numberOfTimeUnit": "Number of time units",
     "ruleset.numberOfIssues": "No. of issues",
     "ruleset.day": "Day",
     "ruleset.week": "Week",
@@ -266,5 +266,9 @@
     "serials.deleteSerial.confirmMessage": "Serial <strong>{serial}</strong> will be deleted",
     "serials.deleteSerial.error.hasPublicationPattern": "Serial was not deleted because it has one or more publication patterns.",
     "serials.deleteSerial.success": "Serial deleted: <strong>{serial}</strong>",
-    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Serial was not deleted:</strong> {message}"
+    "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Serial was not deleted:</strong> {message}",
+    "ruleset.numberOfTimeUnit.day": "Number of days",
+    "ruleset.numberOfTimeUnit.week": "Number of weeks",
+    "ruleset.numberOfTimeUnit.month": "Number of months",
+    "ruleset.numberOfTimeUnit.year": "Number of years"
 }
