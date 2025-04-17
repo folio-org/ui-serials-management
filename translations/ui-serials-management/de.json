@@ -55,7 +55,7 @@
     "description": "Beschreibung",
     "rulesets.editRuleset": "Regelset bearbeiten",
     "ruleset.timeUnit": "Zeiteinheit",
-    "ruleset.numberOfTimeUnit": "Anzahl der {timeUnit}",
+    "ruleset.numberOfTimeUnit": "Anzahl der Zeiteinheiten",
     "ruleset.numberOfIssues": "Zahl der Hefte",
     "ruleset.day": "Tag",
     "ruleset.week": "Woche",
