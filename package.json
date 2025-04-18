@@ -29,8 +29,8 @@
       "serials-management": "1.0 2.0"
     },
     "optionalOkapiInterfaces": {
-      "orders": "12.1",
-      "order-lines": "3.0",
+      "orders": "12.1 13.0",
+      "order-lines": "3.0 4.0",
       "organizations": "2.0",
       "material-types": "2.2",
       "pieces": "3.0",
