@@ -250,6 +250,7 @@ const PiecesPreviewModalForm = ({
             }
             name="startDate"
             required
+            timeZone="UTC"
             usePortal
             validate={requiredValidator}
           />
