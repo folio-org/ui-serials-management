@@ -184,7 +184,7 @@
     "refdataCategory.deleteRefdataCategory.confirmMessage": "<strong>{name}</strong> zostanie usunięta.",
     "refdataCategory.deleteRefdataCategory.errorMessage": "<strong>Błąd</strong>:Listy wyboru<strong>{label}</strong>nie zostały usunięte.",
     "settings.refdata.pickLists": "Listy wyboru",
-    "pieceSets.combinedPieces": "Combined pieces: {length}",
+    "pieceSets.combinedPieces": "Połączone elementy: {length}",
     "ruleset.addValue": "Dodaj wartość",
     "ruleset.pickList": "Lista wyboru",
     "ruleset.day.monthRange": "Dzień (1-31)",
@@ -247,8 +247,8 @@
     "ruleset.editPublicationPattern": "Edit publication pattern",
     "ruleset.copyAndDeprecate": "Kopiuj i wycofaj",
     "ruleset.copyAndDeprecatePublicationPattern": "Copy and deprecate publication pattern",
-    "ruleset.numberOfCycles": "Number of years/cycles",
-    "validate.allowedCycles": "For this publication pattern it is only possible to generate issues for up to {maxValue} years/cycles at one time to avoid generating very large piece sets",
+    "ruleset.numberOfCycles": "Liczba lat/cykli",
+    "validate.allowedCycles": "Dla tego wzoru publikacji możliwe jest tylko generowanie zeszytów o nakładzie do {maxValue} lat/cykli na raz, aby uniknąć generowania bardzo dużych zestawów elementów",
     "numberOfCycles.infoPopover": "This controls the number of years of predicted pieces that are to be generated, except in the case of multi-year cycles (e.g. 1 issue every 2 years) where it controls the number of multi-year cycles to be used for prediction. The total number of issues to be predicted cannot be >366 (e.g. one year of daily issues or 30 years of monthly issues). Note that it is recommend not to predict large numbers of years in one go in case the serial changes publication frequency in the future.",
     "pieceSets.affiliation": "Afiliacja",
     "patternTemplate": "Szablon wzoru (zastępuje zawartość poniższego formularza wstępnie zdefiniowanymi wartościami)",
@@ -267,8 +267,8 @@
     "serials.deleteSerial.error.hasPublicationPattern": "Wydawnictwo ciągłe nie zostało usunięte, ponieważ zawiera jeden lub więcej wzorów publikacji.",
     "serials.deleteSerial.success": "Wydawnictwo ciągłe zostało usunięte: <strong>{serial}</strong>",
     "serials.deleteSerial.error.noDeleteSerialBackendError": "<strong>Wydawnictwo ciągłe nie zostało usunięte:</strong> {message}",
-    "ruleset.numberOfTimeUnit.day": "Number of days",
-    "ruleset.numberOfTimeUnit.week": "Number of weeks",
-    "ruleset.numberOfTimeUnit.month": "Number of months",
-    "ruleset.numberOfTimeUnit.year": "Number of years"
+    "ruleset.numberOfTimeUnit.day": "Liczba dni",
+    "ruleset.numberOfTimeUnit.week": "Liczba tygodni",
+    "ruleset.numberOfTimeUnit.month": "Liczba miesięcy",
+    "ruleset.numberOfTimeUnit.year": "Liczba lat"
 }
