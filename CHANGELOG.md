@@ -1,5 +1,8 @@
 # change history for ui-serials-management
 
+## 2.0.4 2025-04-28
+  * UISER-211 Predicted publication date is one day out
+
 ## 2.0.3 2025-04-15
   * UISER-210 After creating a publication pattern, the publication pattern view should be displayed
   * MODSER-110 Migrated pattern (Ramsons -> Sunflower) with combination generates incorrect labels for predicted pieces
