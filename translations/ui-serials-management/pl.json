@@ -211,7 +211,7 @@
     "serials.notes.isEmptyMessage": "Brak uwag związanych z tym wydawnictwem ciągłym",
     "serials.publicationPattern.noActivePattern": "Wydawnictwo ciągłe nie ma aktywnych wzorów publikacji",
     "pieceSets.receivingPieces": "Receiving pieces",
-    "serials.titleInReceiving": "Tytuły w dostawie",
+    "serials.titleInReceiving": "Tytuły w odbiorze",
     "learnMore": "Learn more",
     "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
     "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
