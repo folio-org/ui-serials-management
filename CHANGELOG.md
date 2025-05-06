@@ -2,6 +2,12 @@
 
 ## 2.1.0 IN PROGRESS
 
+  * UISER-214 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
+
+## 2.0.3 2025-04-15
+  * UISER-210 After creating a publication pattern, the publication pattern view should be displayed
+  * MODSER-110 Migrated pattern (Ramsons -> Sunflower) with combination generates incorrect labels for predicted pieces
+
 ## 2.0.2 2025-04-01
   * UISER-208 TypeError on the publication pattern create/edit form
   * UISER-206 Fields in publication pattern creation form do not have correct width

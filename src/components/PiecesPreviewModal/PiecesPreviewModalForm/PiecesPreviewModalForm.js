@@ -100,7 +100,7 @@ const PiecesPreviewModalForm = ({
       return {
         value: fps?.id,
         label: `${intl.formatMessage({ id: 'ui-serials-management.pieceSets.publicationDate' })}:
-                ${intl.formatDate(getAdjustedStartDate(fps?.startDate, fps?.numberOfCycles ?? 1))},
+                ${intl.formatDate(getAdjustedStartDate(fps?.startDate, fps?.numberOfCycles ?? 1), { timeZone: 'UTC' })},
                 ${intl.formatMessage({ id: 'ui-serials-management.pieceSets.dateGenerated' })}:
                 ${intl.formatDate(fps?.dateCreated)} ${intl.formatTime(fps?.dateCreated)} `,
       };
@@ -250,6 +250,7 @@ const PiecesPreviewModalForm = ({
             }
             name="startDate"
             required
+            timeZone="UTC"
             usePortal
             validate={requiredValidator}
           />
@@ -307,7 +308,9 @@ const PiecesPreviewModalForm = ({
           <FormattedMessage
             id="ui-serials-management.pieceSets.overlappingDates.warning"
             values={{
-              startDate: intl.formatDate(values?.startDate),
+              startDate: intl.formatDate(values?.startDate, {
+                timeZone: 'UTC',
+              }),
               serialName,
             }}
           />
