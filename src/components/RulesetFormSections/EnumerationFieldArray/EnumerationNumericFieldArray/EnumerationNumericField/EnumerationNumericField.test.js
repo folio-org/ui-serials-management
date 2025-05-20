@@ -67,11 +67,11 @@ describe('EnumerationNumericField', () => {
   });
 
   it('renders expected format selection', async () => {
-    await Select({ id: 'format-value-select' }).exists();
+    await Select({ id: 'format-value-select-0' }).exists();
   });
 
   it('renders expected sequence selection', async () => {
-    await Select({ id: 'sequence-value-select' }).exists();
+    await Select({ id: 'sequence-value-select-0' }).exists();
   });
 
   test('renders the Lable TextField', async () => {

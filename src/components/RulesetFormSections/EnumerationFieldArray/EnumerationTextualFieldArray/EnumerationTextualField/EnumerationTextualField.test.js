@@ -96,6 +96,6 @@ describe('EnumerationTextualField', () => {
   });
 
   it('renders expected format selection', async () => {
-    await Select({ id: 'label-text-select' }).exists();
+    await Select({ id: 'label-text-select-0' }).exists();
   });
 });

@@ -74,7 +74,7 @@ const EnumerationNumericField = ({
                   }
                 ),
               ]}
-              id="format-value-select"
+              id={`format-value-select-${index}`}
               name={`${name}.format.value`}
               required
               validate={requiredValidator}
@@ -96,7 +96,7 @@ const EnumerationNumericField = ({
                   'value'
                 ),
               ]}
-              id="sequence-value-select"
+              id={`sequence-value-select-${index}`}
               name={`${name}.sequence.value`}
               required
               validate={requiredValidator}
