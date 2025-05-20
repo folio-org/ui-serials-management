@@ -52,7 +52,7 @@ const EnumerationTextualField = ({
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...dataOptions]}
               disabled={!dataOptions}
-              id="label-text-select"
+              id={`label-text-select-${index}`}
               // This NEEDS to be the refdata value ID due to backend binding issues
               name={`${name}.refdataValue.id`}
               required
