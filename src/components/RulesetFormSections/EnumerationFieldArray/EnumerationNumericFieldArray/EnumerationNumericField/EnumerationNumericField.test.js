@@ -67,15 +67,15 @@ describe('EnumerationNumericField', () => {
   });
 
   it('renders expected format selection', async () => {
-    await Select({ id: 'format-value-select-0' }).exists();
+    await Select({ id: 'format-value-select-card-0-level-0' }).exists();
   });
 
   it('renders expected sequence selection', async () => {
-    await Select({ id: 'sequence-value-select-0' }).exists();
+    await Select({ id: 'sequence-value-select-card-0-level-0' }).exists();
   });
 
   test('renders the Lable TextField', async () => {
-    await TextField({ id: 'internal-note' }).exists();
+    await TextField({ id: 'internal-note-card-0-level-0' }).exists();
   });
 
   test('renders the Format dropdown with correct options', async () => {

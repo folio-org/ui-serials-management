@@ -25,6 +25,10 @@ const EnumerationTextualField = ({
   onDeleteField,
   dataOptions,
 }) => {
+  // Extract the card index from the name prop
+  const cardIndexMatch = name.match(/enumerationRules\[(\d+)\]/);
+  const cardIndex = cardIndexMatch ? cardIndexMatch[1] : '0';
+
   return (
     <Row>
       <Col xs={1}>{index + 1}</Col>
@@ -52,7 +56,7 @@ const EnumerationTextualField = ({
               component={Select}
               dataOptions={[{ label: '', value: '' }, ...dataOptions]}
               disabled={!dataOptions}
-              id={`label-text-select-${index}`}
+              id={`label-text-select-card-${cardIndex}-level-${index}`}
               // This NEEDS to be the refdata value ID due to backend binding issues
               name={`${name}.refdataValue.id`}
               required
@@ -67,6 +71,7 @@ const EnumerationTextualField = ({
             <Field
               aria-label={ariaLabel}
               component={TextField}
+              id={`internal-note-textual-card-${cardIndex}-level-${index}`}
               name={`${name}.internalNote`}
             />
           )}
