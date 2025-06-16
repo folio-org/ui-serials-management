@@ -38,6 +38,10 @@ const EnumerationNumericField = ({
     ENUMERATION_SEQUENCE,
   ]);
 
+  // Extract the card index from the name prop
+  const cardIndexMatch = name.match(/enumerationRules\[(\d+)\]/);
+  const cardIndex = cardIndexMatch ? cardIndexMatch[1] : '0';
+
   return (
     <Row>
       <Col xs={1}>{index + 1}</Col>
@@ -74,7 +78,7 @@ const EnumerationNumericField = ({
                   }
                 ),
               ]}
-              id={`format-value-select-${index}`}
+              id={`format-value-select-card-${cardIndex}-level-${index}`}
               name={`${name}.format.value`}
               required
               validate={requiredValidator}
@@ -96,7 +100,7 @@ const EnumerationNumericField = ({
                   'value'
                 ),
               ]}
-              id={`sequence-value-select-${index}`}
+              id={`sequence-value-select-card-${cardIndex}-level-${index}`}
               name={`${name}.sequence.value`}
               required
               validate={requiredValidator}
@@ -110,7 +114,7 @@ const EnumerationNumericField = ({
             <Field
               aria-label={ariaLabel}
               component={TextField}
-              id="internal-note"
+              id={`internal-note-card-${cardIndex}-level-${index}`}
               name={`${name}.internalNote`}
             />
           )}
