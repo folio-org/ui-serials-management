@@ -120,7 +120,7 @@
     "ruleset.patternId": "ID do padrão",
     "ruleset.patternDescription": "Descrição do padrão",
     "ruleset.draftPatterns": "Padrões de rascunho",
-    "ruleset.deprecatedPublicationPatterns": "Padrões de publicação obsoletos",
+    "ruleset.deprecatedPublicationPatterns": "Padrões de publicação descontinuados",
     "ruleset.labelling": "Etiquetagem",
     "ruleset.removeLabel": "Remover etiqueta {index}",
     "ruleset.labelIndex": "Etiqueta {index}",
