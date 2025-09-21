@@ -55,7 +55,7 @@
     "description": "Omschrijving",
     "rulesets.editRuleset": "Regelset bewerken",
     "ruleset.timeUnit": "Tijdseenheid",
-    "ruleset.numberOfTimeUnit": "Aantal {timeUnit}s",
+    "ruleset.numberOfTimeUnit": "Aantal tijdseenheden",
     "ruleset.numberOfIssues": "Aantal nummers",
     "ruleset.day": "Dag",
     "ruleset.week": "Week",
