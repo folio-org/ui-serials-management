@@ -40,7 +40,7 @@
     "refdata.deleteRefdataValue.errorMessage": "<strong>Error: {label}</strong> was not deleted. {error}",
     "refdata.editAriaLabel": "Edit value {label}",
     "refdata.deleteAriaLabel": "Delete value {label}",
-    "settings.refdata.picklistValues": "Wartości z listy wyboru",
+    "settings.refdata.picklistValues": "Wartości listy wyboru",
     "settings.refdata.picklist": "Lista wyboru",
     "serials.note": "Uwaga",
     "serials.notes": "Uwagi",
