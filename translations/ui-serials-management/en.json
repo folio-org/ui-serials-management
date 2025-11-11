@@ -65,6 +65,10 @@
   "serials.publicationPattern": "Publication pattern",
   "serials.publicationPattern.noActivePattern": "Serial has no active publication patterns",
 
+  "templates": "Templates",
+  "templates.name": "Name",
+  "templates.description": "Description",
+
   "rulesets.newPublicationPattern": "New publication pattern",
   "rulesets.editRuleset": "Edit ruleset",
 

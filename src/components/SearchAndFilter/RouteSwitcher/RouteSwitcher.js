@@ -21,6 +21,9 @@ const RouteSwitcher = ({ primary }) => {
     case 'pieceSets':
       selectedIndex = 1;
       break;
+    case 'templates':
+      selectedIndex = 2;
+      break;
     default:
       break;
   }
@@ -40,6 +43,13 @@ const RouteSwitcher = ({ primary }) => {
         to={primary === 'pieceSets' ? null : urls.pieceSets()}
       >
         <FormattedMessage id="ui-serials-management.pieceSets" />
+      </Button>
+      <Button
+        key="clickable-nav-templates"
+        id="clickable-nav-templates"
+        to={primary === 'templates' ? null : urls.templates()}
+      >
+        <FormattedMessage id="ui-serials-management.templates" />
       </Button>
     </ResponsiveButtonGroup>
   );
