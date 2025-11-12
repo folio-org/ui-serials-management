@@ -57,14 +57,16 @@
         "displayName": "UI: ui-serials-management module is enabled",
         "subPermissions": [
           "serials-management.refdata.read",
-          "serials-management.locales.collection.get"
+          "serials-management.locales.collection.get",
+          "mod-settings.global.read.stripes-core.prefs.manage"
         ]
       },
       {
         "permissionName": "settings.serials-management.enabled",
         "displayName": "Settings (serials-management): display list of settings pages",
         "subPermissions": [
-          "settings.enabled"
+          "settings.enabled",
+          "mod-settings.global.read.stripes-core.prefs.manage"
         ]
       },
       {
