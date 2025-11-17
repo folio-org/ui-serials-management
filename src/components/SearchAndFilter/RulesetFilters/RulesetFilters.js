@@ -36,7 +36,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
         displayClearButton={activeFilters?.modelRulesetStatus?.length > 0}
         header={FilterAccordionHeader}
         id="status-status-filter-accordion"
-        label={<FormattedMessage id="ui-serials-management.rulesets.status" />}
+        label={<FormattedMessage id="ui-serials-management.templates.status" />}
         onClearFilter={() => {
           filterHandlers.clearGroup('modelRulesetStatus');
         }}

@@ -28,13 +28,22 @@ const TemplatesRoute = ({ children, path }) => {
       label: <FormattedMessage id="ui-serials-management.templates.name" />,
     },
     {
+      propertyPath: 'modelRulesetStatus',
+      label: <FormattedMessage id="ui-serials-management.templates.status" />,
+    },
+    {
       propertyPath: 'description',
       label: <FormattedMessage id="ui-serials-management.templates.description" />,
+    },
+    {
+      propertyPath: 'exampleLabel',
+      label: <FormattedMessage id="ui-serials-management.templates.exampleLabel" />,
     },
   ];
 
   const formatter = {
     name: (d) => d?.name,
+    modelRulesetStatus: (d) => d?.modelRulesetStatus?.label,
     description: (d) => d?.description,
   };
 
