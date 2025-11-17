@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import { RouteSwitcher } from '../../components/SearchAndFilter';
+import { RouteSwitcher, RulesetFilters } from '../../components/SearchAndFilter';
 import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 const TemplatesRoute = ({ children, path }) => {
@@ -12,6 +12,9 @@ const TemplatesRoute = ({ children, path }) => {
     SASQ_MAP: {
       searchKey: 'name,description',
       perPage: 50,
+      filterKeys: {
+        modelRulesetStatus: 'modelRulesetStatus.value'
+      }
     },
   };
 
@@ -38,6 +41,7 @@ const TemplatesRoute = ({ children, path }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
+      FilterComponent={RulesetFilters}
       FilterPaneHeaderComponent={renderHeaderComponent}
       id="templates"
       mainPaneProps={{
