@@ -5,10 +5,13 @@ import { AppIcon } from '@folio/stripes/core';
 import {
   AccordionSet,
   AccordionStatus,
+  Col,
+  ExpandAllButton,
   HasCommand,
   LoadingPane,
   MetaSection,
   Pane,
+  Row,
   checkScope,
   collapseAllSections,
   expandAllSections,
@@ -82,6 +85,11 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
         />
         <TemplateInfo template={resource} {...getSectionProps('template-info')} />
         <AccordionStatus ref={accordionStatusRef}>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton />
+            </Col>
+          </Row>
           <AccordionSet>
             <IssuePublication {...getSectionProps('issue-publication')} />
             {resource.serialRuleset?.omission?.rules?.length > 0 && (

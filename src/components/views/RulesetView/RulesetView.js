@@ -5,11 +5,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { AppIcon, useStripes } from '@folio/stripes/core';
 import {
+  AccordionSet,
+  AccordionStatus,
+  Col,
+  ExpandAllButton,
   Button,
   HasCommand,
   Icon,
   MetaSection,
   Pane,
+  Row,
   checkScope,
   collapseAllSections,
   expandAllSections,
@@ -132,22 +137,31 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
           lastUpdatedDate={ruleset?.lastUpdated}
         />
         <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
-        <IssuePublication {...getSectionProps('issue-publication')} />
-        {ruleset?.omission?.rules?.length > 0 && (
-          <OmissionRules {...getSectionProps('omission-rules')} />
-        )}
-        {ruleset?.combination?.rules?.length > 0 && (
-          <CombinationRules {...getSectionProps('combination-rules')} />
-        )}
-        {ruleset?.templateConfig?.chronologyRules?.length > 0 && (
-          <ChronologyLabels {...getSectionProps('chronology-labels')} />
-        )}
-        {ruleset?.templateConfig?.enumerationRules?.length > 0 && (
-          <EnumerationLabels {...getSectionProps('enumeration-labels')} />
-        )}
-        <DisplaySummaryTemplate
-          {...getSectionProps('display-template-summary')}
-        />
+        <AccordionStatus ref={accordionStatusRef}>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton />
+            </Col>
+          </Row>
+          <AccordionSet>
+            <IssuePublication {...getSectionProps('issue-publication')} />
+            {ruleset?.omission?.rules?.length > 0 && (
+              <OmissionRules {...getSectionProps('omission-rules')} />
+            )}
+            {ruleset?.combination?.rules?.length > 0 && (
+              <CombinationRules {...getSectionProps('combination-rules')} />
+            )}
+            {ruleset?.templateConfig?.chronologyRules?.length > 0 && (
+              <ChronologyLabels {...getSectionProps('chronology-labels')} />
+            )}
+            {ruleset?.templateConfig?.enumerationRules?.length > 0 && (
+              <EnumerationLabels {...getSectionProps('enumeration-labels')} />
+            )}
+            <DisplaySummaryTemplate
+              {...getSectionProps('display-template-summary')}
+            />
+          </AccordionSet>
+        </AccordionStatus>
       </Pane>
     </HasCommand>
   );
