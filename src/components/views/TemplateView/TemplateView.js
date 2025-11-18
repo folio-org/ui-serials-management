@@ -25,6 +25,7 @@ import {
   EnumerationLabels,
   IssuePublication,
   OmissionRules,
+  PublicationCycleInfo
 } from '../../RulesetSections';
 
 import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
@@ -38,7 +39,6 @@ const propTypes = {
 const TemplateView = ({ resource, queryProps, onClose }) => {
   const accordionStatusRef = createRef();
   const { isLoading } = queryProps || {};
-  console.log('TemplateView resource %o', resource);
 
   const getSectionProps = (name) => {
     return {
@@ -83,7 +83,8 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
           hideSource
           lastUpdatedDate={resource.lastUpdated}
         />
-        <TemplateInfo template={resource} {...getSectionProps('template-info')} />
+        <TemplateInfo template={resource} />
+        <PublicationCycleInfo {...getSectionProps('publication-cycle-info')} />
         <AccordionStatus ref={accordionStatusRef}>
           <Row end="xs">
             <Col xs>

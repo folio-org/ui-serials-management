@@ -27,6 +27,7 @@ import {
   EnumerationLabels,
   IssuePublication,
   OmissionRules,
+  PublicationCycleInfo,
   RulesetInfo,
 } from '../../RulesetSections';
 
@@ -137,6 +138,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
           lastUpdatedDate={ruleset?.lastUpdated}
         />
         <RulesetInfo serial={serial} {...getSectionProps('ruleset-info')} />
+        <PublicationCycleInfo {...getSectionProps('publication-cycle-info')} />
         <AccordionStatus ref={accordionStatusRef}>
           <Row end="xs">
             <Col xs>
