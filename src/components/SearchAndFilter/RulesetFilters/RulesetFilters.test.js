@@ -1,13 +1,13 @@
+import { MemoryRouter } from 'react-router-dom';
+
 import {
   Accordion,
   renderWithIntl,
-  Checkbox,
+  Checkbox
 } from '@folio/stripes-erm-testing';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+
 import { translationsProperties } from '../../../../test/helpers';
 import { refdata as mockRefdata } from '../../../../test/resources';
-
 import RulesetFilters from './RulesetFilters';
 
 jest.mock('../../utils', () => ({
@@ -44,7 +44,6 @@ describe('RulesetFilters', () => {
   });
 
   test('renders the Status accordion', async () => {
-    screen.debug();
     await Accordion('Status').exists();
   });
 
@@ -66,8 +65,13 @@ describe('RulesetFilters', () => {
     await Checkbox({ id: 'clickable-filter-modelRulesetStatus-closed' }).exists();
   });
 
-  test('clicking the Ruleset checkbox', async () => {
+  test('clicking the Ruleset status checkbox', async () => {
     await Checkbox('Active').is({ checked: true });
     await Checkbox('Closed').is({ checked: false });
+  });
+
+  test('changing the Ruleset status checkbox calls the state handler', async () => {
+    await Checkbox('Closed').click();
+    expect(stateMock).toHaveBeenCalled();
   });
 });
