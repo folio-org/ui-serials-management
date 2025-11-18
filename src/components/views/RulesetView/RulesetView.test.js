@@ -61,7 +61,7 @@ describe('RulesetView', () => {
       { componentName: 'RulesetInfo' },
       { componentName: 'IssuePublication' },
       { componentName: 'DisplaySummaryTemplate' },
-    ])('renders %componentName component', async ({ componentName }) => {
+    ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
       await waitFor(async () => {
         expect(getByText(componentName)).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe('RulesetView', () => {
       { componentName: 'CombinationRules' },
       { componentName: 'ChronologyLabels' },
       { componentName: 'EnumerationLabels' },
-    ])('renders %componentName component', async ({ componentName }) => {
+    ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
       await waitFor(async () => {
         expect(getByText(componentName)).toBeInTheDocument();

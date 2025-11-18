@@ -5,12 +5,12 @@ import { translationsProperties } from '../../../../test/helpers';
 import TemplateView from './TemplateView';
 
 // TODO Imports like this need to be sorted, this is messy
-import { handlers, ruleset } from '../../../../test/resources';
+import { handlers, template } from '../../../../test/resources';
 import { dayMonth } from '../../../../test/resources/rulesetResources/omissionsRules';
 import { issue } from '../../../../test/resources/rulesetResources/combinationRules';
 
-jest.mock('../../RulesetSections/RulesetInfo', () => () => (
-  <div>RulesetInfo</div>
+jest.mock('../../TemplateInfo', () => () => (
+  <div>TemplateInfo</div>
 ));
 jest.mock('../../RulesetSections/IssuePublication', () => () => (
   <div>IssuePublication</div>
@@ -39,17 +39,22 @@ jest.mock('@folio/stripes/components', () => ({
 describe('TemplateView', () => {
   let renderComponent;
 
-  describe('with a ruleset which contains only recurrence rules', () => {
+  describe('with a template which contains only recurrence rules', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <TemplateView
             onClose={handlers.onClose}
             queryProps={{ isLoading: false }}
-            // Using centralised ruleset but removing existing templateConfig rules
-            ruleset={{
-              ...ruleset,
-              templateConfig: { templateString: 'Test template string' },
+            // Using centralised template but removing existing templateConfig rules
+            resource={{
+              ...template,
+              serialRuleset: {
+                ...template.serialRuleset,
+                templateConfig: {
+                  templateString: 'Test template string',
+                },
+              },
             }}
           />
         </MemoryRouter>,
@@ -58,10 +63,10 @@ describe('TemplateView', () => {
     });
 
     test.each([
-      { componentName: 'RulesetInfo' },
+      { componentName: 'TemplateInfo' },
       { componentName: 'IssuePublication' },
       { componentName: 'DisplaySummaryTemplate' },
-    ])('renders %componentName component', async ({ componentName }) => {
+    ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
       await waitFor(async () => {
         expect(getByText(componentName)).toBeInTheDocument();
@@ -69,20 +74,23 @@ describe('TemplateView', () => {
     });
   });
 
-  describe('with a ruleset which all potential rules (omssion, combination, enumeration and chronology) ', () => {
+  describe('with a template which all potential rules (omssion, combination, enumeration and chronology) ', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <TemplateView
             onClose={handlers.onClose}
             queryProps={{ isLoading: false }}
-            // Using centralised ruleset adding combination/omissions
+            // Using centralised template adding combination/omissions
             // This would never be the case but nicer to have it all in a single desribe block
             // Additionally the conditionals in the component dont do anything fancy
-            ruleset={{
-              ...ruleset,
-              omission: { rules: [dayMonth] },
-              combination: { rules: [issue] },
+            resource={{
+              ...template,
+              serialRuleset: {
+                ...template.serialRuleset,
+                omission: { rules: [dayMonth] },
+                combination: { rules: [issue] },
+              },
             }}
           />
         </MemoryRouter>,
@@ -95,7 +103,7 @@ describe('TemplateView', () => {
       { componentName: 'CombinationRules' },
       { componentName: 'ChronologyLabels' },
       { componentName: 'EnumerationLabels' },
-    ])('renders %componentName component', async ({ componentName }) => {
+    ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
       await waitFor(async () => {
         expect(getByText(componentName)).toBeInTheDocument();
