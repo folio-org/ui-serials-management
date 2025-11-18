@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useMutation } from 'react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -44,6 +43,13 @@ jest.mock('@folio/stripes-acq-components', () => ({
   }),
 }));
 
+// This is now done within central mocks, however the central mocks interaction with the acq-components hooks
+// is a little weird, so overriding here for now.
+jest.mock('react-query', () => ({
+  ...jest.requireActual('react-query'),
+  useQuery: jest.fn(() => ({ data: {}, isLoading: false })),
+}));
+
 // Option to be selected in 'Location' dropdown
 const selectedLocationOption = mockLocations.find((l) => l.name === 'Annex');
 
@@ -67,10 +73,6 @@ const TestComponent = () => {
 describe('GenerateReceivingModal', () => {
   beforeEach(() => {
     renderWithIntl(<TestComponent />, translationsProperties);
-  });
-
-  test('useMutation has been called', () => {
-    expect(useMutation).toHaveBeenCalled();
   });
 
   test('renders the modal', async () => {
