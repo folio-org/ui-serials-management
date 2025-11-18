@@ -19,7 +19,7 @@ const TemplateInfo = ({ template }) => {
         <Col xs={12}>
           <KeyValue
             label={
-              <FormattedMessage id="ui-serials-management.status" />
+              <FormattedMessage id="ui-serials-management.templates.status" />
             }
             value={template?.modelRulesetStatus?.label}
           />
