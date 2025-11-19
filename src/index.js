@@ -26,6 +26,7 @@ import {
   RulesetCreateRoute,
   RulesetReplaceRoute,
   PieceSetsRoute,
+  TemplatesRoute,
 } from './routes';
 
 import Settings from './settings';
@@ -121,6 +122,7 @@ const App = (props) => {
                 />
               </SerialsRoute>
               <PieceSetsRoute path={`${path}/pieceSets`} />
+              <TemplatesRoute path={`${path}/modelRulesets`} />
             </Switch>
           </Suspense>
         </HasCommand>

@@ -11,6 +11,9 @@ const urls = {
   pieceSets: () => '/serials-management/pieceSets',
   pieceSetView: (id) => `/serials-management/pieceSets/${id}`,
 
+  templates: () => '/serials-management/modelRulesets',
+  templateView: (id) => `/serials-management/modelRulesets/${id}`,
+
   inventoryView: (id) => `/inventory/view/${id}`,
   poLineView: (id) => `/orders/lines/view/${id}`,
   organisationView: (id) => `/organizations/view/${id}`,

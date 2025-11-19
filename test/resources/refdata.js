@@ -472,6 +472,23 @@ const refdata = [
     ],
   },
   {
+    id: 'da8378f62599cb70cee4601785a350b7',
+    desc: 'ModelRuleset.ModelRulesetStatus',
+    internal: false,
+    values: [
+      {
+        id: '2c9180a79a94a3ef019a94ad0c4c0014',
+        value: 'closed',
+        label: 'Closed'
+      },
+      {
+        id: '2c9180a79a94a3ef019a94ad0c450013',
+        value: 'active',
+        label: 'Active'
+      }
+    ]
+  },
+  {
     id: '2c91809f9269cd4f019269d6e9b5002d',
     desc: 'Serial.SerialStatus',
     internal: true,
