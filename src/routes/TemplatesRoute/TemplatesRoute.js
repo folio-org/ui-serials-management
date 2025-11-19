@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
+import { TemplateView } from '../../components/views';
 import { RouteSwitcher, RulesetFilters } from '../../components/SearchAndFilter';
 import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
 
@@ -60,13 +61,12 @@ const TemplatesRoute = ({ children, path }) => {
       }}
       mclProps={{
         formatter,
-        interactive: false,
-        onRowClick: null,
         id: 'list-templates'
       }}
       path={path}
       resultColumns={resultColumns}
       searchFieldAriaLabel="templates-search-field"
+      ViewComponent={TemplateView}
     >
       {children}
     </SASQRoute>
