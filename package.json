@@ -58,7 +58,8 @@
         "subPermissions": [
           "serials-management.refdata.read",
           "serials-management.locales.collection.get",
-          "mod-settings.global.read.stripes-core.prefs.manage"
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
         ]
       },
       {
@@ -66,7 +67,8 @@
         "displayName": "Settings (serials-management): display list of settings pages",
         "subPermissions": [
           "settings.enabled",
-          "mod-settings.global.read.stripes-core.prefs.manage"
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
         ]
       },
       {
