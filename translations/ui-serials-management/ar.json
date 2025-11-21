@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "عدد الأيام",
     "ruleset.numberOfTimeUnit.week": "عدد الأسابيع",
     "ruleset.numberOfTimeUnit.month": "عدد الشهور",
-    "ruleset.numberOfTimeUnit.year": "عدد السنوات"
+    "ruleset.numberOfTimeUnit.year": "عدد السنوات",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }

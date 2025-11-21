@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "Anzahl der Tage",
     "ruleset.numberOfTimeUnit.week": "Anzahl der Wochen",
     "ruleset.numberOfTimeUnit.month": "Anzahl der Monate",
-    "ruleset.numberOfTimeUnit.year": "Anzahl der Jahre"
+    "ruleset.numberOfTimeUnit.year": "Anzahl der Jahre",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }
