@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "天数",
     "ruleset.numberOfTimeUnit.week": "周数",
     "ruleset.numberOfTimeUnit.month": "月数",
-    "ruleset.numberOfTimeUnit.year": "年数"
+    "ruleset.numberOfTimeUnit.year": "年数",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }

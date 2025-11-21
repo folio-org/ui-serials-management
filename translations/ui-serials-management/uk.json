@@ -20,7 +20,7 @@
     "poLine.viewInInventory": "Переглянути в \"Облік фонду\"",
     "poLine.selectPOLine": "Вибрати рядок замовлення на придбання",
     "poLine.orderNumber": "Номер замовлення",
-    "poLine.orderStatus": "Статус замовлення",
+    "poLine.orderStatus": "Статус замовлення комплектування",
     "poLine.vendor": "Постачальник",
     "poLine.materialType": "Тип матеріалу",
     "poLine.funds": "Грошові кошти",
@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "Кількість днів",
     "ruleset.numberOfTimeUnit.week": "Кількість тижнів",
     "ruleset.numberOfTimeUnit.month": "Кількість місяців",
-    "ruleset.numberOfTimeUnit.year": "Кількість років"
+    "ruleset.numberOfTimeUnit.year": "Кількість років",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }

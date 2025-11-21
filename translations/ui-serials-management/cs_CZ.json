@@ -3,7 +3,7 @@
     "serials": "Periodika",
     "serials.poLineNumber": "Číslo řádku NO",
     "serials.title": "Název",
-    "serials.productIDs": "ID produktů",
+    "serials.productIDs": "Produkty (ID)",
     "serials.location": "Lokace",
     "serials.predictionPattern": "Vzor předpovědi",
     "found#Values": "Nalezeno {total} výsledků",
@@ -24,7 +24,7 @@
     "poLine.vendor": "Distributor",
     "poLine.materialType": "Typ materiálu",
     "poLine.funds": "Finanční prostředky",
-    "poLine.productIds": "ID produktů",
+    "poLine.productIds": "Produkty (ID)",
     "edit": "Upravit",
     "serials.editSerial": "Upravit periodikum",
     "serials.description": "Popis",
@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "Počet dní",
     "ruleset.numberOfTimeUnit.week": "Počet týdnů",
     "ruleset.numberOfTimeUnit.month": "Počet měsíců",
-    "ruleset.numberOfTimeUnit.year": "Počet let"
+    "ruleset.numberOfTimeUnit.year": "Počet let",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }

@@ -55,7 +55,7 @@
     "description": "Omschrijving",
     "rulesets.editRuleset": "Regelset bewerken",
     "ruleset.timeUnit": "Tijdseenheid",
-    "ruleset.numberOfTimeUnit": "Aantal {timeUnit}s",
+    "ruleset.numberOfTimeUnit": "Aantal tijdseenheden",
     "ruleset.numberOfIssues": "Aantal nummers",
     "ruleset.day": "Dag",
     "ruleset.week": "Week",
@@ -270,5 +270,10 @@
     "ruleset.numberOfTimeUnit.day": "Aantal dagen",
     "ruleset.numberOfTimeUnit.week": "Aantal weken",
     "ruleset.numberOfTimeUnit.month": "Aantal maanden",
-    "ruleset.numberOfTimeUnit.year": "Aantal jaren"
+    "ruleset.numberOfTimeUnit.year": "Aantal jaren",
+    "templates": "Templates",
+    "templates.name": "Name",
+    "templates.description": "Description",
+    "templates.status": "Status",
+    "templates.exampleLabel": "Example label"
 }
