@@ -271,9 +271,9 @@
     "ruleset.numberOfTimeUnit.week": "Počet týdnů",
     "ruleset.numberOfTimeUnit.month": "Počet měsíců",
     "ruleset.numberOfTimeUnit.year": "Počet let",
-    "templates": "Templates",
-    "templates.name": "Name",
-    "templates.description": "Description",
-    "templates.status": "Status",
-    "templates.exampleLabel": "Example label"
+    "templates": "Šablony",
+    "templates.name": "Název",
+    "templates.description": "Popis",
+    "templates.status": "Stav",
+    "templates.exampleLabel": "Příklad štítku"
 }
