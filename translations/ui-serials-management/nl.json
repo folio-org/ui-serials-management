@@ -272,8 +272,8 @@
     "ruleset.numberOfTimeUnit.month": "Aantal maanden",
     "ruleset.numberOfTimeUnit.year": "Aantal jaren",
     "templates": "Templates",
-    "templates.name": "Name",
-    "templates.description": "Description",
+    "templates.name": "Naam",
+    "templates.description": "Omschrijving",
     "templates.status": "Status",
-    "templates.exampleLabel": "Example label"
+    "templates.exampleLabel": "Voorbeeld label"
 }
