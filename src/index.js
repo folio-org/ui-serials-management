@@ -27,6 +27,7 @@ import {
   RulesetReplaceRoute,
   PieceSetsRoute,
   TemplatesRoute,
+  TemplateCreateRoute
 } from './routes';
 
 import Settings from './settings';

@@ -6,3 +6,4 @@ export { default as RulesetReplaceRoute } from './RulesetReplaceRoute';
 export { default as SerialEditRoute } from './SerialEditRoute';
 export { default as PieceSetsRoute } from './PieceSetsRoute';
 export { default as TemplatesRoute } from './TemplatesRoute';
+export { default as TemplateCreateRoute } from './TemplateCreateRoute';

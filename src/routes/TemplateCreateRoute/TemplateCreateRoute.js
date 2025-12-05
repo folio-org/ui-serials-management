@@ -8,7 +8,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useGenerateNumber } from '@folio/service-interaction';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { RULESETS_ENDPOINT } from '../../constants/endpoints';
+import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { RulesetForm } from '../../components/views';
 import {
@@ -17,7 +17,7 @@ import {
   rulesetSubmitValuesHandler,
 } from '../../components/utils';
 
-const RulesetCreateRoute = () => {
+const TemplateCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
@@ -44,9 +44,9 @@ const RulesetCreateRoute = () => {
   };
   // istanbul ignore next
   const { mutateAsync: postRuleset } = useMutation(
-    ['ui-serials-management', 'RulesetCreateRoute', 'postRuleset'],
+    ['ui-serials-management', 'TemplateCreateRoute', 'postRuleset'],
     (data) => {
-      ky.post(RULESETS_ENDPOINT, { json: data })
+      ky.post(MODEL_RULESETS_ENDPOINT, { json: data })
         .json()
         .then((res) => handleClose(res?.id));
     }
@@ -73,6 +73,7 @@ const RulesetCreateRoute = () => {
       : { rulesetStatus: { value: 'active' } };
   }, [modelRuleset]);
 
+  console.log('initialValues', initialValues);
   return (
     <Form
       id="ruleset-create-form"
@@ -99,4 +100,4 @@ const RulesetCreateRoute = () => {
   );
 };
 
-export default RulesetCreateRoute;
+export default TemplateCreateRoute;
