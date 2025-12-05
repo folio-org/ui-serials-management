@@ -122,6 +122,10 @@ const App = (props) => {
                 />
               </SerialsRoute>
               <PieceSetsRoute path={`${path}/pieceSets`} />
+              <Route
+                component={TemplateCreateRoute}
+                path={`${path}/modelRulesets/create`}
+              />
               <TemplatesRoute path={`${path}/modelRulesets`} />
             </Switch>
           </Suspense>

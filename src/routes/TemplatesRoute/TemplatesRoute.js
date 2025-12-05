@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+
+import { IfPermission } from '@folio/stripes/core';
+import { Button, PaneMenu } from '@folio/stripes/components';
 
 import { TemplateView } from '../../components/views';
 import { RouteSwitcher, RulesetFilters } from '../../components/SearchAndFilter';
 import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
+import urls from '../../components/utils/urls';
 
 const TemplatesRoute = ({ children, path }) => {
   const fetchParameters = {
@@ -19,9 +24,36 @@ const TemplatesRoute = ({ children, path }) => {
     },
   };
 
+  const history = useHistory();
+  const location = useLocation();
+
   const renderHeaderComponent = () => {
     return <RouteSwitcher primary="templates" />;
   };
+
+  const handleCreate = () => {
+    history.push(`${urls.templateCreate()}${location.search}`);
+  };
+
+  const renderLastMenu = (
+    <IfPermission perm="ui-serials-management.modelrulesets.manage">
+      <PaneMenu>
+        <FormattedMessage id="ui-serials-management.templates.newTemplate">
+          {([ariaLabel]) => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              id="clickable-new-serial"
+              marginBottom0
+              onClick={() => handleCreate()}
+            >
+              <FormattedMessage id="ui-serials-management.new" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </PaneMenu>
+    </IfPermission>
+  );
 
   const resultColumns = [
     {
@@ -55,6 +87,7 @@ const TemplatesRoute = ({ children, path }) => {
       FilterPaneHeaderComponent={renderHeaderComponent}
       id="templates"
       mainPaneProps={{
+        lastMenu: renderLastMenu,
         paneTitle: (
           <FormattedMessage id="ui-serials-management.templates" />
         ),
