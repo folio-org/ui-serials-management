@@ -70,7 +70,11 @@
   "templates.description": "Description",
   "templates.status": "Status",
   "templates.exampleLabel": "Example label",
-  "templates.newTemplate": "New template",
+  "templates.newTemplate": "New publication pattern template",
+  "templates.rulesetInfo": "Pattern status and description",
+  "templates.modelRulesetStatus": "Pattern template status",
+  "templates.modelRulesetName": "Pattern template name",
+  "templates.modelRulesetDescription": "Pattern template description",
 
   "rulesets.newPublicationPattern": "New publication pattern",
   "rulesets.editRuleset": "Edit ruleset",

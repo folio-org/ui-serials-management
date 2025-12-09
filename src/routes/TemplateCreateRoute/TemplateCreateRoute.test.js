@@ -3,23 +3,23 @@ import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { translationsProperties } from '../../../test/helpers';
 
-import RulesetCreateRoute from './TemplateCreateRoute';
+import TemplateCreateRoute from './TemplateCreateRoute';
 
-jest.mock('../../components/views/RulesetForm', () => () => <div>RulesetForm</div>);
+jest.mock('../../components/views/TemplateForm', () => () => <div>TemplateForm</div>);
 
 let renderComponent;
-describe('RulesetCreateRoute', () => {
+describe('TemplateCreateRoute', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <RulesetCreateRoute />
+        <TemplateCreateRoute />
       </MemoryRouter>,
       translationsProperties
     );
   });
 
-  test('renders the RulesetForm component', () => {
+  test('renders the TemplateForm component', () => {
     const { getByText } = renderComponent;
-    expect(getByText('RulesetForm')).toBeInTheDocument();
+    expect(getByText('TemplateForm')).toBeInTheDocument();
   });
 });

@@ -4,3 +4,4 @@ export { default as RulesetView } from './RulesetView';
 export { default as RulesetForm } from './RulesetForm';
 export { default as PieceSetView } from './PieceSetView';
 export { default as TemplateView } from './TemplateView';
+export * from './TemplateForm';
