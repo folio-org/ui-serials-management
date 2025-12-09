@@ -98,6 +98,10 @@ const TemplatesRoute = ({ children, path }) => {
       }}
       path={path}
       resultColumns={resultColumns}
+      sasqProps={{
+        initialSortState: { sort: 'name', direction: 'ascending' },
+        sortableColumns: ['name'],
+      }}
       searchFieldAriaLabel="templates-search-field"
       ViewComponent={TemplateView}
     >
