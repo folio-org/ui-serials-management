@@ -98,11 +98,7 @@ const TemplateForm = ({
           <>
             <Button
               buttonStyle="default mega"
-              // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
-              // disabled={pristine || invalid || submitting}
-              disabled={
-                pristine || invalid || submitting
-              }
+              disabled={pristine || invalid || submitting}
               marginBottom0
               onClick={() => setShowModal(!showModal)}
             >
@@ -192,7 +188,7 @@ const TemplateForm = ({
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                )}
+                  )}
               </Accordion>
               <Accordion
                 label={
