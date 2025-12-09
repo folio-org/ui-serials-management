@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,7 +12,11 @@ import { useSerialsManagementRefdata } from '../../utils';
 
 const [RULESET_STATUS] = ['ModelRuleset.ModelRulesetStatus'];
 
-const TemplateInfoForm = () => {
+const propTypes = {
+  nameInputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};
+
+const TemplateInfoForm = ({ nameInputRef }) => {
   const refdataValues = useSerialsManagementRefdata([RULESET_STATUS]);
   const modelRulesetStatus = selectifyRefdata(refdataValues, RULESET_STATUS, 'value').find(p => p.value === 'active');
 
@@ -20,9 +25,9 @@ const TemplateInfoForm = () => {
       <Row>
         <Col xs={9}>
           <Field
-            autoFocus
             component={TextArea}
             fullWidth
+            inputRef={nameInputRef}
             label={<FormattedMessage id="ui-serials-management.templates.modelRulesetName" />}
             name="name"
             parse={(v) => v}
@@ -61,5 +66,7 @@ const TemplateInfoForm = () => {
     </>
   );
 };
+
+TemplateInfoForm.propTypes = propTypes;
 
 export default TemplateInfoForm;

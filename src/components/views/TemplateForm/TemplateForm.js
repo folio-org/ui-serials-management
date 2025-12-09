@@ -1,4 +1,4 @@
-import { createRef, useState } from 'react';
+import { createRef, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useFormState, useForm } from 'react-final-form';
@@ -57,6 +57,17 @@ const TemplateForm = ({
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
   const accordionStatusRef = createRef();
+  const nameInputRef = useRef(null);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      if (nameInputRef.current) {
+        nameInputRef.current.focus();
+      }
+    }, 0);
+
+    return () => clearTimeout(id);
+  }, []);
 
   // istanbul ignore next
   const shortcuts = [
@@ -156,7 +167,7 @@ const TemplateForm = ({
             <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
           )}
         >
-          <TemplateInfoForm />
+          <TemplateInfoForm nameInputRef={nameInputRef} />
           <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>
