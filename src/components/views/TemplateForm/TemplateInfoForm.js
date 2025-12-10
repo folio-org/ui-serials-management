@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Row, Col, TextArea, KeyValue } from '@folio/stripes/components';
+import { Row, Col, TextArea, TextField, KeyValue } from '@folio/stripes/components';
 
 import {
   requiredValidator,
@@ -25,7 +25,7 @@ const TemplateInfoForm = ({ nameInputRef }) => {
       <Row>
         <Col xs={9}>
           <Field
-            component={TextArea}
+            component={TextField}
             fullWidth
             inputRef={nameInputRef}
             label={<FormattedMessage id="ui-serials-management.templates.modelRulesetName" />}
@@ -55,7 +55,7 @@ const TemplateInfoForm = ({ nameInputRef }) => {
         </Col>
         <Col xs={3}>
           <Field
-            component={TextArea}
+            component={TextField}
             fullWidth
             label={<FormattedMessage id="ui-serials-management.templates.exampleLabel" />}
             name="exampleLabel"
