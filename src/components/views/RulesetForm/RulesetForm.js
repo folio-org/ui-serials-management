@@ -80,7 +80,6 @@ const RulesetForm = ({
   );
 
   const getPreviewDisabled = ({ pristine, invalid, submitting, values }) => {
-    console.log('getPreviewDisabled values', values);
     const modelRulesetPresent = computeModelRulesetPresent(values);
     // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
     return (!modelRulesetPresent && pristine) || invalid || submitting;
