@@ -210,42 +210,42 @@ const RulesetFormLayout = ({
   };
 
   return (
-    // <HasCommand
-    //   commands={shortcuts}
-    //   isWithinScope={checkScope}
-    //   scope={document.body}
-    // >
-    <Paneset>
-      <Pane
-        appIcon={<AppIcon app="serials-management" />}
-        centerContent
-        defaultWidth="100%"
-        firstMenu={renderFirstMenu()}
-        footer={renderPaneFooter()}
-        renderHeader={(renderProps) => (
-          <PaneHeader {...renderProps} paneTitle={title} />
-        )}
-      >
-        {infoSection}
-        <AccordionStatus ref={accordionStatusRef}>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton />
-            </Col>
-          </Row>
-          <AccordionSet>
-            {renderAccordions({ values, getFieldState })}
-          </AccordionSet>
-        </AccordionStatus>
-        <TemplateStringField />
-      </Pane>
-      <PiecesPreviewModal
-        ruleset={values}
-        setShowModal={setShowModal}
-        showModal={showModal}
-      />
-    </Paneset>
-    // </HasCommand>
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="serials-management" />}
+          centerContent
+          defaultWidth="100%"
+          firstMenu={renderFirstMenu()}
+          footer={renderPaneFooter()}
+          renderHeader={(renderProps) => (
+            <PaneHeader {...renderProps} paneTitle={title} />
+          )}
+        >
+          {infoSection}
+          <AccordionStatus ref={accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet>
+              {renderAccordions({ values, getFieldState })}
+            </AccordionSet>
+          </AccordionStatus>
+          <TemplateStringField />
+        </Pane>
+        <PiecesPreviewModal
+          ruleset={values}
+          setShowModal={setShowModal}
+          showModal={showModal}
+        />
+      </Paneset>
+    </HasCommand>
   );
 };
 
