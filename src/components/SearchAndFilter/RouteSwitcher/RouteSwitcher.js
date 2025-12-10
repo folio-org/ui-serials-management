@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { IfPermission } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 
 import { ResponsiveButtonGroup } from '@k-int/stripes-kint-components';
@@ -44,13 +45,15 @@ const RouteSwitcher = ({ primary }) => {
       >
         <FormattedMessage id="ui-serials-management.pieceSets" />
       </Button>
-      <Button
-        key="clickable-nav-templates"
-        id="clickable-nav-templates"
-        to={primary === 'templates' ? null : urls.templates()}
-      >
-        <FormattedMessage id="ui-serials-management.templates" />
-      </Button>
+      <IfPermission perm="serials-management.rulesets.view">
+        <Button
+          key="clickable-nav-templates"
+          id="clickable-nav-templates"
+          to={primary === 'templates' ? null : urls.templates()}
+        >
+          <FormattedMessage id="ui-serials-management.templates" />
+        </Button>
+      </IfPermission>
     </ResponsiveButtonGroup>
   );
 };
