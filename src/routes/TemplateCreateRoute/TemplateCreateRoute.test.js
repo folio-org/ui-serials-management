@@ -5,7 +5,7 @@ import { translationsProperties } from '../../../test/helpers';
 
 import TemplateCreateRoute from './TemplateCreateRoute';
 
-jest.mock('../../components/views/TemplateForm', () => () => <div>TemplateForm</div>);
+jest.mock('../../components/views', () => ({ TemplateForm: () => <div>TemplateForm</div> }));
 
 let renderComponent;
 describe('TemplateCreateRoute', () => {
