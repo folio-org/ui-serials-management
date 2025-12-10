@@ -188,7 +188,7 @@ const TemplateForm = ({
                   values?.recurrence?.issues >= 1 &&
                   getFieldState('recurrence.issues')?.valid && (
                     <IssuePublicationFieldArray />
-                  )}
+                )}
               </Accordion>
               <Accordion
                 label={
