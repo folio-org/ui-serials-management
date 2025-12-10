@@ -52,7 +52,7 @@ export const RulesetSections = ({ values, getFieldState }) => (
         values?.recurrence?.issues >= 1 &&
         getFieldState('recurrence.issues')?.valid && (
           <IssuePublicationFieldArray />
-        )}
+      )}
     </Accordion>
     <Accordion
       label={
