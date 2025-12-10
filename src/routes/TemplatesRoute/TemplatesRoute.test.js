@@ -1,36 +1,55 @@
-import { MemoryRouter, useLocation } from 'react-router-dom';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
+import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../test/helpers';
 import TemplatesRoute from './TemplatesRoute';
+import urls from '../../components/utils/urls';
 
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  SASQRoute: () => <div>SASQRoute</div>,
+const mockHistoryPush = jest.fn();
+const mockLocation = { search: '?filters=modelRulesetStatus.active' };
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({ push: mockHistoryPush }),
+  useLocation: () => mockLocation,
 }));
 
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useHistory: jest.fn(),
-  useLocation: jest.fn(),
+jest.mock('@k-int/stripes-kint-components', () => {
+  const actual = jest.requireActual('@k-int/stripes-kint-components');
+
+  return {
+    ...actual,
+    SASQRoute: ({ mainPaneProps }) => (
+      <div>
+        <div>SASQRoute</div>
+        {mainPaneProps.lastMenu}
+      </div>
+    ),
+  };
+});
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes-core'),
+  IfPermission: ({ children }) => <>{children}</>,
 }));
 
-const location = {
-  pathname: '/serials-management/templates/da8378f62599cb70cee4601785a350b7',
-  search: '?filters=modelRulesetStatus.active',
-};
+jest.mock('../../components/utils/urls', () => ({
+  __esModule: true,
+  default: {
+    templateCreate: jest.fn(() => '/serials-management/modelRulesets/create'),
+  },
+}));
 
 let renderComponent;
+
 describe('TemplatesRoute', () => {
   beforeEach(() => {
-    useLocation.mockClear().mockReturnValue(location);
+    mockHistoryPush.mockClear();
+    urls.templateCreate.mockClear();
+
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <TemplatesRoute
-          location={location}
-          path="/serials-management/modelRulesets"
-        />,
+        <TemplatesRoute path="/serials-management/modelRulesets" />
       </MemoryRouter>,
       translationsProperties
     );
@@ -39,5 +58,14 @@ describe('TemplatesRoute', () => {
   test('renders the SASQRoute component', () => {
     const { getByText } = renderComponent;
     expect(getByText('SASQRoute')).toBeInTheDocument();
+  });
+
+  test('clicking New button navigates to template create with current search params', async () => {
+    await Button('New').click();
+
+    expect(urls.templateCreate).toHaveBeenCalled();
+    expect(mockHistoryPush).toHaveBeenCalledWith(
+      '/serials-management/modelRulesets/create?filters=modelRulesetStatus.active'
+    );
   });
 });
