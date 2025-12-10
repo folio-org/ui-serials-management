@@ -16,7 +16,7 @@ const propTypes = {
   nameInputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };
 
-const TemplateInfoForm = ({ nameInputRef }) => {
+const ModelRulesetInfoForm = ({ nameInputRef }) => {
   const refdataValues = useSerialsManagementRefdata([RULESET_STATUS]);
   const modelRulesetStatus = selectifyRefdata(refdataValues, RULESET_STATUS, 'value').find(p => p.value === 'active');
 
@@ -67,6 +67,6 @@ const TemplateInfoForm = ({ nameInputRef }) => {
   );
 };
 
-TemplateInfoForm.propTypes = propTypes;
+ModelRulesetInfoForm.propTypes = propTypes;
 
-export default TemplateInfoForm;
+export default ModelRulesetInfoForm;
