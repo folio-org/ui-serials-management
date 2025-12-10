@@ -5,7 +5,7 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes-erm-testing';
-import TemplateInfoForm from './TemplateInfoForm';
+import ModelRulesetInfoForm from './ModelRulesetInfoForm';
 import { refdata as mockRefdata } from '../../../../test/resources';
 
 import { translationsProperties } from '../../../../test/helpers';
@@ -17,11 +17,11 @@ jest.mock('../../utils', () => ({
   useSerialsManagementRefdata: () => mockRefdata,
 }));
 
-describe('TemplateInfoForm', () => {
+describe('ModelRulesetInfoForm', () => {
   beforeEach(() => {
     renderWithIntl(
       <TestForm onSubmit={onSubmit}>
-        <TemplateInfoForm />
+        <ModelRulesetInfoForm />
       </TestForm>,
       translationsProperties
     );

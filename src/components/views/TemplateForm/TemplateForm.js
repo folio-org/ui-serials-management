@@ -1,46 +1,19 @@
-import { createRef, useState, useEffect, useRef } from 'react';
+// TemplateForm.js
+
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useFormState, useForm } from 'react-final-form';
-
-import { AppIcon } from '@folio/stripes/core';
 
 import {
   Accordion,
-  AccordionSet,
-  AccordionStatus,
-  Button,
-  Col,
-  ExpandAllButton,
-  HasCommand,
-  IconButton,
-  Pane,
-  PaneFooter,
-  PaneHeader,
-  Paneset,
-  PaneMenu,
-  Row,
-  expandAllSections,
-  collapseAllSections,
-  checkScope,
 } from '@folio/stripes/components';
 
-import { handleSaveKeyCommand } from '../../utils';
-
 import {
+  ModelRulesetInfoForm,
   RulesetInfoForm,
-  PatternTimePeriodForm,
-  IssuePublicationFieldArray,
-  OmissionFieldArray,
-  CombinationFieldArray,
-  ChronologyFieldArray,
-  EnumerationFieldArray,
-  TemplateStringField,
 } from '../../RulesetFormSections';
 
-import PiecesPreviewModal from '../../PiecesPreviewModal';
-
-import TemplateInfoForm from './TemplateInfoForm';
+import RulesetFormLayout, { RulesetSections } from '../RulesetForm/RulesetFormLayout';
 
 const propTypes = {
   handlers: PropTypes.shape({
@@ -53,10 +26,6 @@ const propTypes = {
 const TemplateForm = ({
   handlers: { onClose, onSubmit },
 }) => {
-  const { pristine, submitting, invalid, values } = useFormState();
-  const { getFieldState } = useForm();
-  const [showModal, setShowModal] = useState(false);
-  const accordionStatusRef = createRef();
   const nameInputRef = useRef(null);
 
   useEffect(() => {
@@ -69,166 +38,43 @@ const TemplateForm = ({
     return () => clearTimeout(id);
   }, []);
 
-  // istanbul ignore next
-  const shortcuts = [
-    {
-      name: 'save',
-      handler: (e) => handleSaveKeyCommand(e, onSubmit, pristine, submitting),
-    },
-    {
-      name: 'expandAllSections',
-      handler: (e) => expandAllSections(e, accordionStatusRef),
-    },
-    {
-      name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, accordionStatusRef),
-    },
-  ];
+  const infoSection = (
+    <ModelRulesetInfoForm nameInputRef={nameInputRef} />
+  );
 
-  const renderPaneTitle = () => {
-    return (
-      <FormattedMessage id="ui-serials-management.templates.newTemplate" />
-    );
-  };
-
-  const renderPaneFooter = () => {
-    return (
-      <PaneFooter
-        renderEnd={
-          <>
-            <Button
-              buttonStyle="default mega"
-              disabled={pristine || invalid || submitting}
-              marginBottom0
-              onClick={() => setShowModal(!showModal)}
-            >
-              <FormattedMessage id="ui-serials-management.ruleset.preview" />
-            </Button>
-            <Button
-              buttonStyle="primary mega"
-              // disabled={pristine || submitting}
-              disabled={pristine || submitting}
-              marginBottom0
-              onClick={onSubmit}
-              type="submit"
-            >
-              <FormattedMessage id="stripes-components.saveAndClose" />
-            </Button>
-          </>
+  const renderAccordions = ({ values, getFieldState }) => (
+    <>
+      <Accordion
+        label={
+          <FormattedMessage id="ui-serials-management.templates.rulesetInfo" />
         }
-        renderStart={
-          <Button
-            buttonStyle="default mega"
-            marginBottom0
-            onClick={() => onClose()}
-          >
-            <FormattedMessage id="stripes-components.cancel" />
-          </Button>
-        }
+      >
+        <RulesetInfoForm />
+      </Accordion>
+      <RulesetSections
+        getFieldState={getFieldState}
+        values={values}
       />
-    );
-  };
+    </>
+  );
 
-  const renderFirstMenu = () => {
-    return (
-      <PaneMenu>
-        <FormattedMessage id="ui-serials-management.closeForm">
-          {([ariaLabel]) => (
-            <IconButton
-              aria-label={ariaLabel}
-              icon="times"
-              id="close-template-form-button"
-              onClick={() => onClose()}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    );
-  };
+  const getPreviewDisabled = ({ pristine, invalid, submitting }) => pristine || invalid || submitting;
+
+  const getSaveDisabled = ({ pristine, submitting }) => pristine || submitting;
 
   return (
-    <HasCommand
-      commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
-    >
-      <Paneset>
-        <Pane
-          appIcon={<AppIcon app="serials-management" />}
-          centerContent
-          defaultWidth="100%"
-          firstMenu={renderFirstMenu()}
-          footer={renderPaneFooter()}
-          renderHeader={(renderProps) => (
-            <PaneHeader {...renderProps} paneTitle={renderPaneTitle()} />
-          )}
-        >
-          <TemplateInfoForm nameInputRef={nameInputRef} />
-          <AccordionStatus ref={accordionStatusRef}>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton />
-              </Col>
-            </Row>
-            <AccordionSet>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.templates.rulesetInfo" />
-                }
-              >
-                <RulesetInfoForm />
-              </Accordion>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.publicationCycle" />
-                }
-              >
-                <PatternTimePeriodForm />
-                {values?.recurrence?.timeUnit &&
-                  values?.recurrence?.issues >= 1 &&
-                  getFieldState('recurrence.issues')?.valid && (
-                    <IssuePublicationFieldArray />
-                )}
-              </Accordion>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.omissionRules" />
-                }
-              >
-                <OmissionFieldArray />
-              </Accordion>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.combinationRules" />
-                }
-              >
-                <CombinationFieldArray />
-              </Accordion>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.chronologyLabels" />
-                }
-              >
-                <ChronologyFieldArray />
-              </Accordion>
-              <Accordion
-                label={
-                  <FormattedMessage id="ui-serials-management.ruleset.enumerationLabels" />
-                }
-              >
-                <EnumerationFieldArray />
-              </Accordion>
-            </AccordionSet>
-          </AccordionStatus>
-          <TemplateStringField />
-        </Pane>
-        <PiecesPreviewModal
-          ruleset={values}
-          setShowModal={setShowModal}
-          showModal={showModal}
-        />
-      </Paneset>
-    </HasCommand>
+    <RulesetFormLayout
+      closeButtonId="close-template-form-button"
+      getPreviewDisabled={getPreviewDisabled}
+      getSaveDisabled={getSaveDisabled}
+      infoSection={infoSection}
+      onClose={onClose}
+      onSubmit={onSubmit}
+      renderAccordions={renderAccordions}
+      title={
+        <FormattedMessage id="ui-serials-management.templates.newTemplate" />
+      }
+    />
   );
 };
 
