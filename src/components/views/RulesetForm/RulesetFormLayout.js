@@ -115,9 +115,6 @@ const RulesetFormLayout = ({
   getSaveDisabled,
 }) => {
   const { pristine, submitting, invalid, values } = useFormState();
-  // const { pristine, submitting, invalid, values, errors } = useFormState({
-  //   subscription: { pristine: true, submitting: true, invalid: true, values: true, errors: true },
-  // });
 
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
