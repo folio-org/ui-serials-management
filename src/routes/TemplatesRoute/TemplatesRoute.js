@@ -43,7 +43,7 @@ const TemplatesRoute = ({ children, path }) => {
             <Button
               aria-label={ariaLabel}
               buttonStyle="primary"
-              id="clickable-new-serial"
+              id="clickable-new-template"
               marginBottom0
               onClick={() => handleCreate()}
             >
