@@ -271,9 +271,9 @@
     "ruleset.numberOfTimeUnit.week": "周数",
     "ruleset.numberOfTimeUnit.month": "月数",
     "ruleset.numberOfTimeUnit.year": "年数",
-    "templates": "Templates",
-    "templates.name": "Name",
-    "templates.description": "Description",
-    "templates.status": "Status",
-    "templates.exampleLabel": "Example label"
+    "templates": "模板",
+    "templates.name": "名称",
+    "templates.description": "描述",
+    "templates.status": "状态",
+    "templates.exampleLabel": "示例标签"
 }

@@ -271,9 +271,9 @@
     "ruleset.numberOfTimeUnit.week": "Number of weeks",
     "ruleset.numberOfTimeUnit.month": "Number of months",
     "ruleset.numberOfTimeUnit.year": "Number of years",
-    "templates": "Templates",
-    "templates.name": "Name",
-    "templates.description": "Description",
-    "templates.status": "Status",
+    "templates": "Plantillas",
+    "templates.name": "Nombre",
+    "templates.description": "Descripción",
+    "templates.status": "Estado",
     "templates.exampleLabel": "Example label"
 }
