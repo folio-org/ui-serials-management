@@ -1,10 +1,9 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, Callout, Modal } from '@folio/stripes-erm-testing';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { translationsProperties } from '../../../../test/helpers';
 import TemplateView from './TemplateView';
 
-// TODO Imports like this need to be sorted, this is messy
 import { handlers, template } from '../../../../test/resources';
 import { dayMonth } from '../../../../test/resources/rulesetResources/omissionsRules';
 import { issue } from '../../../../test/resources/rulesetResources/combinationRules';
@@ -107,6 +106,63 @@ describe('TemplateView', () => {
       const { getByText } = renderComponent;
       await waitFor(async () => {
         expect(getByText(componentName)).toBeInTheDocument();
+      });
+    });
+
+    test('Action menu has delete button', async () => {
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+      });
+    });
+
+    describe('opening actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+
+      describe('clicking delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        test('renders the confirmation modal', async () => {
+          await waitFor(async () => {
+            await Modal('Delete publication pattern template').exists();
+          });
+        });
+
+        describe('cancelling confirmation modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click(); // close the modal
+            });
+          });
+
+          test('confirmation modal no longer renders', async () => {
+            await waitFor(async () => {
+              await Modal('Delete publication pattern template').absent();
+            });
+          });
+        });
+
+        describe('clicking the confirmation delete button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Delete').click();
+            });
+          });
+
+          test('delete success callout fires', async () => {
+            await waitFor(async () => {
+              await Callout('Publication pattern template deleted: <strong>{name}</strong>').exists();
+            });
+          });
+        });
       });
     });
   });

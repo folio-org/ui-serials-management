@@ -15,6 +15,7 @@ export const REPLACE_AND_DEPRECATE_ENDPOINT = (id) => `serials-management/rulese
 export const REPLACE_AND_DELETE_ENDPOINT = (id) => `serials-management/rulesets/${id}/replaceAndDelete`;
 
 export const MODEL_RULESETS_ENDPOINT = 'serials-management/modelRulesets';
+export const MODEL_RULESET_ENDPOINT = (id) => `serials-management/modelRulesets/${id}`;
 
 export const GENERATE_PIECES_PREVIEW = 'serials-management/predictedPieces/generate';
 export const CREATE_PREDICTED_PIECES = 'serials-management/predictedPieces/create';
