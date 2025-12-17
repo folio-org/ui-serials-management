@@ -19,10 +19,12 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onSelect: PropTypes.func,
   }).isRequired,
+  isCopy: PropTypes.bool,
 };
 
 const TemplateForm = ({
   handlers: { onClose, onSubmit },
+  isCopy = false
 }) => {
   const nameInputRef = useRef(null);
 
@@ -56,9 +58,9 @@ const TemplateForm = ({
     </>
   );
 
-  const getPreviewDisabled = ({ pristine, invalid, submitting }) => pristine || invalid || submitting;
+  const getPreviewDisabled = ({ pristine, invalid, submitting }) => (!isCopy && pristine) || invalid || submitting;
 
-  const getSaveDisabled = ({ pristine, submitting }) => pristine || submitting;
+  const getSaveDisabled = ({ pristine, submitting }) => (!isCopy && pristine) || submitting;
 
   return (
     <RulesetFormLayout

@@ -97,6 +97,7 @@ const TemplateCreateRoute = () => {
               onClose: handleClose,
               onSubmit: handleSubmit,
             }}
+            isCopy={!!copyFrom}
           />
         </form>
       )}
