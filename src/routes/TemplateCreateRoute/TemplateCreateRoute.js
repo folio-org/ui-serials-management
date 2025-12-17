@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
@@ -10,14 +11,35 @@ import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
 
 import { TemplateForm } from '../../components/views';
 import {
-  urls,
+  getRulesetFormValues,
   rulesetSubmitValuesHandler,
+  urls,
 } from '../../components/utils';
 
 const TemplateCreateRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
+
+  const copyFrom = location.state?.copyFrom;
+
+  const initialValues = useMemo(() => {
+    const base = { rulesetStatus: { value: 'active' } };
+
+    if (!copyFrom) return base;
+
+    const rulesetValues = copyFrom.serialRuleset
+      ? getRulesetFormValues(copyFrom.serialRuleset)
+      : {};
+
+    return {
+      ...base,
+      ...rulesetValues,
+      name: copyFrom.name ? `Copy of: ${copyFrom.name}` : '',
+      modelRulesetDescription: copyFrom.description ?? '',
+      exampleLabel: copyFrom.exampleLabel ?? '',
+    };
+  }, [copyFrom]);
 
   const handleClose = (templateId) => {
     history.push(
@@ -59,8 +81,6 @@ const TemplateCreateRoute = () => {
     const submitValues = handleSubmitValues(values);
     await postTemplate(submitValues);
   };
-
-  const initialValues = { rulesetStatus: { value: 'active' } };
 
   return (
     <Form

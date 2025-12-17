@@ -70,6 +70,14 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
     };
   };
 
+  const handleCopy = () => {
+    history.push(
+      `${urls.templateCreate()}${location.search}`,
+      { copyFrom: resource }
+    );
+  };
+
+
   const { mutateAsync: deleteTemplate } = useMutation(
     [templatePath, 'ui-serials-management', 'TemplateView', 'deleteTemplate'],
     () => ky
@@ -105,6 +113,18 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
     const buttons = [];
 
     if (stripes.hasPerm('ui-serials-management.modelrulesets.manage')) {
+      buttons.push(
+        <Button
+          key="copy-template"
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-copy-template"
+          onClick={() => handleCopy()}
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-serials-management.templates.copy" />
+          </Icon>
+        </Button>
+      );
       buttons.push(
         <Button
           key="delete-template"
