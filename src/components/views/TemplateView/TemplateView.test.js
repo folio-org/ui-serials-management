@@ -1,12 +1,30 @@
 import { renderWithIntl, Button, Callout, Modal } from '@folio/stripes-erm-testing';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { useStripes } from '@folio/stripes/core';
 import { translationsProperties } from '../../../../test/helpers';
+
 import TemplateView from './TemplateView';
 
 import { handlers, template } from '../../../../test/resources';
 import { dayMonth } from '../../../../test/resources/rulesetResources/omissionsRules';
 import { issue } from '../../../../test/resources/rulesetResources/combinationRules';
+
+const mockHistoryPush = jest.fn();
+const mockLocation = { search: '?filters=modelRulesetStatus.active' };
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({ push: mockHistoryPush }),
+  useLocation: () => mockLocation,
+}));
+
+jest.mock('../../utils', () => ({
+  urls: {
+    templateCreate: jest.fn(() => '/serials-management/modelRulesets/create'),
+    templates: jest.fn(() => '/serials-management/modelRulesets'),
+  },
+}));
 
 jest.mock('../../TemplateInfo', () => () => (
   <div>TemplateInfo</div>
@@ -33,19 +51,67 @@ jest.mock('../../RulesetSections/DisplaySummaryTemplate', () => () => (
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   MetaSection: () => <div>MetaSection</div>,
+  LoadingPane: () => <div>LoadingPane</div>,
 }));
 
 describe('TemplateView', () => {
   let renderComponent;
 
-  describe('with a template which contains only recurrence rules', () => {
+  describe('when loading', () => {
+    test('renders LoadingPane', async () => {
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          <TemplateView
+            onClose={handlers.onClose}
+            queryProps={{ isLoading: true }}
+            resource={template}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      await waitFor(async () => {
+        expect(getByText('LoadingPane')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('without manage permission', () => {
     beforeEach(() => {
+      useStripes().hasPerm.mockReturnValue(false);
+    });
+
+    afterEach(() => {
+      useStripes().hasPerm.mockReturnValue(true);
+    });
+
+    test('does not render the Actions button', async () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <TemplateView
             onClose={handlers.onClose}
             queryProps={{ isLoading: false }}
-            // Using centralised template but removing existing templateConfig rules
+            resource={template}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      await waitFor(async () => {
+        await Button('Actions').absent();
+      });
+    });
+  });
+
+  describe('with a template which contains only recurrence rules', () => {
+    beforeEach(() => {
+      mockHistoryPush.mockClear();
+
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <TemplateView
+            onClose={handlers.onClose}
+            queryProps={{ isLoading: false }}
             resource={{
               ...template,
               serialRuleset: {
@@ -74,23 +140,26 @@ describe('TemplateView', () => {
   });
 
   describe('with a template which all potential rules (omssion, combination, enumeration and chronology) ', () => {
+    let resourceToCopy;
+
     beforeEach(() => {
+      mockHistoryPush.mockClear();
+
+      resourceToCopy = {
+        ...template,
+        serialRuleset: {
+          ...template.serialRuleset,
+          omission: { rules: [dayMonth] },
+          combination: { rules: [issue] },
+        },
+      };
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <TemplateView
             onClose={handlers.onClose}
             queryProps={{ isLoading: false }}
-            // Using centralised template adding combination/omissions
-            // This would never be the case but nicer to have it all in a single desribe block
-            // Additionally the conditionals in the component dont do anything fancy
-            resource={{
-              ...template,
-              serialRuleset: {
-                ...template.serialRuleset,
-                omission: { rules: [dayMonth] },
-                combination: { rules: [issue] },
-              },
-            }}
+            resource={resourceToCopy}
           />
         </MemoryRouter>,
         translationsProperties
@@ -116,10 +185,32 @@ describe('TemplateView', () => {
       });
     });
 
+    test('Action menu has copy button', async () => {
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Copy').click();
+      });
+    });
+
     describe('opening actions menu', () => {
       beforeEach(async () => {
         await waitFor(async () => {
           await Button('Actions').click();
+        });
+      });
+
+
+      describe('clicking copy', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Copy').click();
+          });
+        });
+        test('clicking copy navigates to create route with copyFrom in location state', async () => {
+          expect(mockHistoryPush).toHaveBeenCalledWith(
+            `/serials-management/modelRulesets/create${mockLocation.search}`,
+            { copyFrom: resourceToCopy }
+          );
         });
       });
 
@@ -139,7 +230,7 @@ describe('TemplateView', () => {
         describe('cancelling confirmation modal', () => {
           beforeEach(async () => {
             await waitFor(async () => {
-              await Button('Cancel').click(); // close the modal
+              await Button('Cancel').click();
             });
           });
 
