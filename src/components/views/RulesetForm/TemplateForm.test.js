@@ -8,38 +8,28 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import RulesetForm from './RulesetForm';
+import TemplateForm from './TemplateForm';
 import { handlers } from '../../../../test/resources';
 
-jest.mock('../../RulesetFormSections/RulesetInfoForm', () => () => (
-  <div>RulesetInfoForm</div>
-));
-jest.mock('../../RulesetFormSections/PatternTimePeriodForm', () => () => (
-  <div>PatternTimePeriodForm</div>
-));
-jest.mock('../../RulesetFormSections/IssuePublicationFieldArray', () => () => (
-  <div>IssuePublicationFieldArray</div>
-));
-jest.mock('../../RulesetFormSections/OmissionFieldArray', () => () => (
-  <div>OmissionFieldArray</div>
-));
-jest.mock('../../RulesetFormSections/CombinationFieldArray', () => () => (
-  <div>CombinationFieldArray</div>
-));
-jest.mock('../../RulesetFormSections/EnumerationFieldArray', () => () => (
-  <div>EnumerationFieldArray</div>
-));
-jest.mock('../../RulesetFormSections/ChronologyFieldArray', () => () => (
-  <div>ChronologyFieldArray</div>
-));
-jest.mock('../../RulesetFormSections/ModelRulesetSelection', () => () => (
-  <div>ModelRulesetSelection</div>
+jest.mock('../../RulesetFormSections', () => ({
+  ModelRulesetInfoForm: () => <div>ModelRulesetInfoForm</div>,
+  RulesetInfoForm: () => <div>RulesetInfoForm</div>,
+  PatternTimePeriodForm: () => <div>PatternTimePeriodForm</div>,
+  IssuePublicationFieldArray: () => <div>IssuePublicationFieldArray</div>,
+  OmissionFieldArray: () => <div>OmissionFieldArray</div>,
+  CombinationFieldArray: () => <div>CombinationFieldArray</div>,
+  ChronologyFieldArray: () => <div>ChronologyFieldArray</div>,
+  EnumerationFieldArray: () => <div>EnumerationFieldArray</div>,
+  TemplateStringField: () => <div>TemplateStringField</div>,
+}));
+
+jest.mock('../../PiecesPreviewModal', () => () => (
+  <div>PiecesPreviewModal</div>
 ));
 
 const onSubmit = jest.fn();
-const onModelRulesetChange = jest.fn();
 
-describe('RulesetForm', () => {
+describe('TemplateForm', () => {
   let renderComponent;
 
   describe('renders components', () => {
@@ -47,23 +37,22 @@ describe('RulesetForm', () => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           {/* From next version handleSubmit should be passed down in TestForm children func */}
-          <RulesetForm
+          <TemplateForm
             handlers={{ onClose: handlers.onClose, onSubmit }}
-            modelRuleset={{ onChange: onModelRulesetChange }}
           />
         </TestForm>,
         translationsProperties
       );
     });
 
-    test('renders RulesetInfoForm Component', () => {
+    test('renders ModelRulesetInfoForm Component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('RulesetInfoForm')).toBeInTheDocument();
+      expect(getByText('ModelRulesetInfoForm')).toBeInTheDocument();
     });
 
-    test('renders ModelRulesetSelection Component', () => {
+    test('renders RulesetInfoForm Component inside an accordion', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ModelRulesetSelection')).toBeInTheDocument();
+      expect(getByText('RulesetInfoForm')).toBeInTheDocument();
     });
 
     test('renders PatternTimePeriodForm Component', () => {
@@ -91,12 +80,12 @@ describe('RulesetForm', () => {
       expect(getByText('EnumerationFieldArray')).toBeInTheDocument();
     });
 
-    test('renders the New publication pattern Pane', async () => {
-      await Pane('New publication pattern').is({ visible: true });
+    test('renders the New publication pattern template Pane', async () => {
+      await Pane('New publication pattern template').is({ visible: true });
     });
 
     it('renders the expected Pane title', async () => {
-      await PaneHeader('New publication pattern').is({ visible: true });
+      await PaneHeader('New publication pattern template').is({ visible: true });
     });
 
     test('renders the Publication cycle Accordion', async () => {
