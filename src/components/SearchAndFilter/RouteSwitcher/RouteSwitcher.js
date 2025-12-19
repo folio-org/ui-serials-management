@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { IfPermission } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 
 import { ResponsiveButtonGroup } from '@k-int/stripes-kint-components';
@@ -13,6 +13,8 @@ const propTypes = {
 };
 
 const RouteSwitcher = ({ primary }) => {
+  const stripes = useStripes();
+
   let selectedIndex;
   // istanbul ignore next
   switch (primary) {
@@ -28,6 +30,8 @@ const RouteSwitcher = ({ primary }) => {
     default:
       break;
   }
+
+  const canViewTemplates = stripes.hasPerm('serials-management.rulesets.view');
 
   return (
     <ResponsiveButtonGroup fullWidth selectedIndex={selectedIndex}>
@@ -45,7 +49,7 @@ const RouteSwitcher = ({ primary }) => {
       >
         <FormattedMessage id="ui-serials-management.pieceSets" />
       </Button>
-      <IfPermission perm="serials-management.rulesets.view">
+      {canViewTemplates &&
         <Button
           key="clickable-nav-templates"
           id="clickable-nav-templates"
@@ -53,7 +57,7 @@ const RouteSwitcher = ({ primary }) => {
         >
           <FormattedMessage id="ui-serials-management.templates" />
         </Button>
-      </IfPermission>
+      }
     </ResponsiveButtonGroup>
   );
 };

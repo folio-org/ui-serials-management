@@ -5,7 +5,7 @@ import { translationsProperties } from '../../../test/helpers';
 
 import RulesetReplaceRoute from './RulesetReplaceRoute';
 
-jest.mock('../../components/views/RulesetForm', () => () => <div>RulesetForm</div>);
+jest.mock('../../components/views', () => ({ RulesetForm: () => <div>RulesetForm</div> }));
 
 let renderComponent;
 describe('RulesetReplaceRoute', () => {
