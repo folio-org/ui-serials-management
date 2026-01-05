@@ -272,8 +272,8 @@
     "ruleset.numberOfTimeUnit.month": "Number of months",
     "ruleset.numberOfTimeUnit.year": "Number of years",
     "templates": "Templates",
-    "templates.name": "Name",
+    "templates.name": "名称",
     "templates.description": "Description",
-    "templates.status": "Status",
+    "templates.status": "ステータス",
     "templates.exampleLabel": "Example label"
 }
