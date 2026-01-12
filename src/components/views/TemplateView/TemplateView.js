@@ -123,9 +123,7 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
           <Icon icon="duplicate">
             <FormattedMessage id="ui-serials-management.templates.copy" />
           </Icon>
-        </Button>
-      );
-      buttons.push(
+        </Button>,
         <Button
           key="delete-template"
           buttonStyle="dropdownItem"
