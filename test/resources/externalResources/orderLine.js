@@ -55,7 +55,7 @@ const orderLine = {
     createInventory: 'Instance, Holding',
     trial: true,
     expectedActivation: '2019-07-20T00:00:00.000+00:00',
-    userLimit: "0",
+    userLimit: '0',
     accessProvider: '14fb6608-cdf1-11e8-a8d5-f2801f1b9fd1',
     materialType: 'a7eb0130-7287-4485-b32c-b4b5814da0fa',
   },
