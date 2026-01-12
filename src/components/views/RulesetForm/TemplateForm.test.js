@@ -1,3 +1,4 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
   TestForm,
@@ -12,7 +13,13 @@ import TemplateForm from './TemplateForm';
 import { handlers } from '../../../../test/resources';
 
 jest.mock('../../RulesetFormSections', () => ({
-  ModelRulesetInfoForm: () => <div>ModelRulesetInfoForm</div>,
+  // ModelRulesetInfoForm: () => <div>ModelRulesetInfoForm</div>,
+  ModelRulesetInfoForm: ({ nameInputRef }) => (
+    <div>
+      ModelRulesetInfoForm
+      <input ref={nameInputRef} aria-label="template-name" />
+    </div>
+  ),
   RulesetInfoForm: () => <div>RulesetInfoForm</div>,
   PatternTimePeriodForm: () => <div>PatternTimePeriodForm</div>,
   IssuePublicationFieldArray: () => <div>IssuePublicationFieldArray</div>,
@@ -126,6 +133,30 @@ describe('TemplateForm', () => {
 
     test('renders the Save and close button as disabled', async () => {
       await Button('Save and close').has({ disabled: true });
+    });
+  });
+
+  describe('focus behavior', () => {
+    test('focuses the name input on mount', async () => {
+      jest.useFakeTimers();
+
+      const focusSpy = jest.spyOn(HTMLElement.prototype, 'focus');
+
+      renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <TemplateForm handlers={{ onClose: handlers.onClose, onSubmit }} />
+        </TestForm>,
+        translationsProperties
+      );
+
+      jest.runOnlyPendingTimers();
+
+      await waitFor(() => {
+        expect(focusSpy).toHaveBeenCalled();
+      });
+
+      focusSpy.mockRestore();
+      jest.useRealTimers();
     });
   });
 });
