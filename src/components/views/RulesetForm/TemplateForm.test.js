@@ -136,11 +136,35 @@ describe('TemplateForm', () => {
     });
   });
 
+  describe('when isCopy is true', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <TemplateForm
+            handlers={{ onClose: handlers.onClose, onSubmit }}
+            isCopy
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    test('renders the Preview button as enabled', async () => {
+      await Button('Preview').has({ disabled: false });
+    });
+
+    test('renders the Save and close button as enabled', async () => {
+      await Button('Save and close').has({ disabled: false });
+    });
+  });
+
   describe('focus behavior', () => {
-    test('focuses the name input on mount', async () => {
+    let focusSpy;
+
+    beforeEach(() => {
       jest.useFakeTimers();
 
-      const focusSpy = jest.spyOn(HTMLElement.prototype, 'focus');
+      focusSpy = jest.spyOn(HTMLElement.prototype, 'focus');
 
       renderWithIntl(
         <TestForm onSubmit={onSubmit}>
@@ -148,15 +172,19 @@ describe('TemplateForm', () => {
         </TestForm>,
         translationsProperties
       );
+    });
 
+    afterEach(() => {
+      focusSpy.mockRestore();
+      jest.useRealTimers();
+    });
+
+    test('focuses the name input on mount', async () => {
       jest.runOnlyPendingTimers();
 
       await waitFor(() => {
         expect(focusSpy).toHaveBeenCalled();
       });
-
-      focusSpy.mockRestore();
-      jest.useRealTimers();
     });
   });
 });
