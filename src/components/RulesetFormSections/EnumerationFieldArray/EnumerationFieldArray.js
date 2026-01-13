@@ -56,7 +56,7 @@ const EnumerationFieldArray = () => {
         data-testid="editCard"
         deleteButtonTooltipText={
           <FormattedMessage
-            id="ui-serials-management.ruleset.removeEnumerationLabel"
+            id="ui-serials-management.ruleset.removeEnumerationLabelIndex"
             values={{ index: index + 1 }}
           />
         }
@@ -99,17 +99,17 @@ const EnumerationFieldArray = () => {
         */}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_numeric' && (
-          <EnumerationNumericFieldArray
-            index={index}
-            name={`templateConfig.enumerationRules[${index}].ruleFormat`}
-          />
+            <EnumerationNumericFieldArray
+              index={index}
+              name={`templateConfig.enumerationRules[${index}].ruleFormat`}
+            />
         )}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_textual' && (
-          <EnumerationTextualFieldArray
-            index={index}
-            name={`templateConfig.enumerationRules[${index}].ruleFormat`}
-          />
+            <EnumerationTextualFieldArray
+              index={index}
+              name={`templateConfig.enumerationRules[${index}].ruleFormat`}
+            />
         )}
       </EditCard>
     );

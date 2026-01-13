@@ -77,6 +77,12 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
     );
   };
 
+  const handleEdit = () => {
+    history.push(
+      `${urls.templateEdit(resource.id)}${location.search}`,
+      { copyFrom: resource }
+    );
+  };
 
   const { mutateAsync: deleteTemplate } = useMutation(
     [templatePath, 'ui-serials-management', 'TemplateView', 'deleteTemplate'],
@@ -114,6 +120,16 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
 
     if (stripes.hasPerm('ui-serials-management.modelrulesets.manage')) {
       buttons.push(
+        <Button
+          key="edit-template"
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-edit-template"
+          onClick={() => handleEdit()}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-serials-management.edit" />
+          </Icon>
+        </Button>,
         <Button
           key="copy-template"
           buttonStyle="dropdownItem"
