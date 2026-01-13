@@ -45,8 +45,8 @@ const TemplateCreateRoute = () => {
     };
   }, [copyFrom, isEdit]);
 
-  const handleClose = () => {
-    const templateId = id ?? copyFrom?.id;
+  const handleClose = (returnedId) => {
+    const templateId = returnedId || (isEdit ? id : copyFrom?.id) || null;
     history.push(
       `${templateId ? urls.templateView(templateId) : urls.templates()}${location.search}`
     );
