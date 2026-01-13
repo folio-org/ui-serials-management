@@ -103,14 +103,14 @@ const EnumerationFieldArray = () => {
               index={index}
               name={`templateConfig.enumerationRules[${index}].ruleFormat`}
             />
-          )}
+        )}
         {values?.templateConfig?.enumerationRules[index]
           ?.templateMetadataRuleFormat === 'enumeration_textual' && (
             <EnumerationTextualFieldArray
               index={index}
               name={`templateConfig.enumerationRules[${index}].ruleFormat`}
             />
-          )}
+        )}
       </EditCard>
     );
   };
