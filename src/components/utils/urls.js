@@ -14,6 +14,7 @@ const urls = {
   templates: () => '/serials-management/modelRulesets',
   templateView: (id) => `/serials-management/modelRulesets/${id}`,
   templateCreate: () => '/serials-management/modelRulesets/create',
+  templateEdit: (id) => `/serials-management/modelRulesets/${id}/edit`,
 
   inventoryView: (id) => `/inventory/view/${id}`,
   poLineView: (id) => `/orders/lines/view/${id}`,
