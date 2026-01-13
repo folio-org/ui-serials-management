@@ -95,11 +95,8 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   closeButtonId: PropTypes.string.isRequired,
-  // "top section" content
   infoSection: PropTypes.node.isRequired,
-  // Renders the accordions inside AccordionSet
   renderAccordions: PropTypes.func.isRequired,
-  // Functions that decide disabled state based on form state
   getPreviewDisabled: PropTypes.func.isRequired,
   getSaveDisabled: PropTypes.func.isRequired,
 };
