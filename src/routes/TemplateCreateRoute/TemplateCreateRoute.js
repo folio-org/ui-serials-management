@@ -37,9 +37,7 @@ const TemplateCreateRoute = () => {
     return {
       ...base,
       ...rulesetValues,
-      name: copyFrom.name
-        ? (isEdit ? copyFrom.name : `Copy of: ${copyFrom.name}`)
-        : '',
+      name: isEdit ? copyFrom.name : `Copy of: ${copyFrom.name}`,
       modelRulesetDescription: copyFrom.description ?? '',
       exampleLabel: copyFrom.exampleLabel ?? '',
     };
