@@ -62,7 +62,7 @@ const TemplateCreateRoute = () => {
     }
   );
 
-  const editTemplate = () => {
+  const editTemplate = (_data) => {
     console.log('edit template');
   };
 

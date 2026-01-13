@@ -22,6 +22,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../utils', () => ({
   urls: {
     templateCreate: jest.fn(() => '/serials-management/modelRulesets/create'),
+    templateEdit: jest.fn((id) => `/serials-management/modelRulesets/${id}/edit`),
     templates: jest.fn(() => '/serials-management/modelRulesets'),
   },
 }));
@@ -56,9 +57,8 @@ jest.mock('@folio/stripes/components', () => ({
 
 describe('TemplateView', () => {
   let renderComponent;
-
   describe('when loading', () => {
-    test('renders LoadingPane', async () => {
+    test('renders LoadingPane', () => {
       const { getByText } = renderWithIntl(
         <MemoryRouter>
           <TemplateView
@@ -70,9 +70,7 @@ describe('TemplateView', () => {
         translationsProperties
       );
 
-      await waitFor(async () => {
-        expect(getByText('LoadingPane')).toBeInTheDocument();
-      });
+      expect(getByText('LoadingPane')).toBeInTheDocument();
     });
   });
 
@@ -133,13 +131,14 @@ describe('TemplateView', () => {
       { componentName: 'DisplaySummaryTemplate' },
     ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
-      await waitFor(async () => {
+
+      await waitFor(() => {
         expect(getByText(componentName)).toBeInTheDocument();
       });
     });
   });
 
-  describe('with a template which all potential rules (omssion, combination, enumeration and chronology) ', () => {
+  describe('with a template which has all potential rules (omission, combination, enumeration and chronology)', () => {
     let resourceToCopy;
 
     beforeEach(() => {
@@ -151,6 +150,12 @@ describe('TemplateView', () => {
           ...template.serialRuleset,
           omission: { rules: [dayMonth] },
           combination: { rules: [issue] },
+          // ensure these are present if you expect those sections to render:
+          templateConfig: {
+            ...(template.serialRuleset?.templateConfig || {}),
+            chronologyRules: [{ ruleLocale: 'en' }],
+            enumerationRules: [{ ruleLocale: 'en' }],
+          },
         },
       };
 
@@ -173,22 +178,9 @@ describe('TemplateView', () => {
       { componentName: 'EnumerationLabels' },
     ])('renders $componentName component', async ({ componentName }) => {
       const { getByText } = renderComponent;
-      await waitFor(async () => {
+
+      await waitFor(() => {
         expect(getByText(componentName)).toBeInTheDocument();
-      });
-    });
-
-    test('Action menu has delete button', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Delete').click();
-      });
-    });
-
-    test('Action menu has copy button', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Copy').click();
       });
     });
 
@@ -199,6 +191,13 @@ describe('TemplateView', () => {
         });
       });
 
+      test('action menu includes Edit, Copy, and Delete buttons', async () => {
+        await waitFor(async () => {
+          await Button('Edit').exists();
+          await Button('Copy').exists();
+          await Button('Delete').exists();
+        });
+      });
 
       describe('clicking copy', () => {
         beforeEach(async () => {
@@ -206,9 +205,25 @@ describe('TemplateView', () => {
             await Button('Copy').click();
           });
         });
-        test('clicking copy navigates to create route with copyFrom in location state', async () => {
+
+        test('navigates to create route with copyFrom in location state', () => {
           expect(mockHistoryPush).toHaveBeenCalledWith(
             `/serials-management/modelRulesets/create${mockLocation.search}`,
+            { copyFrom: resourceToCopy }
+          );
+        });
+      });
+
+      describe('clicking edit', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Edit').click();
+          });
+        });
+
+        test('navigates to edit route with copyFrom in location state', () => {
+          expect(mockHistoryPush).toHaveBeenCalledWith(
+            `/serials-management/modelRulesets/${resourceToCopy.id}/edit${mockLocation.search}`,
             { copyFrom: resourceToCopy }
           );
         });
@@ -241,10 +256,10 @@ describe('TemplateView', () => {
           });
         });
 
-        describe('clicking the confirmation delete button', () => {
+        describe('confirming delete', () => {
           beforeEach(async () => {
             await waitFor(async () => {
-              await Button('Delete').click();
+              await Button('Delete').click(); // confirm button inside modal
             });
           });
 
