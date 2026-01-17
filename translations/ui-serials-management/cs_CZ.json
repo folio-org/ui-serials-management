@@ -275,5 +275,15 @@
     "templates.name": "Název",
     "templates.description": "Popis",
     "templates.status": "Stav",
-    "templates.exampleLabel": "Příklad štítku"
+    "templates.exampleLabel": "Příklad štítku",
+    "templates.newTemplate": "Nová šablona publikačního vzoru",
+    "templates.rulesetInfo": "Stav a popis vzoru",
+    "templates.modelRulesetStatus": "Stav šablony vzoru",
+    "templates.modelRulesetName": "Název šablony vzoru",
+    "templates.modelRulesetDescription": "Popis šablony vzoru",
+    "templates.deleteTemplate": "Smazat žablonu publikačního vzoru",
+    "templates.deleteTemplate.confirmMessage": "Šablona publikačního vzoru <strong>{name}</strong> bude smazána",
+    "templates.deleteTemplate.success": "Šablona publikačního vzoru byla smazána: <strong>{name}</strong>",
+    "templates.deleteTemplate.error": "<strong>Šablona publikačního vzoru nebyla smazána:</strong> {message}",
+    "templates.copy": "Kopírovat"
 }
