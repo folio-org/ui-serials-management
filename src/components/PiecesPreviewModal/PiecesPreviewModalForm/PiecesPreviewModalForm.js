@@ -131,7 +131,7 @@ const PiecesPreviewModalForm = ({
             ? getAdjustedStartDate(
               selectedPieceSet?.startDate,
               selectedPieceSet?.numberOfCycles ?? 1
-            )
+            ).toISOString().slice(0, 10)
             : null
         );
         change('numberOfCycles', selectedPieceSet?.numberOfCycles ?? 1);
