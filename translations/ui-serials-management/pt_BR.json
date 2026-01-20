@@ -275,5 +275,15 @@
     "templates.name": "Nome",
     "templates.description": "Descrição",
     "templates.status": "Status",
-    "templates.exampleLabel": "Exemplo de etiqueta"
+    "templates.exampleLabel": "Exemplo de etiqueta",
+    "templates.newTemplate": "Novo modelo padrão de publicação",
+    "templates.rulesetInfo": "Status e descrição padrão",
+    "templates.modelRulesetStatus": "Status do modelo padrão",
+    "templates.modelRulesetName": "Nome do modelo padrão",
+    "templates.modelRulesetDescription": "Descrição do modelo padrão",
+    "templates.deleteTemplate": "Excluir modelo padrão de publicação",
+    "templates.deleteTemplate.confirmMessage": "O modelo padrão de publicação <strong>{name}</strong> será excluído",
+    "templates.deleteTemplate.success": "Modelo padrão de publicação excluído: <strong>{name}</strong>",
+    "templates.deleteTemplate.error": "<strong>O modelo padrão de publicação não foi excluído:</strong> {message}",
+    "templates.copy": "Cópia"
 }
