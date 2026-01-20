@@ -150,7 +150,6 @@ describe('TemplateView', () => {
           ...template.serialRuleset,
           omission: { rules: [dayMonth] },
           combination: { rules: [issue] },
-          // ensure these are present if you expect those sections to render:
           templateConfig: {
             ...(template.serialRuleset?.templateConfig || {}),
             chronologyRules: [{ ruleLocale: 'en' }],
