@@ -7,7 +7,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
+import { MODEL_RULESETS_ENDPOINT, MODEL_RULESET_EDIT_ENDPOINT } from '../../constants/endpoints';
 
 import { TemplateForm } from '../../components/views';
 import {
@@ -60,9 +60,15 @@ const TemplateCreateRoute = () => {
     }
   );
 
-  const editTemplate = (_data) => {
-    console.log('edit template');
-  };
+  // istanbul ignore next
+  const { mutateAsync: editTemplate } = useMutation(
+    ['ui-serials-management', 'TemplateCreateRoute', 'editTemplate'],
+    (data) => {
+      ky.post(MODEL_RULESET_EDIT_ENDPOINT(id), { json: data })
+        .json()
+        .then((res) => handleClose(res?.id));
+    }
+  );
 
   const handleSubmitValues = (values) => {
     const {
@@ -87,8 +93,8 @@ const TemplateCreateRoute = () => {
   const submitTemplate = async (values) => {
     const submitValues = handleSubmitValues(values);
     if (isEdit) {
-      // await editTemplate(submitValues);
-      editTemplate(submitValues);
+      await editTemplate(submitValues);
+      // editTemplate(submitValues);
     } else {
       await postTemplate(submitValues);
     }
