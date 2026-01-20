@@ -94,7 +94,6 @@ const TemplateCreateRoute = () => {
     const submitValues = handleSubmitValues(values);
     if (isEdit) {
       await editTemplate(submitValues);
-      // editTemplate(submitValues);
     } else {
       await postTemplate(submitValues);
     }
