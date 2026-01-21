@@ -127,6 +127,10 @@ const App = (props) => {
                 component={TemplateCreateRoute}
                 path={`${path}/modelRulesets/create`}
               />
+              <Route
+                component={TemplateCreateRoute}
+                path={`${path}/modelRulesets/:id/edit`}
+              />
               <TemplatesRoute path={`${path}/modelRulesets`} />
             </Switch>
           </Suspense>

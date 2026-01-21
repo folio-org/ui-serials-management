@@ -3,11 +3,11 @@ import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation } from 'react-query';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
+import { MODEL_RULESETS_ENDPOINT, MODEL_RULESET_EDIT_ENDPOINT } from '../../constants/endpoints';
 
 import { TemplateForm } from '../../components/views';
 import {
@@ -21,6 +21,8 @@ const TemplateCreateRoute = () => {
   const location = useLocation();
   const ky = useOkapiKy();
 
+  const { id } = useParams();
+  const isEdit = !!id;
   const copyFrom = location.state?.copyFrom;
 
   const initialValues = useMemo(() => {
@@ -35,13 +37,14 @@ const TemplateCreateRoute = () => {
     return {
       ...base,
       ...rulesetValues,
-      name: copyFrom.name ? `Copy of: ${copyFrom.name}` : '',
+      name: isEdit ? copyFrom.name : `Copy of: ${copyFrom.name}`,
       modelRulesetDescription: copyFrom.description ?? '',
       exampleLabel: copyFrom.exampleLabel ?? '',
     };
-  }, [copyFrom]);
+  }, [copyFrom, isEdit]);
 
-  const handleClose = (templateId) => {
+  const handleClose = (returnedId) => {
+    const templateId = returnedId || (isEdit ? id : copyFrom?.id) || null;
     history.push(
       `${templateId ? urls.templateView(templateId) : urls.templates()}${location.search}`
     );
@@ -52,6 +55,16 @@ const TemplateCreateRoute = () => {
     ['ui-serials-management', 'TemplateCreateRoute', 'postTemplate'],
     (data) => {
       ky.post(MODEL_RULESETS_ENDPOINT, { json: data })
+        .json()
+        .then((res) => handleClose(res?.id));
+    }
+  );
+
+  // istanbul ignore next
+  const { mutateAsync: editTemplate } = useMutation(
+    ['ui-serials-management', 'TemplateCreateRoute', 'editTemplate'],
+    (data) => {
+      ky.post(MODEL_RULESET_EDIT_ENDPOINT(id), { json: data })
         .json()
         .then((res) => handleClose(res?.id));
     }
@@ -79,25 +92,29 @@ const TemplateCreateRoute = () => {
   // istanbul ignore next
   const submitTemplate = async (values) => {
     const submitValues = handleSubmitValues(values);
-    await postTemplate(submitValues);
+    if (isEdit) {
+      await editTemplate(submitValues);
+    } else {
+      await postTemplate(submitValues);
+    }
   };
 
   return (
     <Form
-      id="template-create-form"
       initialValues={initialValues}
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       onSubmit={submitTemplate}
     >
       {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form id={isEdit ? 'template-edit-form' : 'template-create-form'} onSubmit={handleSubmit}>
           <TemplateForm
             handlers={{
               onClose: handleClose,
               onSubmit: handleSubmit,
             }}
             isCopy={!!copyFrom}
+            isEdit={isEdit}
           />
         </form>
       )}

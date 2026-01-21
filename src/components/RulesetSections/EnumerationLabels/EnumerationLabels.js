@@ -12,6 +12,8 @@ import {
   KeyValue,
 } from '@folio/stripes/components';
 
+import { stableKeyFrom } from '@folio/stripes-erm-components';
+
 import { getSortedItems } from '../../utils';
 
 const proptypes = {
@@ -124,18 +126,18 @@ const EnumerationLabels = ({ ruleset }) => {
     >
       {sortedLabels?.map((rule, ruleIndex) => {
         return (
-          <>
+          <div key={rule?.id || stableKeyFrom(rule)}>
             <Row>
               {rule?.templateMetadataRuleFormat?.value ===
-              'enumeration_numeric' ? (
-                <>
-                  <Col xs={12}>
-                    {renderEnumerationLabelName(rule, ruleIndex)}
-                  </Col>
-                  <Col xs={12}>
-                    {renderEnumerationNumericMCL(rule?.ruleFormat)}
-                  </Col>
-                </>
+                'enumeration_numeric' ? (
+                  <>
+                    <Col xs={12}>
+                      {renderEnumerationLabelName(rule, ruleIndex)}
+                    </Col>
+                    <Col xs={12}>
+                      {renderEnumerationNumericMCL(rule?.ruleFormat)}
+                    </Col>
+                  </>
                 ) : (
                   <>
                     <Col xs={12}>
@@ -157,7 +159,7 @@ const EnumerationLabels = ({ ruleset }) => {
                 )}
             </Row>
             <br />
-          </>
+          </div>
         );
       })}
     </Accordion>

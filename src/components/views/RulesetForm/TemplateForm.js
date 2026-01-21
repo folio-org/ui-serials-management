@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useFormState } from 'react-final-form';
 
 import {
   Accordion,
@@ -14,6 +15,7 @@ import {
 import RulesetFormLayout, { RulesetSections } from './RulesetFormLayout';
 
 const propTypes = {
+  isEdit: PropTypes.bool,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -24,10 +26,11 @@ const propTypes = {
 
 const TemplateForm = ({
   handlers: { onClose, onSubmit },
+  isEdit = false,
   isCopy = false
 }) => {
   const nameInputRef = useRef(null);
-
+  const { initialValues } = useFormState();
   useEffect(() => {
     const id = setTimeout(() => {
       if (nameInputRef.current) {
@@ -60,7 +63,7 @@ const TemplateForm = ({
 
   const getPreviewDisabled = ({ pristine, invalid, submitting }) => (!isCopy && pristine) || invalid || submitting;
 
-  const getSaveDisabled = ({ pristine, submitting }) => (!isCopy && pristine) || submitting;
+  const getSaveDisabled = ({ pristine, submitting }) => ((!isCopy || isEdit) && pristine) || submitting;
 
   return (
     <RulesetFormLayout
@@ -71,7 +74,9 @@ const TemplateForm = ({
       onClose={onClose}
       onSubmit={onSubmit}
       renderAccordions={renderAccordions}
-      title={
+      title={isEdit ?
+        <FormattedMessage id="ui-serials-management.templates.editTemplate" values={{ name: initialValues?.name }} />
+        :
         <FormattedMessage id="ui-serials-management.templates.newTemplate" />
       }
     />
