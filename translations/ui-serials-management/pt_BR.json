@@ -285,5 +285,6 @@
     "templates.deleteTemplate.confirmMessage": "O modelo padrão de publicação <strong>{name}</strong> será excluído",
     "templates.deleteTemplate.success": "Modelo padrão de publicação excluído: <strong>{name}</strong>",
     "templates.deleteTemplate.error": "<strong>O modelo padrão de publicação não foi excluído:</strong> {message}",
-    "templates.copy": "Cópia"
+    "templates.copy": "Cópia",
+    "templates.editTemplate": "Editar modelo de template - {name}"
 }

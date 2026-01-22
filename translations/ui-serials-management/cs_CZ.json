@@ -285,5 +285,6 @@
     "templates.deleteTemplate.confirmMessage": "Šablona publikačního vzoru <strong>{name}</strong> bude smazána",
     "templates.deleteTemplate.success": "Šablona publikačního vzoru byla smazána: <strong>{name}</strong>",
     "templates.deleteTemplate.error": "<strong>Šablona publikačního vzoru nebyla smazána:</strong> {message}",
-    "templates.copy": "Kopírovat"
+    "templates.copy": "Kopírovat",
+    "templates.editTemplate": "Edit pattern template - {name}"
 }

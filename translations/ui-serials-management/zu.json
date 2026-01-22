@@ -285,5 +285,6 @@
     "templates.deleteTemplate.confirmMessage": "Publication pattern template <strong>{name}</strong> will be deleted",
     "templates.deleteTemplate.success": "Publication pattern template deleted: <strong>{name}</strong>",
     "templates.deleteTemplate.error": "<strong>Publication pattern template was not deleted:</strong> {message}",
-    "templates.copy": "Copy"
+    "templates.copy": "Copy",
+    "templates.editTemplate": "Edit pattern template - {name}"
 }
