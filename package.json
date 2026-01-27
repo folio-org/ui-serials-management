@@ -120,7 +120,7 @@
         "visible": true,
         "subPermissions": [
           "serials-management.modelRulesets.manage",
-          "serials-management.modelRulesets.view"
+          "ui-serials-management.rulesets.view"
         ]
       },
       {
