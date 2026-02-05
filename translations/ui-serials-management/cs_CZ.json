@@ -286,5 +286,5 @@
     "templates.deleteTemplate.success": "Šablona publikačního vzoru byla smazána: <strong>{name}</strong>",
     "templates.deleteTemplate.error": "<strong>Šablona publikačního vzoru nebyla smazána:</strong> {message}",
     "templates.copy": "Kopírovat",
-    "templates.editTemplate": "Edit pattern template - {name}"
+    "templates.editTemplate": "Upravit šablonu vzoru - {name}"
 }
