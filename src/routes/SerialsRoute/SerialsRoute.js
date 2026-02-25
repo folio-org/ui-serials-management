@@ -33,7 +33,10 @@ const SerialsRoute = ({ children, path }) => {
         serialStatus: 'serialStatus.value',
         orderLine: 'orderLine.remoteId',
       },
-      perPage: 50
+      perPage: 50,
+      sortKeys: {
+        title: 'orderLine.title,id'
+      }
     },
   };
 
