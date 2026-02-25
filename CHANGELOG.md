@@ -3,6 +3,7 @@
 ## 2.1.0 IN PROGRESS
 
   * UISER-214 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
+  * UISER-245 Supply missing dependency, `@folio/stripes-acq-components`
 
 ## 2.0.3 2025-04-15
   * UISER-210 After creating a publication pattern, the publication pattern view should be displayed
