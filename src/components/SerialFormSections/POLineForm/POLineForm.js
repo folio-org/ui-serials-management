@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -6,32 +7,38 @@ import { Link } from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
 
 import { Row, Col, KeyValue } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, useOkapiKy } from '@folio/stripes/core';
 
-import { Typedown } from '@k-int/stripes-kint-components';
+import { Typedown, QueryTypedown } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import SerialPOLineInfo from '../../SerialPOLineInfo';
 import POLineLookup from '../POLineLookup';
-import { useTitles } from '../../../hooks';
 import { urls } from '../../utils';
+
+import { TITLES_ENDPOINT } from '../../../constants/endpoints';
 
 const POLineForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
 
-  const { isLoading: titlesLoading, data: titles } = useTitles(
-    values?.orderLine?.id
+  const ky = useOkapiKy();
+
+  const queryString = `poLineId==${values?.orderLine?.id} sortby title`;
+
+  const { isLoading: titlesLoading, data: titles = {} } = useQuery(
+    ['ui-serials-management', TITLES_ENDPOINT, values?.orderLine?.id],
+    () => ky.get(`${TITLES_ENDPOINT}?query=${queryString}`).json(),
+    { enabled: !!values?.orderLine?.id },
   );
 
   // istanbul ignore next
   useEffect(() => {
-    if (
-      values?.orderLine &&
-      !titlesLoading &&
-      titles?.titles?.length === 1
-    ) {
-      const titleObj = { id: titles.titles[0].id, title: titles.titles[0].title };
+    if (values?.orderLine && !titlesLoading && titles?.titles?.length === 1) {
+      const titleObj = {
+        id: titles.titles[0].id,
+        title: titles.titles[0].title,
+      };
       if (!isEqual(values.orderLine?.titleObject, titleObj)) {
         // Ensure same shape as initialValues -- THIS IS FLAKY -- WE SHOULD BE DOING SOMETHING CLEVERER HERE
         // Don't use form state here mabe, track this kind of extra difference through our own state? -- Investigate
@@ -56,6 +63,17 @@ const POLineForm = () => {
   const formattedDataOptions = titles?.titles?.map((e) => {
     return { title: e?.title, id: e?.id };
   });
+
+  const pathMutator = (input, path) => {
+    const queryParams = [];
+    queryParams.push(
+      `query=${queryString}`
+    );
+    if (input) {
+      queryParams.push(` and title=="*${input}*"`);
+    }
+    return `${path}?${queryParams.join('')}`;
+  };
 
   return (
     <>
@@ -86,7 +104,7 @@ const POLineForm = () => {
                         >
                           <Link
                             to={urls.inventoryView(
-                              values?.orderLine?.instanceId
+                              values?.orderLine?.instanceId,
                             )}
                           >
                             {values?.orderLine?.titleOrPackage}
@@ -110,17 +128,36 @@ const POLineForm = () => {
         <Col xs={12}>
           {titles?.titles?.length > 1 && (
             // istanbul ignore next
+            // <Field
+            //   component={Typedown}
+            //   dataOptions={formattedDataOptions}
+            //   filterPath="label"
+            //   label={
+            //     <FormattedMessage id="ui-serials-management.ruleset.title" />
+            //   }
+            //   name="orderLine.titleObject"
+            //   renderListItem={renderListItem}
+            //   required
+            //   uniqueIdentificationPath="id"
+            //   validate={requiredValidator}
+            // />
             <Field
-              component={Typedown}
-              dataOptions={formattedDataOptions}
-              filterPath="label"
+              component={QueryTypedown}
+              dataFormatter={(data) => {
+                return data?.titles?.map((e) => {
+                  return { title: e?.title, id: e?.id };
+                });
+              }}
+              id="po-line-title-typedown"
               label={
                 <FormattedMessage id="ui-serials-management.ruleset.title" />
               }
               name="orderLine.titleObject"
+              // onChange={(e) => handlePartyChange(e)}
+              path={TITLES_ENDPOINT}
+              pathMutator={pathMutator}
               renderListItem={renderListItem}
               required
-              uniqueIdentificationPath="id"
               validate={requiredValidator}
             />
           )}
