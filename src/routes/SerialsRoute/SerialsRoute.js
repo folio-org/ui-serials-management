@@ -36,6 +36,9 @@ const SerialsRoute = ({ children, path }) => {
         orderLine: 'orderLine.remoteId',
       },
       perPage: 50,
+      sortKeys: {
+        title: 'orderLine.title,id'
+      }
     },
   };
 
