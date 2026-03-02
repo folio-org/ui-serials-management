@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 import { Row, Col, KeyValue } from '@folio/stripes/components';
 import { AppIcon, useOkapiKy } from '@folio/stripes/core';
 
-import { Typedown, QueryTypedown } from '@k-int/stripes-kint-components';
+import { QueryTypedown } from '@k-int/stripes-kint-components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import SerialPOLineInfo from '../../SerialPOLineInfo';
@@ -24,11 +24,13 @@ const POLineForm = () => {
 
   const ky = useOkapiKy();
 
-  const queryString = `poLineId==${values?.orderLine?.id} sortby title`;
-
   const { isLoading: titlesLoading, data: titles = {} } = useQuery(
     ['ui-serials-management', TITLES_ENDPOINT, values?.orderLine?.id],
-    () => ky.get(`${TITLES_ENDPOINT}?query=${queryString}`).json(),
+    () => ky
+      .get(
+        `${TITLES_ENDPOINT}?query=poLineId==${values?.orderLine?.id} sortby title`,
+      )
+      .json(),
     { enabled: !!values?.orderLine?.id },
   );
 
@@ -60,19 +62,12 @@ const POLineForm = () => {
     return <>{option?.title}</>;
   };
 
-  const formattedDataOptions = titles?.titles?.map((e) => {
-    return { title: e?.title, id: e?.id };
-  });
-
   const pathMutator = (input, path) => {
-    const queryParams = [];
-    queryParams.push(
-      `query=${queryString}`
-    );
     if (input) {
-      queryParams.push(` and title=="*${input}*"`);
+      return `${path}?query=poLineId==${values?.orderLine?.id} and title=="*${input}*" sortby title`;
+    } else {
+      return `${path}?query=poLineId==${values?.orderLine?.id} sortby title`;
     }
-    return `${path}?${queryParams.join('')}`;
   };
 
   return (
@@ -127,20 +122,6 @@ const POLineForm = () => {
       <Row start="xs">
         <Col xs={12}>
           {titles?.titles?.length > 1 && (
-            // istanbul ignore next
-            // <Field
-            //   component={Typedown}
-            //   dataOptions={formattedDataOptions}
-            //   filterPath="label"
-            //   label={
-            //     <FormattedMessage id="ui-serials-management.ruleset.title" />
-            //   }
-            //   name="orderLine.titleObject"
-            //   renderListItem={renderListItem}
-            //   required
-            //   uniqueIdentificationPath="id"
-            //   validate={requiredValidator}
-            // />
             <Field
               component={QueryTypedown}
               dataFormatter={(data) => {
@@ -153,7 +134,6 @@ const POLineForm = () => {
                 <FormattedMessage id="ui-serials-management.ruleset.title" />
               }
               name="orderLine.titleObject"
-              // onChange={(e) => handlePartyChange(e)}
               path={TITLES_ENDPOINT}
               pathMutator={pathMutator}
               renderListItem={renderListItem}
