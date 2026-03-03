@@ -108,7 +108,7 @@
         "subPermissions": [
           "ui-serials-management.serials.edit",
           "serials-management.rulesets.edit",
-          "serials-management.modelRulesets.view"
+          "ui-serials-management.modelRulesets.view"
         ]
       },
       {
@@ -118,11 +118,11 @@
         "visible": true,
         "subPermissions": [
           "serials-management.modelRulesets.manage",
-          "ui-serials-management.rulesets.view"
+          "ui-serials-management.modelRulesets.view"
         ]
       },
       {
-        "permissionName": "ui-serials-management.rulesets.view",
+        "permissionName": "ui-serials-management.modelRulesets.view",
         "displayName": "Serials: View publication pattern templates",
         "description": "Grants permission to view publication pattern templates.",
         "visible": true,
