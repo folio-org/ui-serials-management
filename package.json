@@ -108,7 +108,7 @@
         "subPermissions": [
           "ui-serials-management.serials.edit",
           "serials-management.rulesets.edit",
-          "ui-serials-management.modelRulesets.view"
+          "serials-management.modelRulesets.view"
         ]
       },
       {
