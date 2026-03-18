@@ -9,8 +9,6 @@ import {
   checkScope,
   HasCommand,
   TextLink,
-  PaneHeader,
-  MessageBanner
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { SASQRoute } from '@k-int/stripes-kint-components';
@@ -37,8 +35,8 @@ const SerialsRoute = ({ children, path }) => {
       },
       perPage: 50,
       sortKeys: {
-        title: 'orderLine.title,id'
-      }
+        title: 'orderLine.title,id',
+      },
     },
   };
 
@@ -121,13 +119,6 @@ const SerialsRoute = ({ children, path }) => {
         FilterComponent={SerialsFilters}
         FilterPaneHeaderComponent={renderHeaderComponent}
         mainPaneProps={{
-          renderHeader: (_renderProps) => {
-            return (
-              <PaneHeader {..._renderProps} paneTitle="Overwritten Pane Title">
-                <MessageBanner>Default</MessageBanner>
-              </PaneHeader>
-            );
-          },
           appIcon: (
             <AppIcon app="serials-management" iconKey="app" size="small" />
           ),

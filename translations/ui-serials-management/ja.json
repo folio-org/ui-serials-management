@@ -233,7 +233,7 @@
     "ruleset.chronologyLabels": "Chronology labels",
     "ruleset.chronology.locale": "Locale",
     "ruleset.enumerationLabels": "Enumeration labels",
-    "ruleset.enumeration": "Enumeration",
+    "ruleset.enumeration": "列挙",
     "ruleset.numberOfIssuesToCombine": "Number of issues to combine",
     "ruleset.chronology": "Chronology",
     "ruleset.displaySummaryTemplate": "Display summary template",
