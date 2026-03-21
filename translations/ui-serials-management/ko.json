@@ -44,7 +44,7 @@
     "settings.refdata.picklist": "Pick list",
     "serials.note": "Note",
     "serials.notes": "Notes",
-    "serials.addNote": "Add note",
+    "serials.addNote": "노트 추가",
     "serials.removeNoteIndex": "Remove note {index}",
     "poLine.acqUnits": "Acquisition units",
     "validate.withinRange": "Must be within range {minValue} and {maxValue}",
