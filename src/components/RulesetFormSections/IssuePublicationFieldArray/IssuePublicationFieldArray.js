@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field, useFormState, useForm } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -14,6 +15,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { RECURRENCE_PATTERN_TYPE_OPTIONS } from '../../../constants/patternTypeOptions';
+import getSortedPublicationRules from '../../utils/getSortedPublicationRules';
 import IssuePublicationField from './IssuePublicationField';
 
 const IssuePublicationFieldArray = () => {
@@ -21,6 +23,23 @@ const IssuePublicationFieldArray = () => {
   const { values } = useFormState();
   const { items } = useKiwtFieldArray('recurrence.rules');
   const { change } = useForm();
+
+  useEffect(() => {
+    if (!values?.patternType || !Array.isArray(values?.recurrence?.rules)) return;
+
+    const sortedRules = getSortedPublicationRules(
+      values?.recurrence?.rules,
+      values?.patternType
+    );
+
+    const hasSameOrder = values?.recurrence?.rules.every(
+      (rule, index) => rule === sortedRules[index]
+    );
+
+    if (!hasSameOrder) {
+      change('recurrence.rules', sortedRules);
+    }
+  }, [change, values?.patternType, values?.recurrence?.rules]);
 
   // Check if the cycle length is a daily issue, defined by timeUnit="Day" and period=1
   // This will cause the "Days of publication, per cycle" section not to render if so
