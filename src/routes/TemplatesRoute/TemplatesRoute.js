@@ -11,6 +11,11 @@ import { TemplateView } from '../../components/views';
 import { RouteSwitcher, RulesetFilters } from '../../components/SearchAndFilter';
 import { MODEL_RULESETS_ENDPOINT } from '../../constants/endpoints';
 import urls from '../../components/utils/urls';
+import {
+  MAIN_FILTER_PANE_CONFIG,
+  MAIN_PANE_ID,
+  MAIN_PANESET_CONFIG
+} from '../../constants/panesetConfigs';
 
 const TemplatesRoute = ({ children, path }) => {
   const fetchParameters = {
@@ -85,18 +90,21 @@ const TemplatesRoute = ({ children, path }) => {
       fetchParameters={fetchParameters}
       FilterComponent={RulesetFilters}
       FilterPaneHeaderComponent={renderHeaderComponent}
+      filterPaneProps={MAIN_FILTER_PANE_CONFIG}
       id="templates"
       mainPaneProps={{
         lastMenu: renderLastMenu,
         paneTitle: (
           <FormattedMessage id="ui-serials-management.templates" />
         ),
+        id: MAIN_PANE_ID,
       }}
       mclProps={{
         formatter,
         id: 'list-templates'
       }}
       path={path}
+      persistedPanesetProps={MAIN_PANESET_CONFIG}
       resultColumns={resultColumns}
       sasqProps={{
         initialSortState: { sort: 'name', direction: 'ascending' },
