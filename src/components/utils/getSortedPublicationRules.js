@@ -49,7 +49,7 @@ const PATTERN_TYPE_SORTERS = {
   year_month_weekday: [getOrdinalSortValue, getMonthSortValue, getWeekdaySortValue],
 };
 
-const getSortedPublicationRules = (patternType, rules = []) => {
+const getSortedPublicationRules = (rules = [], patternType) => {
   // Fall back to ordinal sorting if no pattern-specific rule is defined.
   const sorters = PATTERN_TYPE_SORTERS[patternType] || [getOrdinalSortValue];
 
