@@ -21,6 +21,11 @@ import {
 import { focusSASQSearchField } from '../../components/utils';
 import urls from '../../components/utils/urls';
 import { SERIALS_ENDPOINT } from '../../constants/endpoints';
+import {
+  MAIN_FILTER_PANE_CONFIG,
+  MAIN_PANE_ID,
+  MAIN_PANESET_CONFIG
+} from '../../constants/panesetConfigs';
 
 const SerialsRoute = ({ children, path }) => {
   const history = useHistory();
@@ -118,12 +123,15 @@ const SerialsRoute = ({ children, path }) => {
         fetchParameters={fetchParameters}
         FilterComponent={SerialsFilters}
         FilterPaneHeaderComponent={renderHeaderComponent}
+        filterPaneProps={MAIN_FILTER_PANE_CONFIG}
+        id="serials"
         mainPaneProps={{
           appIcon: (
             <AppIcon app="serials-management" iconKey="app" size="small" />
           ),
           lastMenu: renderLastMenu,
           paneTitle: <FormattedMessage id="ui-serials-management.serials" />,
+          id: MAIN_PANE_ID,
         }}
         mclProps={{
           formatter,
@@ -133,6 +141,7 @@ const SerialsRoute = ({ children, path }) => {
           id: 'list-serials',
         }}
         path={path}
+        persistedPanesetProps={MAIN_PANESET_CONFIG}
         resultColumns={resultColumns}
         searchFieldAriaLabel="serials-search-field"
         ViewComponent={SerialView}
