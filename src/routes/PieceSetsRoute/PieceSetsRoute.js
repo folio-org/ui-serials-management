@@ -14,6 +14,11 @@ import { RouteSwitcher } from '../../components/SearchAndFilter';
 import { urls } from '../../components/utils';
 
 import { PIECE_SETS_ENDPOINT } from '../../constants/endpoints';
+import {
+  MAIN_FILTER_PANE_CONFIG,
+  MAIN_PANE_ID,
+  MAIN_PANESET_CONFIG
+} from '../../constants/panesetConfigs';
 
 const PieceSetsRoute = ({ children, path }) => {
   const location = useLocation();
@@ -95,11 +100,13 @@ const PieceSetsRoute = ({ children, path }) => {
     <SASQRoute
       fetchParameters={fetchParameters}
       FilterPaneHeaderComponent={renderHeaderComponent}
+      filterPaneProps={MAIN_FILTER_PANE_CONFIG}
       id="piece-sets"
       mainPaneProps={{
         paneTitle: (
           <FormattedMessage id="ui-serials-management.pieceSets.predictedPieceSets" />
         ),
+        id: MAIN_PANE_ID,
       }}
       mclProps={{
         formatter,
@@ -108,6 +115,7 @@ const PieceSetsRoute = ({ children, path }) => {
         id: 'list-predicted-piece-sets',
       }}
       path={path}
+      persistedPanesetProps={MAIN_PANESET_CONFIG}
       resultColumns={resultColumns}
       searchFieldAriaLabel="piece-sets-search-field"
       ViewComponent={PieceSetView}
