@@ -11,6 +11,7 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 import { selectifyRefdata } from '@folio/stripes-erm-components';
 
+import { getSelectedValues } from '../../utils/filterParserUtils';
 import { useSerialsManagementRefdata } from '../../utils';
 
 const propTypes = {
@@ -30,27 +31,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
     'label'
   );
 
-  const getSelectedValues = (name, prefix) => {
-    const activeValue = activeFilters?.[name];
-    if (Array.isArray(activeValue)) return activeValue.map((v) => String(v));
-    if (activeValue) return [String(activeValue)];
-
-    // fallback to state property
-    const stateValue = activeFilters?.state?.[name];
-    if (Array.isArray(stateValue)) return stateValue.map((v) => String(v));
-    if (stateValue) return [String(stateValue)];
-
-    // fallback to filter string format
-    const filterString = activeFilters?.string || '';
-    if (!filterString) return [];
-
-    return filterString
-      .split(',')
-      .filter((f) => f.startsWith(`${prefix}.`))
-      .map((f) => f.replace(`${prefix}.`, ''));
-  };
-
-  const selectedStatus = getSelectedValues('modelRulesetStatus', 'modelRulesetStatus');
+  const selectedStatus = getSelectedValues(activeFilters, 'modelRulesetStatus', 'modelRulesetStatus');
 
   const renderModelRulesetStatusFilter = () => {
     return (
