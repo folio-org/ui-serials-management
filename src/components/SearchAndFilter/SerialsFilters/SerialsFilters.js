@@ -29,6 +29,29 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     SERIAL_STATUS,
     'value'
   );
+
+  const getSelectedValues = (name, prefix) => {
+    const activeValue = activeFilters?.[name];
+    if (Array.isArray(activeValue)) return activeValue.map((v) => String(v));
+    if (activeValue) return [String(activeValue)];
+
+    // fallback to state property
+    const stateValue = activeFilters?.state?.[name];
+    if (Array.isArray(stateValue)) return stateValue.map((v) => String(v));
+    if (stateValue) return [String(stateValue)];
+
+    // fallback to filter string format
+    const filterString = activeFilters?.string || '';
+    if (!filterString) return [];
+
+    return filterString
+      .split(',')
+      .filter((f) => f.startsWith(`${prefix}.`))
+      .map((f) => f.replace(`${prefix}.`, ''));
+  };
+
+  const selectedStatus = getSelectedValues('serialStatus', 'serialStatus');
+
   const renderPOLineFilter = () => {
     return (
       <Accordion
@@ -54,9 +77,9 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
   const renderRequestStatusFilter = () => {
     return (
       <Accordion
-        displayClearButton={activeFilters?.serialStatus?.length > 0}
+        displayClearButton={selectedStatus.length > 0}
         header={FilterAccordionHeader}
-        id="status-status-filter-accordion"
+        id="serial-status-filter-accordion"
         label={<FormattedMessage id="ui-serials-management.serials.status" />}
         onClearFilter={() => {
           filterHandlers.clearGroup('serialStatus');
@@ -72,7 +95,7 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
               serialStatus: s?.values,
             });
           }}
-          selectedValues={activeFilters?.serialStatus || []}
+          selectedValues={selectedStatus}
         />
       </Accordion>
     );
