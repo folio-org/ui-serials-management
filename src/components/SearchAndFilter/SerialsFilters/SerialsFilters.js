@@ -31,7 +31,7 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     'value'
   );
 
-  const selectedStatus = getSelectedValues(activeFilters, 'serialStatus', 'serialStatus');
+  const selectedStatus = getSelectedValues('serialStatus', 'serialStatus', activeFilters);
 
   const renderPOLineFilter = () => {
     return (

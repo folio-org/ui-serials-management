@@ -31,7 +31,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
     'label'
   );
 
-  const selectedStatus = getSelectedValues(activeFilters, 'modelRulesetStatus', 'modelRulesetStatus');
+  const selectedStatus = getSelectedValues('modelRulesetStatus', 'modelRulesetStatus', activeFilters);
 
   const renderModelRulesetStatusFilter = () => {
     return (
