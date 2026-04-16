@@ -210,7 +210,7 @@
     "ruleset.enumeration.numberFormat.roman": "Cyfry rzymskie (I, II, III)",
     "serials.notes.isEmptyMessage": "Brak uwag związanych z tym wydawnictwem ciągłym",
     "serials.publicationPattern.noActivePattern": "Wydawnictwo ciągłe nie ma aktywnych wzorców publikacji",
-    "pieceSets.receivingPieces": "Receiving pieces",
+    "pieceSets.receivingPieces": "Odbierane elementy",
     "serials.titleInReceiving": "Tytuł w odbiorze",
     "learnMore": "Dowiedz się więcej",
     "ruleset.templatePopover": "Templates are used to generate the values to be used in each predicted piece Display Summary.",
