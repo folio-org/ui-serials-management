@@ -1,5 +1,7 @@
 # change history for ui-serials-management
 
+## 2.2.0 IN PROGRESS
+
 ## 2.1.0 2026-04-17
   * UISER-247: Incorrect pane header on serials search and sort
   * UISER-246: Serials Panes do not retain width between tabs
