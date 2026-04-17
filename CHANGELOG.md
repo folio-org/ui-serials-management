@@ -1,9 +1,28 @@
 # change history for ui-serials-management
 
-## 2.1.0 IN PROGRESS
-
+## 2.1.0 2026-04-17
+  * UISER-247: Incorrect pane header on serials search and sort
+  * UISER-246: Serials Panes do not retain width between tabs
+  * UISER-245: unmet peer dependency
+  * UISER-244: Title selection from a package does not filter the list or retrieve more than 10 titles
+  * UISER-243: Change perm name `ui-serials-management.rulesets.view` → `ui-serials-management.modelRulesets.view`.
+  * UISER-242: Title sort does not work in Serials Management search results
+  * UISER-237: "ui-serials-management.modelrulesets.manage" perm should include "ui-serials-management.rulesets.view"
+  * UISER-235: Error if user lacks `ui-serials-management.rulesets.view` permission
+  * UISER-234: Add "Edit" template option in UI
+  * UISER-233: Add "Copy template" option in UI
+  * UISER-232: Add "View publication pattern templates" permission and use to control visibility of template search and sort
+  * UISER-231: Add "Delete template" option in UI
+  * UISER-230: Serials management template search results should default sort by name (asc)
+  * UISER-229: Create for publication pattern templates
+  * UISER-228: View for publication pattern templates
+  * UISER-226: ui-serials: include global permissions in package.json base permissions
+  * UISER-225: Create basic search and sort for Publication pattern templates (model rulesets)
+  * UISER-224: Title Selection from a package does not filter the list or retrieve more than 10 titles
+  * UISER-222: Accessibility: Duplicate aria labels in enumeration labels
+  * UISER-205 ECS enable generation of receiving pieces from Serials Management when not in the primary tenant
   * UISER-214 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
-  * UISER-245 Supply missing dependency, `@folio/stripes-acq-components`
+  * UISER-187: Add parameters to locations hook
 
 ## 2.0.3 2025-04-15
   * UISER-210 After creating a publication pattern, the publication pattern view should be displayed
