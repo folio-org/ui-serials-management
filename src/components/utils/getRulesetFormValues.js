@@ -1,4 +1,5 @@
 import deepDeleteKeys from './deepDeleteKeys';
+import getSortedPublicationRules from './getSortedPublicationRules';
 
 /**
  * Transforms a ruleset into initial form values for a form, including handling specific nested structures.
@@ -39,7 +40,13 @@ const getRulesetFormValues = (ruleset) => {
 
   const initialValues = {
     ...ruleset,
-    recurrence: ruleset?.recurrence,
+    recurrence: ruleset?.recurrence ? {
+      ...ruleset.recurrence,
+      rules: getSortedPublicationRules(
+        ruleset?.recurrence?.rules,
+        ruleset?.recurrence?.rules?.[0]?.patternType?.value
+      ),
+    } : ruleset?.recurrence,
     patternType: ruleset?.recurrence?.rules?.[0]?.patternType?.value,
     ...(ruleset?.omission && {
       omission: {
