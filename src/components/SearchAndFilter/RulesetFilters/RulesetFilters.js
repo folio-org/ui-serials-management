@@ -11,6 +11,7 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 import { selectifyRefdata } from '@folio/stripes-erm-components';
 
+import { getSelectedValues } from '../../utils/filterParserUtils';
 import { useSerialsManagementRefdata } from '../../utils';
 
 const propTypes = {
@@ -30,12 +31,14 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
     'label'
   );
 
+  const selectedStatus = getSelectedValues('modelRulesetStatus', 'modelRulesetStatus', activeFilters);
+
   const renderModelRulesetStatusFilter = () => {
     return (
       <Accordion
-        displayClearButton={activeFilters?.modelRulesetStatus?.length > 0}
+        displayClearButton={selectedStatus.length > 0}
         header={FilterAccordionHeader}
-        id="status-status-filter-accordion"
+        id="ruleset-status-filter-accordion"
         label={<FormattedMessage id="ui-serials-management.templates.status" />}
         onClearFilter={() => {
           filterHandlers.clearGroup('modelRulesetStatus');
@@ -51,7 +54,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
               modelRulesetStatus: m?.values,
             });
           }}
-          selectedValues={activeFilters?.modelRulesetStatus || []}
+          selectedValues={selectedStatus}
         />
       </Accordion>
     );
