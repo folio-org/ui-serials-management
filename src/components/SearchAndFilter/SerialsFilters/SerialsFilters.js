@@ -11,7 +11,6 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 import { selectifyRefdata } from '@folio/stripes-erm-components';
 
-import { getSelectedValues } from '../../utils/filterParserUtils';
 import POLineFilter from '../POLineFilter';
 import { useSerialsManagementRefdata } from '../../utils';
 
@@ -31,7 +30,8 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     'value'
   );
 
-  const selectedStatus = getSelectedValues('serialStatus', 'serialStatus', activeFilters);
+  // fallback to parse legacy activeFilters.string values if needed.
+  const selectedStatus = activeFilters?.serialStatus || activeFilters?.string?.split(',').filter(f => f.startsWith('serialStatus.')).map(f => f.replace('serialStatus.', '')) || [];
 
   const renderPOLineFilter = () => {
     return (
