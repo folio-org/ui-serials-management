@@ -11,7 +11,7 @@ import {
   KeyValue,
 } from '@folio/stripes/components';
 
-import { getSortedItems } from '../../utils';
+import getSortedPublicationRules from '../../utils/getSortedPublicationRules';
 
 import { RECURRENCE_PATTERN_TYPE_TRANSLATIONS } from '../../../constants/patternTypeTranslations';
 
@@ -22,10 +22,10 @@ const proptypes = {
 const IssuePublication = ({ ruleset }) => {
   const intl = useIntl();
 
-  const sortedRules = getSortedItems(ruleset?.recurrence?.rules, null, {
-    column: 'ordinal',
-    direction: 'asc',
-  });
+  const sortedRules = getSortedPublicationRules(
+    ruleset?.recurrence?.rules,
+    ruleset?.recurrence?.rules?.[0]?.patternType?.value
+  );
 
   const patternTypeVisibleColumns = {
     day: ['issue', 'day'],
