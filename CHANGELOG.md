@@ -1,5 +1,8 @@
 # change history for ui-serials-management
 
+## 2.0.5 2026-04-27
+  * UISER-205 ECS enable generation of receiving pieces from Serials Management when not in the primary tenant
+
 ## 2.0.4 2025-04-28
   * UISER-211 Predicted publication date is one day out
 
