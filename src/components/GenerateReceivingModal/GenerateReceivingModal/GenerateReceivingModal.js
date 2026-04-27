@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useOkapiKy, useCallout } from '@folio/stripes/core';
+import { useOkapiKy, useCallout, useStripes } from '@folio/stripes/core';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 import { Button, ModalFooter, Spinner } from '@folio/stripes/components';
@@ -21,7 +21,7 @@ import GenerateReceivingModalInfo from '../GenerateReceivingModalInfo';
 
 import {
   PIECE_SET_ENDPOINT,
-  BATCH_RECEIVING_PIECES_ENDPOINT
+  BATCH_RECEIVING_PIECES_ENDPOINT,
 } from '../../../constants/endpoints';
 import {
   INTERNAL_COMBINATION_PIECE,
@@ -37,8 +37,12 @@ const propTypes = {
 
 const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const queryClient = useQueryClient();
   const callout = useCallout();
+
+  const activeTenantId = stripes.okapi.tenant;
+  const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
   // Hooks to be used within an environment when cental ordering is enabled
   const { enabled: isCentralOrderingEnabled } = useCentralOrderingSettings();
@@ -61,13 +65,21 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   // Filtering holdings/locaitons for non ecs environments
   // First filter the holdings by id, checking if holdingId exist in POL locations
   const filteredHoldings = useMemo(() => {
-    return holdings?.filter((h) => orderLine?.remoteId_object?.locations?.some((rol) => {
-      if (rol?.tenantId) {
-        return rol?.holdingId === h?.id && rol?.tenantId === h?.tenantId;
-      }
-      return rol?.holdingId === h?.id;
-    }));
-  }, [holdings, orderLine?.remoteId_object?.locations]);
+    return holdings?.filter((h) => {
+      return orderLine?.remoteId_object?.locations?.some((rol) => {
+        // If tenantIds are present we assume ECS is enabled, however if we are within a member tenant instead of central, this should be irrelevant
+        if (rol?.tenantId && activeTenantId === centralTenantId) {
+          return rol?.holdingId === h?.id && rol?.tenantId === h?.tenantId;
+        }
+        return rol?.holdingId === h?.id;
+      });
+    });
+  }, [
+    holdings,
+    orderLine?.remoteId_object?.locations,
+    activeTenantId,
+    centralTenantId,
+  ]);
 
   // Filter locations the same way we did with holdings
   // location?.id being comapred against the POL locations arrays location?.id
@@ -102,11 +114,17 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   }, [tenants, filteredLocations, filteredHoldings]);
 
   const { mutateAsync: submitReceivingPieces } = useMutation(
-    ['ui-serials-management', 'GeneratingReceivingModal', 'submitReceivingPieces'],
-    (data) => ky.post(
-      `${BATCH_RECEIVING_PIECES_ENDPOINT}${data.createItem ? '?createItem=true' : ''}`,
-      { json: { pieces: data.pieces } }
-    ).json()
+    [
+      'ui-serials-management',
+      'GeneratingReceivingModal',
+      'submitReceivingPieces',
+    ],
+    (data) => ky
+      .post(
+        `${BATCH_RECEIVING_PIECES_ENDPOINT}${data.createItem ? '?createItem=true' : ''}`,
+        { json: { pieces: data.pieces } },
+      )
+      .json(),
   );
 
   const { mutateAsync: submitReceivingIds } = useMutation(
@@ -131,7 +149,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
           ),
         });
         onClose();
-      })
+      }),
   );
 
   const getInitialValues = () => {
@@ -178,7 +196,7 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         piece?.class === INTERNAL_COMBINATION_PIECE
           ? piece?.recurrencePieces[0]?.date
           : piece?.date,
-        values?.interval
+        values?.interval,
       ),
     };
 
@@ -203,18 +221,18 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
   const handleGeneration = async (values) => {
     try {
       const piecesArray = (pieceSet?.pieces || [])
-        .filter(piece => piece?.class !== INTERNAL_OMISSION_PIECE)
-        .map(piece => {
+        .filter((piece) => piece?.class !== INTERNAL_OMISSION_PIECE)
+        .map((piece) => {
           const formattedPiece = formatReceivingPiece(piece, values);
           return { originalPiece: piece, formattedPiece };
         });
 
       await submitReceivingPieces({
-        pieces: piecesArray.map(p => p.formattedPiece),
+        pieces: piecesArray.map((p) => p.formattedPiece),
         createItem: values?.createItem,
       });
 
-      const updatedPieces = piecesArray.map(p => ({
+      const updatedPieces = piecesArray.map((p) => ({
         ...p.originalPiece,
         receivingPieces: [
           ...(p.originalPiece?.receivingPieces || []),
@@ -285,7 +303,9 @@ const GenerateReceivingModal = ({ orderLine, open, onClose, pieceSet }) => {
         holdings={filteredHoldings}
         locations={filteredLocations}
         orderLine={orderLine}
-        tenants={filteredTenants}
+        // Since the form component makes assumptions based on the presence of tenantIds within locations/holdings,
+        //  we need to provide an empty array in the scenario where ECS is enabled but we are within a member tenant instead of central
+        tenants={activeTenantId === centralTenantId ? filteredTenants : []}
       />
     </FormModal>
   );
