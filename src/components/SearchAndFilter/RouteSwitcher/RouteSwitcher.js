@@ -31,7 +31,7 @@ const RouteSwitcher = ({ primary }) => {
       break;
   }
 
-  const canViewTemplates = stripes.hasPerm('ui-serials-management.modelRulesets.view');
+  const canViewTemplates = stripes.hasPerm('ui-serials-management.modelrulesets.view');
 
   return (
     <ResponsiveButtonGroup fullWidth selectedIndex={selectedIndex}>
