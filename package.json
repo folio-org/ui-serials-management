@@ -108,7 +108,7 @@
         "subPermissions": [
           "ui-serials-management.serials.edit",
           "serials-management.rulesets.edit",
-          "serials-management.modelrulesets.view"
+          "serials-management.modelRulesets.view"
         ]
       },
       {
@@ -117,7 +117,7 @@
         "description": "Grants permissions to create and delete publication pattern templates.",
         "visible": true,
         "subPermissions": [
-          "serials-management.modelrulesets.manage",
+          "serials-management.modelRulesets.manage",
           "ui-serials-management.modelrulesets.view"
         ]
       },
@@ -127,7 +127,7 @@
         "description": "Grants permission to view publication pattern templates.",
         "visible": true,
         "subPermissions": [
-          "serials-management.modelrulesets.view"
+          "serials-management.modelRulesets.view"
         ]
       },
       {
