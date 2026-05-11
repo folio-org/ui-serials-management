@@ -30,8 +30,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
     'label'
   );
 
-  // fallback to parse legacy activeFilters.string values if needed.
-  const selectedStatus = activeFilters?.modelRulesetStatus || activeFilters?.string?.split(',').filter(f => f.startsWith('modelRulesetStatus.')).map(f => f.replace('modelRulesetStatus.', '')) || [];
+  const selectedStatus = activeFilters?.modelRulesetStatus || activeFilters?.state?.modelRulesetStatus || [];
 
   const renderModelRulesetStatusFilter = () => {
     return (

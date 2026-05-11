@@ -30,9 +30,7 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     'value'
   );
 
-  // fallback to parse legacy activeFilters.string values if needed.
-  const selectedStatus = activeFilters?.serialStatus || activeFilters?.string?.split(',').filter(f => f.startsWith('serialStatus.')).map(f => f.replace('serialStatus.', '')) || [];
-
+  const selectedStatus = activeFilters?.serialStatus || activeFilters?.state?.serialStatus || [];
   const renderPOLineFilter = () => {
     return (
       <Accordion
