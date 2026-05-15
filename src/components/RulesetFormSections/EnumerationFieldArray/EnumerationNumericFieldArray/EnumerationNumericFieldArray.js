@@ -14,7 +14,6 @@ import {
 import { ClipCopy } from '@folio/stripes/smart-components';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
-import { stableKeyFrom } from '@folio/stripes-erm-components';
 
 import EnumerationNumericField from './EnumerationNumericField';
 
@@ -88,9 +87,10 @@ const EnumerationNumericFieldArray = ({ name, index }) => {
       </Row>
       <FieldArray name={`${name}.levels`}>
         {() => items?.map((level, levelIndex) => {
+          const stableIndex = levelIndex;
           return (
             <EnumerationNumericField
-              key={`enumeration-numeric-field-${stableKeyFrom(level)}`}
+              key={`enumeration-numeric-field-${stableIndex}`}
               index={levelIndex}
               items={items}
               level={level}
