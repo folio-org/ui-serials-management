@@ -193,6 +193,7 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
           <MetaSection
             contentId="templateMetaContent"
             createdDate={resource.dateCreated}
+            headingLevel={3}
             hideSource
             lastUpdatedDate={resource.lastUpdated}
           />

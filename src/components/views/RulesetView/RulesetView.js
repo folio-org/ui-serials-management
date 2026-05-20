@@ -134,6 +134,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
         <MetaSection
           contentId="rulesetMetaContent"
           createdDate={ruleset?.dateCreated}
+          headingLevel={3}
           hideSource
           lastUpdatedDate={ruleset?.lastUpdated}
         />

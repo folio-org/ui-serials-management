@@ -233,6 +233,7 @@ const SerialView = ({
           <MetaSection
             contentId="serialMetaContent"
             createdDate={serial?.dateCreated}
+            headingLevel={3}
             hideSource
             lastUpdatedDate={serial?.lastUpdated}
           />
