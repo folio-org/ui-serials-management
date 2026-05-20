@@ -32,10 +32,13 @@ import {
 } from '../../RulesetSections';
 
 import {
+  DEFAULT_META_SECTION_HEADING_LEVEL,
+  DEFAULT_VIEW_PANE_WIDTH,
+} from '../../../constants/config';
+import {
   REPLACE_AND_DELETE,
   REPLACE_AND_DEPRECATE,
 } from '../../../constants/replaceTypes';
-import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
 
 import { urls } from '../../utils';
 
@@ -134,7 +137,7 @@ const RulesetView = ({ serial, ruleset, pieceSets, onClose }) => {
         <MetaSection
           contentId="rulesetMetaContent"
           createdDate={ruleset?.dateCreated}
-          headingLevel={3}
+          headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
           hideSource
           lastUpdatedDate={ruleset?.lastUpdated}
         />

@@ -21,6 +21,14 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  DEFAULT_META_SECTION_HEADING_LEVEL,
+  DEFAULT_VIEW_PANE_WIDTH,
+} from '../../../constants/config';
+import {
+  PIECE_SETS_ENDPOINT,
+  SERIAL_ENDPOINT,
+} from '../../../constants/endpoints';
+import {
   PublicationPattern,
   DeprecatedPublicationPatterns,
   SerialInfo,
@@ -30,8 +38,6 @@ import {
 } from '../../SerialSections';
 import PiecesPreviewModal from '../../PiecesPreviewModal';
 import { urls } from '../../utils';
-import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
-import { PIECE_SETS_ENDPOINT, SERIAL_ENDPOINT } from '../../../constants/endpoints';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -233,7 +239,7 @@ const SerialView = ({
           <MetaSection
             contentId="serialMetaContent"
             createdDate={serial?.dateCreated}
-            headingLevel={3}
+            headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
             hideSource
             lastUpdatedDate={serial?.lastUpdated}
           />
