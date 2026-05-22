@@ -40,9 +40,12 @@ import {
   PublicationCycleInfo
 } from '../../RulesetSections';
 
-import { urls } from '../../utils';
-import { DEFAULT_VIEW_PANE_WIDTH } from '../../../constants/config';
+import {
+  DEFAULT_META_SECTION_HEADING_LEVEL,
+  DEFAULT_VIEW_PANE_WIDTH,
+} from '../../../constants/config';
 import { MODEL_RULESET_ENDPOINT } from '../../../constants/endpoints';
+import { urls } from '../../utils';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -193,6 +196,7 @@ const TemplateView = ({ resource, queryProps, onClose }) => {
           <MetaSection
             contentId="templateMetaContent"
             createdDate={resource.dateCreated}
+            headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
             hideSource
             lastUpdatedDate={resource.lastUpdated}
           />
