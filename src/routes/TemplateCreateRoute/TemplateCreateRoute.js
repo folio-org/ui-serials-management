@@ -26,7 +26,10 @@ const TemplateCreateRoute = () => {
   const copyFrom = location.state?.copyFrom;
 
   const initialValues = useMemo(() => {
-    const base = { rulesetStatus: { value: 'active' } };
+    const base = {
+      rulesetStatus: { value: 'active' },
+      templateConfig: { templateString: '' },
+    };
 
     if (!copyFrom) return base;
 

@@ -7,7 +7,10 @@ import {
   REPLACE_AND_DELETE,
   REPLACE_AND_DEPRECATE,
 } from '../../../constants/replaceTypes';
-import { getRulesetFormValues } from '../../utils';
+import {
+  getRulesetFormValues,
+  isRulesetFormPreviewInvalid,
+} from '../../utils';
 
 import {
   RulesetInfoForm,
@@ -79,7 +82,13 @@ const RulesetForm = ({
     getRulesetFormValues(selectedModelRuleset?.serialRuleset)
   );
 
-  const getPreviewDisabled = ({ pristine, invalid, submitting, values }) => {
+  const getPreviewDisabled = ({
+    errors,
+    pristine,
+    submitting,
+    values,
+  }) => {
+    const invalid = isRulesetFormPreviewInvalid({ errors });
     const modelRulesetPresent = computeModelRulesetPresent(values);
     // Bit funky but a confirmed way of ensuring that incomplete recurrence objects arent passed
     return (!modelRulesetPresent && pristine) || invalid || submitting;
