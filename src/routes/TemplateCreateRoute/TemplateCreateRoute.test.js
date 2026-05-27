@@ -129,6 +129,7 @@ describe('TemplateCreateRoute', () => {
     expect(capturedFormProps).toBeDefined();
     expect(capturedFormProps.initialValues).toEqual({
       rulesetStatus: { value: 'active' },
+      templateConfig: { templateString: '' },
     });
   });
 
