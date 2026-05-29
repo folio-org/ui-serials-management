@@ -29,6 +29,8 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
     SERIAL_STATUS,
     'value'
   );
+
+  const selectedStatus = activeFilters?.serialStatus || activeFilters?.state?.serialStatus || [];
   const renderPOLineFilter = () => {
     return (
       <Accordion
@@ -54,9 +56,9 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
   const renderRequestStatusFilter = () => {
     return (
       <Accordion
-        displayClearButton={activeFilters?.serialStatus?.length > 0}
+        displayClearButton={selectedStatus.length > 0}
         header={FilterAccordionHeader}
-        id="status-status-filter-accordion"
+        id="serial-status-filter-accordion"
         label={<FormattedMessage id="ui-serials-management.serials.status" />}
         onClearFilter={() => {
           filterHandlers.clearGroup('serialStatus');
@@ -72,7 +74,7 @@ const SerialsFilters = ({ activeFilters, filterHandlers }) => {
               serialStatus: s?.values,
             });
           }}
-          selectedValues={activeFilters?.serialStatus || []}
+          selectedValues={selectedStatus}
         />
       </Accordion>
     );

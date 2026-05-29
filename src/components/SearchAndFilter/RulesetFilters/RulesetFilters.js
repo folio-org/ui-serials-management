@@ -30,12 +30,14 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
     'label'
   );
 
+  const selectedStatus = activeFilters?.modelRulesetStatus || activeFilters?.state?.modelRulesetStatus || [];
+
   const renderModelRulesetStatusFilter = () => {
     return (
       <Accordion
-        displayClearButton={activeFilters?.modelRulesetStatus?.length > 0}
+        displayClearButton={selectedStatus.length > 0}
         header={FilterAccordionHeader}
-        id="status-status-filter-accordion"
+        id="ruleset-status-filter-accordion"
         label={<FormattedMessage id="ui-serials-management.templates.status" />}
         onClearFilter={() => {
           filterHandlers.clearGroup('modelRulesetStatus');
@@ -51,7 +53,7 @@ const RulesetFilters = ({ activeFilters, filterHandlers }) => {
               modelRulesetStatus: m?.values,
             });
           }}
-          selectedValues={activeFilters?.modelRulesetStatus || []}
+          selectedValues={selectedStatus}
         />
       </Accordion>
     );
