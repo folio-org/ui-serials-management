@@ -1,6 +1,14 @@
 # change history for ui-serials-management
 
 ## 2.2.0 IN PROGRESS
+
+## 2.1.1 2026-05-05
+  * UISER-259: On entering values in text fields in Enumeration label, focus on field is lost after each keyboard stroke
+  * UISER-253: camelCase used incorrectly in permission name
+  * UISER-252: Remove the 'string' filter fallback added in UISER-249
+  * UISER-250: Serials enumeration levels sometimes do not fill as expected
+  * UISER-249: Clicking checkbox filters in Serials and Publication template search does not show checkbox selected
+  * UISER-240: In publication pattern edit and view, sort Days of publication per cycle values 
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
   * UISER-70: Make it possible to preview publication pattern without a label template
 
