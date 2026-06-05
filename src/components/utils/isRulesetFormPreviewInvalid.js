@@ -1,9 +1,7 @@
-import deepDeleteKeys from './deepDeleteKeys';
-
-const NOT_AFFECTING_ERRORS = ['templateConfig'];
+const NOT_AFFECTING_ERRORS_SET = new Set(['templateConfig']);
 
 export const isRulesetFormPreviewInvalid = ({ errors }) => {
-  const affectingErrors = deepDeleteKeys(errors, NOT_AFFECTING_ERRORS);
-
-  return Object.keys(affectingErrors).length > 0;
+  return Object
+    .keys(errors)
+    .some((key) => !NOT_AFFECTING_ERRORS_SET.has(key));
 };
