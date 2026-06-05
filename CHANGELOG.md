@@ -1,5 +1,8 @@
 # change history for ui-serials-management
 
+## 2.0.6 2026-06-05
+  * Updated validate workflows node version to 22.x
+
 ## 2.0.5 2026-04-27
   * UISER-205 ECS enable generation of receiving pieces from Serials Management when not in the primary tenant
 
