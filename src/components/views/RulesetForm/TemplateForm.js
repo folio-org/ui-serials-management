@@ -11,6 +11,7 @@ import {
   ModelRulesetInfoForm,
   RulesetInfoForm,
 } from '../../RulesetFormSections';
+import { isRulesetFormPreviewInvalid } from '../../utils';
 
 import RulesetFormLayout, { RulesetSections } from './RulesetFormLayout';
 
@@ -61,7 +62,15 @@ const TemplateForm = ({
     </>
   );
 
-  const getPreviewDisabled = ({ pristine, invalid, submitting }) => (!isCopy && pristine) || invalid || submitting;
+  const getPreviewDisabled = ({
+    errors,
+    pristine,
+    submitting,
+  }) => {
+    const invalid = isRulesetFormPreviewInvalid({ errors });
+
+    return (!isCopy && pristine) || invalid || submitting;
+  };
 
   const getSaveDisabled = ({ pristine, submitting }) => ((!isCopy || isEdit) && pristine) || submitting;
 

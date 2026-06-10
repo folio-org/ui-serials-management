@@ -10,6 +10,7 @@
   * UISER-249: Clicking checkbox filters in Serials and Publication template search does not show checkbox selected
   * UISER-240: In publication pattern edit and view, sort Days of publication per cycle values 
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
+  * UISER-70: Make it possible to preview publication pattern without a label template
 
 ## 2.1.0 2026-04-17
   * UISER-247: Incorrect pane header on serials search and sort

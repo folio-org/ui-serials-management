@@ -111,7 +111,7 @@ const RulesetFormLayout = ({
   getPreviewDisabled,
   getSaveDisabled,
 }) => {
-  const { pristine, submitting, invalid, values } = useFormState();
+  const { errors, pristine, submitting, invalid, values } = useFormState();
 
   const { getFieldState } = useForm();
   const [showModal, setShowModal] = useState(false);
@@ -134,11 +134,10 @@ const RulesetFormLayout = ({
   ];
 
   const previewDisabled = getPreviewDisabled({
+    errors,
     pristine,
-    invalid,
     submitting,
     values,
-    getFieldState,
   });
 
   const saveDisabled = getSaveDisabled({

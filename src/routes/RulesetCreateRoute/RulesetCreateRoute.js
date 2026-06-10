@@ -68,9 +68,14 @@ const RulesetCreateRoute = () => {
   };
 
   const initialValues = useMemo(() => {
+    const defaultInitialValues = {
+      rulesetStatus: { value: 'active' },
+      templateConfig: { templateString: '' },
+    };
+
     return modelRuleset?.serialRuleset
       ? getRulesetFormValues(modelRuleset.serialRuleset)
-      : { rulesetStatus: { value: 'active' } };
+      : defaultInitialValues;
   }, [modelRuleset]);
 
   return (
