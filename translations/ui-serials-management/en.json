@@ -283,6 +283,7 @@
   "pieceSets.generateReceivingInfo": "Selecting 'Generate receiving pieces' will create new pieces in the Receiving app. Please wait while the pieces are generated. This window will close when the process is complete.",
   "pieceSets.countReceivingGenerated": "<strong>{count} receiving pieces were generated.</strong> Please check this total is as expected. The pieces can now be viewed in the Receiving app.",
   "pieceSets.generateReceivingErrorMessage": "<strong>Error:</strong> No receiving pieces were generated. ",
+  "pieceSets.receivingPiecesAlreadyExistWarning": "Warning: Receiving pieces already exist for this predicted piece set. See {link} for more details.",
   "pieceSets.createItem": "Create item",
   "pieceSets.displayToPublic": "Display to public",
   "pieceSets.overlappingDates.dialog": "A predicted piece set with the start date <strong>{startDate}</strong> already exists for the serial <strong>{serialName}</strong>. {br} Generating a new set will result in some overlap between piece sets. If this is acceptable select \"Generate\" to continue.",

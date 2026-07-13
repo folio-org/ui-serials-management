@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router-dom';
+
 import {
   renderWithIntl,
   KeyValue,
@@ -36,6 +38,12 @@ describe('GenerateReceivingModalInfo', () => {
     test('does not render the "No orderline locations or holdings" message', async () => {
       await MessageBanner(
         'There are no locations or holdings for the linked POL and receiving pieces will be created with no location or holding. To add a location or holding please update the PO line.'
+      ).absent();
+    });
+
+    test('does not render the "Receiving pieces already exist" warning', async () => {
+      await MessageBanner(
+        'Warning: Receiving pieces already exist for this predicted piece set. See Quiet times for more details.'
       ).absent();
     });
 
@@ -102,6 +110,43 @@ describe('GenerateReceivingModalInfo', () => {
       await KeyValue('First piece').has({
         value: '2025-01-01, Wednesday 1 January 2025',
       });
+    });
+  });
+
+  describe('render component with a pieceset that already has receiving pieces', () => {
+    const pieceSetWithReceiving = {
+      ...pieceSet,
+      pieces: pieceSet.pieces.map((piece, index) => (index === 0
+        ? { ...piece, receivingPieces: [{ receivingId: 'receiving-1' }] }
+        : piece)),
+    };
+
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <GenerateReceivingModalInfo
+            orderLineLocations={serial?.orderLine?.remoteId_object?.locations}
+            pieceSet={pieceSetWithReceiving}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders the "Receiving pieces already exist" warning', async () => {
+      await MessageBanner(
+        'Warning: Receiving pieces already exist for this predicted piece set. See Quiet times for more details.'
+      ).exists();
+    });
+
+    test('renders a link to the title in receiving using the serial title as link text', async () => {
+      const { getByRole } = renderComponent;
+      const link = getByRole('link', { name: 'Quiet times' });
+      expect(link).toHaveAttribute(
+        'href',
+        `/receiving/${pieceSet.titleId}/view`
+      );
     });
   });
 });

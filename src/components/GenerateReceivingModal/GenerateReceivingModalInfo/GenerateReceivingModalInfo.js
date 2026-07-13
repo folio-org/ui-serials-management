@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { Row, Col, KeyValue, MessageBanner } from '@folio/stripes/components';
@@ -8,6 +9,7 @@ import {
   INTERNAL_OMISSION_PIECE,
   INTERNAL_RECURRENCE_PIECE,
 } from '../../../constants/internalPieceClasses';
+import { urls } from '../../utils';
 
 import css from './GenerateReceivingModalInfo.css';
 
@@ -31,11 +33,34 @@ const GenerateReceivingModalInfo = ({ orderLineLocations = [], pieceSet }) => {
     }
   };
 
+  const hasExistingReceiving = pieceSet?.pieces?.some(
+    (p) => p?.receivingPieces?.length >= 1
+  );
+
   return (
     <>
       <MessageBanner>
         <FormattedMessage id="ui-serials-management.pieceSets.generateReceivingInfo" />
       </MessageBanner>
+      {hasExistingReceiving && (
+        <>
+          <MessageBanner type="warning">
+            <FormattedMessage
+              id="ui-serials-management.pieceSets.receivingPiecesAlreadyExistWarning"
+              values={{
+                link: pieceSet?.titleId ? (
+                  <Link to={urls.receivingView(pieceSet.titleId)}>
+                    {pieceSet?.title}
+                  </Link>
+                ) : (
+                  pieceSet?.title
+                ),
+              }}
+            />
+          </MessageBanner>
+          <br />
+        </>
+      )}
       {!orderLineLocations?.length && (
         <>
           <MessageBanner type="warning">
