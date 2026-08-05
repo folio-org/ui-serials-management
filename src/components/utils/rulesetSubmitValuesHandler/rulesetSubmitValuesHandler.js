@@ -1,4 +1,36 @@
 import cloneDeep from 'lodash/cloneDeep';
+import { produce } from 'immer';
+
+// TODO Jack ensure this is _actually_ the same please, I'd like to see a rulesetSubmitValuesHandler.test.js with all possible cases covered
+// Basically this ONLY changes the values that are required, so should be pretty efficient, WHILE leaving the original "values" object alone.
+// Important also that the test checks immutability is left untouched, see immutability.test.js
+// see https://immerjs.github.io/immer/update-patterns/ for some more details
+const immutableSubmitHandler = (values) => {
+  return produce(values, (draft) => {
+    values.recurrence?.rules?.forEach((rule, index) => {
+      if (!rule.ordinal) {
+        draft.rules[index].ordinal = 1;
+      }
+
+      if (!rule.pattern) {
+        draft.rules[index].pattern = {};
+      }
+      draft.rules[index] = values?.patternType;
+    });
+
+    values.templateConfig.chronologyRules.forEach((rule, index) => {
+      draft.templateConfig.chronologyRule[index].index = index;
+    });
+
+    values.templateConfig.enumerationRules.forEach((rule, index) => {
+      draft.templateConfig.enumerationRules[index].index = index;
+
+      rule.ruleFormat.levels.forEach((level, levIndex) => {
+        draft.templateConfig.enumerationRules[index].ruleFormat.levels[levIndex].index = levIndex;
+      });
+    });
+  });
+};
 
 const rulesetSubmitValuesHandler = (values) => {
   // We don't want to manipulate the original values object
